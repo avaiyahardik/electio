@@ -13,10 +13,11 @@ import java.sql.Timestamp;
  */
 public class Election {
 
-    long election_id;
+    long id;
     String election_commissioner_email;
-    String election_name;
+    String name;
     long type_id;
+    String criteria;
     Timestamp nomination_start;
     Timestamp nomination_end;
     Timestamp witdrawal_start;
@@ -25,12 +26,12 @@ public class Election {
     Timestamp voting_end;
     int petition_duration;
 
-    public long getElection_id() {
-        return election_id;
+    public long getId() {
+        return id;
     }
 
-    public void setElection_id(long election_id) {
-        this.election_id = election_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getElection_commissioner_email() {
@@ -41,12 +42,20 @@ public class Election {
         this.election_commissioner_email = election_commissioner_email;
     }
 
-    public String getElection_name() {
-        return election_name;
+    public String getName() {
+        return name;
     }
 
-    public void setElection_name(String election_name) {
-        this.election_name = election_name;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(String criteria) {
+        this.criteria = criteria;
     }
 
     public long getType_id() {
@@ -112,5 +121,5 @@ public class Election {
     public void setPetition_duration(int petition_duration) {
         this.petition_duration = petition_duration;
     }
-    
+
 }
