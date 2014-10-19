@@ -28,19 +28,19 @@
                         </div>
 
                         <div class="panel-body">
-                            <form action="" method="POST" class="form-horizontal">
+                            <form action="Controller" method="POST" class="form-horizontal">
                                 <fieldset>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-4" for="first_name"><strong>First Name</strong></label>
+                                        <label class="control-label col-sm-4" for="firstname"><strong>First Name</strong></label>
                                         <div class="col-sm-7">
-                                            <input type="text" name="fisrt_name" class="form-control" required>
+                                            <input type="text" name="firstname" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-4" for="last_name"><strong>Last Name</strong></label>
+                                        <label class="control-label col-sm-4" for="lastname"><strong>Last Name</strong></label>
                                         <div class="col-sm-7">
-                                            <input type="text" name="last_name" class="form-control" required>
+                                            <input type="text" name="lastname" class="form-control" required>
                                         </div>
                                     </div>
 
@@ -53,14 +53,14 @@
 
 
                                     <div class="form-group">
-                                        <label for="mobile-no" class="col-lg-4 control-label"><strong>Mobile No</strong></label>
+                                        <label for="mobile" class="col-lg-4 control-label"><strong>Mobile No</strong></label>
                                         <div class="col-lg-7">
                                             <div class="input-group">
                                                 <span class="input-group-addon bg-blue">
                                                     <span class="arrow"></span>
                                                     <i>+91</i> 
                                                 </span>
-                                                <input type="text" class="form-control" name="mobile_no" required>
+                                                <input type="text" class="form-control" name="mobile" required>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
 
                                     <div class="form-group">
                                         <div class="col-lg-7 col-lg-offset-4">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Register</button>
+                                            <button type="submit" name="action" value="election_commissioner_registration" class="btn btn-primary"><i class="fa fa-check"></i> Register</button>
                                             <button type="reset" class="btn btn-danger">Reset</button>
                                         </div>
                                     </div>
