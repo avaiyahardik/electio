@@ -11,9 +11,17 @@ import java.sql.SQLException;
 public class DBDAOImplementation {
 
     private Connection con;
+    private static DBDAOImplementation obj = null;
 
-    public DBDAOImplementation() throws SQLException {
+    private DBDAOImplementation() throws SQLException {
         con = DBConnection.getConnection();
+    }
+
+    public static DBDAOImplementation getInstance() throws SQLException {
+        if (obj == null) {
+            obj = new DBDAOImplementation();
+        }
+        return obj;
     }
 
     public boolean registerElectionCommissioner(ElectionCommissioner ec) throws SQLException {

@@ -5,7 +5,6 @@
  */
 package Controller;
 
-import Util.ObjectCreator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -36,9 +35,9 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
             response.setContentType("text/html;charset=UTF-8");
             String theAction = request.getParameter("action");
+            String view = "index.jsp";
             System.out.println("The Action: " + theAction);
             Properties map = new Properties();
             map.load(this.getClass().getClassLoader().getResourceAsStream(ACTION_MAPPING));
@@ -48,10 +47,12 @@ public class Controller extends HttpServlet {
 
             System.out.println("Action Class: " + action_class);
             Action action = (Action) ObjectCreator.createObject(action_class);
-            String view = action.execute(request, response);
+            view = action.execute(request, response);
             System.out.println("View: " + view);
             RequestDispatcher rd = request.getRequestDispatcher(view);
             rd.forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Controller Error: " + ex.getMessage());
         }
     }
 

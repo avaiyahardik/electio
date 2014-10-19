@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Util;
+package Controller;
 
 /**
  *
@@ -17,8 +17,10 @@ public class ObjectCreator {
             Class name = Class.forName(class_name);
             object = name.newInstance();
         } catch (Exception e) {
-            System.err.println("Error: " + e);
+            System.out.println("Object Creator Error: " + e);
         }
+
         return object;
     }
+
 }

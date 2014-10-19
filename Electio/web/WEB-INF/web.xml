@@ -7,7 +7,11 @@
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
-    </servlet>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/election-commissioner/Controller</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>MassMail</servlet-name>
         <servlet-class>Controller.MassMail</servlet-class>
@@ -22,6 +26,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

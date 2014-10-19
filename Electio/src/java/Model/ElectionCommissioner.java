@@ -18,6 +18,18 @@ public class ElectionCommissioner {
     private String organization;
     private String password;
 
+    public ElectionCommissioner() {
+    }
+
+    public ElectionCommissioner(String email, String firstname, String lastname, String mobile, String organization, String password) {
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.mobile = mobile;
+        this.organization = organization;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
