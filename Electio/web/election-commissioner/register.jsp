@@ -12,7 +12,9 @@
         <title>Election Commissioner Registration</title>
 
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-
+        <link href="../assets/css/plugins.min.css" rel="stylesheet">
+        <link href="../assets/plugins/bootstrap-loading/lada.min.css" rel="stylesheet">
+        <link href="../assets/css/icons/icons.min.css" rel="stylesheet">
         <link href="../assets/css/style.css" rel="stylesheet">
     </head>
     <body>
@@ -29,21 +31,21 @@
                             <form action="" method="POST" class="form-horizontal">
                                 <fieldset>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-3" for="first_name"><strong>First Name</strong></label>
+                                        <label class="control-label col-sm-4" for="first_name"><strong>First Name</strong></label>
                                         <div class="col-sm-7">
                                             <input type="text" name="fisrt_name" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-3" for="last_name"><strong>Last Name</strong></label>
+                                        <label class="control-label col-sm-4" for="last_name"><strong>Last Name</strong></label>
                                         <div class="col-sm-7">
                                             <input type="text" name="last_name" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="email" class="control-label col-lg-3"><strong>Email ID</strong></label>
+                                        <label for="email" class="control-label col-lg-4"><strong>Email ID</strong></label>
                                         <div class="col-lg-7">
                                             <input type="text" name="email" class="form-control" required>
                                         </div>
@@ -51,7 +53,7 @@
 
 
                                     <div class="form-group">
-                                        <label for="mobile-no" class="col-lg-3 control-label"><strong>Mobile No</strong></label>
+                                        <label for="mobile-no" class="col-lg-4 control-label"><strong>Mobile No</strong></label>
                                         <div class="col-lg-7">
                                             <div class="input-group">
                                                 <span class="input-group-addon bg-blue">
@@ -63,6 +65,41 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="organization" class="control-label col-lg-4"><strong>Organization</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="organization" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="username" class="control-label col-lg-4"><strong>Choose a Username</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="username" required>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="password" class="form-control" name="password" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="password" class="form-control" name="retype_password" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-7 col-lg-offset-4">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Register</button>
+                                            <button type="reset" class="btn btn-danger">Reset</button>
+                                        </div>
+                                    </div>
                                 </fieldset>
 
                             </form>
@@ -72,5 +109,34 @@
 
             </div>
         </div>
+
+
+        <!-- BEGIN MANDATORY SCRIPTS -->
+        <script src="../assets/plugins/jquery-1.11.js"></script>
+        <script src="../assets/plugins/jquery-migrate-1.2.1.js"></script>
+        <script src="../assets/plugins/jquery-ui/jquery-ui-1.10.4.min.js"></script>
+        <script src="../assets/plugins/jquery-mobile/jquery.mobile-1.4.2.js"></script>
+        <script src="../assets/plugins/bootstrap/bootstrap.min.js"></script>
+        <script src="../assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+        <!-- END MANDATORY SCRIPTS -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <script src="../assets/plugins/backstretch/backstretch.min.js"></script>
+        <script src="../assets/plugins/bootstrap-loading/lada.min.js"></script>
+        <script src="../assets/js/account.js"></script>
+        <!-- END PAGE LEVEL SCRIPTS -->
+
+        <script>
+            $(function() {
+                $('#submit-form').click(function(e) {
+                    e.preventDefault();
+                    var l = Ladda.create(this);
+                    l.start();
+                    setTimeout(function() {
+                        window.location.href = "index.html";
+                    }, 2000);
+
+                });
+            });
+        </script>
     </body>
 </html>
