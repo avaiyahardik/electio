@@ -33,7 +33,9 @@ public class DBDAOImplementation {
         ps.setString(4, ec.getMobile());
         ps.setString(5, ec.getOrganization());
         ps.setString(6, ec.getPassword());
-        result = ps.execute();
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
         return result;
     }
 
@@ -95,7 +97,9 @@ public class DBDAOImplementation {
         ps.setTimestamp(10, el.getVoting_end());
         ps.setInt(11, el.getPetition_duration());
 
-        result = ps.execute();
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
         return result;
     }
 

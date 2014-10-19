@@ -26,7 +26,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String mobile = req.getParameter("mobile");
         String organization = req.getParameter("organization");
         String password = req.getParameter("password");
-        String view = "register.jsp";
+        String view = "registration.jsp";
         String msg = "";
         String err = "";
         System.out.println(email + ", " + firstname + ", " + lastname + ", " + mobile + ", " + organization + ", " + password);
@@ -38,6 +38,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                 ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization, password);
                 if (obj.registerElectionCommissioner(ec)) {
                     msg = "You're registered successfully";
+                    view = "index.jsp";
                 } else {
                     err = "Fail to register, please try again later";
                 }

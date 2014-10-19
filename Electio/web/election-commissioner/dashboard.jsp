@@ -6,8 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="headerSidebar.jsp"/>
-<div class="row">
-    Home Page
-</div>
+
 
 <jsp:include page="footer.jsp"/>

@@ -68,7 +68,7 @@
                                         <li>
                                             <a href="#">
                                                 <i class="fa fa-exclamation-triangle p-r-10 f-18 c-orange"></i>
-                                                GJ01NC3502 reported a challan
+                                                
                                                 <span class="dropdown-time">Just now</span>
                                             </a>
                                         </li>
@@ -105,10 +105,10 @@
                                 </li>
                                 <li class="dropdown-footer clearfix">
                                     <a href="javascript:;" class="toggle_fullscreen" title="Fullscreen">
-                                        <i class="fa fa"></i>
+                                        <i class="glyph-icon flaticon-fullscreen3"></i>
                                     </a>
                                     <a href="profile/lockScreen" title="Lock Screen">
-                                        <i class="fa fa-lock"></i>
+                                        <i class="glyph-icon flaticon-padlock23"></i>
                                     </a>
                                     <a href="profile/logout" title="Logout">
                                         <i class="fa fa-power-off"></i>
@@ -134,6 +134,14 @@
                             <a href="dashboard"><i class="fa fa-dashboard"></i><span class="sidebar-text">Dashboard</span></a>
                         </li>
 
+                        <li>
+                            <a href="#"><i class="glyph-icon flaticon-shopping80"></i><span class="sidebar-text">Election</span>
+                                <span class="fa arrow"></span></a>
+                            <ul class="submenu collapse">
+                                
+
+                            </ul>
+                        </li>
                         <br>
                     </ul>
                 </div>
