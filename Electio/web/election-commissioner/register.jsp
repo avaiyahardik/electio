@@ -73,14 +73,6 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="username" class="control-label col-lg-4"><strong>Choose a Username</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="username" required>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
                                         <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
                                         <div class="col-lg-7">
                                             <input type="password" class="form-control" name="password" required>
@@ -97,7 +89,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-7 col-lg-offset-4">
                                             <button type="submit" name="action" value="election_commissioner_registration" class="btn btn-primary"><i class="fa fa-check"></i> Register</button>
-                                            <button type="reset" class="btn btn-danger">Reset</button>
+                                            <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
                                         </div>
                                     </div>
                                 </fieldset>

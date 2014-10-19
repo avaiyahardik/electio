@@ -56,7 +56,7 @@
                         <form action="#" method="post">
                             <input type="text" placeholder="Email" class="input-field form-control user" />
                             <input type="password" placeholder="Password" class="input-field form-control password" />
-                            <button id="submit-form" class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">login</span></button>
+                            <button class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">login</span></button>
                         </form>
                         <div class="login-links">
                             <a href="#">Forgot password?</a>
@@ -83,19 +83,6 @@
     <script src="../assets/js/account.js"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
 
-    <script>
-    $(function() {
-    $('#submit-form').click(function(e){
-        e.preventDefault();
-        var l = Ladda.create(this);
-        l.start();
-        setTimeout(function () {
-            window.location.href = "index.html";
-        }, 2000);
-
-    });
-});
-    </script>
 </body>
 
 </html>
