@@ -22,6 +22,7 @@
         <!-- BEGIN MANDATORY STYLE -->
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <body class="login fade-in" data-page="login">
     <!-- BEGIN LOGIN BOX -->
     <div class="container" id="login-block">
@@ -50,6 +51,8 @@
                             <br>
                             <a href="#">Don't have an account? <strong>Sign Up</strong></a>
 =======
+=======
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
 
         <link href="../assets/css/icons/icons.min.css" rel="stylesheet">
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
@@ -105,12 +108,16 @@
                                 <br>
                                 <a href="#">Don't have an account? <strong>Sign Up</strong></a>
                             </div>
+<<<<<<< HEAD
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
+=======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
     </div>
     <!-- END LOCKSCREEN BOX -->
@@ -130,6 +137,8 @@
 
 </body>
 =======
+=======
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
         <!-- END LOCKSCREEN BOX -->
         <!-- BEGIN MANDATORY SCRIPTS -->
         <script src="../assets/plugins/jquery-1.11.js"></script>
@@ -146,6 +155,9 @@
         <!-- END PAGE LEVEL SCRIPTS -->
         
     </body>
+<<<<<<< HEAD
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
+=======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
 
 </html>

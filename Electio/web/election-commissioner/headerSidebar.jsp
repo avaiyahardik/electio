@@ -135,11 +135,17 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="glyph-icon flaticon-shopping80"></i><span class="sidebar-text">Election</span>
+                            <a href="#"><i class="glyphicon glyphicon-tasks"></i><span class="sidebar-text">Election</span>
                                 <span class="fa arrow"></span></a>
                             <ul class="submenu collapse">
-                                
+                                <li>
+                                    <a href=""><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
+                                </li>
 
+                                <li>
+                                    <a href=""><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New</span></a>
+                                </li>
+                                
                             </ul>
                         </li>
                         <br>
