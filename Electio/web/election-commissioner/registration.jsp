@@ -73,14 +73,6 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="username" class="control-label col-lg-4"><strong>Choose a Username</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="username" required>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
                                         <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
                                         <div class="col-lg-7">
                                             <input type="password" class="form-control" name="password" required>
@@ -103,6 +95,19 @@
                                 </fieldset>
 
                             </form>
+                            <%
+                                String msg = (String) request.getAttribute("msg");
+                                if (msg != null) {
+                            %>
+                            <br> <label><%=msg%></label>
+                            <% }%>
+                            <%
+                                String err = (String) request.getAttribute("err");
+                                if (err != null) {
+                            %>
+                            <br> <label style="color: red"><%=err%></label>
+                            <% }%>
+
                         </div>
                     </div>
                 </div>
@@ -132,7 +137,7 @@
                     var l = Ladda.create(this);
                     l.start();
                     setTimeout(function() {
-                        window.location.href = "index.html";
+                        window.location.href = "index.jsp";
                     }, 2000);
 
                 });
