@@ -162,4 +162,34 @@ public class DBDAOImplementation {
         }
         return voter;
     }
+    public boolean loginVoter(String email,long election_id,String password) throws SQLException{
+        
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=? and password=?");
+        ps.setString(1, email);
+        ps.setLong(2, election_id);
+        ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+    public boolean loginCandidate(String email,long election_id,String password) throws SQLException{
+        
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_candidate WHERE email=? and election_id=? and password=?");
+        ps.setString(1, email);
+        ps.setLong(2, election_id);
+        ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
 }
