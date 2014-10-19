@@ -10,8 +10,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Electio</title>
+        
+        <link href="style.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Index page for Electio 2014</h1>
+        <h1>Index page for Electio</h1>
     </body>
 </html>
