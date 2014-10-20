@@ -51,8 +51,8 @@
                         <hr>
                         <div class="login-form">
                             <form action="Controller" method="post">
-                                <input type="text" placeholder="Email" class="input-field form-control user" />
-                                <input type="password" placeholder="Password" class="input-field form-control password" />
+                                <input type="text" name="email" placeholder="Email" class="input-field form-control user" />
+                                <input type="password" name="password" placeholder="Password" class="input-field form-control password" />
                                 <button type="submit"  name="action" value="election_commissioner_login" class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">login</span></button>
                             </form>
                             <div class="login-links">
