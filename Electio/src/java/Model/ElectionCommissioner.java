@@ -15,18 +15,18 @@ public class ElectionCommissioner {
     private String firstname;
     private String lastname;
     private String mobile;
-    private long organization;
+    private long organization_id;
     private String password;
 
     public ElectionCommissioner() {
     }
 
-    public ElectionCommissioner(String email, String firstname, String lastname, String mobile, long organization, String password) {
+    public ElectionCommissioner(String email, String firstname, String lastname, String mobile, long organization_id, String password) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.mobile = mobile;
-        this.organization = organization;
+        this.organization_id = organization_id;
         this.password = password;
     }
 
@@ -62,12 +62,12 @@ public class ElectionCommissioner {
         this.mobile = mobile;
     }
 
-    public long getOrganization() {
-        return organization;
+    public long getOrganization_id() {
+        return organization_id;
     }
 
-    public void setOrganization(long organization) {
-        this.organization = organization;
+    public void setOrganization_id(long organization_id) {
+        this.organization_id = organization_id;
     }
 
     public String getPassword() {

@@ -37,7 +37,7 @@ public class DBDAOImplementation {
         ps.setString(2, ec.getFirstname());
         ps.setString(3, ec.getLastname());
         ps.setString(4, ec.getMobile());
-        ps.setLong(5, ec.getOrganization());
+        ps.setLong(5, ec.getOrganization_id());
         ps.setString(6, ec.getPassword());
         if (ps.executeUpdate() > 0) {
             result = true;
@@ -67,7 +67,7 @@ public class DBDAOImplementation {
             ec.setFirstname(rs.getString("firstname"));
             ec.setLastname(rs.getString("lastname"));
             ec.setMobile(rs.getString("mobile"));
-            ec.setOrganization(rs.getLong("organization"));
+            ec.setOrganization_id(rs.getLong("organization_id"));
             ec.setPassword(rs.getString("password"));
         }
         return ec;
@@ -79,7 +79,7 @@ public class DBDAOImplementation {
         ps.setString(1, ec.getFirstname());
         ps.setString(2, ec.getLastname());
         ps.setString(3, ec.getMobile());
-        ps.setLong(4, ec.getOrganization());
+        ps.setLong(4, ec.getOrganization_id());
         ps.setString(5, ec.getPassword());
         ps.setString(6, ec.getEmail());
         if (ps.executeUpdate() > 0) {
@@ -254,5 +254,18 @@ public class DBDAOImplementation {
             id = rs.getLong("id");
         }
         return id;
+    }
+
+    public Organization getOrganization(long id) throws SQLException {
+        Organization org = new Organization();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_organization WHERE id=?");
+        ps.setLong(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            org.setName(rs.getString("name"));
+            org.setAddress(rs.getString("address"));
+            org.setAbout(rs.getString("about"));
+        }
+        return org;
     }
 }

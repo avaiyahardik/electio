@@ -16,6 +16,9 @@ public class Organization {
     private String address;
     private String about;
 
+    public Organization() {
+    }
+
     public Organization(String name, String address, String about) {
         this.name = name;
         this.address = address;

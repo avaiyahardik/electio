@@ -106,7 +106,7 @@
                                         <i class="glyph-icon flaticon-account"></i> My Profile
                                     </a>
                                 </li>
-                                
+
                                 <li class="dropdown-footer clearfix">
                                     <a href="javascript:;" class="toggle_fullscreen" title="Fullscreen">
                                         <i class="glyph-icon flaticon-fullscreen3"></i>

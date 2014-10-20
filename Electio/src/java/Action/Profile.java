@@ -8,6 +8,7 @@ package Action;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import Model.ElectionCommissioner;
+import Model.Organization;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -25,17 +26,30 @@ public class Profile implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
         String email = req.getSession().getAttribute("email").toString();
-        String view = "profile.jsp";
-        req.setAttribute("title", "Profile");
-        ElectionCommissioner ec = new ElectionCommissioner();
-        try {
-            DBDAOImplementation obj = DBDAOImplementation.getInstance();
-            ec = obj.getElectionCommissioner(email);
+        String view = "index.jsp";
+        String msg = null;
+        String err = null;
+        String title = "Login";
+        if (email == null || email.equals("")) {
+            err = "Session expired please login again";
+        } else {
+            view = "profile.jsp";
+            title = "Profile";
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewElection.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                ElectionCommissioner ec = obj.getElectionCommissioner(email);
+                Organization org = obj.getOrganization(ec.getOrganization_id());
+                req.setAttribute("election_commissioner", ec);
+                req.setAttribute("organization", org);
+            } catch (SQLException ex) {
+                Logger.getLogger(ViewElection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-        req.setAttribute("ec", ec);
+        req.setAttribute("msg", msg);
+        req.setAttribute("err", err);
+        req.setAttribute("title", title);
         return view;
 
     }

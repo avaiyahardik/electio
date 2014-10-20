@@ -1,3 +1,4 @@
+<%@page import="Model.Organization"%>
 <%@page import="Model.ElectionCommissioner"%>
 <jsp:include page="headerSidebar.jsp"/>
 
@@ -14,27 +15,27 @@
                     <fieldset>
 
                         <%
-                            ElectionCommissioner ec = (ElectionCommissioner) request.getAttribute("ec");
-
+                            ElectionCommissioner ec = (ElectionCommissioner) request.getAttribute("election_commissioner");
+                            Organization organization = (Organization) request.getAttribute("organization");
                         %>
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="firstname"><strong>First Name</strong></label>
                             <div class="col-sm-7">
-                                <input type="text" name="firstname" class="form-control" required value="<%=ec.getFirstname() %>" >
+                                <input type="text" name="firstname" class="form-control" required="required" value="<%=ec.getFirstname()%>" >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="lastname" ><strong>Last Name</strong></label>
                             <div class="col-sm-7">
-                                <input type="text" name="lastname" class="form-control" required value="<%=ec.getLastname() %>">
+                                <input type="text" name="lastname" class="form-control" required="required" value="<%=ec.getLastname()%>">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="email" class="control-label col-lg-5"><strong>Email ID</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" name="email" class="form-control" required value="<%=ec.getEmail() %>">
+                                <input type="text" name="email" class="form-control" required value="<%=ec.getEmail()%>">
                             </div>
                         </div>
 
@@ -47,7 +48,7 @@
                                         <span class="arrow"></span>
                                         <i>+91</i> 
                                     </span>
-                                    <input type="text" class="form-control" name="mobile" required  value="<%=ec.getMobile() %>">
+                                    <input type="text" class="form-control" required="required" name="mobile"  value="<%=ec.getMobile()%>">
                                 </div>
                             </div>
                         </div>
@@ -55,19 +56,19 @@
                         <div class="form-group">
                             <label for="organization_name" class="control-label col-lg-5"><strong>Organization Name</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="organization_name" required  value="<%=ec.getOrganization()%>">
+                                <input type="text" class="form-control" required="required" name="organization_name"  value="<%= organization.getName()%>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="organization_address" class="control-label col-lg-5"><strong>Organization Address</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="organization_address" required>
+                                <input type="text" class="form-control" required="required" name="organization_address" value="<%= organization.getAddress()%>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="about_organization" class="control-label col-lg-5"><strong>About Organization</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="about_organization" required>
+                                <input type="text" class="form-control" required="required" name="about_organization" value="<%= organization.getAbout()%>">
                             </div>
                         </div>
 
