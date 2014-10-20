@@ -98,7 +98,7 @@ public class DBDAOImplementation {
         // ps.setTimestamp(5, el.getCreated_at());
         ps.setTimestamp(5, el.getNomination_start());
         ps.setTimestamp(6, el.getNomination_end());
-        ps.setTimestamp(7, el.getWitdrawal_start());
+        ps.setTimestamp(7, el.getWithdrawal_start());
         ps.setTimestamp(8, el.getNomination_end());
         ps.setTimestamp(9, el.getVoting_start());
         ps.setTimestamp(10, el.getVoting_end());
@@ -119,7 +119,7 @@ public class DBDAOImplementation {
         ps.setLong(3, el.getType_id());
         ps.setTimestamp(4, el.getNomination_start());
         ps.setTimestamp(5, el.getNomination_end());
-        ps.setTimestamp(6, el.getWitdrawal_start());
+        ps.setTimestamp(6, el.getWithdrawal_start());
         ps.setTimestamp(7, el.getNomination_end());
         ps.setTimestamp(8, el.getVoting_start());
         ps.setTimestamp(9, el.getVoting_end());
@@ -170,20 +170,32 @@ public class DBDAOImplementation {
         return voter;
     }
 
-    public ArrayList<Election> getElection(String email) throws SQLException {
-        ArrayList<Election> el = new ArrayList<Election>();
+    public ArrayList<Election> getElections(String email) throws SQLException {
+        ArrayList<Election> elections = new ArrayList<Election>();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=?");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            Election e = new Election();
-            e.setId(rs.getLong("id"));
-            e.setName(rs.getString("Name"));
-            e.setType_id(rs.getLong("type_id"));
-            el.add(e);
+        Election el;
+        System.out.println("B4");
+        while (rs.next()) {
+            System.out.println("Yes");
+            el = new Election();
+            el.setId(rs.getLong("id"));
+            el.setElection_commissioner_email(email);
+            el.setName(rs.getString("name"));
+            el.setRequirements(rs.getString("requirements"));
+            el.setType_id(rs.getLong("type_id"));
+            el.setCreated_at(rs.getTimestamp("created_at"));
+            el.setNomination_start(rs.getTimestamp("nomination_start"));
+            el.setNomination_end(rs.getTimestamp("nomination_end"));
+            el.setWithdrawal_start(rs.getTimestamp("withdrawal_start"));
+            el.setWithdrawal_end(rs.getTimestamp("withdrawal_end"));
+            el.setVoting_start(rs.getTimestamp("voting_start"));
+            el.setVoting_end(rs.getTimestamp("voting_end"));
+            el.setPetition_duration(rs.getInt("petition_duration"));
+            elections.add(el);
         }
-        return el;
+        return elections;
     }
 
     public ElectionType getElectionType(long type_id) throws SQLException {

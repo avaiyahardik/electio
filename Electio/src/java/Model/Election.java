@@ -21,8 +21,8 @@ public class Election {
     private Timestamp created_at;
     private Timestamp nomination_start;
     private Timestamp nomination_end;
-    private Timestamp witdrawal_start;
-    private Timestamp witdrawal_end;
+    private Timestamp withdrawal_start;
+    private Timestamp withdrawal_end;
     private Timestamp voting_start;
     private Timestamp voting_end;
     private int petition_duration;
@@ -37,8 +37,8 @@ public class Election {
         this.type_id = type_id;
         this.nomination_start = nomination_start;
         this.nomination_end = nomination_end;
-        this.witdrawal_start = witdrawal_start;
-        this.witdrawal_end = witdrawal_end;
+        this.withdrawal_start = witdrawal_start;
+        this.withdrawal_end = witdrawal_end;
         this.voting_start = voting_start;
         this.voting_end = voting_end;
         this.petition_duration = petition_duration;
@@ -108,20 +108,20 @@ public class Election {
         this.nomination_end = nomination_end;
     }
 
-    public Timestamp getWitdrawal_start() {
-        return witdrawal_start;
+    public Timestamp getWithdrawal_start() {
+        return withdrawal_start;
     }
 
-    public void setWitdrawal_start(Timestamp witdrawal_start) {
-        this.witdrawal_start = witdrawal_start;
+    public void setWithdrawal_start(Timestamp withdrawal_start) {
+        this.withdrawal_start = withdrawal_start;
     }
 
-    public Timestamp getWitdrawal_end() {
-        return witdrawal_end;
+    public Timestamp getWithdrawal_end() {
+        return withdrawal_end;
     }
 
-    public void setWitdrawal_end(Timestamp witdrawal_end) {
-        this.witdrawal_end = witdrawal_end;
+    public void setWithdrawal_end(Timestamp withdrawal_end) {
+        this.withdrawal_end = withdrawal_end;
     }
 
     public Timestamp getVoting_start() {

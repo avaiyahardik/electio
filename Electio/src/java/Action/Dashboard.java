@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Action;
 
 import DAO.DBDAOImplementation;
@@ -19,22 +18,22 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author darshit
  */
-public class Dashboard implements Controller.Action{
+public class Dashboard implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String email=req.getSession().getAttribute("email").toString();
-        String view="dashboard.jsp";
+        String email = req.getSession().getAttribute("email").toString();
+        String view = "dashboard.jsp";
         req.setAttribute("title", "Dashboard");
-        ArrayList<Election>  el=new ArrayList<Election>();
+        ArrayList<Election> elections = null;
         try {
-            DBDAOImplementation obj=DBDAOImplementation.getInstance();
-            el=obj.getElection(email);
+            DBDAOImplementation obj = DBDAOImplementation.getInstance();
+            elections = obj.getElections(email);
         } catch (SQLException ex) {
-            Logger.getLogger(ViewElection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewElections.class.getName()).log(Level.SEVERE, null, ex);
         }
-        req.setAttribute("Election", el);
+        req.setAttribute("elections", elections);
         return view;
     }
-    
+
 }

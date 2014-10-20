@@ -143,7 +143,7 @@
                                 <span class="fa arrow"></span></a>
                             <ul class="submenu collapse">
                                 <li>
-                                    <a href="Controller?action=view_election"><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
+                                    <a href="Controller?action=view_elections"><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
                                 </li>
 
                                 <li>

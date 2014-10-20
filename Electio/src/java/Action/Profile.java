@@ -43,7 +43,7 @@ public class Profile implements Controller.Action {
                 req.setAttribute("election_commissioner", ec);
                 req.setAttribute("organization", org);
             } catch (SQLException ex) {
-                Logger.getLogger(ViewElection.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ViewElections.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

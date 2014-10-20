@@ -32,7 +32,7 @@ public class LockScreen implements Controller.Action {
             name = ec.getFirstname()+ " " + ec.getLastname();
             
         } catch (SQLException ex) {
-            Logger.getLogger(ViewElection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewElections.class.getName()).log(Level.SEVERE, null, ex);
         }
         req.setAttribute("name", name);
         return view;

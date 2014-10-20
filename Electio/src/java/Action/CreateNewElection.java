@@ -25,12 +25,11 @@ public class CreateNewElection implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
         String email = (String) req.getSession().getAttribute("email");
-        email = "mail@electio.com"; // for now check karne ke liye default le liya.
         String view = "newElection.jsp";
         String title = "New Election";
         String msg = null;
         String err = null;
-        if (false) {    // validation will be performed to check elec comm session.
+        if (email == null || email.equals("")) {
             err = "Session expired, please login again";
         } else {
             try {

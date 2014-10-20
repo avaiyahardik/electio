@@ -30,22 +30,21 @@
                             Show the data using loop here
                             Example set is given here
                             -->
-                            <% ArrayList<Election> el = (ArrayList<Election>) request.getAttribute("Election");
-                                for (Election e : el) {
+                            <% ArrayList<Election> elections = (ArrayList<Election>) request.getAttribute("elections");
+                                for (Election el : elections) {
                                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                                    ElectionType et = obj.getElectionType(e.getType_id());
+                                    ElectionType et = obj.getElectionType(el.getType_id());
                             %>
 
                             <tr>
-                                <td><strong><a href="#"><%= e.getName()%></a></strong></td>
-                                <td>2014/02/05 10:25</td>
-                                <td><%= et.getType() %></td>
+                                <td><strong><a href="#"><%= el.getName()%></a></strong></td>
+                                <td><%= el.getCreated_at()%> </td>
+                                <td><%= et.getType()%></td>
                                 <td>
                                     <a href="#" class="btn btn-success">Result</a>
                                     <a href="#" class="btn btn-default">Download Data</a>
                                     <a href="javascript:deleteElection()" class="btn btn-effect btn-danger">Delete</a>
                                 </td>
-
                             </tr>
                             <%}%>
                         </tbody>
