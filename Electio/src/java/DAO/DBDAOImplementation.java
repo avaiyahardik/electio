@@ -2,6 +2,7 @@ package DAO;
 
 import Model.Election;
 import Model.ElectionCommissioner;
+import Model.ElectionType;
 import Model.Voter;
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class DBDAOImplementation {
 
@@ -165,10 +167,39 @@ public class DBDAOImplementation {
             voter.setStatus(rs.getBoolean("status"));
         }
         return voter;
+    }    
+    public ArrayList<Election> getElection(String email) throws SQLException {
+        ArrayList<Election> el=new ArrayList<Election>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=?");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            Election e=new Election();
+            e.setId(rs.getLong("id"));
+            e.setName(rs.getString("Name"));
+            e.setType_id(rs.getLong("type_id"));
+            el.add(e);
+        }
+        return el;
     }
-
-    public boolean loginVoter(String email, long election_id, String password) throws SQLException {
-
+    
+    public ElectionType getElectionType(long type_id) throws SQLException {
+        ElectionType et=new ElectionType();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_type WHERE type_id=?");
+        ps.setLong(1, type_id);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            et.setType_id(rs.getLong("type_id"));
+            et.setType(rs.getString("type"));
+            et.setDescription(rs.getString("description"));
+            
+        }
+        return et;
+    }
+    
+    public boolean loginVoter(String email,long election_id,String password) throws SQLException{
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=? and password=?");
         ps.setString(1, email);
         ps.setLong(2, election_id);
