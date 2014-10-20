@@ -13,6 +13,22 @@
         <div class="panel-body">
             <form action="Controller" method="POST" class="form-horizontal">
                 <fieldset>
+                    <div class="col-lg-10 col-lg-offset-3">
+                        <%
+                            String msg = (String) request.getAttribute("msg");
+                            if (msg != null) {
+                        %>
+                        <br> <label class="label label-primary"><%=msg%></label>
+                        <% }%>
+                        <%
+                            String err = (String) request.getAttribute("err");
+                            if (err != null) {
+                        %>
+                        <br> <label class="label label-danger"><%=err%></label>
+                        <% }%>
+                    </div>
+
+
                     <div class="col-lg-10">
                         <div class="form-group">
                             <label for="name" class="control-label col-lg-3"><strong>Election Name</strong></label>
