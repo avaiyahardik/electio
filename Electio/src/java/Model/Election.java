@@ -16,8 +16,9 @@ public class Election {
     long id;
     String election_commissioner_email;
     String name;
+    String requirements;
     long type_id;
-    String criteria;
+    Timestamp created_at;
     Timestamp nomination_start;
     Timestamp nomination_end;
     Timestamp witdrawal_start;
@@ -25,6 +26,23 @@ public class Election {
     Timestamp voting_start;
     Timestamp voting_end;
     int petition_duration;
+
+    public Election() {
+    }
+
+    public Election(String election_commissioner_email, String name, String requirements, long type_id, Timestamp nomination_start, Timestamp nomination_end, Timestamp witdrawal_start, Timestamp witdrawal_end, Timestamp voting_start, Timestamp voting_end, int petition_duration) {
+        this.election_commissioner_email = election_commissioner_email;
+        this.name = name;
+        this.requirements = requirements;
+        this.type_id = type_id;
+        this.nomination_start = nomination_start;
+        this.nomination_end = nomination_end;
+        this.witdrawal_start = witdrawal_start;
+        this.witdrawal_end = witdrawal_end;
+        this.voting_start = voting_start;
+        this.voting_end = voting_end;
+        this.petition_duration = petition_duration;
+    }
 
     public long getId() {
         return id;
@@ -50,12 +68,12 @@ public class Election {
         this.name = name;
     }
 
-    public String getCriteria() {
-        return criteria;
+    public String getRequirements() {
+        return requirements;
     }
 
-    public void setCriteria(String criteria) {
-        this.criteria = criteria;
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
     }
 
     public long getType_id() {
@@ -64,6 +82,14 @@ public class Election {
 
     public void setType_id(long type_id) {
         this.type_id = type_id;
+    }
+
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 
     public Timestamp getNomination_start() {

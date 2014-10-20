@@ -63,8 +63,6 @@
                             </div>
                             <hr>
 
-
-
                             <%
                                 String msg = (String) request.getAttribute("msg");
                                 if (msg != null) {

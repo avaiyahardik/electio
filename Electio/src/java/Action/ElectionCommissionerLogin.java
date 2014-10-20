@@ -32,7 +32,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 if (obj.loginElectionCommissioner(email, password)) {
                     req.getSession().setAttribute("email", email);
-                    view = "login-success.jsp"; // view changed if login successfull
+                    view = "dashboard.jsp"; // view changed if login successfull
                     msg = "You're logged in successfully"; // message should be displayed on view page
                 } else {
                     err = "Fail to login, please retry"; // error message should be displayed on view page

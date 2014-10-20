@@ -11,86 +11,85 @@
         </div>
 
         <div class="panel-body">
-            <form action="" method="POST" class="form-horizontal">
+            <form action="Controller" method="POST" class="form-horizontal">
                 <fieldset>
                     <div class="col-lg-10">
                         <div class="form-group">
-                            <label for="electionname" class="control-label col-lg-3"><strong>Election Name</strong></label>
+                            <label for="name" class="control-label col-lg-3"><strong>Election Name</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="electionname">
+                                <input type="text" class="form-control" name="name">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="electiondescription" class="control-label col-lg-3"><strong>Description</strong></label>
+                            <label for="description" class="control-label col-lg-3"><strong>Description</strong></label>
                             <div class="col-lg-7">
-                                <textarea class="form-control" name="electiondescription"></textarea>
+                                <textarea class="form-control" name="description"></textarea>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="criteria" class="control-label col-lg-3"><strong>Criteria</strong></label>
+                            <label for="requirements" class="control-label col-lg-3"><strong>Eligibility Requirements</strong></label>
                             <div class="col-lg-7">
                                 <div class="tinymceScreen">
-                                    <textarea name="criteria" id="criteria">
+                                    <textarea name="requirements" id="requirements">
                                     </textarea>
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="electiontype" class="control-label col-lg-3"><strong>Election Type</strong></label>
+                            <label for="type" class="control-label col-lg-3"><strong>Election Type</strong></label>
                             <div class="col-lg-7">
-                                <select class="form-control" name="electiontype">
-                                    <option value="">Weighted</option>
-                                    <option value="">Preferential</option>
+                                <select class="form-control" name="type">
+                                    <option value="2">Weighted</option>
+                                    <option value="1">Preferential</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="nominationstart" class="control-label col-lg-3"><strong>Nomination Starts on</strong></label>
+                            <label for="nomination_start" class="control-label col-lg-3"><strong>Nomination Starts on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="nomstart" id="nomstart" placeholder="Click to choose date"/>
+                                <input type="text" class="form-control" name="nomination_start" id="nomination_start" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="nominationend" class="control-label col-lg-3"><strong>Nomination Ends on</strong></label>
+                            <label for="nomination_end" class="control-label col-lg-3"><strong>Nomination Ends on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="nomend" id="nomend" placeholder="Click to choose date"/>
+                                <input type="text" class="form-control" name="nomination_end" id="nomination_end" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="withdrawalstart" class="control-label col-lg-3"><strong>Withdrawal Starts on</strong></label>
+                            <label for="withdrawal_start" class="control-label col-lg-3"><strong>Withdrawal Starts on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="withdrawstart" id="withdrawstart" placeholder="Click to choose date"/>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="withdrawalend" class="control-label col-lg-3"><strong>Withdrawal Ends on</strong></label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" name="withdrawend" id="withdrawend" placeholder="Click to choose date"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="votingstart" class="control-label col-lg-3"><strong>Voting Starts on</strong></label>
-                            <div class="col-lg-7">
-                                <input type="text" class="form-control" name="votestart" id="votestart" placeholder="Click to choose date"/>
+                                <input type="text" class="form-control" name="withdrawal_start" id="withdrawal_start" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="votingend" class="control-label col-lg-3"><strong>Voting Ends on</strong></label>
+                            <label for="withdrawal_end" class="control-label col-lg-3"><strong>Withdrawal Ends on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="voteend" id="voteend" placeholder="Click to choose date"/>
+                                <input type="text" class="form-control" name="withdrawal_end" id="withdrawal_end" placeholder="Click to choose date"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="voting_start" class="control-label col-lg-3"><strong>Voting Starts on</strong></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control" name="voting_start" id="voting_start" placeholder="Click to choose date"/>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="voting_end" class="control-label col-lg-3"><strong>Voting Ends on</strong></label>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control" name="voting_end" id="voting_end" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
@@ -98,16 +97,30 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3"><strong>Petition Period (In Days)</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="petitonperiod">
+                                <input type="text" class="form-control" name="petition_duration">
                             </div>
                         </div>
                         <br>
 
                         <div class="form-group">
                             <div class="col-lg-7 col-lg-offset-3">
-                                <button type="submit" class="btn btn-success"><i class="fa fa-pencil"></i> Create</button>
+                                <button type="submit" name="action" value="create_new_election" class="btn btn-success"><i class="fa fa-pencil"></i> Create</button>
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Clear</button>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <%
+                                String msg = (String) request.getAttribute("msg");
+                                if (msg != null) {
+                            %>
+                            <br> <label class="label label-primary"><%=msg%></label>
+                            <% }%>
+                            <%
+                                String err = (String) request.getAttribute("err");
+                                if (err != null) {
+                            %>
+                            <br> <label class="label label-danger"><%=err%></label>
+                            <% }%>
                         </div>
 
                     </div>
@@ -121,26 +134,26 @@
 <script type="text/javascript" src="../assets/dtp/jquery.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
 <script type="text/javascript">
-    $('#nomstart').datetimepicker()
+    $('#nomination_start').datetimepicker()
             .datetimepicker({step: 10});
 
-    $('#nomend').datetimepicker()
+    $('#nomination_end').datetimepicker()
             .datetimepicker({step: 10});
 
-    $('#withdrawstart').datetimepicker()
+    $('#withdrawal_start').datetimepicker()
             .datetimepicker({step: 10});
-    $('#withdrawend').datetimepicker()
-            .datetimepicker({step: 10});
-
-    $('#votestart').datetimepicker()
+    $('#withdrawal_end').datetimepicker()
             .datetimepicker({step: 10});
 
-    $('#voteend').datetimepicker()
+    $('#voting_start').datetimepicker()
+            .datetimepicker({step: 10});
+
+    $('#voting_end').datetimepicker()
             .datetimepicker({step: 10});
 
 
 
-    tinymce.init({selector: '#criteria'});
+    tinymce.init({selector: '#requirements'});
 </script>
 
 <jsp:include page="footer.jsp"/>

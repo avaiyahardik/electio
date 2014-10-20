@@ -4,9 +4,12 @@ import Model.Election;
 import Model.ElectionCommissioner;
 import Model.Voter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class DBDAOImplementation {
 
@@ -84,11 +87,12 @@ public class DBDAOImplementation {
 
     public boolean createElection(Election el) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election(election_commissioner_email, name,criteria, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election(election_commissioner_email, name, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
         ps.setString(1, el.getElection_commissioner_email());
         ps.setString(2, el.getName());
-        ps.setString(3, el.getCriteria());
+        ps.setString(3, el.getRequirements());
         ps.setLong(4, el.getType_id());
+        // ps.setTimestamp(5, el.getCreated_at());
         ps.setTimestamp(5, el.getNomination_start());
         ps.setTimestamp(6, el.getNomination_end());
         ps.setTimestamp(7, el.getWitdrawal_start());
@@ -105,10 +109,10 @@ public class DBDAOImplementation {
 
     public boolean updateElection(Election el) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election SET name=?,criteria=?, type_id=?, nomination_start=?, nomination_end=?, withdrawal_start=?, withdrawal_end=?, voting_start=?, voting_end=?, petition_duration=? WHERE id=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election SET name=?, requirements=?, type_id=?, nomination_start=?, nomination_end=?, withdrawal_start=?, withdrawal_end=?, voting_start=?, voting_end=?, petition_duration=? WHERE id=?");
 
         ps.setString(1, el.getName());
-        ps.setString(2, el.getCriteria());
+        ps.setString(2, el.getRequirements());
         ps.setLong(3, el.getType_id());
         ps.setTimestamp(4, el.getNomination_start());
         ps.setTimestamp(5, el.getNomination_end());
@@ -162,8 +166,9 @@ public class DBDAOImplementation {
         }
         return voter;
     }
-    public boolean loginVoter(String email,long election_id,String password) throws SQLException{
-        
+
+    public boolean loginVoter(String email, long election_id, String password) throws SQLException {
+
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=? and password=?");
         ps.setString(1, email);
         ps.setLong(2, election_id);
@@ -171,14 +176,14 @@ public class DBDAOImplementation {
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
-        
+
     }
-    public boolean loginCandidate(String email,long election_id,String password) throws SQLException{
-        
+
+    public boolean loginCandidate(String email, long election_id, String password) throws SQLException {
+
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_candidate WHERE email=? and election_id=? and password=?");
         ps.setString(1, email);
         ps.setLong(2, election_id);
@@ -186,10 +191,9 @@ public class DBDAOImplementation {
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
-        
+
     }
 }

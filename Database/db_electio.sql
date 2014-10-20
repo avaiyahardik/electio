@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2014 at 05:08 AM
+-- Generation Time: Oct 20, 2014 at 08:10 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `tbl_election` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `election_commissioner_email` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `requirements` text NOT NULL,
+  `description` text,
+  `requirements` text,
   `type_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nomination_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `tbl_election` (
   `voting_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `petition_duration` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
