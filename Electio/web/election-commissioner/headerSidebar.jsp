@@ -15,7 +15,12 @@
     <head>
         <!-- BEGIN META SECTION -->
         <meta charset="utf-8">
-        <title></title>
+        <title>
+            <%
+                String title = (String) request.getAttribute("title");
+            %>
+            <%=title%>
+        </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="../assets/img/favicon.png">
@@ -86,8 +91,13 @@
                         <!-- BEGIN USER DROPDOWN -->
                         <li class="dropdown" id="user-header">
                             <a href="#" class="dropdown-toggle c-white" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <img src="" alt="user avatar" width="30" class="p-r-5">
-                                <span class="username">Vishal Jain</span>
+                                <span class="username">
+                                    <%
+                                        String email = (String) session.getAttribute("email");
+                                    %>
+
+                                    <%=email%>
+                                </span>
                                 <i class="fa fa-angle-down p-r-10"></i>
                             </a>
                             <ul class="dropdown-menu">
