@@ -45,7 +45,7 @@
                         <i class="fa fa-outdent"></i>
                     </a>
 
-                    <span class="navbar-brand"><a  href="dashboard" style="color:#FFF; text-decoration:none;">Electio</a></span>
+                    <span class="navbar-lo"><a  href="dashboard" style="color:#FFF; text-decoration:none;">Electio</a></span>
 
                 </div>
                 <div class="navbar-center"></div>
@@ -68,7 +68,7 @@
                                         <li>
                                             <a href="#">
                                                 <i class="fa fa-exclamation-triangle p-r-10 f-18 c-orange"></i>
-                                                
+
                                                 <span class="dropdown-time">Just now</span>
                                             </a>
                                         </li>
@@ -76,7 +76,7 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown-footer clearfix">
-                                    <a href="#" class="pull-left">See all reported challans</a>
+                                    <a href="#" class="pull-left">See all notifications</a>
                                     <a href="#" class="pull-right">
                                         <i class="fa fa-cog"></i>
                                     </a>
@@ -139,13 +139,13 @@
                                 <span class="fa arrow"></span></a>
                             <ul class="submenu collapse">
                                 <li>
-                                    <a href=""><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
+                                    <a href="listElections.jsp"><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
                                 </li>
 
                                 <li>
                                     <a href="newElection.jsp"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New</span></a>
                                 </li>
-                                
+
                             </ul>
                         </li>
                         <br>
