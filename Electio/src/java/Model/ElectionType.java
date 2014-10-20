@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 /**
@@ -11,9 +10,10 @@ package Model;
  * @author darshit
  */
 public class ElectionType {
-    long type_id;
-    String type;
-    String description;
+
+    private long type_id;
+    private String type;
+    private String description;
 
     public long getType_id() {
         return type_id;
@@ -38,6 +38,5 @@ public class ElectionType {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
+
 }

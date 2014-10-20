@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2014 at 08:10 AM
+-- Generation Time: Oct 20, 2014 at 01:18 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -19,21 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_electio`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_candidate`
---
-
-CREATE TABLE IF NOT EXISTS `tbl_candidate` (
-  `email` varchar(255) NOT NULL,
-  `election_id` int(11) NOT NULL,
-  `requirements_file` text NOT NULL,
-  `votes` int(11) NOT NULL,
-  `manifesto` text NOT NULL,
-  PRIMARY KEY (`email`,`election_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -59,6 +44,28 @@ CREATE TABLE IF NOT EXISTS `tbl_election` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
+--
+-- Dumping data for table `tbl_election`
+--
+
+INSERT INTO `tbl_election` (`id`, `election_commissioner_email`, `name`, `description`, `requirements`, `type_id`, `created_at`, `nomination_start`, `nomination_end`, `withdrawal_start`, `withdrawal_end`, `voting_start`, `voting_end`, `petition_duration`) VALUES
+(1, 'mail@electio.com', 'sbg', NULL, '<p>req</p>', 2, '2014-10-20 10:18:33', '2014-10-19 19:00:00', '2014-10-20 10:50:00', '2014-10-20 10:50:00', '2014-10-20 10:50:00', '2014-10-20 10:50:00', '2014-10-20 11:00:00', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_election_candidate`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_election_candidate` (
+  `email` varchar(255) NOT NULL,
+  `election_id` int(11) NOT NULL,
+  `requirements_file` text NOT NULL,
+  `votes` int(11) NOT NULL,
+  `manifesto` text NOT NULL,
+  PRIMARY KEY (`email`,`election_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +81,13 @@ CREATE TABLE IF NOT EXISTS `tbl_election_commissioner` (
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_election_commissioner`
+--
+
+INSERT INTO `tbl_election_commissioner` (`email`, `firstname`, `lastname`, `mobile`, `organization_id`, `password`) VALUES
+('avaiyahardik@gmail.com', 'Hardik', 'Avaiya', '9737808095', 3, 'hadik');
 
 -- --------------------------------------------------------
 
@@ -122,7 +136,16 @@ CREATE TABLE IF NOT EXISTS `tbl_organization` (
   `address` text NOT NULL,
   `about` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `tbl_organization`
+--
+
+INSERT INTO `tbl_organization` (`id`, `name`, `address`, `about`) VALUES
+(1, 'DA-IICT', 'Gandhinagar', 'Best'),
+(2, 'DA-IICT', 'Gandhinagar', 'Best'),
+(3, 'DA-IICT', 'Gandhinagar', 'Best');
 
 -- --------------------------------------------------------
 

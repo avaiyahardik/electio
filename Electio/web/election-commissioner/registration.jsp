@@ -66,9 +66,21 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="organization" class="control-label col-lg-4"><strong>Organization</strong></label>
+                                        <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization" required>
+                                            <input type="text" class="form-control" name="organization_name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="organization_address" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="about_organization" required>
                                         </div>
                                     </div>
 

@@ -3,6 +3,7 @@ package DAO;
 import Model.Election;
 import Model.ElectionCommissioner;
 import Model.ElectionType;
+import Model.Organization;
 import Model.Voter;
 import java.sql.Connection;
 import java.sql.Date;
@@ -36,7 +37,7 @@ public class DBDAOImplementation {
         ps.setString(2, ec.getFirstname());
         ps.setString(3, ec.getLastname());
         ps.setString(4, ec.getMobile());
-        ps.setString(5, ec.getOrganization());
+        ps.setLong(5, ec.getOrganization());
         ps.setString(6, ec.getPassword());
         if (ps.executeUpdate() > 0) {
             result = true;
@@ -66,7 +67,7 @@ public class DBDAOImplementation {
             ec.setFirstname(rs.getString("firstname"));
             ec.setLastname(rs.getString("lastname"));
             ec.setMobile(rs.getString("mobile"));
-            ec.setOrganization(rs.getString("organization"));
+            ec.setOrganization(rs.getLong("organization"));
             ec.setPassword(rs.getString("password"));
         }
         return ec;
@@ -78,7 +79,7 @@ public class DBDAOImplementation {
         ps.setString(1, ec.getFirstname());
         ps.setString(2, ec.getLastname());
         ps.setString(3, ec.getMobile());
-        ps.setString(4, ec.getOrganization());
+        ps.setLong(4, ec.getOrganization());
         ps.setString(5, ec.getPassword());
         ps.setString(6, ec.getEmail());
         if (ps.executeUpdate() > 0) {
@@ -167,15 +168,16 @@ public class DBDAOImplementation {
             voter.setStatus(rs.getBoolean("status"));
         }
         return voter;
-    }    
+    }
+
     public ArrayList<Election> getElection(String email) throws SQLException {
-        ArrayList<Election> el=new ArrayList<Election>();
+        ArrayList<Election> el = new ArrayList<Election>();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=?");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
-        
+
         if (rs.next()) {
-            Election e=new Election();
+            Election e = new Election();
             e.setId(rs.getLong("id"));
             e.setName(rs.getString("Name"));
             e.setType_id(rs.getLong("type_id"));
@@ -183,23 +185,23 @@ public class DBDAOImplementation {
         }
         return el;
     }
-    
+
     public ElectionType getElectionType(long type_id) throws SQLException {
-        ElectionType et=new ElectionType();
+        ElectionType et = new ElectionType();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_type WHERE type_id=?");
         ps.setLong(1, type_id);
         ResultSet rs = ps.executeQuery();
-        
+
         if (rs.next()) {
             et.setType_id(rs.getLong("type_id"));
             et.setType(rs.getString("type"));
             et.setDescription(rs.getString("description"));
-            
+
         }
         return et;
     }
-    
-    public boolean loginVoter(String email,long election_id,String password) throws SQLException{
+
+    public boolean loginVoter(String email, long election_id, String password) throws SQLException {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=? and password=?");
         ps.setString(1, email);
         ps.setLong(2, election_id);
@@ -226,5 +228,31 @@ public class DBDAOImplementation {
             return false;
         }
 
+    }
+
+    public long addNewOrganization(Organization org) throws SQLException {
+        long id = -1;
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_organization(name,address,about) VALUES(?,?,?)");
+        ps.setString(1, org.getName());
+        ps.setString(2, org.getAddress());
+        ps.setString(3, org.getAbout());
+        if (ps.executeUpdate() > 0) {
+            ps = con.prepareStatement("SELECT max(id) FROM tbl_organization");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                id = rs.getLong("max(id)");
+            }
+        }
+        return id;
+    }
+
+    public long getLastOrganizationId() throws SQLException {
+        long id = -1;
+        PreparedStatement ps = con.prepareStatement("SELECT max(id) FROM tbl_organization");
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            id = rs.getLong("id");
+        }
+        return id;
     }
 }

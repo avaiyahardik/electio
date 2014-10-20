@@ -11,10 +11,10 @@ package Model;
  */
 public class Voter {
 
-    String email;
-    long election_id;
-    String password;
-    boolean status;
+    private String email;
+    private long election_id;
+    private String password;
+    private boolean status;
 
     public String getEmail() {
         return email;

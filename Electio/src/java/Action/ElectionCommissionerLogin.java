@@ -22,6 +22,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String view = "index.jsp";  // default view should be login page itself
+        String title = "Login";
         String msg = null;
         String err = null;
         System.out.println(email + ", " + password);
@@ -33,6 +34,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
                 if (obj.loginElectionCommissioner(email, password)) {
                     req.getSession().setAttribute("email", email);
                     view = "dashboard.jsp"; // view changed if login successfull
+                    title = "Dashboard";
                     msg = "You're logged in successfully"; // message should be displayed on view page
                 } else {
                     err = "Fail to login, please retry"; // error message should be displayed on view page
@@ -44,6 +46,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
         }
         req.setAttribute("msg", msg); // setting msg attribute
         req.setAttribute("err", err); // setting err attribute
+        req.setAttribute("title", title);
         return view;
     }
 }

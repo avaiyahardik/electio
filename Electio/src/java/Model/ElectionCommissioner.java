@@ -15,13 +15,13 @@ public class ElectionCommissioner {
     private String firstname;
     private String lastname;
     private String mobile;
-    private String organization;
+    private long organization;
     private String password;
 
     public ElectionCommissioner() {
     }
 
-    public ElectionCommissioner(String email, String firstname, String lastname, String mobile, String organization, String password) {
+    public ElectionCommissioner(String email, String firstname, String lastname, String mobile, long organization, String password) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -62,11 +62,11 @@ public class ElectionCommissioner {
         this.mobile = mobile;
     }
 
-    public String getOrganization() {
+    public long getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
+    public void setOrganization(long organization) {
         this.organization = organization;
     }
 

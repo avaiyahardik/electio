@@ -14,18 +14,30 @@
             <form action="Controller" method="POST" class="form-horizontal">
                 <fieldset>
                     <div class="col-lg-10 col-lg-offset-3">
+                        <!-- BEGIN ERROR BOX -->
+
                         <%
                             String msg = (String) request.getAttribute("msg");
                             if (msg != null) {
                         %>
-                        <br> <label class="label label-primary"><%=msg%></label>
+
+                        <div class="alert alert-info">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <%=msg%>
+                        </div>
                         <% }%>
+
                         <%
                             String err = (String) request.getAttribute("err");
                             if (err != null) {
                         %>
-                        <br> <label class="label label-danger"><%=err%></label>
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <%=err%>
+
+                        </div>
                         <% }%>
+                        <!-- END ERROR BOX -->
                     </div>
 
 

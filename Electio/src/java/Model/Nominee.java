@@ -9,18 +9,17 @@ package Model;
  *
  * @author Hardik
  */
-public class Candidate extends UserInfo {
+public class Nominee extends UserInfo {
 
-    private long election_id;
+    private String election_id;
     private String requirements_file;
-    private long votes;
-    private String manifesto;
+    private boolean status;
 
-    public long getElection_id() {
+    public String getElection_id() {
         return election_id;
     }
 
-    public void setElection_id(long election_id) {
+    public void setElection_id(String election_id) {
         this.election_id = election_id;
     }
 
@@ -32,20 +31,12 @@ public class Candidate extends UserInfo {
         this.requirements_file = requirements_file;
     }
 
-    public long getVotes() {
-        return votes;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setVotes(long votes) {
-        this.votes = votes;
-    }
-
-    public String getManifesto() {
-        return manifesto;
-    }
-
-    public void setManifesto(String manifesto) {
-        this.manifesto = manifesto;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 }

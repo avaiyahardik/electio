@@ -13,19 +13,19 @@ import java.sql.Timestamp;
  */
 public class Election {
 
-    long id;
-    String election_commissioner_email;
-    String name;
-    String requirements;
-    long type_id;
-    Timestamp created_at;
-    Timestamp nomination_start;
-    Timestamp nomination_end;
-    Timestamp witdrawal_start;
-    Timestamp witdrawal_end;
-    Timestamp voting_start;
-    Timestamp voting_end;
-    int petition_duration;
+    private long id;
+    private String election_commissioner_email;
+    private String name;
+    private String requirements;
+    private long type_id;
+    private Timestamp created_at;
+    private Timestamp nomination_start;
+    private Timestamp nomination_end;
+    private Timestamp witdrawal_start;
+    private Timestamp witdrawal_end;
+    private Timestamp voting_start;
+    private Timestamp voting_end;
+    private int petition_duration;
 
     public Election() {
     }

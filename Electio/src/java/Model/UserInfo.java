@@ -9,24 +9,15 @@ package Model;
  *
  * @author Hardik
  */
-public class Nominator {
+public abstract class UserInfo {
 
-    long election_id;
-    String email;
-    String firstname;
-    String lastname;
-    String mobile;
-    String criteria;
-    String password;
-    boolean status;
-
-    public long getElection_id() {
-        return election_id;
-    }
-
-    public void setElection_id(long election_id) {
-        this.election_id = election_id;
-    }
+    private String email;
+    private String firstname;
+    private String lastname;
+    private String mobile;
+    private long organization_id;
+    private String image;
+    private String password;
 
     public String getEmail() {
         return email;
@@ -60,12 +51,20 @@ public class Nominator {
         this.mobile = mobile;
     }
 
-    public String getCriteria() {
-        return criteria;
+    public long getOrganization_id() {
+        return organization_id;
     }
 
-    public void setCriteria(String criteria) {
-        this.criteria = criteria;
+    public void setOrganization_id(long organization_id) {
+        this.organization_id = organization_id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPassword() {
@@ -74,14 +73,6 @@ public class Nominator {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
 }

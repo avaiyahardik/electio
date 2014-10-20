@@ -27,6 +27,7 @@ public class CreateNewElection implements Controller.Action {
         String email = (String) req.getSession().getAttribute("email");
         email = "mail@electio.com"; // for now check karne ke liye default le liya.
         String view = "newElection.jsp";
+        String title = "New Election";
         String msg = "";
         String err = "";
         if (false) {    // validation will be performed to check elec comm session.
@@ -68,6 +69,7 @@ public class CreateNewElection implements Controller.Action {
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
+        req.setAttribute("title", title);
         return view;
     }
 }
