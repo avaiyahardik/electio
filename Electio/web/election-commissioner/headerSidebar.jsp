@@ -143,7 +143,7 @@
                                 </li>
 
                                 <li>
-                                    <a href=""><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New</span></a>
+                                    <a href="newElection.jsp"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New</span></a>
                                 </li>
                                 
                             </ul>

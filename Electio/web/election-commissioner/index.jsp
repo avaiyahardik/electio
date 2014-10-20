@@ -23,6 +23,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <body class="login fade-in" data-page="login">
     <!-- BEGIN LOGIN BOX -->
     <div class="container" id="login-block">
@@ -51,6 +52,8 @@
                             <br>
                             <a href="#">Don't have an account? <strong>Sign Up</strong></a>
 =======
+=======
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
 =======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
 
@@ -109,6 +112,9 @@
                                 <a href="#">Don't have an account? <strong>Sign Up</strong></a>
                             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
+=======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
 =======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
@@ -117,6 +123,7 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     </div>
@@ -139,6 +146,8 @@
 =======
 =======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
+=======
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
         <!-- END LOCKSCREEN BOX -->
         <!-- BEGIN MANDATORY SCRIPTS -->
         <script src="../assets/plugins/jquery-1.11.js"></script>
@@ -156,6 +165,9 @@
         
     </body>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
+=======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
 =======
 >>>>>>> d07084e438eb9841994c6c4768f004d0ed8afa22
