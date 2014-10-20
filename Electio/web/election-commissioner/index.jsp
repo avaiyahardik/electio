@@ -43,16 +43,37 @@
                         <div class="page-icon animated bounceInDown">
                             <img src="../assets/img/account/user-icon.png" alt="Key icon">
                         </div>
-                        <div class="login-logo">
-                            <a href="#?login-theme-3">
-                                <img src="../assets/img/account/login-logo.png" alt="Company Logo">
-                            </a>
-                        </div>
                         <hr>
                         <div class="login-form">
+                            <!-- BEGIN ERROR BOX -->
+
+                            <%
+                                String msg = (String) request.getAttribute("msg");
+                                if (msg != null) {
+                            %>
+
+                            <div class="alert alert-info">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=msg%>
+                            </div>
+                            <% }%>
+
+                            <%
+                                String err = (String) request.getAttribute("err");
+                                if (err != null) {
+                            %>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=err%>
+
+                            </div>
+                            <% }%>
+                            <!-- END ERROR BOX -->
+
+
                             <form action="Controller" method="post">
-                                <input type="text" name="email" placeholder="Email" class="input-field form-control user" />
-                                <input type="password" name="password" placeholder="Password" class="input-field form-control password" />
+                                <input type="text" name="email" placeholder="Email" class="input-field form-control user" required/>
+                                <input type="password" name="password" placeholder="Password" class="input-field form-control password" required/>
                                 <button type="submit"  name="action" value="election_commissioner_login" class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">login</span></button>
                             </form>
                             <div class="login-links">
@@ -62,22 +83,6 @@
 
                             </div>
                             <hr>
-
-
-
-                            <%
-                                String msg = (String) request.getAttribute("msg");
-                                if (msg != null) {
-                            %>
-                            <br> <label class="label label-primary"><%=msg%></label>
-                            <% }%>
-                            <%
-                                String err = (String) request.getAttribute("err");
-                                if (err != null) {
-                            %>
-                            <br> <label class="label label-danger"><%=err%></label>
-                            <% }%>
-
                         </div>
                     </div>
                 </div>
