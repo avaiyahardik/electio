@@ -280,4 +280,28 @@ public class DBDAOImplementation {
         }
         return org;
     }
+
+    public boolean isValidElectionCommissioner(String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_commissioner WHERE email=? AND password=?");
+        ps.setString(1, email);
+        ps.setString(2, password);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean changeElectionCommissionerPassword(String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_commissioner SET password=? WHERE email=?");
+        ps.setString(1, password);
+        ps.setString(2, email);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+
+    }
 }

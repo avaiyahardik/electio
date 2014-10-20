@@ -22,7 +22,7 @@ public class LockScreen implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
-        String email = req.getSession().getAttribute("email").toString();
+        String email =  (String) req.getSession().getAttribute("email");
         String view = "lockScreen.jsp";
         String name = null;
 

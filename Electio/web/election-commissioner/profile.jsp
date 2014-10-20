@@ -74,7 +74,7 @@
 
                         <div class="form-group">
                             <div class="col-lg-7 col-lg-offset-5">
-                                <button type="submit" name="action" value="update_profile" class="btn btn-success"><i class="fa fa-floppy-o"></i> Update Profile</button>
+                                <button type="submit" name="action" value="update_election_commissioner_profile" class="btn btn-success"><i class="fa fa-floppy-o"></i> Update Profile</button>
                             </div>
                         </div>
                     </fieldset>
@@ -108,10 +108,41 @@
 
                         <div class="form-group">
                             <div class="col-lg-7 col-lg-offset-4">
-                                <button type="submit" name="action" value="change_password" class="btn btn-warning"><i class="fa fa-check"></i> Change Password</button>
+                                <button type="submit" name="action" value="change_election_commissioner_password" class="btn btn-warning"><i class="fa fa-check"></i> Change Password</button>
                             </div>
                         </div>
                     </fieldset>
+                    
+                    <!-- EDITING BY HARDIK START -->
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <!-- BEGIN ERROR BOX -->
+
+                            <%
+                                String msg = (String) request.getAttribute("msg");
+                                if (msg != null) {
+                            %>
+
+                            <div class="alert alert-info">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=msg%>
+                            </div>
+                            <% }%>
+
+                            <%
+                                String err = (String) request.getAttribute("err");
+                                if (err != null) {
+                            %>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=err%>
+
+                            </div>
+                            <% }%>
+                            <!-- END ERROR BOX -->
+                        </div>
+                    </div>
+                    <!-- EDITING BY HARDIK END-->
                 </form>
             </div>
         </div>

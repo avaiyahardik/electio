@@ -24,7 +24,7 @@ public class ViewElections implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String email = req.getSession().getAttribute("email").toString();
+        String email = (String)  req.getSession().getAttribute("email");
         String view = "index.jsp";
         String msg = null;
         String err = null;

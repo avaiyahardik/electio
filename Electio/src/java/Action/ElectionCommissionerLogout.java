@@ -6,16 +6,18 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LogoutElectionCommissioner implements Controller.Action {
+public class ElectionCommissionerLogout implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String email = req.getSession().getAttribute("email").toString();
+        String email = (String) req.getSession().getAttribute("email");
         String view = "index.jsp";
         String msg = null;
         String err = null;
+        System.out.println("EMAIL: " + email);
         String title = "Login";
-        if (email == null || email.equals("")) {
+        if (email == null || email.equals("You are not logged in, or session already expired")) {
+            System.out.println("");
             err = "You are not logged in, or session already expired";
         } else {
             try {

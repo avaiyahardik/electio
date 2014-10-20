@@ -25,13 +25,15 @@ public class CreateNewElection implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
         String email = (String) req.getSession().getAttribute("email");
-        String view = "newElection.jsp";
-        String title = "New Election";
+        String view = "index.jsp";
+        String title = "Login";
         String msg = null;
         String err = null;
         if (email == null || email.equals("")) {
             err = "Session expired, please login again";
         } else {
+            view = "newElection.jsp";
+            title = "Create New Election";
             try {
                 String name = req.getParameter("name");
                 String description = req.getParameter("description");

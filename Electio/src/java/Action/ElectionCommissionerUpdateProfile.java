@@ -20,11 +20,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Vishal Jain
  */
-public class Profile implements Controller.Action {
+public class ElectionCommissionerUpdateProfile implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-
+// update profile abhi pura baki he
         String email = (String) req.getSession().getAttribute("email");
         String view = "index.jsp";
         String msg = null;
@@ -44,7 +44,7 @@ public class Profile implements Controller.Action {
                 req.setAttribute("organization", org);
             } catch (SQLException ex) {
                 err = ex.getMessage();
-                System.out.println("Profile Err: " + ex.getMessage());
+                System.out.println("ECUpdateProfile Err: " + ex.getMessage());
             }
 
         }

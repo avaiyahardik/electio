@@ -6,11 +6,10 @@
 package Action;
 
 import DAO.DBDAOImplementation;
-import Model.Election;
 import Model.ElectionCommissioner;
 import Model.Organization;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Vishal Jain
+ * @author Hardik
  */
-public class Profile implements Controller.Action {
+public class ElectionCommissionerChangePassword implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-
-        String email = (String) req.getSession().getAttribute("email");
+        String email =  (String) req.getSession().getAttribute("email");
         String view = "index.jsp";
         String msg = null;
         String err = null;
@@ -35,16 +33,31 @@ public class Profile implements Controller.Action {
         } else {
             view = "profile.jsp";
             title = "Profile";
-
+            String old_password = req.getParameter("old_password");
+            String new_password = req.getParameter("new_password");
+            String retype_password = req.getParameter("retype_password");
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 ElectionCommissioner ec = obj.getElectionCommissioner(email);
                 Organization org = obj.getOrganization(ec.getOrganization_id());
                 req.setAttribute("election_commissioner", ec);
                 req.setAttribute("organization", org);
+                if (obj.isValidElectionCommissioner(email, old_password)) {
+                    if (new_password.equals(retype_password)) {
+                        if (obj.changeElectionCommissionerPassword(email, new_password)) {
+                            msg = "Your password changed successfully";
+                        } else {
+                            err = "Error occured while changing your password, please retry";
+                        }
+                    } else {
+                        err = "Confirm password does not match, please retry";
+                    }
+                } else {
+                    err = "Old password doesn't match, please retry";
+                }
             } catch (SQLException ex) {
                 err = ex.getMessage();
-                System.out.println("Profile Err: " + ex.getMessage());
+                System.out.println("ChangePassword Err: " + ex.getMessage());
             }
 
         }
