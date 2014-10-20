@@ -114,7 +114,7 @@
                                     <a href="Controller?action=lock_screen" title="Lock Screen">
                                         <i class="glyph-icon flaticon-padlock23"></i>
                                     </a>
-                                    <a href="Controller?action=logout" title="Logout">
+                                    <a href="Controller?action=logout_election_commissioner" title="Logout">
                                         <i class="fa fa-power-off"></i>
                                     </a>
                                 </li>
