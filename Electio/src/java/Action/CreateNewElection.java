@@ -37,7 +37,7 @@ public class CreateNewElection implements Controller.Action {
                 String description = req.getParameter("description");
                 String requirements = req.getParameter("requirements");
                 long type_id = Integer.parseInt(req.getParameter("type"));
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                 Date date = new Date();
 //                date = dateFormat.parse(dateFormat.format(date));
 //                Timestamp created_at = new Timestamp(date.getTime());

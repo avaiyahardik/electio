@@ -124,21 +124,6 @@
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Clear</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <%
-                                String msg = (String) request.getAttribute("msg");
-                                if (msg != null) {
-                            %>
-                            <br> <label class="label label-primary"><%=msg%></label>
-                            <% }%>
-                            <%
-                                String err = (String) request.getAttribute("err");
-                                if (err != null) {
-                            %>
-                            <br> <label class="label label-danger"><%=err%></label>
-                            <% }%>
-                        </div>
-
                     </div>
                 </fieldset>
             </form>

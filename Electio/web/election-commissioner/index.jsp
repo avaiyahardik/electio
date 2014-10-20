@@ -103,8 +103,6 @@
         <script src="../assets/plugins/backstretch/backstretch.min.js"></script>
         <script src="../assets/plugins/bootstrap-loading/lada.min.js"></script>
         <script src="../assets/js/account.js"></script>
-        <!-- END PAGE LEVEL SCRIPTS -->
-
+        <!-- END PAGE LEVEL SCRIPTS -->s
     </body>
-
 </html>

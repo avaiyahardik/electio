@@ -22,8 +22,8 @@ public class ElectionCommissionerLogin implements Controller.Action {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String view = "index.jsp";  // default view should be login page itself
-        String msg = "";
-        String err = "";
+        String msg = null;
+        String err = null;
         System.out.println(email + ", " + password);
         if (email == null || email.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields"; // error message should be displayed on view page
