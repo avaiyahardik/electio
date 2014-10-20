@@ -45,10 +45,8 @@
                         <i class="fa fa-outdent"></i>
                     </a>
 
-                    <span class="navbar-lo"><a  href="dashboard" style="color:#FFF; text-decoration:none;">Electio</a></span>
-
                 </div>
-                <div class="navbar-center"></div>
+                <div class="navbar-center"><a  href="dashboard.jsp" style="color:#FFF; text-decoration:none;">Electio</a></div>
                 <div class="navbar-collapse collapse">
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <ul class="nav navbar-nav pull-right header-menu">
@@ -131,7 +129,7 @@
                 <div id="main-menu">
                     <ul class="sidebar-nav">
                         <li>
-                            <a href="dashboard"><i class="fa fa-dashboard"></i><span class="sidebar-text">Dashboard</span></a>
+                            <a href="dashboard.jsp"><i class="fa fa-dashboard"></i><span class="sidebar-text">Dashboard</span></a>
                         </li>
 
                         <li>
