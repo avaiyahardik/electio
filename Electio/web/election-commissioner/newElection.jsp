@@ -150,21 +150,21 @@
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
 <script type="text/javascript">
     $('#nomination_start').datetimepicker()
-            .datetimepicker({step: 10});
+            .datetimepicker({step: 30});
 
     $('#nomination_end').datetimepicker()
-            .datetimepicker({step: 10});
+            .datetimepicker({step: 30});
 
     $('#withdrawal_start').datetimepicker()
-            .datetimepicker({step: 10});
+            .datetimepicker({step: 30});
     $('#withdrawal_end').datetimepicker()
-            .datetimepicker({step: 10});
+            .datetimepicker({step: 30});
 
     $('#voting_start').datetimepicker()
-            .datetimepicker({step: 10});
+            .datetimepicker({step: 30});
 
     $('#voting_end').datetimepicker()
-            .datetimepicker({step: 10});
+            .datetimepicker({step: 30});
 
 
 
