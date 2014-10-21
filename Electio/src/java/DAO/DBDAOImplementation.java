@@ -132,6 +132,16 @@ public class DBDAOImplementation {
         return result;
     }
 
+    public boolean deleteElection(long id) throws SQLException{
+        boolean result=false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election WHERE id=?");
+        ps.setLong(1,id);
+        if(ps.executeUpdate()>0){
+            result=true;
+        }
+        return result;
+    }
+    
     public boolean addVoter(Voter voter) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_voter VALUES(?,?,?,?)");

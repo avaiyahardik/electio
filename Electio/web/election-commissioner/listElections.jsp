@@ -12,7 +12,18 @@
         </div>
 
         <div class="panel-body">
+            <!-- BEGIN ERROR BOX --> 
+<%
+                                            String err = (String) request.getAttribute("err");
+                                            if (err != null) {
+                                        %>
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <%=err%>
 
+                                        </div>
+                                        <% }%>
+                                        <!-- END ERROR BOX --> 
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
                     <table class="table table-hover table-dynamic table-tools">
