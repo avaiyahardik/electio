@@ -102,23 +102,19 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="profile">
+                                    <a href="Controller?action=profile">
                                         <i class="glyph-icon flaticon-account"></i> My Profile
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="profile/account">
-                                        <i class="glyph-icon flaticon-settings21"></i> Account Settings
-                                    </a>
-                                </li>
+                                
                                 <li class="dropdown-footer clearfix">
                                     <a href="javascript:;" class="toggle_fullscreen" title="Fullscreen">
                                         <i class="glyph-icon flaticon-fullscreen3"></i>
                                     </a>
-                                    <a href="profile/lockScreen" title="Lock Screen">
+                                    <a href="Controller?action=lock_screen" title="Lock Screen">
                                         <i class="glyph-icon flaticon-padlock23"></i>
                                     </a>
-                                    <a href="profile/logout" title="Logout">
+                                    <a href="Controller?action=logout" title="Logout">
                                         <i class="fa fa-power-off"></i>
                                     </a>
                                 </li>
@@ -139,7 +135,7 @@
                 <div id="main-menu">
                     <ul class="sidebar-nav">
                         <li>
-                            <a href="dashboard.jsp"><i class="fa fa-dashboard"></i><span class="sidebar-text">Dashboard</span></a>
+                            <a href="Controller?action=dashboard"><i class="fa fa-dashboard"></i><span class="sidebar-text">Dashboard</span></a>
                         </li>
 
                         <li>
@@ -147,11 +143,11 @@
                                 <span class="fa arrow"></span></a>
                             <ul class="submenu collapse">
                                 <li>
-                                    <a href="listElections.jsp"><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
+                                    <a href="Controller?action=view_election"><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
                                 </li>
 
                                 <li>
-                                    <a href="newElection.jsp"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New</span></a>
+                                    <a href="Controller?action=create_new_election"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New</span></a>
                                 </li>
 
                             </ul>

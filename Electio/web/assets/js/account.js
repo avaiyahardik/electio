@@ -15,8 +15,8 @@ $(function(){
 
 	/*  Background slide for lockscreen page  */
 	if($('body').attr('data-page') == 'lockscreen'){
-		$.backstretch([ "assets/img/background/01.png", "assets/img/background/02.png", "assets/img/background/03.png", "assets/img/background/04.png", "assets/img/background/05.png", "assets/img/background/06.png",
-		  "assets/img/background/07.png", "assets/img/background/08.png", "assets/img/background/09.png" ], 
+		$.backstretch([ "../assets/img/background/01.png", "../assets/img/background/02.png", "../assets/img/background/03.png", "../assets/img/background/04.png", "../assets/img/background/05.png", "../assets/img/background/06.png",
+		  "../assets/img/background/07.png", "../assets/img/background/08.png", "../assets/img/background/09.png" ], 
 		  {
 		    fade: 600,
 		    duration: 4000 

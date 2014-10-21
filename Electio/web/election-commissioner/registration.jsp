@@ -31,6 +31,34 @@
                             <form action="Controller" method="POST" class="form-horizontal">
                                 <fieldset>
                                     <div class="form-group">
+                                        <!-- BEGIN ERROR BOX -->
+
+                                        <%
+                                            String msg = (String) request.getAttribute("msg");
+                                            if (msg != null) {
+                                        %>
+
+                                        <div class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <%=msg%>
+                                        </div>
+                                        <% }%>
+
+                                        <%
+                                            String err = (String) request.getAttribute("err");
+                                            if (err != null) {
+                                        %>
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <%=err%>
+
+                                        </div>
+                                        <% }%>
+                                        <!-- END ERROR BOX -->  
+                                    </div>
+
+
+                                    <div class="form-group">
                                         <label class="control-label col-sm-4" for="firstname"><strong>First Name</strong></label>
                                         <div class="col-sm-7">
                                             <input type="text" name="firstname" class="form-control" required>
@@ -107,19 +135,6 @@
                                 </fieldset>
 
                             </form>
-                            <%
-                                String msg = (String) request.getAttribute("msg");
-                                if (msg != null) {
-                            %>
-                            <br> <label><%=msg%></label>
-                            <% }%>
-                            <%
-                                String err = (String) request.getAttribute("err");
-                                if (err != null) {
-                            %>
-                            <br> <label style="color: red"><%=err%></label>
-                            <% }%>
-
                         </div>
                     </div>
                 </div>
@@ -142,18 +157,5 @@
         <script src="../assets/js/account.js"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
 
-        <script>
-            $(function() {
-                $('#submit-form').click(function(e) {
-                    e.preventDefault();
-                    var l = Ladda.create(this);
-                    l.start();
-                    setTimeout(function() {
-                        window.location.href = "index.jsp";
-                    }, 2000);
-
-                });
-            });
-        </script>
     </body>
 </html>

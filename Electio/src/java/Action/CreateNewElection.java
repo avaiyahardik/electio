@@ -28,8 +28,8 @@ public class CreateNewElection implements Controller.Action {
         email = "mail@electio.com"; // for now check karne ke liye default le liya.
         String view = "newElection.jsp";
         String title = "New Election";
-        String msg = "";
-        String err = "";
+        String msg = null;
+        String err = null;
         if (false) {    // validation will be performed to check elec comm session.
             err = "Session expired, please login again";
         } else {

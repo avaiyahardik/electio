@@ -19,13 +19,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author darshit
  */
-public class ViewElection implements Controller.Action{
+public class Dashboard implements Controller.Action{
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email=req.getSession().getAttribute("email").toString();
-        String view="listElections.jsp";
-        req.setAttribute("title", "View Elections");
+        String view="dashboard.jsp";
+        req.setAttribute("title", "Dashboard");
         ArrayList<Election>  el=new ArrayList<Election>();
         try {
             DBDAOImplementation obj=DBDAOImplementation.getInstance();

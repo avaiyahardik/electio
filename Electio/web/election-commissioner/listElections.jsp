@@ -5,13 +5,6 @@
 <jsp:include page="headerSidebar.jsp"/>
 <link href="../assets/plugins/modal/css/component.css" rel="stylesheet">
 
-<script type="text/JavaScript">
-    function deleteElection(){
-    alert("?");
-    }    
-</script>
-
-
 <div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading bg-blue">

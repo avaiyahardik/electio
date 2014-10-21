@@ -31,8 +31,8 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String password = req.getParameter("password");
         String view = "registration.jsp";
         String title = "Registration";
-        String msg = "";
-        String err = "";
+        String msg = null;
+        String err = null;
         System.out.println(email + ", " + firstname + ", " + lastname + ", " + mobile + ", " + organization_name + ", " + password);
         if (email == null || email.equals("") || firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields";
