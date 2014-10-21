@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Vishal Jain
  */
-public class LockScreen implements Controller.Action {
+public class Unlock implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
@@ -28,16 +28,22 @@ public class LockScreen implements Controller.Action {
         String msg = null;
         String err = null;
         String view = "lockScreen.jsp";
-        String name = null;
-
-        try {
-            DBDAOImplementation obj = DBDAOImplementation.getInstance();
-            ElectionCommissioner ec = obj.getElectionCommissioner(email);
-            name = ec.getFirstname() + " " + ec.getLastname();
-
-        } catch (SQLException ex) {
-            err = ex.getMessage();
-            System.out.println("LockScreen Err: " + ex.getMessage());
+        String password = req.getParameter("password");
+        String name = req.getParameter("name");
+        if (email == null || email.equals("")) {
+            err = "You are not logged in, or session already expired";
+        } else {
+            try {
+                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                if (obj.isValidElectionCommissioner(email, password)) {
+                    // here i have to redirect to old action page, that i'll do later 
+                } else {
+                    err = "Invalid password";
+                }
+            } catch (SQLException ex) {
+                err = ex.getMessage();
+                System.out.println("LockScreen Err: " + ex.getMessage());
+            }
         }
         req.setAttribute("old_action", old_action);
         req.setAttribute("name", name);

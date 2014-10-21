@@ -111,7 +111,7 @@
                                     <a href="javascript:;" class="toggle_fullscreen" title="Fullscreen">
                                         <i class="glyph-icon flaticon-fullscreen3"></i>
                                     </a>
-                                    <a href="Controller?action=lock_screen" title="Lock Screen">
+                                    <a href="Controller?action=lock_screen&old_action=<%= request.getParameter("action")%>" title="Lock Screen">
                                         <i class="glyph-icon flaticon-padlock23"></i>
                                     </a>
                                     <a href="Controller?action=logout_election_commissioner" title="Logout">

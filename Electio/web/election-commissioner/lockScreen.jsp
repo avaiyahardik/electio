@@ -43,9 +43,11 @@
                         <div class="login-form">
 
 
-                            <form action="Controller" method="get">
+                            <form action="Controller" method="POST">
+                                <input type="hidden" name="old_action" value="<%= request.getAttribute("old_action")%>">
+                                <input type="hidden" name="name" value="<%= request.getAttribute("name")%> ">
                                 <div class="col-md-12 form-input">
-                                    <input type="password" class="input-field form-control width-100p password" placeholder="Password" required/>
+                                    <input type="password" name="password" class="input-field form-control width-100p password" placeholder="Password" required/>
                                 </div>
                                 <button type="submit" class="btn btn-login btn-reset" name="action" value="unlock">Unlock</button>
                             </form>

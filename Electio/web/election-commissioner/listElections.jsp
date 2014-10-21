@@ -37,13 +37,13 @@
                             %>
 
                             <tr>
-                                <td><strong><a href="Controller?action=election_details&id="><%= el.getName()%></a></strong></td>
+                                <td><strong><a href="Controller?action=election_details&id=<%= el.getId()%>"><%= el.getName()%></a></strong></td>
                                 <td><%= el.getCreated_at()%> </td>
                                 <td><%= et.getType()%></td>
                                 <td>
-                                    <a href="Controller?action=election_result&id=" class="btn btn-success btn-sm"><i class="fa fa-list"></i> Result</a>
-                                    <a href="Controller?action=download_election_data&id=" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>
-                                    <a href="Controller?action=delete_election&id=" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+                                    <a href="Controller?action=election_result&id=<%= el.getId()%>" class="btn btn-success btn-sm"><i class="fa fa-list"></i> Result</a>
+                                    <a href="Controller?action=download_election_data&id=<%= el.getId()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>
+                                    <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
                                 </td>
                             </tr>
                             <%}%>
