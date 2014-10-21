@@ -21,7 +21,7 @@ public class DeleteElection implements Controller.Action{
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String view="listElections.jsp";
+        String view="Controller?action=view_elections";
         String email=req.getSession().getAttribute("email").toString();
         long id=Integer.parseInt(req.getParameter("id"));
         String err=null;
