@@ -16,6 +16,7 @@ public class Election {
     private long id;
     private String election_commissioner_email;
     private String name;
+    private String description;
     private String requirements;
     private long type_id;
     private Timestamp created_at;
@@ -30,9 +31,10 @@ public class Election {
     public Election() {
     }
 
-    public Election(String election_commissioner_email, String name, String requirements, long type_id, Timestamp nomination_start, Timestamp nomination_end, Timestamp witdrawal_start, Timestamp witdrawal_end, Timestamp voting_start, Timestamp voting_end, int petition_duration) {
+    public Election(String election_commissioner_email, String name, String description, String requirements, long type_id, Timestamp nomination_start, Timestamp nomination_end, Timestamp witdrawal_start, Timestamp witdrawal_end, Timestamp voting_start, Timestamp voting_end, int petition_duration) {
         this.election_commissioner_email = election_commissioner_email;
         this.name = name;
+        this.description = description;
         this.requirements = requirements;
         this.type_id = type_id;
         this.nomination_start = nomination_start;
@@ -66,6 +68,14 @@ public class Election {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getRequirements() {

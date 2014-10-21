@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Action;
 
 import DAO.DBDAOImplementation;
@@ -17,32 +16,40 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author darshit
  */
-public class DeleteElection implements Controller.Action{
+public class DeleteElection implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String view="Controller?action=view_elections";
-        String email=req.getSession().getAttribute("email").toString();
-        long id=Integer.parseInt(req.getParameter("id"));
-        String err=null;
-        String title="View Elections";
-        if (id == 0) {
+        String view = "index.jsp";
+        String email = (String) req.getSession().getAttribute("email");
+        String msg = null;
+        String err = null;
+        String title = "Login";
+        if (email == null || email.equals("")) {
             err = "Session expired, please login again";
         } else {
-        try {
-            DBDAOImplementation obj=DBDAOImplementation.getInstance();
-            obj.deleteElection(email,id);
-            obj.deleteVoter(email, id);
-            obj.deleteNominee(email,id);
-        } catch (SQLException ex) {
-            Logger.getLogger(DeleteElection.class.getName()).log(Level.SEVERE, null, ex);
+            view = "Controller?action=view_elections";
+            title = "View Elections";
+            if (req.getParameter("id") == null) {
+                err = "Unable to locate election id";
+            } else {
+                long id = Integer.parseInt(req.getParameter("id"));
+                try {
+                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    if (obj.deleteElection(email, id) && obj.deleteVoter(email, id) && obj.deleteNominee(email, id)) {
+                        msg = "Election deleted successfully";
+                    } else {
+                        err = "Fail to delete election, please retry";
+                    }
+                } catch (SQLException ex) {
+                    err = ex.getMessage();
+                    System.out.println("Logout Error: " + ex.getMessage());
+                }
+            }
         }
-        }
+        req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);
-        
         return view;
-        
     }
-    
 }

@@ -56,7 +56,7 @@ public class CreateNewElection implements Controller.Action {
                     err = "Please fill-up required fields";
                 } else {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    Election el = new Election(email, name, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
+                    Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
                     if (obj.createElection(el)) {
                         msg = "New election created successfully";
                     } else {

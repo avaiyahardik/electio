@@ -38,7 +38,6 @@ public class ViewElections implements Controller.Action {
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 elections = obj.getElections(email);
-                System.out.println("Total: " + elections.size());
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("ViewElections Err: " + ex.getMessage());

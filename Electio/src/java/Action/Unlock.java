@@ -36,7 +36,8 @@ public class Unlock implements Controller.Action {
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 if (obj.isValidElectionCommissioner(email, password)) {
-                    // here i have to redirect to old action page, that i'll do later 
+                    view = "dashboard.jsp";
+                    title = "Dashboard";
                 } else {
                     err = "Invalid password";
                 }

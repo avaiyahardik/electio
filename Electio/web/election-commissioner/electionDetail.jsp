@@ -1,3 +1,4 @@
+<%@page import="Model.Election"%>
 <jsp:include page="headerSidebar.jsp"/>
 <!-- BEGIN PAGE LEVEL STYLE -->
 <link rel="stylesheet" href="../assets/plugins/magnific/magnific-popup.css">    
@@ -6,11 +7,12 @@
 <link rel="stylesheet" type="text/css" href="../assets/dtp/jquery.datetimepicker.css"/>
 
 <!-- END PAGE LEVEL STYLE -->
-
+<% Election el = (Election) request.getAttribute("election");
+%>
 <div id="main-content">
     <div class="page-title">
         <h3><strong>
-                Election Name Here
+                <%= el.getName()%>
             </strong></h3>
     </div>
 
@@ -60,17 +62,20 @@
                                         </div>
                                     </div>
 
+                                    <input type="hidden" name="id" value="<%= el.getId()%>">
                                     <div class="form-group">
                                         <label for="name" class="control-label col-lg-3"><strong>Election Name</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="name">
+                                            <input type="text" class="form-control" name="name" value="<%=el.getName()%>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="description" class="control-label col-lg-3"><strong>Description</strong></label>
                                         <div class="col-lg-7">
-                                            <textarea class="form-control" name="description"></textarea>
+                                            <textarea class="form-control" name="description">
+                                                <%= el.getDescription()%>
+                                            </textarea>
                                         </div>
                                     </div>
 
@@ -79,6 +84,7 @@
                                         <div class="col-lg-7">
                                             <div class="tinymceScreen">
                                                 <textarea name="requirements" id="requirements">
+                                                    <%= el.getRequirements()%>
                                                 </textarea>
                                             </div>
                                         </div>
@@ -88,8 +94,14 @@
                                         <label for="type" class="control-label col-lg-3"><strong>Election Type</strong></label>
                                         <div class="col-lg-7">
                                             <select class="form-control" name="type">
-                                                <option value="2">Weighted</option>
+                                                <% if (el.getType_id() == 2) {%>
+                                                <option value="2" selected="selected">Weighted</option>
                                                 <option value="1">Preferential</option>
+                                                <%} else {%>
+                                                <option value="2">Weighted</option>
+                                                <option value="1" selected="selected">Preferential</option>
+                                                <%}%>                                                    
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -97,7 +109,7 @@
                                     <div class="form-group">
                                         <label for="nomination_start" class="control-label col-lg-3"><strong>Nomination Starts on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="nomination_start" id="nomination_start" placeholder="Click to choose date"/>
+                                            <input type="text" class="form-control" name="nomination_start" id="nomination_start" placeholder="Click to choose date" value="<%= el.getNomination_start()%>"/>
                                         </div>
                                     </div>
 
@@ -105,14 +117,14 @@
                                     <div class="form-group">
                                         <label for="nomination_end" class="control-label col-lg-3"><strong>Nomination Ends on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="nomination_end" id="nomination_end" placeholder="Click to choose date"/>
+                                            <input type="text" class="form-control" name="nomination_end" id="nomination_end" placeholder="Click to choose date" value="<%= el.getNomination_end()%>"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="withdrawal_start" class="control-label col-lg-3"><strong>Withdrawal Starts on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="withdrawal_start" id="withdrawal_start" placeholder="Click to choose date"/>
+                                            <input type="text" class="form-control" name="withdrawal_start" id="withdrawal_start" placeholder="Click to choose date" value="<%= el.getWithdrawal_start()%>"/>
                                         </div>
                                     </div>
 
@@ -120,14 +132,14 @@
                                     <div class="form-group">
                                         <label for="withdrawal_end" class="control-label col-lg-3"><strong>Withdrawal Ends on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="withdrawal_end" id="withdrawal_end" placeholder="Click to choose date"/>
+                                            <input type="text" class="form-control" name="withdrawal_end" id="withdrawal_end" placeholder="Click to choose date" value="<%= el.getWithdrawal_end()%>"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="voting_start" class="control-label col-lg-3"><strong>Voting Starts on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="voting_start" id="voting_start" placeholder="Click to choose date"/>
+                                            <input type="text" class="form-control" name="voting_start" id="voting_start" placeholder="Click to choose date" value="<%= el.getVoting_start()%>"/>
                                         </div>
                                     </div>
 
@@ -135,7 +147,7 @@
                                     <div class="form-group">
                                         <label for="voting_end" class="control-label col-lg-3"><strong>Voting Ends on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="voting_end" id="voting_end" placeholder="Click to choose date"/>
+                                            <input type="text" class="form-control" name="voting_end" id="voting_end" placeholder="Click to choose date" value="<%= el.getVoting_end()%>"/>
                                         </div>
                                     </div>
 
@@ -143,7 +155,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-3"><strong>Petition Period (In Days)</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="petition_duration">
+                                            <input type="text" class="form-control" name="petition_duration" value="<%= el.getPetition_duration()%>">
                                         </div>
                                     </div>
                                     <br>

@@ -13,17 +13,42 @@
 
         <div class="panel-body">
             <!-- BEGIN ERROR BOX --> 
-<%
-                                            String err = (String) request.getAttribute("err");
-                                            if (err != null) {
-                                        %>
-                                        <div class="alert alert-danger">
-                                            <button type="button" class="close" data-dismiss="alert">×</button>
-                                            <%=err%>
+            <%
+                String err0 = (String) request.getAttribute("err");
+                if (err0 != null) {
+            %>
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <%=err0%>
 
-                                        </div>
-                                        <% }%>
-                                        <!-- END ERROR BOX --> 
+            </div>
+            <% }%>
+            <!-- END ERROR BOX --> 
+
+            <!-- BEGIN ERROR BOX Hardik -->
+
+            <%
+                String msg = (String) request.getAttribute("msg");
+                if (msg != null) {
+            %>
+
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <%=msg%>
+            </div>
+            <% }%>
+
+            <%
+                String err = (String) request.getAttribute("err");
+                if (err != null) {
+            %>
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <%=err%>
+
+            </div>
+            <% }%>
+            <!-- END ERROR BOX Hardik -->
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
                     <table class="table table-hover table-dynamic table-tools">
@@ -48,7 +73,7 @@
                             %>
 
                             <tr>
-                                <td><strong><a href="Controller?action=election_details&id=<%= el.getId()%>"><%= el.getName()%></a></strong></td>
+                                <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>"><%= el.getName()%></a></strong></td>
                                 <td><%= el.getCreated_at()%> </td>
                                 <td><%= et.getType()%></td>
                                 <td>
