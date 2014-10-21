@@ -22,6 +22,7 @@ public class DeleteElection implements Controller.Action{
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String view="listElections.jsp";
+        String email=req.getSession().getAttribute("email").toString();
         long id=Integer.parseInt(req.getParameter("id"));
         String err=null;
         String title="View Elections";
@@ -30,7 +31,9 @@ public class DeleteElection implements Controller.Action{
         } else {
         try {
             DBDAOImplementation obj=DBDAOImplementation.getInstance();
-            obj.deleteElection(id);
+            obj.deleteElection(email,id);
+            obj.deleteVoter(email, id);
+            obj.deleteNominee(email,id);
         } catch (SQLException ex) {
             Logger.getLogger(DeleteElection.class.getName()).log(Level.SEVERE, null, ex);
         }

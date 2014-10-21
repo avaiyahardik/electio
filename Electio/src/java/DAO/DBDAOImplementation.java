@@ -132,10 +132,22 @@ public class DBDAOImplementation {
         return result;
     }
 
-    public boolean deleteElection(long id) throws SQLException{
+    public boolean deleteElection(String email,long id) throws SQLException{
         boolean result=false;
-        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election WHERE id=?");
-        ps.setLong(1,id);
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election WHERE election_commissioner_email=? and id=?");
+        ps.setString(1,email);
+        ps.setLong(2,id);
+        if(ps.executeUpdate()>0){
+            result=true;
+        }
+        return result;
+    }
+    
+    public boolean deleteNominee(String email,long id) throws SQLException{
+        boolean result=false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE email=? and id=?");
+        ps.setString(1,email);
+        ps.setLong(2,id);
         if(ps.executeUpdate()>0){
             result=true;
         }
