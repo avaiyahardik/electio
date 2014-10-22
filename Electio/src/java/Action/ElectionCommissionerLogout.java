@@ -16,8 +16,7 @@ public class ElectionCommissionerLogout implements Controller.Action {
         String err = null;
         System.out.println("EMAIL: " + email);
         String title = "Login";
-        if (email == null || email.equals("You are not logged in, or session already expired")) {
-            System.out.println("");
+        if (email == null || email.equals("")) {
             err = "You are not logged in, or session already expired";
         } else {
             try {

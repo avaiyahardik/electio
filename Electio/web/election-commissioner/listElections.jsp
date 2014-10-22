@@ -59,6 +59,13 @@
                                 </td>
                             </tr>
                             <%}%>
+                            <%
+                                if (elections.size() == 0) {
+                            %>
+                            <tr>
+                                <td colspan="4"><strong>Your elections will be displayed here...</strong></td>
+                            </tr>
+                            <%}%>
                         </tbody>
                     </table>
                 </div>

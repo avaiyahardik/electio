@@ -32,7 +32,7 @@
 
                                 <%
                                     String err = (String) request.getAttribute("err");
-                                    if (err != null) {
+                                    if (err != null && !err.equals("") && !err.equals("null")) {
                                 %>
                                 <div class="alert alert-danger">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
