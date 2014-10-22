@@ -11,15 +11,15 @@ package Model;
  */
 public class Nominee extends UserInfo {
 
-    private String election_id;
+    private long election_id;
     private String requirements_file;
     private boolean status;
 
-    public String getElection_id() {
+    public long getElection_id() {
         return election_id;
     }
 
-    public void setElection_id(String election_id) {
+    public void setElection_id(long election_id) {
         this.election_id = election_id;
     }
 

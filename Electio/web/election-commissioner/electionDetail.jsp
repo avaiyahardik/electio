@@ -1,3 +1,7 @@
+<%@page import="Model.Candidate"%>
+<%@page import="Model.Nominee"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Voter"%>
 <%@page import="Model.Election"%>
 <jsp:include page="headerSidebar.jsp"/>
 <!-- BEGIN PAGE LEVEL STYLE -->
@@ -21,6 +25,7 @@
             <div class="tabcordian">
                 <ul id="myTab" class="nav nav-tabs">
                     <li class="active"><a href="#election_general" data-toggle="tab">General</a></li>
+                    <li><a href="#election_nominees" data-toggle="tab">Nominees</a></li>
                     <li><a href="#election_candidates" data-toggle="tab">Candidates</a></li>
                     <li><a href="#election_voters" data-toggle="tab">Voters</a>
                     </li>
@@ -169,8 +174,40 @@
                                 </div>
                             </fieldset>
                         </form>
+                    </div>
+                    <div class="tab-pane fade active in" id="election_nominees">
+                        <h4>Nominees' list for the election</h4>
+                        <table class="table table-hover table-dynamic table-tools">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                <% ArrayList<Nominee> nominees = (ArrayList<Nominee>) request.getAttribute("nominees");
+                                    for (Nominee n : nominees) {
+                                %>
 
+                                <!-- Display Nominees Data by Loop -->
+                                <tr>
+                                    <td>
+                                        <a href="Controller?action=nominee_detail&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>"><%= n.getFirstname()%> <%= n.getLastname()%></a>
+                                    </td>
+                                    <td><%= n.getEmail()%></td>
+                                    <td><%= n.getMobile()%></td>
+                                    <td>
+                                        <a href="#">
+                                            <img src="<%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
 
                     </div>
 
@@ -182,30 +219,34 @@
                                     <th>Candidate Name</th>
                                     <th>Email ID</th>
                                     <th>Mobile No</th>
-                                    <th>Gender</th>
                                     <th>Photo</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
 
                                 <!-- Display Candidate Data by Loop -->
+                                <% ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
+                                    for (Candidate c : candidates) {
+                                %>
                                 <tr>
                                     <td>
-                                        <a href="Controller?action=candidate_details&email="></a>
+                                        <a href="Controller?action=candidate_detail&election_id=<%= c.getElection_id()%>&email=<%= c.getEmail()%>"><%= c.getFirstname()%> <%= c.getLastname()%></a>
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td><%= c.getEmail()%></td>
+                                    <td><%= c.getMobile()%></td>
                                     <td>
                                         <a href="#">
-                                            <img src="" height="75" width="60" alt="Candidate Photo"/>
+                                            <img src="<%= c.getImage()%>" height="75" width="60" alt="Candidate Photo"/>
                                         </a>
-
+                                    </td>   
+                                    <td>
+                                        <a href="Controller?action=delete_candidate&election_id=<%= c.getElection_id()%>&email=<%= c.getEmail()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
                                     </td>
+
                                 </tr>
-
-
+                                <%}%>
                             </tbody>
                         </table>
 
@@ -213,6 +254,34 @@
 
                     <div class="tab-pane fade active in" id="election_voters">
                         <h4>Voters' List for the election</h4>
+                        <table class="table table-hover table-dynamic table-tools">
+                            <thead>
+                                <tr>
+                                    <th>Voter Email</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% ArrayList<Voter> voters = (ArrayList<Voter>) request.getAttribute("voters");
+                                    for (Voter v : voters) {
+                                %>
+
+                                <!-- Display Voter Data by Loop -->
+                                <tr>
+                                    <td><%= v.getEmail()%></td>
+                                    <td><%= v.getStatus()%></td>
+                                    <td>
+                                        <a href="Controller?action=edit_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Update</a>
+                                        <a href="Controller?action=delete_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+                                    </td>
+                                </tr>
+                                <%}%>
+
+                            </tbody>
+                        </table>
+
                         <!-- BEGIN ERROR BOX -->
 
                         <%
@@ -236,11 +305,6 @@
                         <% }%>
 
                         <br>
-
-
-
-
-
                     </div>
                 </div>
 

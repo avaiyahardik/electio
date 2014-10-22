@@ -6,9 +6,12 @@
 package Action;
 
 import DAO.DBDAOImplementation;
+import Model.Candidate;
 import Model.Election;
 import Model.ElectionCommissioner;
+import Model.Nominee;
 import Model.Organization;
+import Model.Voter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -47,6 +50,12 @@ public class ViewElectionDetail implements Controller.Action {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Election el = obj.getElection(id);
                     req.setAttribute("election", el);
+                    ArrayList<Nominee> nominees = obj.getNominees(id);
+                    req.setAttribute("nominees", nominees);
+                    ArrayList<Candidate> candidates = obj.getCandidates(id);
+                    req.setAttribute("candidates", candidates);
+                    ArrayList<Voter> voters = obj.getVoters(id);
+                    req.setAttribute("voters", voters);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("View Election Detail Err: " + ex.getMessage());

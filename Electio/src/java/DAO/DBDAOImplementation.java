@@ -1,8 +1,10 @@
 package DAO;
 
+import Model.Candidate;
 import Model.Election;
 import Model.ElectionCommissioner;
 import Model.ElectionType;
+import Model.Nominee;
 import Model.Organization;
 import Model.Voter;
 import java.sql.Connection;
@@ -217,6 +219,23 @@ public class DBDAOImplementation {
         return voter;
     }
 
+    public ArrayList<Voter> getVoters(long election_id) throws SQLException {
+        ArrayList<Voter> voters = new ArrayList<Voter>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        Voter voter;
+        while (rs.next()) {
+            voter = new Voter();
+            voter.setEmail(rs.getString("email"));
+            voter.setElection_id(election_id);
+            voter.setPassword(rs.getString("password"));
+            voter.setStatus(rs.getBoolean("status"));
+            voters.add(voter);
+        }
+        return voters;
+    }
+
     public ArrayList<Election> getElections(String email) throws SQLException {
         ArrayList<Election> elections = new ArrayList<Election>();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=?");
@@ -351,4 +370,50 @@ public class DBDAOImplementation {
 
     }
 
+    public ArrayList<Nominee> getNominees(long election_id) throws SQLException {
+        ArrayList<Nominee> nominees = new ArrayList<Nominee>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info INNER JOIN tbl_election_nominee WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        Nominee nominee;
+        while (rs.next()) {
+            nominee = new Nominee();
+            nominee.setEmail(rs.getString("email"));
+            nominee.setFirstname(rs.getString("firstname"));
+            nominee.setLastname(rs.getString("lastname"));
+            nominee.setMobile(rs.getString("mobile"));
+            nominee.setOrganization_id(rs.getLong("organization_id"));
+            nominee.setImage(rs.getString("image"));
+            nominee.setPassword(rs.getString("password"));
+            nominee.setElection_id(rs.getLong("election_id"));
+            nominee.setRequirements_file(rs.getString("requirements_file"));
+            nominee.setStatus(rs.getBoolean("status"));
+            nominees.add(nominee);
+        }
+        return nominees;
+    }
+
+    public ArrayList<Candidate> getCandidates(long election_id) throws SQLException {
+        ArrayList<Candidate> candidates = new ArrayList<Candidate>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info INNER JOIN tbl_election_candidate WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        Candidate candidate;
+        while (rs.next()) {
+            candidate = new Candidate();
+            candidate.setEmail(rs.getString("email"));
+            candidate.setFirstname(rs.getString("firstname"));
+            candidate.setLastname(rs.getString("lastname"));
+            candidate.setMobile(rs.getString("mobile"));
+            candidate.setOrganization_id(rs.getLong("organization_id"));
+            candidate.setImage(rs.getString("image"));
+            candidate.setPassword(rs.getString("password"));
+            candidate.setElection_id(rs.getLong("election_id"));
+            candidate.setRequirements_file(rs.getString("requirements_file"));
+            candidate.setVotes(rs.getLong("votes"));
+            candidate.setManifesto(rs.getString("manifesto"));
+            candidates.add(candidate);
+        }
+        return candidates;
+    }
 }
