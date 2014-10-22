@@ -92,7 +92,7 @@ public class DBDAOImplementation {
 
     public boolean createElection(Election el) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election(election_commissioner_email, name,description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election(election_commissioner_email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
         ps.setString(1, el.getElection_commissioner_email());
         ps.setString(2, el.getName());
         ps.setString(3, el.getDescription());
