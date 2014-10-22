@@ -415,6 +415,28 @@ public class DBDAOImplementation {
         return nominees;
     }
 
+    public Nominee getNominee(long election_id, String email) throws SQLException {
+        PreparedStatement ps = con.prepareStatement("select * from tbl_user_info as u INNER JOIN tbl_election_nominee as n ON u.email=n.email WHERE election_id=? and u.email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        Nominee nominee = null;
+        if (rs.next()) {
+            nominee = new Nominee();
+            nominee.setEmail(rs.getString("email"));
+            nominee.setFirstname(rs.getString("firstname"));
+            nominee.setLastname(rs.getString("lastname"));
+            nominee.setMobile(rs.getString("mobile"));
+            nominee.setOrganization_id(rs.getLong("organization_id"));
+            nominee.setImage(rs.getString("image"));
+            nominee.setPassword(rs.getString("password"));
+            nominee.setElection_id(rs.getLong("election_id"));
+            nominee.setRequirements_file(rs.getString("requirements_file"));
+            nominee.setStatus(rs.getBoolean("status"));
+        }
+        return nominee;
+    }
+
     public ArrayList<Candidate> getCandidates(long election_id) throws SQLException {
         ArrayList<Candidate> candidates = new ArrayList<Candidate>();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info INNER JOIN tbl_election_candidate WHERE election_id=?");

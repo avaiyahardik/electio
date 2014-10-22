@@ -67,7 +67,7 @@ public class UpdateElection implements Controller.Action {
                     }
                 } catch (Exception ex) {
                     err = ex.getMessage();
-                    System.out.println("Logout Error: " + ex.getMessage());
+                    System.out.println("Update Election Error: " + ex.getMessage());
                 }
             }
         }
