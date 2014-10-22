@@ -45,7 +45,7 @@ public class ViewElectionDetail implements Controller.Action {
                 long id = Long.parseLong(req.getParameter("id"));
                 view = "electionDetail.jsp";
                 title = "Election Detail";
-
+                System.out.println("Election ID: " + id);
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Election el = obj.getElection(id);

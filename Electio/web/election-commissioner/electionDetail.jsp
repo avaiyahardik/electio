@@ -210,7 +210,7 @@
                                     if (nominees.size() == 0) {
                                 %>
                                 <tr>
-                                    <td colspan="4"><strong>Your nominees will be displayed here...</strong></td>
+                                    <td colspan="4"><strong>Nominees will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -258,7 +258,7 @@
                                     if (candidates.size() == 0) {
                                 %>
                                 <tr>
-                                    <td colspan="5"><strong>Your candidates will be displayed here...</strong></td>
+                                    <td colspan="5"><strong>Candidates will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -296,7 +296,7 @@
                                     if (voters.size() == 0) {
                                 %>
                                 <tr>
-                                    <td colspan="3"><strong>Your voters will be displayed here...</strong></td>
+                                    <td colspan="3"><strong>Voters will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
