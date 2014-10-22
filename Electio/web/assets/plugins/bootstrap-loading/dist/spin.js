@@ -1,15 +1,22 @@
 (function(root, factory) {
-    if (typeof exports == "object") module.exports = factory(); else if (typeof define == "function" && define.amd) define(factory); else root.Spinner = factory();
+    if (typeof exports == "object")
+        module.exports = factory();
+    else if (typeof define == "function" && define.amd)
+        define(factory);
+    else
+        root.Spinner = factory();
 })(this, function() {
     "use strict";
-    var prefixes = [ "webkit", "Moz", "ms", "O" ], animations = {}, useCssAnimations;
+    var prefixes = ["webkit", "Moz", "ms", "O"], animations = {}, useCssAnimations;
     function createEl(tag, prop) {
         var el = document.createElement(tag || "div"), n;
-        for (n in prop) el[n] = prop[n];
+        for (n in prop)
+            el[n] = prop[n];
         return el;
     }
     function ins(parent) {
-        for (var i = 1, n = arguments.length; i < n; i++) parent.appendChild(arguments[i]);
+        for (var i = 1, n = arguments.length; i < n; i++)
+            parent.appendChild(arguments[i]);
         return parent;
     }
     var sheet = function() {
@@ -20,7 +27,7 @@
         return el.sheet || el.styleSheet;
     }();
     function addAnimation(alpha, trail, i, lines) {
-        var name = [ "opacity", trail, ~~(alpha * 100), i, lines ].join("-"), start = .01 + i / lines * 100, z = Math.max(1 - (1 - alpha) / trail * (100 - start), alpha), prefix = useCssAnimations.substring(0, useCssAnimations.indexOf("Animation")).toLowerCase(), pre = prefix && "-" + prefix + "-" || "";
+        var name = ["opacity", trail, ~~(alpha * 100), i, lines].join("-"), start = .01 + i / lines * 100, z = Math.max(1 - (1 - alpha) / trail * (100 - start), alpha), prefix = useCssAnimations.substring(0, useCssAnimations.indexOf("Animation")).toLowerCase(), pre = prefix && "-" + prefix + "-" || "";
         if (!animations[name]) {
             sheet.insertRule("@" + pre + "keyframes " + name + "{" + "0%{opacity:" + z + "}" + start + "%{opacity:" + alpha + "}" + (start + .01) + "%{opacity:1}" + (start + trail) % 100 + "%{opacity:" + alpha + "}" + "100%{opacity:" + z + "}" + "}", sheet.cssRules.length);
             animations[name] = 1;
@@ -29,21 +36,26 @@
     }
     function vendor(el, prop) {
         var s = el.style, pp, i;
-        if (s[prop] !== undefined) return prop;
+        if (s[prop] !== undefined)
+            return prop;
         prop = prop.charAt(0).toUpperCase() + prop.slice(1);
         for (i = 0; i < prefixes.length; i++) {
             pp = prefixes[i] + prop;
-            if (s[pp] !== undefined) return pp;
+            if (s[pp] !== undefined)
+                return pp;
         }
     }
     function css(el, prop) {
-        for (var n in prop) el.style[vendor(el, n) || n] = prop[n];
+        for (var n in prop)
+            el.style[vendor(el, n) || n] = prop[n];
         return el;
     }
     function merge(obj) {
         for (var i = 1; i < arguments.length; i++) {
             var def = arguments[i];
-            for (var n in def) if (obj[n] === undefined) obj[n] = def[n];
+            for (var n in def)
+                if (obj[n] === undefined)
+                    obj[n] = def[n];
         }
         return obj;
     }
@@ -52,7 +64,8 @@
             x: el.offsetLeft,
             y: el.offsetTop
         };
-        while (el = el.offsetParent) o.x += el.offsetLeft, o.y += el.offsetTop;
+        while (el = el.offsetParent)
+            o.x += el.offsetLeft, o.y += el.offsetTop;
         return o;
     }
     var defaults = {
@@ -75,7 +88,8 @@
         position: "relative"
     };
     function Spinner(o) {
-        if (typeof this == "undefined") return new Spinner(o);
+        if (typeof this == "undefined")
+            return new Spinner(o);
         this.opts = merge(o || {}, Spinner.defaults, defaults);
     }
     Spinner.defaults = {};
@@ -117,7 +131,8 @@
             var el = this.el;
             if (el) {
                 clearTimeout(this.timeout);
-                if (el.parentNode) el.parentNode.removeChild(el);
+                if (el.parentNode)
+                    el.parentNode.removeChild(el);
                 this.el = undefined;
             }
             return this;
@@ -136,7 +151,7 @@
                     borderRadius: (o.corners * o.width >> 1) + "px"
                 });
             }
-            for (;i < o.lines; i++) {
+            for (; i < o.lines; i++) {
                 seg = css(createEl(), {
                     position: "absolute",
                     top: 1 + ~(o.width / 2) + "px",
@@ -144,15 +159,17 @@
                     opacity: o.opacity,
                     animation: useCssAnimations && addAnimation(o.opacity, o.trail, start + i * o.direction, o.lines) + " " + 1 / o.speed + "s linear infinite"
                 });
-                if (o.shadow) ins(seg, css(fill("#000", "0 0 4px " + "#000"), {
-                    top: 2 + "px"
-                }));
+                if (o.shadow)
+                    ins(seg, css(fill("#000", "0 0 4px " + "#000"), {
+                        top: 2 + "px"
+                    }));
                 ins(el, ins(seg, fill(o.color, "0 0 1px rgba(0,0,0,.1)")));
             }
             return el;
         },
         opacity: function(el, i, val) {
-            if (i < el.childNodes.length) el.childNodes[i].style.opacity = val;
+            if (i < el.childNodes.length)
+                el.childNodes[i].style.opacity = val;
         }
     });
     function initVML() {
@@ -195,8 +212,11 @@
                     opacity: 0
                 }))));
             }
-            if (o.shadow) for (i = 1; i <= o.lines; i++) seg(i, -2, "progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)");
-            for (i = 1; i <= o.lines; i++) seg(i);
+            if (o.shadow)
+                for (i = 1; i <= o.lines; i++)
+                    seg(i, -2, "progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)");
+            for (i = 1; i <= o.lines; i++)
+                seg(i);
             return ins(el, g);
         };
         Spinner.prototype.opacity = function(el, i, val, o) {
@@ -206,13 +226,17 @@
                 c = c.childNodes[i + o];
                 c = c && c.firstChild;
                 c = c && c.firstChild;
-                if (c) c.opacity = val;
+                if (c)
+                    c.opacity = val;
             }
         };
     }
     var probe = css(createEl("group"), {
         behavior: "url(#default#VML)"
     });
-    if (!vendor(probe, "transform") && probe.adj) initVML(); else useCssAnimations = vendor(probe, "animation");
+    if (!vendor(probe, "transform") && probe.adj)
+        initVML();
+    else
+        useCssAnimations = vendor(probe, "animation");
     return Spinner;
 });

@@ -8,7 +8,6 @@
             message: 'message',
             ccfield: 'creditCardField'
         },
-
         /**
          * Return true if the input value is a valid CVV number.
          *
@@ -38,7 +37,7 @@
             if (creditCard === '') {
                 return true;
             }
-            
+
             creditCard = creditCard.replace(/\D/g, '');
 
             // Supported credit card types
@@ -58,11 +57,11 @@
                 DISCOVER: {
                     length: [16],
                     prefix: ['6011', '622126', '622127', '622128', '622129', '62213',
-                             '62214', '62215', '62216', '62217', '62218', '62219',
-                             '6222', '6223', '6224', '6225', '6226', '6227', '6228',
-                             '62290', '62291', '622920', '622921', '622922', '622923',
-                             '622924', '622925', '644', '645', '646', '647', '648',
-                             '649', '65']
+                        '62214', '62215', '62216', '62217', '62218', '62219',
+                        '6222', '6223', '6224', '6225', '6226', '6227', '6228',
+                        '62290', '62291', '622920', '622921', '622922', '622923',
+                        '622924', '622925', '644', '645', '646', '647', '648',
+                        '649', '65']
                 },
                 JCB: {
                     length: [16],
@@ -87,9 +86,9 @@
                 UNIONPAY: {
                     length: [16, 17, 18, 19],
                     prefix: ['622126', '622127', '622128', '622129', '62213', '62214',
-                             '62215', '62216', '62217', '62218', '62219', '6222', '6223',
-                             '6224', '6225', '6226', '6227', '6228', '62290', '62291',
-                             '622920', '622921', '622922', '622923', '622924', '622925']
+                        '62215', '62216', '62217', '62218', '62219', '6222', '6223',
+                        '6224', '6225', '6226', '6227', '6228', '62290', '62291',
+                        '622920', '622921', '622922', '622923', '622924', '622925']
                 },
                 VISA: {
                     length: [16],
@@ -100,7 +99,7 @@
             for (type in cards) {
                 for (i in cards[type].prefix) {
                     if (creditCard.substr(0, cards[type].prefix[i].length) === cards[type].prefix[i]    // Check the prefix
-                        && $.inArray(creditCard.length, cards[type].length) !== -1)                     // and length
+                            && $.inArray(creditCard.length, cards[type].length) !== -1)                     // and length
                     {
                         creditCardType = type;
                         break;
@@ -109,8 +108,8 @@
             }
 
             return (creditCardType === null)
-                        ? false
-                        : (('AMERICAN_EXPRESS' === creditCardType) ? (value.length === 4) : (value.length === 3));
+                    ? false
+                    : (('AMERICAN_EXPRESS' === creditCardType) ? (value.length === 4) : (value.length === 3));
         }
     };
 }(window.jQuery));

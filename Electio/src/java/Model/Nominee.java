@@ -15,6 +15,22 @@ public class Nominee extends UserInfo {
     private String requirements_file;
     private boolean status;
 
+    public Nominee() {
+    }
+
+    public Nominee(String firstname, String lastname, String email, String mobile, long organization_id, String image, String password, long election_id, String requirements_file, boolean status) {
+        super.setFirstname(firstname);
+        super.setLastname(lastname);
+        super.setEmail(email);
+        super.setMobile(mobile);
+        super.setOrganization_id(organization_id);
+        super.setImage(image);
+        super.setPassword(password);
+        this.election_id = election_id;
+        this.requirements_file = requirements_file;
+        this.status = status;
+    }
+
     public long getElection_id() {
         return election_id;
     }
@@ -31,7 +47,7 @@ public class Nominee extends UserInfo {
         this.requirements_file = requirements_file;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

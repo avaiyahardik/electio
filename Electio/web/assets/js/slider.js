@@ -1,10 +1,10 @@
-$(function () {
+$(function() {
 
     /*  Slider with decimal option  */
     $("#slider3").rangeSlider({
-        formatter: function (val) {
+        formatter: function(val) {
             var value = Math.round(val),
-                decimal = value - Math.round(val);
+                    decimal = value - Math.round(val);
             return decimal == 0 ? value.toString() + ".0" : value.toString();
         }
     });
@@ -22,37 +22,37 @@ $(function () {
         scales: [
             // Primary scale
             {
-                first: function (val) {
+                first: function(val) {
                     return val;
                 },
-                next: function (val) {
+                next: function(val) {
                     return val + 10;
                 },
-                stop: function (val) {
+                stop: function(val) {
                     return false;
                 },
-                label: function (val) {
+                label: function(val) {
                     return val;
                 },
-                format: function (tickContainer, tickStart, tickEnd) {
+                format: function(tickContainer, tickStart, tickEnd) {
                     tickContainer.addClass("myCustomClass");
                 }
             },
             // Secondary scale
             {
-                first: function (val) {
+                first: function(val) {
                     return val;
                 },
-                next: function (val) {
+                next: function(val) {
                     if (val % 10 === 9) {
                         return val + 2;
                     }
                     return val + 1;
                 },
-                stop: function (val) {
+                stop: function(val) {
                     return false;
                 },
-                label: function () {
+                label: function() {
                     return null;
                 }
             }
@@ -72,23 +72,23 @@ $(function () {
             max: new Date(2012, 7, 22)
         },
         scales: [{
-            first: function (value) {
-                return value;
-            },
-            end: function (value) {
-                return value;
-            },
-            next: function (value) {
-                var next = new Date(value);
-                return new Date(next.setMonth(value.getMonth() + 2));
-            },
-            label: function (value) {
-                return months[value.getMonth()];
-            },
-            format: function (tickContainer, tickStart, tickEnd) {
-                tickContainer.addClass("myCustomClass");
-            }
-        }]
+                first: function(value) {
+                    return value;
+                },
+                end: function(value) {
+                    return value;
+                },
+                next: function(value) {
+                    var next = new Date(value);
+                    return new Date(next.setMonth(value.getMonth() + 2));
+                },
+                label: function(value) {
+                    return months[value.getMonth()];
+                },
+                format: function(tickContainer, tickStart, tickEnd) {
+                    tickContainer.addClass("myCustomClass");
+                }
+            }]
     });
 
 });

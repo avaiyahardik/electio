@@ -13,10 +13,10 @@
     </head>
     <body>
         <form action="MassMail" method="post">
-        To: <input type="text" name="to"><br>
-        Subject: <input type="text" name="subject"><br>
-        Message:<br><textarea name="msg"></textarea><br>
-        <input type="submit" value="send" name="send">
+            To: <input type="text" name="to"><br>
+            Subject: <input type="text" name="subject"><br>
+            Message:<br><textarea name="msg"></textarea><br>
+            <input type="submit" value="send" name="send">
         </form>
     </body>
 </html>

@@ -48,8 +48,8 @@
             'default': '請選擇有效的檔案'
         },
         greaterThan: {
-            'default'    : '請輸入大於等於 %s 的值',
-            notInclusive : '請輸入大於 %s 的值'
+            'default': '請輸入大於等於 %s 的值',
+            notInclusive: '請輸入大於 %s 的值'
         },
         grid: {
             'default': '請輸入有效的GRId編碼'

@@ -11,7 +11,6 @@
             url: 'url',
             delay: 'delay'
         },
-
         /**
          * Destroy the timer when destroying the bootstrapValidator (using validator.destroy() method)
          */
@@ -21,7 +20,6 @@
                 $field.removeData('bv.remote.timer');
             }
         },
-
         /**
          * Request a remote server to check the input value
          *
@@ -42,17 +40,17 @@
          */
         validate: function(validator, $field, options) {
             var value = $field.val(),
-                dfd   = new $.Deferred();
+                    dfd = new $.Deferred();
             if (value === '') {
-                dfd.resolve($field, 'remote', { valid: true });
+                dfd.resolve($field, 'remote', {valid: true});
                 return dfd;
             }
 
-            var name    = $field.attr('data-bv-field'),
-                data    = options.data || {},
-                url     = options.url,
-                type    = options.type || 'GET',
-                headers = options.headers || {};
+            var name = $field.attr('data-bv-field'),
+                    data = options.data || {},
+                    url = options.url,
+                    type = options.type || 'GET',
+                    headers = options.headers || {};
 
             // Support dynamic data
             if ('function' === typeof data) {
@@ -84,7 +82,7 @@
 
                 return dfd;
             }
-            
+
             if (options.delay) {
                 // Since the form might have multiple fields with the same name
                 // I have to attach the timer to the field element

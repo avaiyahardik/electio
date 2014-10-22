@@ -9,7 +9,6 @@
             message: 'message',
             version: 'version'
         },
-
         /**
          * Return true if and only if the input value is a valid UUID string
          *
@@ -29,17 +28,17 @@
 
             // See the format at http://en.wikipedia.org/wiki/Universally_unique_identifier#Variants_and_versions
             var patterns = {
-                    '3': /^[0-9A-F]{8}-[0-9A-F]{4}-3[0-9A-F]{3}-[0-9A-F]{4}-[0-9A-F]{12}$/i,
-                    '4': /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
-                    '5': /^[0-9A-F]{8}-[0-9A-F]{4}-5[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
-                    all: /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i
-                },
-                version = options.version ? (options.version + '') : 'all';
+                '3': /^[0-9A-F]{8}-[0-9A-F]{4}-3[0-9A-F]{3}-[0-9A-F]{4}-[0-9A-F]{12}$/i,
+                '4': /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
+                '5': /^[0-9A-F]{8}-[0-9A-F]{4}-5[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
+                all: /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i
+            },
+            version = options.version ? (options.version + '') : 'all';
             return {
                 valid: (null === patterns[version]) ? true : patterns[version].test(value),
                 message: options.version
-                            ? $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.uuid.version, options.version)
-                            : (options.message || $.fn.bootstrapValidator.i18n.uuid['default'])
+                        ? $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.uuid.version, options.version)
+                        : (options.message || $.fn.bootstrapValidator.i18n.uuid['default'])
             };
         }
     };

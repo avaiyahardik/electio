@@ -8,7 +8,6 @@
             message: 'message',
             field: 'field'
         },
-
         /**
          * Return true if the input value is different with given field's value
          *
@@ -25,8 +24,8 @@
                 return true;
             }
 
-            var fields  = options.field.split(','),
-                isValid = true;
+            var fields = options.field.split(','),
+                    isValid = true;
 
             for (var i = 0; i < fields.length; i++) {
                 var compareWith = validator.getFieldElements(fields[i]);

@@ -36,7 +36,7 @@
             'default': 'Voer een andere waarde in'
         },
         digits: {
-             'default': 'Voer enkel cijfers in'
+            'default': 'Voer enkel cijfers in'
         },
         ean: {
             'default': 'Voer een geldige EAN-code in'

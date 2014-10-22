@@ -1,48 +1,47 @@
 var crop_1;
 
-$(function () {
+$(function() {
     cropImage();
 });
 
-$(window).resize(function () {
+$(window).resize(function() {
     img_width = $('.jcrop-holder img').parent().parent().parent().width() - 40;
     $('.jcrop-holder img').width(img_width);
     $('.jcrop-holder img').height('auto');
 });
 
-$('#chat-toggle').on('click', function () {
- 
+$('#chat-toggle').on('click', function() {
+
     $('#main-content .col-md-6').fadeOut().fadeIn();
 
-    setTimeout(function () {
-        if($('#menu-right').hasClass('mm-opened')){
+    setTimeout(function() {
+        if ($('#menu-right').hasClass('mm-opened')) {
             img_width = $('.jcrop-holder img').parent().parent().parent().width() - 40;
             $('.jcrop-holder img').width(img_width);
             $('.jcrop-holder img').height('auto');
-            $('#preview-pane').css('margin-right', '135px'); 
+            $('#preview-pane').css('margin-right', '135px');
         }
-        else{
+        else {
             img_width = $('.jcrop-holder img').parent().parent().parent().width() - 40;
             $('.jcrop-holder img').width(img_width);
             $('.jcrop-holder img').height('auto');
-            $('#preview-pane').css('margin-right', '10px'); 
+            $('#preview-pane').css('margin-right', '10px');
         }
-    }, 500); 
+    }, 500);
 });
 
 function cropImage() {
     // Create variables (in this scope) to hold the API and image size
     var boundx,
-        boundy,
-        api;
+            boundy,
+            api;
 
     // Grab some information about the preview pane
     $preview = $('#preview-pane'),
-    $pcnt = $('#preview-pane .preview-container'),
-    $pimg = $('#preview-pane .preview-container img'),
-
-    xsize = $pcnt.width(),
-    ysize = $pcnt.height();
+            $pcnt = $('#preview-pane .preview-container'),
+            $pimg = $('#preview-pane .preview-container img'),
+            xsize = $pcnt.width(),
+            ysize = $pcnt.height();
 
     console.log('init', [xsize, ysize]);
 
@@ -50,7 +49,7 @@ function cropImage() {
         onChange: updatePreview,
         onSelect: updatePreview,
         aspectRatio: xsize / ysize
-    }, function () {
+    }, function() {
         // Use the API to get the real image size
         var bounds = this.getBounds();
         boundx = bounds[0];
@@ -74,7 +73,8 @@ function cropImage() {
                 marginTop: '-' + Math.round(ry * c.y) + 'px'
             });
         }
-    };
+    }
+    ;
 
 
     $('#image_crop2').Jcrop({
@@ -82,7 +82,7 @@ function cropImage() {
         bgOpacity: 0.5,
         bgColor: 'transparent',
         addClass: 'jcrop-light'
-    }, function () {
+    }, function() {
         crop_2 = this;
         crop_2.setSelect([130, 65, 130 + 350, 65 + 285]);
         crop_2.setOptions({
@@ -93,41 +93,42 @@ function cropImage() {
 
 
     /* Change Background Opacity on Button click */
-    $('#buttonbar').on('click', 'button', function (e) {
+    $('#buttonbar').on('click', 'button', function(e) {
         var $t = $(this),
-            $g = $t.closest('.btn-group');
+                $g = $t.closest('.btn-group');
         $g.find('button.active').removeClass('active');
         $t.addClass('active');
-        $g.find('[data-setclass]').each(function () {
+        $g.find('[data-setclass]').each(function() {
             var $th = $(this),
-                c = $th.data('setclass'),
-                a = $th.hasClass('active');
+                    c = $th.data('setclass'),
+                    a = $th.hasClass('active');
             if (a) {
                 crop_2.ui.holder.addClass(c);
                 switch (c) {
 
-                case 'jcrop-light':
-                    crop_2.setOptions({
-                        bgColor: 'white',
-                        bgOpacity: 0.5
-                    });
-                    break;
+                    case 'jcrop-light':
+                        crop_2.setOptions({
+                            bgColor: 'white',
+                            bgOpacity: 0.5
+                        });
+                        break;
 
-                case 'jcrop-dark':
-                    crop_2.setOptions({
-                        bgColor: 'black',
-                        bgOpacity: 0.4
-                    });
-                    break;
+                    case 'jcrop-dark':
+                        crop_2.setOptions({
+                            bgColor: 'black',
+                            bgOpacity: 0.4
+                        });
+                        break;
 
-                case 'jcrop-normal':
-                    crop_2.setOptions({
-                        bgColor: $.Jcrop.defaults.bgColor,
-                        bgOpacity: $.Jcrop.defaults.bgOpacity
-                    });
-                    break;
+                    case 'jcrop-normal':
+                        crop_2.setOptions({
+                            bgColor: $.Jcrop.defaults.bgColor,
+                            bgOpacity: $.Jcrop.defaults.bgOpacity
+                        });
+                        break;
                 }
-            } else crop_2.ui.holder.removeClass(c);
+            } else
+                crop_2.ui.holder.removeClass(c);
         });
     });
 

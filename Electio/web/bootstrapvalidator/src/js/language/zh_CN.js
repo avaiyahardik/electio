@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
     /**
      * Simplified Chinese language package
      * Translated by @shamiao

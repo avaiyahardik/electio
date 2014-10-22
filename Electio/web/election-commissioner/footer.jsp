@@ -1,5 +1,5 @@
-        </div>
-        <!-- END WRAPPER -->
+</div>
+<!-- END WRAPPER -->
 
 <!-- BEGIN MANDATORY SCRIPTS -->
 <script src="../assets/plugins/jquery-1.11.js"></script>

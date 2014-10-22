@@ -1,9 +1,9 @@
-$(function () {
+$(function() {
 
-/*------------------------------------------------------------------------------------*/
-/*------------------------------  BLOG DASHBOARD --------------------------------*/
+    /*------------------------------------------------------------------------------------*/
+    /*------------------------------  BLOG DASHBOARD --------------------------------*/
 
-    if($('body').data('page') == 'blog'){
+    if ($('body').data('page') == 'blog') {
 
         //jvectormap data
         var visitorsData = {
@@ -95,7 +95,7 @@ $(function () {
 
 
         /* Delete a product */
-        $('#products-table a.delete').live('click', function (e) {
+        $('#products-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this product ?") == false) {
                 return;
@@ -104,7 +104,7 @@ $(function () {
         });
 
         /* Delete a review */
-        $('#product-review a.delete').live('click', function (e) {
+        $('#product-review a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this comment ?") == false) {
                 return;
@@ -113,7 +113,7 @@ $(function () {
         });
 
         /* Validate a review */
-        $('#product-review a.edit').live('click', function (e) {
+        $('#product-review a.edit').live('click', function(e) {
             e.preventDefault();
 
             $(this).parent().parent().find('.label').removeClass('label-info').addClass('label-success').html('Approved');
@@ -129,11 +129,11 @@ $(function () {
             [1, 5 + randomValue()], [2, 10 + randomValue()], [3, 10 + randomValue()], [4, 15 + randomValue()], [5, 20 + randomValue()], [6, 25 + randomValue()], [7, 30 + randomValue()], [8, 35 + randomValue()], [9, 40 + randomValue()], [10, 45 + randomValue()], [11, 50 + randomValue()], [12, 55 + randomValue()], [13, 60 + randomValue()], [14, 70 + randomValue()], [15, 75 + randomValue()], [16, 80 + randomValue()], [17, 85 + randomValue()], [18, 90 + randomValue()], [19, 95 + randomValue()], [20, 100 + randomValue()]
         ];
         var data2 = [
-            [1, 1425], [2, 1754], [3, 1964], [4, 2145], [5, 2550], [6, 2210], [7, 1760], [8, 1820], [9, 1880], [10, 1985],  [11, 2240],  [12, 2435]
+            [1, 1425], [2, 1754], [3, 1964], [4, 2145], [5, 2550], [6, 2210], [7, 1760], [8, 1820], [9, 1880], [10, 1985], [11, 2240], [12, 2435]
         ];
 
         var plot = $.plot(
-            $('#chart_visits'), [{
+                $('#chart_visits'), [{
                 data: data2,
                 label: [
                     ["January"],
@@ -155,39 +155,39 @@ $(function () {
                     fillColor: "#3584b2"
                 }
             }], {
-                grid: {
-                    color: '#fff',
-                    borderColor: "transparent",
-                    clickable: true,
-                    hoverable: true
+            grid: {
+                color: '#fff',
+                borderColor: "transparent",
+                clickable: true,
+                hoverable: true
+            },
+            series: {
+                bars: {
+                    show: true,
+                    barWidth: 0.4,
+                    fill: true,
+                    fillColor: 'rgba(53,132,178,0.7)'
                 },
-                series: {
-                    bars: {
-                        show: true,
-                        barWidth: 0.4,
-                        fill: true,
-                        fillColor: 'rgba(53,132,178,0.7)'
-                    },
-                    points: {
-                        show: false
-                    }
-                },
-                xaxis: {
-                    mode: "time",
-                    monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    axisLabel: 'Month',
-                },
-                yaxis: {
-                    tickColor: '#e8e8e8'
-                },
-                legend: {
+                points: {
                     show: false
-                },
-                tooltip: true
-            });
+                }
+            },
+            xaxis: {
+                mode: "time",
+                monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                axisLabel: 'Month',
+            },
+            yaxis: {
+                tickColor: '#e8e8e8'
+            },
+            legend: {
+                show: false
+            },
+            tooltip: true
+        });
 
         var previousPoint = null;
-        $("#chart_visits").bind("plothover", function (event, pos, item) {
+        $("#chart_visits").bind("plothover", function(event, pos, item) {
             $("#x").text(pos.x.toFixed(0));
             $("#y").text(pos.y.toFixed(0));
             if (item) {
@@ -195,7 +195,7 @@ $(function () {
                     previousPoint = item.dataIndex;
                     $("#flot-tooltip").remove();
                     var x = item.datapoint[0].toFixed(0),
-                        y = item.datapoint[1].toFixed(0);
+                            y = item.datapoint[1].toFixed(0);
                     showTooltip(item.pageX, item.pageY, y + " visits in " + item.series.label[item.dataIndex]);
                 }
             } else {
@@ -215,7 +215,8 @@ $(function () {
                 'background-color': '#717171',
                 opacity: 0.80
             }).appendTo("body").fadeIn(200);
-        };
+        }
+        ;
 
     }
 
@@ -224,8 +225,8 @@ $(function () {
     /*-------------------------------  POSTS / ARTICLES ----------------------------------*/
 
     /* Select checked row */
-    $('input:checkbox').on('click', function () {
-       if ($(this).prop('checked') ==  true){
+    $('input:checkbox').on('click', function() {
+        if ($(this).prop('checked') == true) {
             $(this).prop('checked', true);
             $(this).parent().parent().parent().addClass('selected');
         } else {
@@ -235,8 +236,8 @@ $(function () {
     });
 
     /* Toggle All Checkbox Function */
-    $('.check_all').on('click', function () {
-       if ($(this).prop('checked') ==  true){
+    $('.check_all').on('click', function() {
+        if ($(this).prop('checked') == true) {
             $(this).closest('table').find('input:checkbox').prop('checked', true);
             $(this).closest('table').find('tr').addClass('selected');
         } else {
@@ -246,21 +247,21 @@ $(function () {
     });
 
 
-    if($('body').data('page') == 'posts'){
+    if ($('body').data('page') == 'posts') {
 
         var opt = {};
         // Tools: export to Excel, CSV, PDF & Print
         opt.sDom = "<'row m-t-10'<'col-md-6'><'col-md-6'Tf>r>t<'row'<'col-md-6'><'col-md-6 align-right'p>>",
-        opt.oLanguage = { "sSearch": "","sZeroRecords": "No articles found" } ,
+                opt.oLanguage = {"sSearch": "", "sZeroRecords": "No articles found"},
         opt.iDisplayLength = 15,
-        opt.oTableTools = {
-            "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
-            "aButtons": ["csv", "xls"]
-        };
-        opt.aaSorting = [[ 4, 'asc' ]];
+                opt.oTableTools = {
+                    "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
+                    "aButtons": ["csv", "xls"]
+                };
+        opt.aaSorting = [[4, 'asc']];
         opt.aoColumnDefs = [
-              { 'bSortable': false, 'aTargets': [0] }
-           ];
+            {'bSortable': false, 'aTargets': [0]}
+        ];
 
         var oTable = $('#posts-table').dataTable(opt);
         oTable.fnDraw();
@@ -269,7 +270,7 @@ $(function () {
         $('.dataTables_filter input').attr("placeholder", "Search an article...");
 
         /* Delete a product */
-        $('#posts-table a.delete').live('click', function (e) {
+        $('#posts-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this article ?") == false) {
                 return;
@@ -285,39 +286,39 @@ $(function () {
     /*------------------------------------------------------------------------------------*/
     /*------------------------------------  EVENTS ----------------------------------------*/
 
-    if($('body').data('page') == 'events'){
+    if ($('body').data('page') == 'events') {
 
-        $('#reportrange').daterangepicker( {
-              ranges: {
-                 'Today': [moment(), moment()],
-                 'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-                 'Last 7 Days': [moment().subtract('days', 6), moment()],
-                 'Last 30 Days': [moment().subtract('days', 29), moment()],
-                 'This Month': [moment().startOf('month'), moment().endOf('month')],
-                 'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-              },
-              startDate: moment().subtract('days', 29),
-              endDate: moment()
+        $('#reportrange').daterangepicker({
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                'Last 7 Days': [moment().subtract('days', 6), moment()],
+                'Last 30 Days': [moment().subtract('days', 29), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
             },
-            function(start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            }
+            startDate: moment().subtract('days', 29),
+            endDate: moment()
+        },
+        function(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
         );
 
 
         var opt = {};
         // Tools: export to Excel, CSV, PDF & Print
         opt.sDom = "<'row m-t-10'<'col-md-6'><'col-md-6'T>r>t<'row'<'col-md-6'><'col-md-6 align-right'p>>",
-        opt.oLanguage = { "sSearch": "","sZeroRecords": "No event found" } ,
+                opt.oLanguage = {"sSearch": "", "sZeroRecords": "No event found"},
         opt.iDisplayLength = 6,
-        opt.oTableTools = {
-            "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
-            "aButtons": []
-        };
-        opt.aaSorting = [[ 5, 'asc' ]];
+                opt.oTableTools = {
+                    "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
+                    "aButtons": []
+                };
+        opt.aaSorting = [[5, 'asc']];
         opt.aoColumnDefs = [
-              { 'bSortable': false, 'aTargets': [0] }
-           ];
+            {'bSortable': false, 'aTargets': [0]}
+        ];
 
         var oTable = $('#events-table').dataTable(opt);
         oTable.fnDraw();
@@ -326,7 +327,7 @@ $(function () {
         $('.dataTables_filter input').attr("placeholder", "Search an event...");
 
         /* Delete a product */
-        $('#events-table a.delete').live('click', function (e) {
+        $('#events-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this event ?") == false) {
                 return;
@@ -339,30 +340,30 @@ $(function () {
     }
 
 
-    if($('body').data('page') == 'event'){
+    if ($('body').data('page') == 'event') {
 
-        $('#reportrange').daterangepicker( {
-              ranges: {
-                 'Today': [moment(), moment()],
-                 'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-                 'Last 7 Days': [moment().subtract('days', 6), moment()],
-                 'Last 30 Days': [moment().subtract('days', 29), moment()],
-                 'This Month': [moment().startOf('month'), moment().endOf('month')],
-                 'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-              },
-              startDate: moment().subtract('days', 29),
-              endDate: moment()
+        $('#reportrange').daterangepicker({
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                'Last 7 Days': [moment().subtract('days', 6), moment()],
+                'Last 30 Days': [moment().subtract('days', 29), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
             },
-            function(start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            }
+            startDate: moment().subtract('days', 29),
+            endDate: moment()
+        },
+        function(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        }
         );
 
 
         var opt = {};
 
         /* Delete a product */
-        $('#comments-table a.delete').live('click', function (e) {
+        $('#comments-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this event ?") == false) {
                 return;
@@ -378,20 +379,20 @@ $(function () {
     /*------------------------------------------------------------------------------------*/
     /*------------------------------------  ORDERS ---------------------------------------*/
 
-    if($('body').data('page') == 'orders'){
+    if ($('body').data('page') == 'orders') {
 
         var opt = {};
         // Tools: export to Excel, CSV, PDF & Print
         opt.sDom = "<'row m-t-10'<'col-md-6'f><'col-md-6'T>r>t<'row'<'col-md-6'><'col-md-6 align-right'p>>",
-        opt.oLanguage = { "sSearch": "" } ,
+                opt.oLanguage = {"sSearch": ""},
         opt.iDisplayLength = 15,
-        opt.oTableTools = {
-            "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
-            "aButtons": ["csv", "xls", "pdf", "print"]
-        };
+                opt.oTableTools = {
+                    "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
+                    "aButtons": ["csv", "xls", "pdf", "print"]
+                };
         opt.aoColumnDefs = [
-              { 'bSortable': false, 'aTargets': [ 9 ] }
-           ];
+            {'bSortable': false, 'aTargets': [9]}
+        ];
 
         var oTable = $('#products-table').dataTable(opt);
         oTable.fnDraw();
@@ -400,7 +401,7 @@ $(function () {
         $('.dataTables_filter input').attr("placeholder", "Search an order...");
 
         /* Delete a product */
-        $('#products-table a.delete').live('click', function (e) {
+        $('#products-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this product ?") == false) {
                 return;

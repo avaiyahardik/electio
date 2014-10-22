@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
     /**
      * Portuguese (Brazil) language package
      * Translated by @marcuscarvalho6

@@ -28,8 +28,8 @@
             }
 
             var length = value.length,
-                sum    = 0,
-                weight = (length === 8) ? [3, 1] : [1, 3];
+                    sum = 0,
+                    weight = (length === 8) ? [3, 1] : [1, 3];
             for (var i = 0; i < length - 1; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i % 2];
             }

@@ -31,12 +31,12 @@
             // Groups are separated by a hyphen or a space
             var type;
             switch (true) {
-                case /^\d{9}[\dX]$/.test(value):
+                case / ^ \d{9}[\dX]$ / .test(value):
                 case (value.length === 13 && /^(\d+)-(\d+)-(\d+)-([\dX])$/.test(value)):
                 case (value.length === 13 && /^(\d+)\s(\d+)\s(\d+)\s([\dX])$/.test(value)):
                     type = 'ISBN10';
                     break;
-                case /^(978|979)\d{9}[\dX]$/.test(value):
+                case / ^ (978 | 979)\d{9}[\dX]$ / .test(value):
                 case (value.length === 17 && /^(978|979)-(\d+)-(\d+)-(\d+)-([\dX])$/.test(value)):
                 case (value.length === 17 && /^(978|979)\s(\d+)\s(\d+)\s(\d+)\s([\dX])$/.test(value)):
                     type = 'ISBN13';
@@ -47,11 +47,11 @@
 
             // Replace all special characters except digits and X
             value = value.replace(/[^0-9X]/gi, '');
-            var chars  = value.split(''),
-                length = chars.length,
-                sum    = 0,
-                i,
-                checksum;
+            var chars = value.split(''),
+                    length = chars.length,
+                    sum = 0,
+                    i,
+                    checksum;
 
             switch (type) {
                 case 'ISBN10':

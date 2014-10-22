@@ -9,7 +9,6 @@
             message: 'message',
             'case': 'case'
         },
-
         /**
          * Check if a string is a lower or upper case one
          *

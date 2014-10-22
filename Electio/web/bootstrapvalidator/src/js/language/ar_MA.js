@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
     /**
      * Arabic language package
      * Translated by @Arkni

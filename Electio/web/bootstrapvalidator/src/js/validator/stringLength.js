@@ -12,11 +12,10 @@
             min: 'min',
             max: 'max'
         },
-
         enableByHtml5: function($field) {
-            var options   = {},
-                maxLength = $field.attr('maxlength'),
-                minLength = $field.attr('minlength');
+            var options = {},
+                    maxLength = $field.attr('maxlength'),
+                    minLength = $field.attr('minlength');
             if (maxLength) {
                 options.max = parseInt(maxLength, 10);
             }
@@ -26,7 +25,6 @@
 
             return $.isEmptyObject(options) ? false : options;
         },
-
         /**
          * Check if the length of element value is less or more than given number
          *
@@ -51,11 +49,11 @@
                 return true;
             }
 
-            var min     = $.isNumeric(options.min) ? options.min : validator.getDynamicOption($field, options.min),
-                max     = $.isNumeric(options.max) ? options.max : validator.getDynamicOption($field, options.max),
-                length  = value.length,
-                isValid = true,
-                message = options.message || $.fn.bootstrapValidator.i18n.stringLength['default'];
+            var min = $.isNumeric(options.min) ? options.min : validator.getDynamicOption($field, options.min),
+                    max = $.isNumeric(options.max) ? options.max : validator.getDynamicOption($field, options.max),
+                    length = value.length,
+                    isValid = true,
+                    message = options.message || $.fn.bootstrapValidator.i18n.stringLength['default'];
 
             if ((min && length < parseInt(min, 10)) || (max && length > parseInt(max, 10))) {
                 isValid = false;
@@ -78,7 +76,7 @@
                     break;
             }
 
-            return { valid: isValid, message: message };
+            return {valid: isValid, message: message};
         }
     };
 }(window.jQuery));

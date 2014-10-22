@@ -8,7 +8,6 @@
             message: 'message',
             callback: 'callback'
         },
-
         /**
          * Return result from the callback method
          *
@@ -25,13 +24,13 @@
          * @returns {Deferred}
          */
         validate: function(validator, $field, options) {
-            var value  = $field.val(),
-                dfd    = new $.Deferred(),
-                result = { valid: true };
+            var value = $field.val(),
+                    dfd = new $.Deferred(),
+                    result = {valid: true};
 
             if (options.callback) {
                 var response = $.fn.bootstrapValidator.helpers.call(options.callback, [value, validator, $field]);
-                result = ('boolean' === typeof response) ? { valid: response } :  response;
+                result = ('boolean' === typeof response) ? {valid: response} : response;
             }
 
             dfd.resolve($field, 'callback', result);

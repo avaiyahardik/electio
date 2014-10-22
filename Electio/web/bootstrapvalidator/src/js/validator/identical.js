@@ -8,7 +8,6 @@
             message: 'message',
             field: 'field'
         },
-
         /**
          * Check if input value equals to value of particular one
          *

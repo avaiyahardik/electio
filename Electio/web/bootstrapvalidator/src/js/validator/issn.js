@@ -30,9 +30,9 @@
 
             // Replace all special characters except digits and X
             value = value.replace(/[^0-9X]/gi, '');
-            var chars  = value.split(''),
-                length = chars.length,
-                sum    = 0;
+            var chars = value.split(''),
+                    length = chars.length,
+                    sum = 0;
 
             if (chars[7] === 'X') {
                 chars[7] = 10;

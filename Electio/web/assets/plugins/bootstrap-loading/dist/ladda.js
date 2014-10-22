@@ -2,7 +2,7 @@
     if (typeof exports === "object") {
         module.exports = factory();
     } else if (typeof define === "function" && define.amd) {
-        define([ "spin" ], factory);
+        define(["spin"], factory);
     } else {
         root.Ladda = factory(root.Spinner);
     }
@@ -91,7 +91,7 @@
         if (typeof target === "string") {
             targets = toArray(document.querySelectorAll(target));
         } else if (typeof target === "object" && typeof target.nodeName === "string") {
-            targets = [ target ];
+            targets = [target];
         }
         for (var i = 0, len = targets.length; i < len; i++) {
             (function() {
@@ -106,7 +106,7 @@
                             timeout = setTimeout(instance.stop, options.timeout);
                         }
                         if (typeof options.callback === "function") {
-                            options.callback.apply(null, [ instance ]);
+                            options.callback.apply(null, [instance]);
                         }
                     }, false);
                 }

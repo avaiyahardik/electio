@@ -36,7 +36,7 @@
             'default': 'Bitte anderen Wert eingeben'
         },
         digits: {
-             'default': 'Bitte Zahlen eingeben'
+            'default': 'Bitte Zahlen eingeben'
         },
         ean: {
             'default': 'Bitte gültige EAN Nummer eingeben'

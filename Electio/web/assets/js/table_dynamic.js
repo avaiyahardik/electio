@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
     function fnFormatDetails(oTable, nTr) {
         var aData = oTable.fnGetData(nTr);
@@ -16,27 +16,27 @@ $(function () {
     nCloneTd.innerHTML = '<i style="color: #C75757" class="fa fa-plus-square-o"></i>';
     nCloneTd.className = "center";
 
-    $('#table2 thead tr').each(function () {
+    $('#table2 thead tr').each(function() {
         this.insertBefore(nCloneTh, this.childNodes[0]);
     });
 
-    $('#table2 tbody tr').each(function () {
+    $('#table2 tbody tr').each(function() {
         this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
     });
 
     /*  Initialse DataTables, with no sorting on the 'details' column  */
     var oTable = $('#table2').dataTable({
         "aoColumnDefs": [{
-            "bSortable": false,
-            "aTargets": [0]
-        }],
+                "bSortable": false,
+                "aTargets": [0]
+            }],
         "aaSorting": [
             [1, 'asc']
         ]
     });
 
     /*  Add event listener for opening and closing details  */
-    $(document).on('click', '#table2 tbody td i', function () {
+    $(document).on('click', '#table2 tbody td i', function() {
         var nTr = $(this).parents('tr')[0];
         if (oTable.fnIsOpen(nTr)) {
             /* This row is already open - close it */

@@ -1,11 +1,11 @@
 /* Parsley dist/parsley.extend.min.js build version 1.2.3 http://parsleyjs.org */
 window.ParsleyConfig = window.ParsleyConfig || {};
-(function (e) {
+(function(e) {
     window.ParsleyConfig = e.extend(true, {}, window.ParsleyConfig, {
         validators: {
-            minwords: function () {
+            minwords: function() {
                 return {
-                    validate: function (e, t) {
+                    validate: function(e, t) {
                         e = e.replace(/(^\s*)|(\s*$)/gi, "");
                         e = e.replace(/[ ]{2,}/gi, " ");
                         e = e.replace(/\n /, "\n");
@@ -15,9 +15,9 @@ window.ParsleyConfig = window.ParsleyConfig || {};
                     priority: 32
                 }
             },
-            maxwords: function () {
+            maxwords: function() {
                 return {
-                    validate: function (e, t) {
+                    validate: function(e, t) {
                         e = e.replace(/(^\s*)|(\s*$)/gi, "");
                         e = e.replace(/[ ]{2,}/gi, " ");
                         e = e.replace(/\n /, "\n");
@@ -27,68 +27,68 @@ window.ParsleyConfig = window.ParsleyConfig || {};
                     priority: 32
                 }
             },
-            rangewords: function () {
+            rangewords: function() {
                 var e = this;
                 return {
-                    validate: function (t, n) {
+                    validate: function(t, n) {
                         return e.minwords().validate(t, n[0]) && e.maxwords().validate(t, n[1])
                     },
                     priority: 32
                 }
             },
-            greaterthan: function () {
+            greaterthan: function() {
                 return {
-                    validate: function (t, n, r) {
+                    validate: function(t, n, r) {
                         r.options.validateIfUnchanged = true;
                         return new Number(t) > new Number(e(n).val())
                     },
                     priority: 32
                 }
             },
-            lessthan: function () {
+            lessthan: function() {
                 return {
-                    validate: function (t, n, r) {
+                    validate: function(t, n, r) {
                         r.options.validateIfUnchanged = true;
                         return new Number(t) < new Number(e(n).val())
                     },
                     priority: 32
                 }
             },
-            beforedate: function () {
+            beforedate: function() {
                 return {
-                    validate: function (t, n, r) {
+                    validate: function(t, n, r) {
                         return Date.parse(t) < Date.parse(e(n).val())
                     },
                     priority: 32
                 }
             },
-            onorbeforedate: function () {
+            onorbeforedate: function() {
                 return {
-                    validate: function (t, n) {
+                    validate: function(t, n) {
                         return Date.parse(t) <= Date.parse(e(n).val())
                     },
                     priority: 32
                 }
             },
-            afterdate: function () {
+            afterdate: function() {
                 return {
-                    validate: function (t, n) {
+                    validate: function(t, n) {
                         return Date.parse(e(n).val()) < Date.parse(t)
                     },
                     priority: 32
                 }
             },
-            onorafterdate: function () {
+            onorafterdate: function() {
                 return {
-                    validate: function (t, n) {
+                    validate: function(t, n) {
                         return Date.parse(e(n).val()) <= Date.parse(t)
                     },
                     priority: 32
                 }
             },
-            inlist: function () {
+            inlist: function() {
                 return {
-                    validate: function (t, n, r) {
+                    validate: function(t, n, r) {
                         var i = r.options.inlistDelimiter || ",";
                         var s = (n + "").split(new RegExp("\\s*\\" + i + "\\s*"));
                         return e.inArray(e.trim(t), s) !== -1
@@ -96,9 +96,9 @@ window.ParsleyConfig = window.ParsleyConfig || {};
                     priority: 32
                 }
             },
-            luhn: function () {
+            luhn: function() {
                 return {
-                    validate: function (e, t, n) {
+                    validate: function(e, t, n) {
                         e = e.replace(/[ -]/g, "");
                         var r, i, s, o, u, a;
                         s = 0;
@@ -122,9 +122,9 @@ window.ParsleyConfig = window.ParsleyConfig || {};
                     priority: 32
                 }
             },
-            americandate: function () {
+            americandate: function() {
                 return {
-                    validate: function (e, t, n) {
+                    validate: function(e, t, n) {
                         if (!/^([01]?[0-9])[\.\/-]([0-3]?[0-9])[\.\/-]([0-9]{4}|[0-9]{2})$/.test(e)) {
                             return false
                         }

@@ -26,9 +26,7 @@
             message: 'message',
             country: 'country'
         },
-
         COUNTRY_CODES: ['BR', 'CA', 'CZ', 'DK', 'GB', 'IT', 'MA', 'NL', 'RO', 'RU', 'SE', 'SG', 'SK', 'US'],
-
         /**
          * Return true if and only if the input value is a valid country zip code
          *
@@ -65,7 +63,7 @@
             }
 
             if (!country || $.inArray(country.toUpperCase(), this.COUNTRY_CODES) === -1) {
-                return { valid: false, message: $.fn.bootstrapValidator.helpers.format($.fn.bootstrapValidator.i18n.zipCode.countryNotSupported, country) };
+                return {valid: false, message: $.fn.bootstrapValidator.helpers.format($.fn.bootstrapValidator.i18n.zipCode.countryNotSupported, country)};
             }
 
             var isValid = false;
@@ -92,21 +90,21 @@
                     isValid = this._gb(value);
                     break;
 
-                // http://en.wikipedia.org/wiki/List_of_postal_codes_in_Italy
+                    // http://en.wikipedia.org/wiki/List_of_postal_codes_in_Italy
                 case 'IT':
                     isValid = /^(I-|IT-)?\d{5}$/i.test(value);
                     break;
 
-                // http://en.wikipedia.org/wiki/List_of_postal_codes_in_Morocco
+                    // http://en.wikipedia.org/wiki/List_of_postal_codes_in_Morocco
                 case 'MA':
                     isValid = /^[1-9][0-9]{4}$/i.test(value);
                     break;
 
-                // http://en.wikipedia.org/wiki/Postal_codes_in_the_Netherlands
+                    // http://en.wikipedia.org/wiki/Postal_codes_in_the_Netherlands
                 case 'NL':
                     isValid = /^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$/i.test(value);
                     break;
-                    
+
                 case 'RO':
                     isValid = /^(0[1-8]{1}|[1-9]{1}[0-5]{1})?[0-9]{4}$/i.test(value);
                     break;
@@ -121,7 +119,7 @@
 
                 case 'SG':
                     isValid = /^([0][1-9]|[1-6][0-9]|[7]([0-3]|[5-9])|[8][0-2])(\d{4})$/i.test(value);
-                    break;                
+                    break;
 
                 case 'SK':
                     // Test: http://regexr.com/39hhr
@@ -129,7 +127,7 @@
                     break;
 
                 case 'US':
-                /* falls through */
+                    /* falls through */
                 default:
                     isValid = /^\d{4,5}([\-]?\d{4})?$/.test(value);
                     break;
@@ -140,7 +138,6 @@
                 message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.zipCode.country, $.fn.bootstrapValidator.i18n.zipCode.countries[country])
             };
         },
-
         /**
          * Validate United Kingdom postcode
          * Examples:
@@ -153,26 +150,25 @@
          * @returns {Boolean}
          */
         _gb: function(value) {
-            var firstChar  = '[ABCDEFGHIJKLMNOPRSTUWYZ]',     // Does not accept QVX
-                secondChar = '[ABCDEFGHKLMNOPQRSTUVWXY]',     // Does not accept IJZ
-                thirdChar  = '[ABCDEFGHJKPMNRSTUVWXY]',
-                fourthChar = '[ABEHMNPRVWXY]',
-                fifthChar  = '[ABDEFGHJLNPQRSTUWXYZ]',
-                regexps    = [
-                    // AN NAA, ANN NAA, AAN NAA, AANN NAA format
-                    new RegExp('^(' + firstChar + '{1}' + secondChar + '?[0-9]{1,2})(\\s*)([0-9]{1}' + fifthChar + '{2})$', 'i'),
-                    // ANA NAA
-                    new RegExp('^(' + firstChar + '{1}[0-9]{1}' + thirdChar + '{1})(\\s*)([0-9]{1}' + fifthChar + '{2})$', 'i'),
-                    // AANA NAA
-                    new RegExp('^(' + firstChar + '{1}' + secondChar + '{1}?[0-9]{1}' + fourthChar + '{1})(\\s*)([0-9]{1}' + fifthChar + '{2})$', 'i'),
-
-                    new RegExp('^(BF1)(\\s*)([0-6]{1}[ABDEFGHJLNPQRST]{1}[ABDEFGHJLNPQRSTUWZYZ]{1})$', 'i'),        // BFPO postcodes
-                    /^(GIR)(\s*)(0AA)$/i,                       // Special postcode GIR 0AA
-                    /^(BFPO)(\s*)([0-9]{1,4})$/i,               // Standard BFPO numbers
-                    /^(BFPO)(\s*)(c\/o\s*[0-9]{1,3})$/i,        // c/o BFPO numbers
-                    /^([A-Z]{4})(\s*)(1ZZ)$/i,                  // Overseas Territories
-                    /^(AI-2640)$/i                              // Anguilla
-                ];
+            var firstChar = '[ABCDEFGHIJKLMNOPRSTUWYZ]', // Does not accept QVX
+                    secondChar = '[ABCDEFGHKLMNOPQRSTUVWXY]', // Does not accept IJZ
+                    thirdChar = '[ABCDEFGHJKPMNRSTUVWXY]',
+                    fourthChar = '[ABEHMNPRVWXY]',
+                    fifthChar = '[ABDEFGHJLNPQRSTUWXYZ]',
+                    regexps = [
+                        // AN NAA, ANN NAA, AAN NAA, AANN NAA format
+                        new RegExp('^(' + firstChar + '{1}' + secondChar + '?[0-9]{1,2})(\\s*)([0-9]{1}' + fifthChar + '{2})$', 'i'),
+                        // ANA NAA
+                        new RegExp('^(' + firstChar + '{1}[0-9]{1}' + thirdChar + '{1})(\\s*)([0-9]{1}' + fifthChar + '{2})$', 'i'),
+                        // AANA NAA
+                        new RegExp('^(' + firstChar + '{1}' + secondChar + '{1}?[0-9]{1}' + fourthChar + '{1})(\\s*)([0-9]{1}' + fifthChar + '{2})$', 'i'),
+                        new RegExp('^(BF1)(\\s*)([0-6]{1}[ABDEFGHJLNPQRST]{1}[ABDEFGHJLNPQRSTUWZYZ]{1})$', 'i'), // BFPO postcodes
+                        /^(GIR)(\s*)(0AA)$/i, // Special postcode GIR 0AA
+                        /^(BFPO)(\s*)([0-9]{1,4})$/i, // Standard BFPO numbers
+                        /^(BFPO)(\s*)(c\/o\s*[0-9]{1,3})$/i, // c/o BFPO numbers
+                        /^([A-Z]{4})(\s*)(1ZZ)$/i, // Overseas Territories
+                        /^(AI-2640)$/i                              // Anguilla
+                    ];
             for (var i = 0; i < regexps.length; i++) {
                 if (regexps[i].test(value)) {
                     return true;

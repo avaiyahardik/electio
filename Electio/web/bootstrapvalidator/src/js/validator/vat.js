@@ -49,14 +49,12 @@
             message: 'message',
             country: 'country'
         },
-
         // Supported country codes
         COUNTRY_CODES: [
             'AT', 'BE', 'BG', 'BR', 'CH', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'GB', 'GR', 'HR', 'HU',
             'IE', 'IS', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'RU', 'RS', 'SE', 'SK', 'SI', 'VE',
             'ZA'
         ],
-
         /**
          * Validate an European VAT number
          *
@@ -92,15 +90,14 @@
                 };
             }
 
-            var method  = ['_', country.toLowerCase()].join('');
+            var method = ['_', country.toLowerCase()].join('');
             return this[method](value)
-                ? true
-                : {
-                    valid: false,
-                    message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.vat.country, $.fn.bootstrapValidator.i18n.vat.countries[country.toUpperCase()])
-                };
+                    ? true
+                    : {
+                        valid: false,
+                        message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.vat.country, $.fn.bootstrapValidator.i18n.vat.countries[country.toUpperCase()])
+                    };
         },
-
         // VAT validators
 
         /**
@@ -121,9 +118,9 @@
             }
 
             value = value.substr(1);
-            var sum    = 0,
-                weight = [1, 2, 1, 2, 1, 2, 1],
-                temp   = 0;
+            var sum = 0,
+                    weight = [1, 2, 1, 2, 1, 2, 1],
+                    temp = 0;
             for (var i = 0; i < 7; i++) {
                 temp = parseInt(value.charAt(i), 10) * weight[i];
                 if (temp > 9) {
@@ -139,7 +136,6 @@
 
             return (sum + '' === value.substr(7, 1));
         },
-
         /**
          * Validate Belgian VAT number
          * Example:
@@ -167,7 +163,6 @@
             var sum = parseInt(value.substr(0, 8), 10) + parseInt(value.substr(8, 2), 10);
             return (sum % 97 === 0);
         },
-
         /**
          * Validate Bulgarian VAT number
          * Example:
@@ -209,62 +204,61 @@
             else if (value.length === 10) {
                 // Validate Bulgarian national identification numbers
                 var egn = function(value) {
-                        // Check the birth date
-                        var year  = parseInt(value.substr(0, 2), 10) + 1900,
+                    // Check the birth date
+                    var year = parseInt(value.substr(0, 2), 10) + 1900,
                             month = parseInt(value.substr(2, 2), 10),
-                            day   = parseInt(value.substr(4, 2), 10);
-                        if (month > 40) {
-                            year += 100;
-                            month -= 40;
-                        } else if (month > 20) {
-                            year -= 100;
-                            month -= 20;
-                        }
+                            day = parseInt(value.substr(4, 2), 10);
+                    if (month > 40) {
+                        year += 100;
+                        month -= 40;
+                    } else if (month > 20) {
+                        year -= 100;
+                        month -= 20;
+                    }
 
-                        if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
-                            return false;
-                        }
+                    if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
+                        return false;
+                    }
 
-                        var sum    = 0,
+                    var sum = 0,
                             weight = [2, 4, 8, 5, 10, 9, 7, 3, 6];
-                        for (var i = 0; i < 9; i++) {
-                            sum += parseInt(value.charAt(i), 10) * weight[i];
-                        }
-                        sum = (sum % 11) % 10;
-                        return (sum + '' === value.substr(9, 1));
-                    },
-                    // Validate Bulgarian personal number of a foreigner
-                    pnf = function(value) {
-                        var sum    = 0,
-                            weight = [21, 19, 17, 13, 11, 9, 7, 3, 1];
-                        for (var i = 0; i < 9; i++) {
-                            sum += parseInt(value.charAt(i), 10) * weight[i];
-                        }
-                        sum = sum % 10;
-                        return (sum + '' === value.substr(9, 1));
-                    },
-                    // Finally, consider it as a VAT number
-                    vat = function(value) {
-                        var sum    = 0,
-                            weight = [4, 3, 2, 7, 6, 5, 4, 3, 2];
-                        for (var i = 0; i < 9; i++) {
-                            sum += parseInt(value.charAt(i), 10) * weight[i];
-                        }
-                        sum = 11 - sum % 11;
-                        if (sum === 10) {
-                            return false;
-                        }
-                        if (sum === 11) {
-                            sum = 0;
-                        }
-                        return (sum + '' === value.substr(9, 1));
-                    };
+                    for (var i = 0; i < 9; i++) {
+                        sum += parseInt(value.charAt(i), 10) * weight[i];
+                    }
+                    sum = (sum % 11) % 10;
+                    return (sum + '' === value.substr(9, 1));
+                },
+                        // Validate Bulgarian personal number of a foreigner
+                        pnf = function(value) {
+                            var sum = 0,
+                                    weight = [21, 19, 17, 13, 11, 9, 7, 3, 1];
+                            for (var i = 0; i < 9; i++) {
+                                sum += parseInt(value.charAt(i), 10) * weight[i];
+                            }
+                            sum = sum % 10;
+                            return (sum + '' === value.substr(9, 1));
+                        },
+                        // Finally, consider it as a VAT number
+                        vat = function(value) {
+                            var sum = 0,
+                                    weight = [4, 3, 2, 7, 6, 5, 4, 3, 2];
+                            for (var i = 0; i < 9; i++) {
+                                sum += parseInt(value.charAt(i), 10) * weight[i];
+                            }
+                            sum = 11 - sum % 11;
+                            if (sum === 10) {
+                                return false;
+                            }
+                            if (sum === 11) {
+                                sum = 0;
+                            }
+                            return (sum + '' === value.substr(9, 1));
+                        };
                 return (egn(value) || pnf(value) || vat(value));
             }
 
             return false;
         },
-        
         /**
          * Validate Brazilian VAT number (CNPJ)
          *
@@ -282,19 +276,19 @@
 
             // Remove invalids CNPJs
             if (cnpj === '00000000000000' || cnpj === '11111111111111' || cnpj === '22222222222222' ||
-                cnpj === '33333333333333' || cnpj === '44444444444444' || cnpj === '55555555555555' ||
-                cnpj === '66666666666666' || cnpj === '77777777777777' || cnpj === '88888888888888' ||
-                cnpj === '99999999999999')
+                    cnpj === '33333333333333' || cnpj === '44444444444444' || cnpj === '55555555555555' ||
+                    cnpj === '66666666666666' || cnpj === '77777777777777' || cnpj === '88888888888888' ||
+                    cnpj === '99999999999999')
             {
                 return false;
             }
 
             // Validate verification digits
-            var length  = cnpj.length - 2,
-                numbers = cnpj.substring(0, length),
-                digits  = cnpj.substring(length),
-                sum     = 0,
-                pos     = length - 7;
+            var length = cnpj.length - 2,
+                    numbers = cnpj.substring(0, length),
+                    digits = cnpj.substring(length),
+                    sum = 0,
+                    pos = length - 7;
 
             for (var i = length; i >= 1; i--) {
                 sum += parseInt(numbers.charAt(length - i), 10) * pos--;
@@ -308,10 +302,10 @@
                 return false;
             }
 
-            length  = length + 1;
+            length = length + 1;
             numbers = cnpj.substring(0, length);
-            sum     = 0;
-            pos     = length - 7;
+            sum = 0;
+            pos = length - 7;
             for (i = length; i >= 1; i--) {
                 sum += parseInt(numbers.charAt(length - i), 10) * pos--;
                 if (pos < 2) {
@@ -322,7 +316,6 @@
             result = sum % 11 < 2 ? 0 : 11 - sum % 11;
             return (result === parseInt(digits.charAt(1), 10));
         },
-
         /**
          * Validate Swiss VAT number
          *
@@ -338,8 +331,8 @@
             }
 
             value = value.substr(1);
-            var sum    = 0,
-                weight = [5, 4, 3, 2, 7, 6, 5, 4];
+            var sum = 0,
+                    weight = [5, 4, 3, 2, 7, 6, 5, 4];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -354,7 +347,6 @@
 
             return (sum + '' === value.substr(8, 1));
         },
-
         /**
          * Validate Cypriot VAT number
          * Examples:
@@ -378,11 +370,11 @@
             }
 
             // Extract the next digit and multiply by the counter.
-            var sum         = 0,
-                translation = {
-                    '0': 1,  '1': 0,  '2': 5,  '3': 7,  '4': 9,
-                    '5': 13, '6': 15, '7': 17, '8': 19, '9': 21
-                };
+            var sum = 0,
+                    translation = {
+                        '0': 1, '1': 0, '2': 5, '3': 7, '4': 9,
+                        '5': 13, '6': 15, '7': 17, '8': 19, '9': 21
+                    };
             for (var i = 0; i < 8; i++) {
                 var temp = parseInt(value.charAt(i), 10);
                 if (i % 2 === 0) {
@@ -394,7 +386,6 @@
             sum = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[sum % 26];
             return (sum + '' === value.substr(8, 1));
         },
-
         /**
          * Validate Czech Republic VAT number
          * Can be:
@@ -418,7 +409,7 @@
             }
 
             var sum = 0,
-                i   = 0;
+                    i = 0;
             if (value.length === 8) {
                 // Do not allow to start with '9'
                 if (value.charAt(0) + '' === '9') {
@@ -455,9 +446,9 @@
                 return (sum + '' === value.substr(8, 1));
             } else if (value.length === 9 || value.length === 10) {
                 // Validate Czech birth number (Rodné číslo), which is also national identifier
-                var year  = 1900 + parseInt(value.substr(0, 2), 10),
-                    month = parseInt(value.substr(2, 2), 10) % 50 % 20,
-                    day   = parseInt(value.substr(4, 2), 10);
+                var year = 1900 + parseInt(value.substr(0, 2), 10),
+                        month = parseInt(value.substr(2, 2), 10) % 50 % 20,
+                        day = parseInt(value.substr(4, 2), 10);
                 if (value.length === 9) {
                     if (year >= 1980) {
                         year -= 100;
@@ -487,7 +478,6 @@
 
             return false;
         },
-
         /**
          * Validate German VAT number
          * Examples:
@@ -507,7 +497,6 @@
 
             return $.fn.bootstrapValidator.helpers.mod11And10(value);
         },
-
         /**
          * Validate Danish VAT number
          * Example:
@@ -525,15 +514,14 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [2, 7, 6, 5, 4, 3, 2, 1];
+            var sum = 0,
+                    weight = [2, 7, 6, 5, 4, 3, 2, 1];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
 
             return (sum % 11 === 0);
         },
-
         /**
          * Validate Estonian VAT number
          * Examples:
@@ -551,15 +539,14 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [3, 7, 1, 3, 7, 1, 3, 7, 1];
+            var sum = 0,
+                    weight = [3, 7, 1, 3, 7, 1, 3, 7, 1];
             for (var i = 0; i < 9; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
 
             return (sum % 10 === 0);
         },
-
         /**
          * Validate Spanish VAT number (NIF - Número de Identificación Fiscal)
          * Can be:
@@ -583,43 +570,43 @@
             }
 
             var dni = function(value) {
-                    var check = parseInt(value.substr(0, 8), 10);
-                    check = 'TRWAGMYFPDXBNJZSQVHLCKE'[check % 23];
-                    return (check + '' === value.substr(8, 1));
-                },
-                nie = function(value) {
-                    var check = ['XYZ'.indexOf(value.charAt(0)), value.substr(1)].join('');
-                    check = parseInt(check, 10);
-                    check = 'TRWAGMYFPDXBNJZSQVHLCKE'[check % 23];
-                    return (check + '' === value.substr(8, 1));
-                },
-                cif = function(value) {
-                    var first = value.charAt(0), check;
-                    if ('KLM'.indexOf(first) !== -1) {
-                        // K: Spanish younger than 14 year old
-                        // L: Spanish living outside Spain without DNI
-                        // M: Granted the tax to foreigners who have no NIE
-                        check = parseInt(value.substr(1, 8), 10);
+                var check = parseInt(value.substr(0, 8), 10);
+                check = 'TRWAGMYFPDXBNJZSQVHLCKE'[check % 23];
+                return (check + '' === value.substr(8, 1));
+            },
+                    nie = function(value) {
+                        var check = ['XYZ'.indexOf(value.charAt(0)), value.substr(1)].join('');
+                        check = parseInt(check, 10);
                         check = 'TRWAGMYFPDXBNJZSQVHLCKE'[check % 23];
                         return (check + '' === value.substr(8, 1));
-                    } else if ('ABCDEFGHJNPQRSUVW'.indexOf(first) !== -1) {
-                        var sum    = 0,
-                            weight = [2, 1, 2, 1, 2, 1, 2],
-                            temp   = 0;
+                    },
+                    cif = function(value) {
+                        var first = value.charAt(0), check;
+                        if ('KLM'.indexOf(first) !== -1) {
+                            // K: Spanish younger than 14 year old
+                            // L: Spanish living outside Spain without DNI
+                            // M: Granted the tax to foreigners who have no NIE
+                            check = parseInt(value.substr(1, 8), 10);
+                            check = 'TRWAGMYFPDXBNJZSQVHLCKE'[check % 23];
+                            return (check + '' === value.substr(8, 1));
+                        } else if ('ABCDEFGHJNPQRSUVW'.indexOf(first) !== -1) {
+                            var sum = 0,
+                                    weight = [2, 1, 2, 1, 2, 1, 2],
+                                    temp = 0;
 
-                        for (var i = 0; i < 7; i++) {
-                            temp = parseInt(value.charAt(i + 1), 10) * weight[i];
-                            if (temp > 9) {
-                                temp = Math.floor(temp / 10) + temp % 10;
+                            for (var i = 0; i < 7; i++) {
+                                temp = parseInt(value.charAt(i + 1), 10) * weight[i];
+                                if (temp > 9) {
+                                    temp = Math.floor(temp / 10) + temp % 10;
+                                }
+                                sum += temp;
                             }
-                            sum += temp;
+                            sum = 10 - sum % 10;
+                            return (sum + '' === value.substr(8, 1) || 'JABCDEFGHI'[sum] === value.substr(8, 1));
                         }
-                        sum = 10 - sum % 10;
-                        return (sum + '' === value.substr(8, 1) || 'JABCDEFGHI'[sum] === value.substr(8, 1));
-                    }
 
-                    return false;
-                };
+                        return false;
+                    };
 
             var first = value.charAt(0);
             if (/^[0-9]$/.test(first)) {
@@ -630,7 +617,6 @@
                 return cif(value);
             }
         },
-
         /**
          * Validate Finnish VAT number
          * Examples:
@@ -648,15 +634,14 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [7, 9, 10, 5, 8, 4, 2, 1];
+            var sum = 0,
+                    weight = [7, 9, 10, 5, 8, 4, 2, 1];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
 
             return (sum % 11 === 0);
         },
-
         /**
          * Validate French VAT number (TVA - taxe sur la valeur ajoutée)
          * It's constructed by a SIREN number, prefixed by two characters.
@@ -686,7 +671,7 @@
             } else {
                 // The first characters cann't be O and I
                 var alphabet = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ',
-                    check;
+                        check;
                 // First one is digit
                 if (/^[0-9]{1}$/.test(value.charAt(0))) {
                     check = alphabet.indexOf(value.charAt(0)) * 24 + alphabet.indexOf(value.charAt(1)) - 10;
@@ -696,7 +681,6 @@
                 return ((parseInt(value.substr(2), 10) + 1 + Math.floor(check / 11)) % 11) === (check % 11);
             }
         },
-
         /**
          * Validate United Kingdom VAT number
          * Example:
@@ -708,37 +692,37 @@
          */
         _gb: function(value) {
             if (/^GB[0-9]{9}$/.test(value)             /* Standard */
-                || /^GB[0-9]{12}$/.test(value)         /* Branches */
-                || /^GBGD[0-9]{3}$/.test(value)        /* Government department */
-                || /^GBHA[0-9]{3}$/.test(value)        /* Health authority */
-                || /^GB(GD|HA)8888[0-9]{5}$/.test(value))
+                    || /^GB[0-9]{12}$/.test(value)         /* Branches */
+                    || /^GBGD[0-9]{3}$/.test(value)        /* Government department */
+                    || /^GBHA[0-9]{3}$/.test(value)        /* Health authority */
+                    || /^GB(GD|HA)8888[0-9]{5}$/.test(value))
             {
                 value = value.substr(2);
             }
             if (!/^[0-9]{9}$/.test(value)
-                && !/^[0-9]{12}$/.test(value)
-                && !/^GD[0-9]{3}$/.test(value)
-                && !/^HA[0-9]{3}$/.test(value)
-                && !/^(GD|HA)8888[0-9]{5}$/.test(value))
+                    && !/^[0-9]{12}$/.test(value)
+                    && !/^GD[0-9]{3}$/.test(value)
+                    && !/^HA[0-9]{3}$/.test(value)
+                    && !/^(GD|HA)8888[0-9]{5}$/.test(value))
             {
                 return false;
             }
 
             var length = value.length;
             if (length === 5) {
-                var firstTwo  = value.substr(0, 2),
-                    lastThree = parseInt(value.substr(2), 10);
+                var firstTwo = value.substr(0, 2),
+                        lastThree = parseInt(value.substr(2), 10);
                 return ('GD' === firstTwo && lastThree < 500) || ('HA' === firstTwo && lastThree >= 500);
             } else if (length === 11 && ('GD8888' === value.substr(0, 6) || 'HA8888' === value.substr(0, 6))) {
                 if (('GD' === value.substr(0, 2) && parseInt(value.substr(6, 3), 10) >= 500)
-                    || ('HA' === value.substr(0, 2) && parseInt(value.substr(6, 3), 10) < 500))
+                        || ('HA' === value.substr(0, 2) && parseInt(value.substr(6, 3), 10) < 500))
                 {
                     return false;
                 }
                 return (parseInt(value.substr(6, 3), 10) % 97 === parseInt(value.substr(9, 2), 10));
             } else if (length === 9 || length === 12) {
-                var sum    = 0,
-                    weight = [8, 7, 6, 5, 4, 3, 2, 10, 1];
+                var sum = 0,
+                        weight = [8, 7, 6, 5, 4, 3, 2, 10, 1];
                 for (var i = 0; i < 9; i++) {
                     sum += parseInt(value.charAt(i), 10) * weight[i];
                 }
@@ -753,7 +737,6 @@
 
             return true;
         },
-
         /**
          * Validate Greek VAT number
          * Examples:
@@ -775,8 +758,8 @@
                 value = '0' + value;
             }
 
-            var sum    = 0,
-                weight = [256, 128, 64, 32, 16, 8, 4, 2];
+            var sum = 0,
+                    weight = [256, 128, 64, 32, 16, 8, 4, 2];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -784,12 +767,10 @@
 
             return (sum + '' === value.substr(8, 1));
         },
-
         // EL is traditionally prefix of Greek VAT numbers
         _el: function(value) {
             return this._gr(value);
         },
-
         /**
          * Validate Hungarian VAT number
          * Examples:
@@ -807,8 +788,8 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [9, 7, 3, 1, 9, 7, 3, 1];
+            var sum = 0,
+                    weight = [9, 7, 3, 1, 9, 7, 3, 1];
 
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -816,7 +797,6 @@
 
             return (sum % 10 === 0);
         },
-
         /**
          * Validate Croatian VAT number
          * Examples:
@@ -836,7 +816,6 @@
 
             return $.fn.bootstrapValidator.helpers.mod11And10(value);
         },
-
         /**
          * Validate Irish VAT number
          * Examples:
@@ -859,7 +838,7 @@
                     value = '0' + value;
                 }
                 var alphabet = 'WABCDEFGHIJKLMNOPQRSTUV',
-                    sum      = 0;
+                        sum = 0;
                 for (var i = 0; i < 7; i++) {
                     sum += parseInt(value.charAt(i), 10) * (8 - i);
                 }
@@ -878,7 +857,6 @@
 
             return true;
         },
-
         /**
          * Validate Icelandic VAT (VSK) number
          * Examples:
@@ -894,7 +872,6 @@
             }
             return /^[0-9]{5,6}$/.test(value);
         },
-
         /**
          * Validate Italian VAT number, which consists of 11 digits.
          * - First 7 digits are a company identifier
@@ -927,7 +904,6 @@
 
             return $.fn.bootstrapValidator.helpers.luhn(value);
         },
-
         /**
          * Validate Lithuanian VAT number
          * It can be:
@@ -950,8 +926,8 @@
             }
 
             var length = value.length,
-                sum    = 0,
-                i;
+                    sum = 0,
+                    i;
             for (i = 0; i < length - 1; i++) {
                 sum += parseInt(value.charAt(i), 10) * (1 + i % 9);
             }
@@ -965,7 +941,6 @@
             check = check % 11 % 10;
             return (check + '' === value.charAt(length - 1));
         },
-
         /**
          * Validate Luxembourg VAT number
          * Examples:
@@ -985,7 +960,6 @@
 
             return ((parseInt(value.substr(0, 6), 10) % 89) + '' === value.substr(6, 2));
         },
-
         /**
          * Validate Latvian VAT number
          * Examples:
@@ -1003,14 +977,14 @@
                 return false;
             }
 
-            var first  = parseInt(value.charAt(0), 10),
-                sum    = 0,
-                weight = [],
-                i,
-                length = value.length;
+            var first = parseInt(value.charAt(0), 10),
+                    sum = 0,
+                    weight = [],
+                    i,
+                    length = value.length;
             if (first > 3) {
                 // Legal entity
-                sum    = 0;
+                sum = 0;
                 weight = [9, 1, 4, 8, 3, 10, 2, 5, 7, 6, 1];
                 for (i = 0; i < length; i++) {
                     sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -1019,9 +993,9 @@
                 return (sum === 3);
             } else {
                 // Check birth date
-                var day   = parseInt(value.substr(0, 2), 10),
-                    month = parseInt(value.substr(2, 2), 10),
-                    year  = parseInt(value.substr(4, 2), 10);
+                var day = parseInt(value.substr(0, 2), 10),
+                        month = parseInt(value.substr(2, 2), 10),
+                        year = parseInt(value.substr(4, 2), 10);
                 year = year + 1800 + parseInt(value.charAt(6), 10) * 100;
 
                 if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
@@ -1029,7 +1003,7 @@
                 }
 
                 // Check personal code
-                sum    = 0;
+                sum = 0;
                 weight = [10, 5, 8, 4, 2, 1, 6, 3, 7, 9];
                 for (i = 0; i < length - 1; i++) {
                     sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -1038,7 +1012,6 @@
                 return (sum + '' === value.charAt(length - 1));
             }
         },
-
         /**
          * Validate Maltese VAT number
          * Examples:
@@ -1056,8 +1029,8 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [3, 4, 6, 7, 8, 9, 10, 1];
+            var sum = 0,
+                    weight = [3, 4, 6, 7, 8, 9, 10, 1];
 
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -1065,7 +1038,6 @@
 
             return (sum % 37 === 0);
         },
-
         /**
          * Validate Dutch VAT number
          * Examples:
@@ -1077,14 +1049,14 @@
          */
         _nl: function(value) {
             if (/^NL[0-9]{9}B[0-9]{2}$/.test(value)) {
-               value = value.substr(2);
+                value = value.substr(2);
             }
             if (!/^[0-9]{9}B[0-9]{2}$/.test(value)) {
-               return false;
+                return false;
             }
 
-            var sum    = 0,
-                weight = [9, 8, 7, 6, 5, 4, 3, 2];
+            var sum = 0,
+                    weight = [9, 8, 7, 6, 5, 4, 3, 2];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -1095,7 +1067,6 @@
             }
             return (sum + '' === value.substr(8, 1));
         },
-
         /**
          * Validate Norwegian VAT number
          *
@@ -1105,14 +1076,14 @@
          */
         _no: function(value) {
             if (/^NO[0-9]{9}$/.test(value)) {
-               value = value.substr(2);
+                value = value.substr(2);
             }
             if (!/^[0-9]{9}$/.test(value)) {
-               return false;
+                return false;
             }
 
-            var sum    = 0,
-                weight = [3, 2, 7, 6, 5, 4, 3, 2];
+            var sum = 0,
+                    weight = [3, 2, 7, 6, 5, 4, 3, 2];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -1123,7 +1094,6 @@
             }
             return (sum + '' === value.substr(8, 1));
         },
-
         /**
          * Validate Polish VAT number
          * Examples:
@@ -1141,8 +1111,8 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [6, 5, 7, 2, 3, 4, 5, 6, 7, -1];
+            var sum = 0,
+                    weight = [6, 5, 7, 2, 3, 4, 5, 6, 7, -1];
 
             for (var i = 0; i < 10; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -1150,7 +1120,6 @@
 
             return (sum % 11 === 0);
         },
-
         /**
          * Validate Portuguese VAT number
          * Examples:
@@ -1168,8 +1137,8 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [9, 8, 7, 6, 5, 4, 3, 2];
+            var sum = 0,
+                    weight = [9, 8, 7, 6, 5, 4, 3, 2];
 
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -1180,7 +1149,6 @@
             }
             return (sum + '' === value.substr(8, 1));
         },
-
         /**
          * Validate Romanian VAT number
          * Examples:
@@ -1199,8 +1167,8 @@
             }
 
             var length = value.length,
-                weight = [7, 5, 3, 2, 1, 7, 5, 3, 2].slice(10 - length),
-                sum    = 0;
+                    weight = [7, 5, 3, 2, 1, 7, 5, 3, 2].slice(10 - length),
+                    sum = 0;
             for (var i = 0; i < length - 1; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -1208,7 +1176,6 @@
             sum = (10 * sum) % 11 % 10;
             return (sum + '' === value.substr(length - 1, 1));
         },
-
         /**
          * Validate Russian VAT number (Taxpayer Identification Number - INN)
          *
@@ -1225,8 +1192,8 @@
 
             var i = 0;
             if (value.length === 10) {
-                var sum    = 0,
-                    weight = [2, 4, 10, 3, 5, 9, 4, 6, 8, 0];
+                var sum = 0,
+                        weight = [2, 4, 10, 3, 5, 9, 4, 6, 8, 0];
                 for (i = 0; i < 10; i++) {
                     sum += parseInt(value.charAt(i), 10) * weight[i];
                 }
@@ -1237,10 +1204,10 @@
 
                 return (sum + '' === value.substr(9, 1));
             } else if (value.length === 12) {
-                var sum1    = 0,
-                    weight1 = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 0],
-                    sum2    = 0,
-                    weight2 = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 0];
+                var sum1 = 0,
+                        weight1 = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 0],
+                        sum2 = 0,
+                        weight2 = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 0];
 
                 for (i = 0; i < 11; i++) {
                     sum1 += parseInt(value.charAt(i), 10) * weight1[i];
@@ -1260,7 +1227,6 @@
 
             return false;
         },
-
         /**
          * Validate Serbian VAT number
          *
@@ -1275,8 +1241,8 @@
                 return false;
             }
 
-            var sum  = 10,
-                temp = 0;
+            var sum = 10,
+                    temp = 0;
             for (var i = 0; i < 8; i++) {
                 temp = (parseInt(value.charAt(i), 10) + sum) % 10;
                 if (temp === 0) {
@@ -1287,7 +1253,6 @@
 
             return ((sum + parseInt(value.substr(8, 1), 10)) % 10 === 1);
         },
-
         /**
          * Validate Swedish VAT number
          * Examples:
@@ -1308,7 +1273,6 @@
             value = value.substr(0, 10);
             return $.fn.bootstrapValidator.helpers.luhn(value);
         },
-
         /**
          * Validate Slovenian VAT number
          * Examples:
@@ -1326,8 +1290,8 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [8, 7, 6, 5, 4, 3, 2];
+            var sum = 0,
+                    weight = [8, 7, 6, 5, 4, 3, 2];
 
             for (var i = 0; i < 7; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -1338,7 +1302,6 @@
             }
             return (sum + '' === value.substr(7, 1));
         },
-
         /**
          * Validate Slovak VAT number
          * Examples:
@@ -1358,7 +1321,6 @@
 
             return (parseInt(value, 10) % 11 === 0);
         },
-
         /**
          * Validate Venezuelan VAT number (RIF)
          * Examples:
@@ -1376,15 +1338,15 @@
                 return false;
             }
 
-            var types  = {
-                    'V': 4,
-                    'E': 8,
-                    'J': 12,
-                    'P': 16,
-                    'G': 20
-                },
-                sum    = types[value.charAt(0)],
-                weight = [3, 2, 7, 6, 5, 4, 3, 2];
+            var types = {
+                'V': 4,
+                'E': 8,
+                'J': 12,
+                'P': 16,
+                'G': 20
+            },
+            sum = types[value.charAt(0)],
+                    weight = [3, 2, 7, 6, 5, 4, 3, 2];
 
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i + 1), 10) * weight[i];
@@ -1396,7 +1358,6 @@
             }
             return (sum + '' === value.substr(9, 1));
         },
-
         /**
          * Validate South African VAT number
          * Examples:
@@ -1406,7 +1367,7 @@
          * @params {String} value VAT number
          * @returns {Boolean}
          */
-         _za: function(value) {
+        _za: function(value) {
             if (/^ZA4[0-9]{9}$/.test(value)) {
                 value = value.substr(2);
             }

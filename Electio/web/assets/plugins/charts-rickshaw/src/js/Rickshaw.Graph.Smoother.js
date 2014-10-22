@@ -1,79 +1,76 @@
 Rickshaw.namespace('Rickshaw.Graph.Smoother');
 
 Rickshaw.Graph.Smoother = Rickshaw.Class.create({
+    initialize: function(args) {
 
-	initialize: function(args) {
+        this.graph = args.graph;
+        this.element = args.element;
+        this.aggregationScale = 1;
 
-		this.graph = args.graph;
-		this.element = args.element;
-		this.aggregationScale = 1;
+        this.build();
 
-		this.build();
+        this.graph.stackData.hooks.data.push({
+            name: 'smoother',
+            orderPosition: 50,
+            f: this.transformer.bind(this)
+        });
+    },
+    build: function() {
 
-		this.graph.stackData.hooks.data.push( {
-			name: 'smoother',
-			orderPosition: 50,
-			f: this.transformer.bind(this)
-		} );
-	},
+        var self = this;
+        var $ = jQuery;
 
-	build: function() {
+        if (this.element) {
+            $(function() {
+                $(self.element).slider({
+                    min: 1,
+                    max: 100,
+                    slide: function(event, ui) {
+                        self.setScale(ui.value);
+                        self.graph.update();
+                    }
+                });
+            });
+        }
+    },
+    setScale: function(scale) {
 
-		var self = this;
-		var $ = jQuery;
+        if (scale < 1) {
+            throw "scale out of range: " + scale;
+        }
 
-		if (this.element) {
-			$( function() {
-				$(self.element).slider( {
-					min: 1,
-					max: 100,
-					slide: function( event, ui ) {
-						self.setScale(ui.value);
-						self.graph.update();
-					}
-				} );
-			} );
-		}
-	},
+        this.aggregationScale = scale;
+        this.graph.update();
+    },
+    transformer: function(data) {
 
-	setScale: function(scale) {
+        if (this.aggregationScale == 1)
+            return data;
 
-		if (scale < 1) {
-			throw "scale out of range: " + scale;
-		}
+        var aggregatedData = [];
 
-		this.aggregationScale = scale;
-		this.graph.update();
-	},
+        data.forEach(function(seriesData) {
 
-	transformer: function(data) {
+            var aggregatedSeriesData = [];
 
-		if (this.aggregationScale == 1) return data;
+            while (seriesData.length) {
 
-		var aggregatedData = [];
+                var avgX = 0, avgY = 0;
+                var slice = seriesData.splice(0, this.aggregationScale);
 
-		data.forEach( function(seriesData) {
+                slice.forEach(function(d) {
+                    avgX += d.x / slice.length;
+                    avgY += d.y / slice.length;
+                });
 
-			var aggregatedSeriesData = [];
+                aggregatedSeriesData.push({x: avgX, y: avgY});
+            }
 
-			while (seriesData.length) {
+            aggregatedData.push(aggregatedSeriesData);
 
-				var avgX = 0, avgY = 0;
-				var slice = seriesData.splice(0, this.aggregationScale);
+        }.bind(this));
 
-				slice.forEach( function(d) {
-					avgX += d.x / slice.length;
-					avgY += d.y / slice.length;
-				} );
-
-				aggregatedSeriesData.push( { x: avgX, y: avgY } );
-			}
-
-			aggregatedData.push(aggregatedSeriesData);
-
-		}.bind(this) );
-
-		return aggregatedData;
-	}
+        return aggregatedData;
+    }
 });
 

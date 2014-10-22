@@ -10,10 +10,9 @@
             value: 'value',
             inclusive: 'inclusive'
         },
-
         enableByHtml5: function($field) {
             var type = $field.attr('type'),
-                min  = $field.attr('min');
+                    min = $field.attr('min');
             if (min && type !== 'date') {
                 return {
                     value: min
@@ -22,7 +21,6 @@
 
             return false;
         },
-
         /**
          * Return true if the input value is greater than or equals to given number
          *
@@ -50,15 +48,15 @@
 
             var compareTo = $.isNumeric(options.value) ? options.value : validator.getDynamicOption($field, options.value);
             value = parseFloat(value);
-			return (options.inclusive === true || options.inclusive === undefined)
+            return (options.inclusive === true || options.inclusive === undefined)
                     ? {
                         valid: value >= compareTo,
                         message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.greaterThan['default'], compareTo)
                     }
-                    : {
-                        valid: value > compareTo,
-                        message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.greaterThan.notInclusive, compareTo)
-                    };
+            : {
+                valid: value > compareTo,
+                message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.greaterThan.notInclusive, compareTo)
+            };
         }
     };
 }(window.jQuery));

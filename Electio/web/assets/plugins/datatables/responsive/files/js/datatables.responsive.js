@@ -137,7 +137,7 @@ function ResponsiveDatatablesHelper(tableSelector, breakpoints, options) {
  * @param {Object} breakpoints
  * @param {Object} options
  */
-ResponsiveDatatablesHelper.prototype.init = function (breakpoints, options) {
+ResponsiveDatatablesHelper.prototype.init = function(breakpoints, options) {
     this.origBreakpointsDefs = breakpoints;
     this.initBreakpoints();
 
@@ -148,7 +148,7 @@ ResponsiveDatatablesHelper.prototype.init = function (breakpoints, options) {
     _.extend(this.options, options);
 };
 
-ResponsiveDatatablesHelper.prototype.initBreakpoints = function () {
+ResponsiveDatatablesHelper.prototype.initBreakpoints = function() {
     // Get last state if it exists
     this.getState();
 
@@ -156,10 +156,10 @@ ResponsiveDatatablesHelper.prototype.initBreakpoints = function () {
         /** Generate breakpoints in the format we need. ***********************/
         // First, we need to create a sorted array of the breakpoints given.
         var breakpointsSorted = [];
-        _.each(this.origBreakpointsDefs, function (value, key) {
+        _.each(this.origBreakpointsDefs, function(value, key) {
             breakpointsSorted.push({
-                name         : key,
-                upperLimit   : value,
+                name: key,
+                upperLimit: value,
                 columnsToHide: []
             });
         });
@@ -167,16 +167,16 @@ ResponsiveDatatablesHelper.prototype.initBreakpoints = function () {
 
         // Set lower and upper limits for each breakpoint.
         var lowerLimit = 0;
-        _.each(breakpointsSorted, function (value) {
+        _.each(breakpointsSorted, function(value) {
             value.lowerLimit = lowerLimit;
             lowerLimit = value.upperLimit;
         });
 
         // Add the default breakpoint which shows all (has no upper limit).
         breakpointsSorted.push({
-            name         : 'always',
-            lowerLimit   : lowerLimit,
-            upperLimit   : Infinity,
+            name: 'always',
+            lowerLimit: lowerLimit,
+            upperLimit: Infinity,
             columnsToHide: []
         });
 
@@ -203,13 +203,13 @@ ResponsiveDatatablesHelper.prototype.initBreakpoints = function () {
         //     Columns to show = all columns - columns to hide
         var headerColumns = this.tableElement.fnSettings().aoColumns;
         // Filter for only visible columns.
-        headerColumns = _.filter(headerColumns, function (col) {
+        headerColumns = _.filter(headerColumns, function(col) {
             return col.bVisible;
         });
 
         /** Sort columns into breakpoints respectively ************************/
         // Read column headers' attributes and get needed info
-        _.each(headerColumns, function (col, index) {
+        _.each(headerColumns, function(col, index) {
             // Get the column with the attribute data-class="expand" so we know
             // where to display the expand icon.
             if ($(col.nTh).attr('data-class') === 'expand') {
@@ -223,12 +223,12 @@ ResponsiveDatatablesHelper.prototype.initBreakpoints = function () {
             var dataHide = $(col.nTh).attr('data-hide');
             if (dataHide !== undefined) {
                 var splitBreakingPoints = dataHide.split(/,\s*/);
-                _.each(splitBreakingPoints, function (e) {
+                _.each(splitBreakingPoints, function(e) {
                     if (e === 'always') {
                         // A column with an 'always' breakpoint is always hidden.
                         // Loop through all breakpoints and add it to each except the
                         // default breakpoint.
-                        _.each(this.breakpoints, function (breakpoint, breakpointName) {
+                        _.each(this.breakpoints, function(breakpoint, breakpointName) {
                             if (breakpointName !== 'default') {
                                 breakpoint.columnsToHide.push(this.columnIndexes[index]);
                             }
@@ -255,7 +255,7 @@ ResponsiveDatatablesHelper.prototype.setWindowsResizeHandler = function(bindFlag
 
     if (bindFlag) {
         var that = this;
-        $(window).bind("resize", function () {
+        $(window).bind("resize", function() {
             that.respond();
         });
     } else {
@@ -266,7 +266,7 @@ ResponsiveDatatablesHelper.prototype.setWindowsResizeHandler = function(bindFlag
 /**
  * Respond window size change.  This helps make datatables responsive.
  */
-ResponsiveDatatablesHelper.prototype.respond = function () {
+ResponsiveDatatablesHelper.prototype.respond = function() {
     if (this.disabled) {
         return;
     }
@@ -277,7 +277,7 @@ ResponsiveDatatablesHelper.prototype.respond = function () {
 
     // Loop through breakpoints to see which columns need to be shown/hidden.
     var newColumnsToHide = [];
-    _.each(this.breakpoints, function (element) {
+    _.each(this.breakpoints, function(element) {
         if ((!element.lowerLimit || newWindowWidth > element.lowerLimit) && (!element.upperLimit || newWindowWidth <= element.upperLimit)) {
             this.currentBreakpoint = element.name;
             newColumnsToHide = element.columnsToHide;
@@ -328,7 +328,7 @@ ResponsiveDatatablesHelper.prototype.respond = function () {
         this.tableElement.addClass('has-columns-hidden');
 
         // Show details for each row that is tagged with the class .detail-show.
-        $('tr.detail-show', this.tableElement).each(function (index, element) {
+        $('tr.detail-show', this.tableElement).each(function(index, element) {
             var tr = $(element);
             if (tr.next('.row-detail').length === 0) {
                 ResponsiveDatatablesHelper.prototype.showRowDetail(that, tr);
@@ -336,7 +336,7 @@ ResponsiveDatatablesHelper.prototype.respond = function () {
         });
     } else {
         this.tableElement.removeClass('has-columns-hidden');
-        $('tr.row-detail').each(function (event) {
+        $('tr.row-detail').each(function(event) {
             ResponsiveDatatablesHelper.prototype.hideRowDetail(that, $(this).prev());
         });
     }
@@ -345,7 +345,7 @@ ResponsiveDatatablesHelper.prototype.respond = function () {
 /**
  * Show/hide datatables columns.
  */
-ResponsiveDatatablesHelper.prototype.showHideColumns = function () {
+ResponsiveDatatablesHelper.prototype.showHideColumns = function() {
     // Calculate the columns to show
     // Show columns that may have been previously hidden.
     for (var i = 0, l = this.columnsShownIndexes.length; i < l; i++) {
@@ -359,11 +359,11 @@ ResponsiveDatatablesHelper.prototype.showHideColumns = function () {
 
     // Rebuild details to reflect shown/hidden column changes.
     var that = this;
-    $('tr.row-detail').each(function () {
+    $('tr.row-detail').each(function() {
         ResponsiveDatatablesHelper.prototype.hideRowDetail(that, $(this).prev());
     });
     if (this.tableElement.hasClass('has-columns-hidden')) {
-        $('tr.detail-show', this.tableElement).each(function (index, element) {
+        $('tr.detail-show', this.tableElement).each(function(index, element) {
             ResponsiveDatatablesHelper.prototype.showRowDetail(that, $(element));
         });
     }
@@ -375,7 +375,7 @@ ResponsiveDatatablesHelper.prototype.showHideColumns = function () {
  *
  * @param {Object} tr table row object
  */
-ResponsiveDatatablesHelper.prototype.createExpandIcon = function (tr) {
+ResponsiveDatatablesHelper.prototype.createExpandIcon = function(tr) {
     if (this.disabled) {
         return;
     }
@@ -420,7 +420,7 @@ ResponsiveDatatablesHelper.prototype.createExpandIcon = function (tr) {
  *
  * @param {Object} event jQuery event object
  */
-ResponsiveDatatablesHelper.prototype.showRowDetailEventHandler = function (event) {
+ResponsiveDatatablesHelper.prototype.showRowDetailEventHandler = function(event) {
     var responsiveDatatablesHelperInstance = event.data.responsiveDatatablesHelperInstance;
     if (responsiveDatatablesHelperInstance.disabled) {
         return;
@@ -455,7 +455,7 @@ ResponsiveDatatablesHelper.prototype.showRowDetailEventHandler = function (event
  * @param {ResponsiveDatatablesHelper} responsiveDatatablesHelperInstance instance of ResponsiveDatatablesHelper
  * @param {Object}                     tr                                 jQuery wrapped set
  */
-ResponsiveDatatablesHelper.prototype.showRowDetail = function (responsiveDatatablesHelperInstance, tr) {
+ResponsiveDatatablesHelper.prototype.showRowDetail = function(responsiveDatatablesHelperInstance, tr) {
     // Get column because we need their titles.
     var tableContainer = responsiveDatatablesHelperInstance.tableElement;
     var columns = tableContainer.fnSettings().aoColumns;
@@ -467,7 +467,7 @@ ResponsiveDatatablesHelper.prototype.showRowDetail = function (responsiveDatatab
     var ul = $('ul', newTr);
 
     // Loop through hidden columns and create an li for each of them.
-    _.each(responsiveDatatablesHelperInstance.columnsHiddenIndexes, function (index) {
+    _.each(responsiveDatatablesHelperInstance.columnsHiddenIndexes, function(index) {
         // Get row td
         var rowIndex = tableContainer.fnGetPosition(tr[0]);
         var td = tableContainer.fnGetTds(rowIndex)[index];
@@ -485,7 +485,7 @@ ResponsiveDatatablesHelper.prototype.showRowDetail = function (responsiveDatatab
             // Copy td class to new li.
             var tdClass = $(td).attr('class');
             if (tdClass !== 'undefined' && tdClass !== false && tdClass !== '') {
-                      li.addClass(tdClass)
+                li.addClass(tdClass)
             }
 
             ul.append(li);
@@ -506,11 +506,11 @@ ResponsiveDatatablesHelper.prototype.showRowDetail = function (responsiveDatatab
  * @param {ResponsiveDatatablesHelper} responsiveDatatablesHelperInstance instance of ResponsiveDatatablesHelper
  * @param {Object}                     tr                                 jQuery wrapped set
  */
-ResponsiveDatatablesHelper.prototype.hideRowDetail = function (responsiveDatatablesHelperInstance, tr) {
+ResponsiveDatatablesHelper.prototype.hideRowDetail = function(responsiveDatatablesHelperInstance, tr) {
 
     // If the value of an input has changed, we need to copy its state back to the DataTables object
     // so that value will persist when the tr.row-detail is removed.
-    tr.next('.row-detail').find('li').each(function () {
+    tr.next('.row-detail').find('li').each(function() {
         var tableContainer = responsiveDatatablesHelperInstance.tableElement;
         var aoData = tableContainer.fnSettings().aoData;
         var rowIndex = tableContainer.fnGetPosition(tr[0]);
@@ -526,7 +526,7 @@ ResponsiveDatatablesHelper.prototype.hideRowDetail = function (responsiveDatatab
  *
  * @param {Boolean} disable, default is true
  */
-ResponsiveDatatablesHelper.prototype.disable = function (disable) {
+ResponsiveDatatablesHelper.prototype.disable = function(disable) {
     this.disabled = (disable === undefined) || disable;
 
     if (this.disabled) {
@@ -557,7 +557,7 @@ ResponsiveDatatablesHelper.prototype.disable = function (disable) {
 /**
  * Get state from cookie.
  */
-ResponsiveDatatablesHelper.prototype.getState = function () {
+ResponsiveDatatablesHelper.prototype.getState = function() {
     try {
         var value = JSON.parse(decodeURIComponent(this.getCookie(this.cookieName)));
         if (value) {
@@ -574,7 +574,7 @@ ResponsiveDatatablesHelper.prototype.getState = function () {
 /**
  * Saves state to cookie.
  */
-ResponsiveDatatablesHelper.prototype.setState = function () {
+ResponsiveDatatablesHelper.prototype.setState = function() {
     var d1 = _.difference(this.lastColumnsHiddenIndexes, this.columnsHiddenIndexes).length;
     var d2 = _.difference(this.columnsHiddenIndexes, this.lastColumnsHiddenIndexes).length;
 
@@ -595,12 +595,13 @@ ResponsiveDatatablesHelper.prototype.setState = function () {
 /**
  * Set cookie.
  */
-ResponsiveDatatablesHelper.prototype.getCookie = function (cname) {
+ResponsiveDatatablesHelper.prototype.getCookie = function(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i].trim();
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        if (c.indexOf(name) == 0)
+            return c.substring(name.length, c.length);
     }
     return "";
 };
@@ -608,14 +609,14 @@ ResponsiveDatatablesHelper.prototype.getCookie = function (cname) {
 /**
  * Set cookie.
  */
-ResponsiveDatatablesHelper.prototype.setCookie = function (cname, cvalue, cexp) {
+ResponsiveDatatablesHelper.prototype.setCookie = function(cname, cvalue, cexp) {
     var d = new Date();
     d.setTime(d.getTime() + cexp);
     var expires = "expires=" + d.toGMTString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
 };
 
-(function($){
+(function($) {
     /**
      * Get an array of TD nodes from DataTables for a given row, including any column elements which are hidden.
      *
@@ -625,7 +626,7 @@ ResponsiveDatatablesHelper.prototype.setCookie = function (cname, cvalue, cexp) 
      * @param {Object} oSettings DataTables settings object
      * @param {node}   mTr       TR node or aoData index
      */
-    $.fn.dataTableExt.oApi.fnGetTds = function (oSettings, mTr)
+    $.fn.dataTableExt.oApi.fnGetTds = function(oSettings, mTr)
     {
         var anTds = [];
         var anVisibleTds = [];
@@ -634,24 +635,24 @@ ResponsiveDatatablesHelper.prototype.setCookie = function (cname, cvalue, cexp) 
 
         /* Take either a TR node or aoData index as the mTr property */
         var iRow = (typeof mTr == 'object') ?
-            oSettings.oApi._fnNodeToDataIndex(oSettings, mTr) : mTr;
+                oSettings.oApi._fnNodeToDataIndex(oSettings, mTr) : mTr;
         var nTr = oSettings.aoData[iRow].nTr;
 
         /* Get an array of the visible TD elements */
-        for (iColumn=0, iColumns=nTr.childNodes.length; iColumn<iColumns ; iColumn++) {
+        for (iColumn = 0, iColumns = nTr.childNodes.length; iColumn < iColumns; iColumn++) {
             nTd = nTr.childNodes[iColumn];
             if (nTd.nodeName.toUpperCase() == "TD") {
-                anVisibleTds.push( nTd );
+                anVisibleTds.push(nTd);
             }
         }
 
         /* Construct and array of the combined elements */
-        for (iColumn=0, iColumns=oSettings.aoColumns.length; iColumn<iColumns ; iColumn++) {
+        for (iColumn = 0, iColumns = oSettings.aoColumns.length; iColumn < iColumns; iColumn++) {
             if (oSettings.aoColumns[iColumn].bVisible) {
-                anTds.push( anVisibleTds[iColumn-iCorrector] );
+                anTds.push(anVisibleTds[iColumn - iCorrector]);
             }
             else {
-                anTds.push( oSettings.aoData[iRow]._anHidden[iColumn] );
+                anTds.push(oSettings.aoData[iRow]._anHidden[iColumn]);
                 iCorrector++;
             }
         }

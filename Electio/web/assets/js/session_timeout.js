@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
     function sessionTimeout() {
 
@@ -13,29 +13,30 @@ $(function () {
             pollingInterval: 5, // 5 seconds
             keepAliveURL: 'assets/plugins/idle-timeout/keepalive.php',
             serverResponseEquals: 'OK',
-            onTimeout: function () {
+            onTimeout: function() {
                 window.location = "lockscreen.html";
             },
-            onIdle: function () {
+            onIdle: function() {
                 $('#session-timeout').modal('show');
                 $countdown = $('#idle-timeout-counter');
 
-                $('#idle-timeout-dialog-keepalive').on('click', function () {
+                $('#idle-timeout-dialog-keepalive').on('click', function() {
                     $('#session-timeout').modal('hide');
                 });
 
-                $('#idle-timeout-dialog-logout').on('click', function () {
+                $('#idle-timeout-dialog-logout').on('click', function() {
                     $('#session-timeout').modal('hide');
                     $.idleTimeout.options.onTimeout.call(this);
                 });
             },
-            onCountdown: function (counter) {
+            onCountdown: function(counter) {
                 /* We update the counter */
                 $countdown.html(counter);
             }
         });
 
-    };
+    }
+    ;
 
     sessionTimeout();
 

@@ -1,105 +1,101 @@
 define('parsley/form', [
-  'parsley/abstract',
-  'parsley/utils'
-], function (ParsleyAbstract, ParsleyUtils) {
-  var ParsleyForm = function (element, OptionsFactory) {
-    this.__class__ = 'ParsleyForm';
-    this.__id__ = ParsleyUtils.hash(4);
+    'parsley/abstract',
+    'parsley/utils'
+], function(ParsleyAbstract, ParsleyUtils) {
+    var ParsleyForm = function(element, OptionsFactory) {
+        this.__class__ = 'ParsleyForm';
+        this.__id__ = ParsleyUtils.hash(4);
 
-    if ('OptionsFactory' !== ParsleyUtils.get(OptionsFactory, '__class__'))
-      throw new Error('You must give an OptionsFactory instance');
+        if ('OptionsFactory' !== ParsleyUtils.get(OptionsFactory, '__class__'))
+            throw new Error('You must give an OptionsFactory instance');
 
-    this.OptionsFactory = OptionsFactory;
-    this.$element = $(element);
+        this.OptionsFactory = OptionsFactory;
+        this.$element = $(element);
 
-    this.validationResult = null;
-    this.options = this.OptionsFactory.get(this);
-  };
+        this.validationResult = null;
+        this.options = this.OptionsFactory.get(this);
+    };
 
-  ParsleyForm.prototype = {
-    onSubmitValidate: function (event) {
-      this.validate(undefined, undefined, event);
+    ParsleyForm.prototype = {
+        onSubmitValidate: function(event) {
+            this.validate(undefined, undefined, event);
 
-      // prevent form submission if validation fails
-      if (false === this.validationResult && event instanceof $.Event) {
-        event.stopImmediatePropagation();
-        event.preventDefault();
-      }
+            // prevent form submission if validation fails
+            if (false === this.validationResult && event instanceof $.Event) {
+                event.stopImmediatePropagation();
+                event.preventDefault();
+            }
 
-      return this;
-    },
+            return this;
+        },
+        // @returns boolean
+        validate: function(group, force, event) {
+            this.submitEvent = event;
+            this.validationResult = true;
 
-    // @returns boolean
-    validate: function (group, force, event) {
-      this.submitEvent = event;
-      this.validationResult = true;
+            var fieldValidationResult = [];
 
-      var fieldValidationResult = [];
+            // Refresh form DOM options and form's fields that could have changed
+            this._refreshFields();
 
-      // Refresh form DOM options and form's fields that could have changed
-      this._refreshFields();
+            $.emit('parsley:form:validate', this);
 
-      $.emit('parsley:form:validate', this);
+            // loop through fields to validate them one by one
+            for (var i = 0; i < this.fields.length; i++) {
 
-      // loop through fields to validate them one by one
-      for (var i = 0; i < this.fields.length; i++) {
+                // do not validate a field if not the same as given validation group
+                if (group && group !== this.fields[i].options.group)
+                    continue;
 
-        // do not validate a field if not the same as given validation group
-        if (group && group !== this.fields[i].options.group)
-          continue;
+                fieldValidationResult = this.fields[i].validate(force);
 
-        fieldValidationResult = this.fields[i].validate(force);
+                if (true !== fieldValidationResult && fieldValidationResult.length > 0 && this.validationResult)
+                    this.validationResult = false;
+            }
 
-        if (true !== fieldValidationResult && fieldValidationResult.length > 0 && this.validationResult)
-          this.validationResult = false;
-      }
+            $.emit('parsley:form:validated', this);
 
-      $.emit('parsley:form:validated', this);
+            return this.validationResult;
+        },
+        // Iterate over refreshed fields, and stop on first failure
+        isValid: function(group, force) {
+            this._refreshFields();
 
-      return this.validationResult;
-    },
+            for (var i = 0; i < this.fields.length; i++) {
 
-    // Iterate over refreshed fields, and stop on first failure
-    isValid: function (group, force) {
-      this._refreshFields();
+                // do not validate a field if not the same as given validation group
+                if (group && group !== this.fields[i].options.group)
+                    continue;
 
-      for (var i = 0; i < this.fields.length; i++) {
+                if (false === this.fields[i].isValid(force))
+                    return false;
+            }
 
-        // do not validate a field if not the same as given validation group
-        if (group && group !== this.fields[i].options.group)
-          continue;
+            return true;
+        },
+        _refreshFields: function() {
+            return this.actualizeOptions()._bindFields();
+        },
+        _bindFields: function() {
+            var self = this;
 
-        if (false === this.fields[i].isValid(force))
-          return false;
-      }
+            this.fields = [];
+            this.fieldsMappedById = {};
 
-      return true;
-    },
+            this.$element.find(this.options.inputs).each(function() {
+                var fieldInstance = new window.Parsley(this, {}, self);
 
-    _refreshFields: function () {
-      return this.actualizeOptions()._bindFields();
-    },
+                // Only add valid and not excluded `ParsleyField` and `ParsleyFieldMultiple` children
+                if (('ParsleyField' === fieldInstance.__class__ || 'ParsleyFieldMultiple' === fieldInstance.__class__) && !fieldInstance.$element.is(fieldInstance.options.excluded))
+                    if ('undefined' === typeof self.fieldsMappedById[fieldInstance.__class__ + '-' + fieldInstance.__id__]) {
+                        self.fieldsMappedById[fieldInstance.__class__ + '-' + fieldInstance.__id__] = fieldInstance;
+                        self.fields.push(fieldInstance);
+                    }
+            });
 
-    _bindFields: function () {
-      var self = this;
+            return this;
+        }
+    };
 
-      this.fields = [];
-      this.fieldsMappedById = {};
-
-      this.$element.find(this.options.inputs).each(function () {
-        var fieldInstance = new window.Parsley(this, {}, self);
-
-        // Only add valid and not excluded `ParsleyField` and `ParsleyFieldMultiple` children
-        if (('ParsleyField' === fieldInstance.__class__ || 'ParsleyFieldMultiple' === fieldInstance.__class__) && !fieldInstance.$element.is(fieldInstance.options.excluded))
-          if ('undefined' === typeof self.fieldsMappedById[fieldInstance.__class__ + '-' + fieldInstance.__id__]) {
-            self.fieldsMappedById[fieldInstance.__class__ + '-' + fieldInstance.__id__] = fieldInstance;
-            self.fields.push(fieldInstance);
-          }
-      });
-
-      return this;
-    }
-  };
-
-  return ParsleyForm;
+    return ParsleyForm;
 });

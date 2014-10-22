@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
     var simple_map;
     var styled_map;
@@ -43,73 +43,73 @@ $(function () {
         mapTypeControl: false,
         overviewMapControl: false,
         styles: [{
-            "featureType": "water",
-            "elementType": "geometry",
-            "stylers": [{
-                "color": "#193341"
-            }]
-        }, {
-            "featureType": "landscape",
-            "elementType": "geometry",
-            "stylers": [{
-                "color": "#2c5a71"
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "geometry",
-            "stylers": [{
-                "color": "#29768a"
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [{
+                        "color": "#193341"
+                    }]
             }, {
-                "lightness": -37
-            }]
-        }, {
-            "featureType": "poi",
-            "elementType": "geometry",
-            "stylers": [{
-                "color": "#406d80"
-            }]
-        }, {
-            "featureType": "transit",
-            "elementType": "geometry",
-            "stylers": [{
-                "color": "#406d80"
-            }]
-        }, {
-            "elementType": "labels.text.stroke",
-            "stylers": [{
-                "visibility": "on"
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [{
+                        "color": "#2c5a71"
+                    }]
             }, {
-                "color": "#3e606f"
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [{
+                        "color": "#29768a"
+                    }, {
+                        "lightness": -37
+                    }]
             }, {
-                "weight": 2
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [{
+                        "color": "#406d80"
+                    }]
             }, {
-                "gamma": 0.84
-            }]
-        }, {
-            "elementType": "labels.text.fill",
-            "stylers": [{
-                "color": "#ffffff"
-            }]
-        }, {
-            "featureType": "administrative",
-            "elementType": "geometry",
-            "stylers": [{
-                "weight": 0.6
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [{
+                        "color": "#406d80"
+                    }]
             }, {
-                "color": "#1a3541"
+                "elementType": "labels.text.stroke",
+                "stylers": [{
+                        "visibility": "on"
+                    }, {
+                        "color": "#3e606f"
+                    }, {
+                        "weight": 2
+                    }, {
+                        "gamma": 0.84
+                    }]
+            }, {
+                "elementType": "labels.text.fill",
+                "stylers": [{
+                        "color": "#ffffff"
+                    }]
+            }, {
+                "featureType": "administrative",
+                "elementType": "geometry",
+                "stylers": [{
+                        "weight": 0.6
+                    }, {
+                        "color": "#1a3541"
+                    }]
+            }, {
+                "elementType": "labels.icon",
+                "stylers": [{
+                        "visibility": "off"
+                    }]
+            }, {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [{
+                        "color": "#2c5a71"
+                    }]
             }]
-        }, {
-            "elementType": "labels.icon",
-            "stylers": [{
-                "visibility": "off"
-            }]
-        }, {
-            "featureType": "poi.park",
-            "elementType": "geometry",
-            "stylers": [{
-                "color": "#2c5a71"
-            }]
-        }]
     });
 
     map = new GMaps({
@@ -122,9 +122,9 @@ $(function () {
         origin: [-12.044012922866312, -77.02470665341184],
         destination: [-12.090814532191756, -77.02271108990476],
         travelMode: 'driving',
-        step: function (e) {
+        step: function(e) {
             $('#instructions').append('<li>' + e.instructions + '</li>');
-            $('#instructions li:eq(' + e.step_number + ')').delay(450 * e.step_number).fadeIn(200, function () {
+            $('#instructions li:eq(' + e.step_number + ')').delay(450 * e.step_number).fadeIn(200, function() {
                 map.drawPolyline({
                     path: e.path,
                     strokeColor: '#131540',
@@ -139,7 +139,7 @@ $(function () {
         div: '#cluster-map',
         lat: -12.043333,
         lng: -77.028333,
-        markerClusterer: function (map) {
+        markerClusterer: function(map) {
             return new MarkerClusterer(map);
         }
     });
@@ -156,7 +156,8 @@ $(function () {
             lng: longitude,
             title: 'Marker #' + i
         });
-    };
+    }
+    ;
 
     geocoding_map = new GMaps({
         el: '#geocoding-map',
@@ -164,11 +165,11 @@ $(function () {
         lng: -77.028333
     });
 
-    $('#geocoding_form').submit(function (e) {
+    $('#geocoding_form').submit(function(e) {
         e.preventDefault();
         GMaps.geocode({
             address: $('#address').val().trim(),
-            callback: function (results, status) {
+            callback: function(results, status) {
                 if (status == 'OK') {
                     var latlng = results[0].geometry.location;
                     geocoding_map.setCenter(latlng.lat(), latlng.lng());

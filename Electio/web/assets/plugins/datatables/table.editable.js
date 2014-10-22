@@ -1,9 +1,8 @@
-var EditableTable = function () {
+var EditableTable = function() {
 
     return {
-
         //main function to initiate the module
-        init: function () {
+        init: function() {
             function restoreRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
@@ -73,17 +72,17 @@ var EditableTable = function () {
 
             var nEditing = null;
 
-            $('#table-edit_new').click(function (e) {
+            $('#table-edit_new').click(function(e) {
                 e.preventDefault();
                 var aiNew = oTable.fnAddData(['', '', '', '',
-                        '<p class="text-center"><a class="edit btn btn-dark" href=""><i class="fa fa-pencil-square-o"></i>Edit</a> <a class="delete btn btn-danger" href=""><i class="fa fa-times-circle"></i> Remove</a></p>'
+                    '<p class="text-center"><a class="edit btn btn-dark" href=""><i class="fa fa-pencil-square-o"></i>Edit</a> <a class="delete btn btn-danger" href=""><i class="fa fa-times-circle"></i> Remove</a></p>'
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
                 editRow(oTable, nRow);
                 nEditing = nRow;
             });
 
-            $('#table-editable a.delete').live('click', function (e) {
+            $('#table-editable a.delete').live('click', function(e) {
                 e.preventDefault();
 
                 if (confirm("Are you sure to delete this row ?") == false) {
@@ -94,7 +93,7 @@ var EditableTable = function () {
                 oTable.fnDeleteRow(nRow);
             });
 
-            $('#table-editable a.cancel').live('click', function (e) {
+            $('#table-editable a.cancel').live('click', function(e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -105,7 +104,7 @@ var EditableTable = function () {
                 }
             });
 
-            $('#table-editable a.edit').live('click', function (e) {
+            $('#table-editable a.edit').live('click', function(e) {
                 e.preventDefault();
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
@@ -115,12 +114,12 @@ var EditableTable = function () {
                     editRow(oTable, nRow);
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
-                     /* This row is being edited and should be saved */
+                    /* This row is being edited and should be saved */
                     saveRow(oTable, nEditing);
                     nEditing = null;
                     // alert("Updated! Do not forget to do some ajax to sync with backend :)");
                 } else {
-                     /* No row currently being edited */
+                    /* No row currently being edited */
                     editRow(oTable, nRow);
                     nEditing = nRow;
                 }

@@ -11,7 +11,6 @@
             message: 'message',
             type: 'type'
         },
-
         /**
          * Validate upload file. Use HTML 5 API if the browser supports
          *
@@ -32,20 +31,20 @@
             }
 
             var ext,
-                extensions = options.extension ? options.extension.toLowerCase().split(',') : null,
-                types      = options.type      ? options.type.toLowerCase().split(',')      : null,
-                html5      = (window.File && window.FileList && window.FileReader);
+                    extensions = options.extension ? options.extension.toLowerCase().split(',') : null,
+                    types = options.type ? options.type.toLowerCase().split(',') : null,
+                    html5 = (window.File && window.FileList && window.FileReader);
 
             if (html5) {
                 // Get FileList instance
                 var files = $field.get(0).files,
-                    total = files.length;
+                        total = files.length;
                 for (var i = 0; i < total; i++) {
                     // Check the minSize
                     if (options.minSize && files[i].size < parseInt(options.minSize, 10)) {
                         return false;
                     }
-                    
+
                     // Check the maxSize
                     if (options.maxSize && files[i].size > parseInt(options.maxSize, 10)) {
                         return false;

@@ -26,11 +26,11 @@
             if (!/^IMO \d{7}$/i.test(value)) {
                 return false;
             }
-            
+
             // Grab just the digits
-            var sum    = 0,
-                digits = value.replace(/^.*(\d{7})$/, '$1');
-            
+            var sum = 0,
+                    digits = value.replace(/^.*(\d{7})$/, '$1');
+
             // Go over each char, multiplying by the inverse of it's position
             // IMO 9176187
             // (9 * 7) + (1 * 6) + (7 * 5) + (6 * 4) + (1 * 3) + (8 * 2) = 147

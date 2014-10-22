@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
     /*  Search Icons Function  */
     if ($('input#member-finder').length) {

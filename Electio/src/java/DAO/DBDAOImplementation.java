@@ -172,6 +172,17 @@ public class DBDAOImplementation {
         return el;
     }
 
+    public String getElectionName(long id) throws SQLException {
+        String name = null;
+        PreparedStatement ps = con.prepareStatement("SELECT name FROM tbl_election WHERE id=?");
+        ps.setLong(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            name = rs.getString("name");
+        }
+        return name;
+    }
+
     public boolean deleteNominee(String email, long id) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=?");
@@ -415,5 +426,32 @@ public class DBDAOImplementation {
             candidates.add(candidate);
         }
         return candidates;
+    }
+
+    public boolean registerNominee(Nominee nominee) throws SQLException {
+        boolean result = false;
+        con.setAutoCommit(false);
+        PreparedStatement ps1 = con.prepareStatement("INSERT INTO tbl_user_info(email, firstname,lastname,mobile,organization_id, image, password) VALUES(?,?,?,?,?,?,?)");
+        ps1.setString(1, nominee.getEmail());
+        ps1.setString(2, nominee.getFirstname());
+        ps1.setString(3, nominee.getLastname());
+        ps1.setString(4, nominee.getMobile());
+        ps1.setLong(5, nominee.getOrganization_id());
+        ps1.setString(6, nominee.getImage());
+        ps1.setString(7, nominee.getPassword());
+
+        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_nominee(email, election_id,requirements_file, status) VALUES(?,?,?,?)");
+        ps2.setString(1, nominee.getEmail());
+        ps2.setLong(2, nominee.getElection_id());
+        ps2.setString(3, nominee.getRequirements_file());
+        ps2.setBoolean(4, nominee.getStatus());
+
+        if (ps1.executeUpdate() > 0 && ps2.executeUpdate() > 0) {
+            result = true;
+            con.commit();
+        } else {
+            con.rollback();
+        }
+        return result;
     }
 }

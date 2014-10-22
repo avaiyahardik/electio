@@ -4,13 +4,13 @@ br { clear: both; }
 input { border: 1px solid black; margin-bottom: .5em;  }
 input.error { border: 1px solid red; }
 label.error {
-	background: url('images/unchecked.gif') no-repeat;
-	padding-left: 16px;
-	margin-left: .3em;
+    background: url('images/unchecked.gif') no-repeat;
+    padding-left: 16px;
+    margin-left: .3em;
 }
 label.valid {
-	background: url('images/checked.gif') no-repeat;
-	display: block;
-	width: 16px;
-	height: 16px;
+    background: url('images/checked.gif') no-repeat;
+    display: block;
+    width: 16px;
+    height: 16px;
 }

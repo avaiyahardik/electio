@@ -27,13 +27,13 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [1, 3, 1, 7, 3, 9, 1],
-                length = value.length;
+            var sum = 0,
+                    weight = [1, 3, 1, 7, 3, 9, 1],
+                    length = value.length;
             for (var i = 0; i < length - 1; i++) {
-	            sum += weight[i] * parseInt(value.charAt(i), 36);
-	        }
-	        sum = (10 - sum % 10) % 10;
+                sum += weight[i] * parseInt(value.charAt(i), 36);
+            }
+            sum = (10 - sum % 10) % 10;
             return sum + '' === value.charAt(length - 1);
         }
     };

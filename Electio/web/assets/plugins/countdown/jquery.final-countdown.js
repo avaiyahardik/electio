@@ -7,7 +7,7 @@
  * @link https://github.com/PragmaticMates/jquery-final-countdown
  */
 
-(function ($) {
+(function($) {
     var settings;
     var timer;
 
@@ -25,7 +25,7 @@
     var callbackFunction;
 
     $.fn.final_countdown = function(options, callback) {
-        element = $(this);        
+        element = $(this);
 
         var defaults = $.extend({
             start: undefined,
@@ -77,7 +77,7 @@
             settings.seconds.borderColor = settings.minutes.borderColor = settings.hours.borderColor = settings.days.borderColor = element.data('border-color');
         }
 
-        if (settings.now < settings.start ) {
+        if (settings.now < settings.start) {
             settings.start = settings.now;
             settings.end = settings.now;
         }
@@ -90,7 +90,7 @@
         if (typeof callback == 'function') { // make sure the callback is a function
             callbackFunction = callback;
         }
-        
+
         responsive();
         dispatchTimer();
         prepareCounters();
@@ -107,7 +107,7 @@
         $(window).on('resize', updateCircles);
     }
 
-    function updateCircles() {     
+    function updateCircles() {
         layerSeconds.draw();
         layerMinutes.draw();
         layerHours.draw();
@@ -115,16 +115,16 @@
     }
 
     function convertToDeg(degree) {
-        return (Math.PI/180)*degree - (Math.PI/180)*90
+        return (Math.PI / 180) * degree - (Math.PI / 180) * 90
     }
 
     function dispatchTimer() {
         timer = {
             total: Math.floor((settings.end - settings.start) / 86400),
-            days: Math.floor((settings.end - settings.now ) / 86400),
+            days: Math.floor((settings.end - settings.now) / 86400),
             hours: 24 - Math.floor(((settings.end - settings.now) % 86400) / 3600),
             minutes: 60 - Math.floor((((settings.end - settings.now) % 86400) % 3600) / 60),
-            seconds: 60 - Math.floor((((settings.end - settings.now) % 86400) % 3600) % 60 )
+            seconds: 60 - Math.floor((((settings.end - settings.now) % 86400) % 3600) % 60)
         }
     }
 
@@ -199,7 +199,7 @@
         circleHours = new Kinetic.Shape({
             drawFunc: function(context) {
                 var hours_width = $('#' + settings.selectors.canvas_hours).width();
-                var radius = hours_width / 2 - settings.hours.borderWidth/2;
+                var radius = hours_width / 2 - settings.hours.borderWidth / 2;
                 var x = hours_width / 2;
                 var y = hours_width / 2;
 
@@ -229,7 +229,7 @@
         circleDays = new Kinetic.Shape({
             drawFunc: function(context) {
                 var days_width = $('#' + settings.selectors.canvas_days).width();
-                var radius = days_width/2 - settings.days.borderWidth/2;
+                var radius = days_width / 2 - settings.days.borderWidth / 2;
                 var x = days_width / 2;
                 var y = days_width / 2;
 
@@ -254,9 +254,9 @@
         daysStage.add(layerDays);
     }
 
-    function startCounters() {        
-        var interval = setInterval( function() {                        
-            if (timer.seconds > 59 ) {
+    function startCounters() {
+        var interval = setInterval(function() {
+            if (timer.seconds > 59) {
                 if (60 - timer.minutes == 0 && 24 - timer.hours == 0 && timer.days == 0) {
                     clearInterval(interval);
                     if (callbackFunction !== undefined) {
@@ -276,16 +276,16 @@
                             timer.days--;
                             layerDays.draw();
                         }
-                    } else {                        
+                    } else {
                         timer.hours++;
-                    }                    
+                    }
                     layerHours.draw()
                 } else {
                     timer.minutes++;
                 }
 
                 layerMinutes.draw();
-            } else {            
+            } else {
                 timer.seconds++;
             }
 

@@ -36,7 +36,7 @@
             'default': 'Geef een andere waarde '
         },
         digits: {
-             'default': 'Geef alleen cijfers in'
+            'default': 'Geef alleen cijfers in'
         },
         ean: {
             'default': 'Geef een geldig EAN nummer'

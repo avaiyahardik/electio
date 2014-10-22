@@ -2,307 +2,330 @@ Rickshaw.namespace('Rickshaw.Graph');
 
 Rickshaw.Graph = function(args) {
 
-	var self = this;
+    var self = this;
+
+    this.initialize = function(args) {
+
+        if (!args.element)
+            throw "Rickshaw.Graph needs a reference to an element";
+        if (args.element.nodeType !== 1)
+            throw "Rickshaw.Graph element was defined but not an HTML element";
+
+        this.element = args.element;
+        this.series = args.series;
+        this.window = {};
+
+        this.updateCallbacks = [];
+        this.configureCallbacks = [];
+
+        this.defaults = {
+            interpolation: 'cardinal',
+            offset: 'zero',
+            min: undefined,
+            max: undefined,
+            preserve: false,
+            xScale: undefined,
+            yScale: undefined
+        };
+
+        this._loadRenderers();
+        this.configure(args);
+        this.validateSeries(args.series);
+
+        this.series.active = function() {
+            return self.series.filter(function(s) {
+                return !s.disabled
+            })
+        };
+        this.setSize({width: args.width, height: args.height});
+        this.element.classList.add('rickshaw_graph');
+
+        this.vis = d3.select(this.element)
+                .append("svg:svg")
+                .attr('width', this.width)
+                .attr('height', this.height);
 
-	this.initialize = function(args) {
+        this.discoverRange();
+    };
+
+    this._loadRenderers = function() {
+
+        for (var name in Rickshaw.Graph.Renderer) {
+            if (!name || !Rickshaw.Graph.Renderer.hasOwnProperty(name))
+                continue;
+            var r = Rickshaw.Graph.Renderer[name];
+            if (!r || !r.prototype || !r.prototype.render)
+                continue;
+            self.registerRenderer(new r({graph: self}));
+        }
+    };
+
+    this.validateSeries = function(series) {
+
+        if (!Array.isArray(series) && !(series instanceof Rickshaw.Series)) {
+            var seriesSignature = Object.prototype.toString.apply(series);
+            throw "series is not an array: " + seriesSignature;
+        }
+
+        var pointsCount;
+
+        series.forEach(function(s) {
+
+            if (!(s instanceof Object)) {
+                throw "series element is not an object: " + s;
+            }
+            if (!(s.data)) {
+                throw "series has no data: " + JSON.stringify(s);
+            }
+            if (!Array.isArray(s.data)) {
+                throw "series data is not an array: " + JSON.stringify(s.data);
+            }
+
+            var x = s.data[0].x;
+            var y = s.data[0].y;
+
+            if (typeof x != 'number' || (typeof y != 'number' && y !== null)) {
+                throw "x and y properties of points should be numbers instead of " +
+                        (typeof x) + " and " + (typeof y);
+            }
+
+            if (s.data.length >= 3) {
+                // probe to sanity check sort order
+                if (s.data[2].x < s.data[1].x || s.data[1].x < s.data[0].x || s.data[s.data.length - 1].x < s.data[0].x) {
+                    throw "series data needs to be sorted on x values for series name: " + s.name;
+                }
+            }
+
+        }, this);
+    };
+
+    this.dataDomain = function() {
+
+        var data = this.series.map(function(s) {
+            return s.data
+        });
+
+        var min = d3.min(data.map(function(d) {
+            return d[0].x
+        }));
+        var max = d3.max(data.map(function(d) {
+            return d[d.length - 1].x
+        }));
+
+        return [min, max];
+    };
+
+    this.discoverRange = function() {
+
+        var domain = this.renderer.domain();
+
+        this.x = (this.xScale || d3.scale.linear()).domain(domain.x).range([0, this.width]);
+        this.y = (this.yScale || d3.scale.linear()).domain(domain.y).range([this.height, 0]);
+
+        this.y.magnitude = d3.scale.linear()
+                .domain([domain.y[0] - domain.y[0], domain.y[1] - domain.y[0]])
+                .range([0, this.height]);
+    };
 
-		if (!args.element) throw "Rickshaw.Graph needs a reference to an element";
-		if (args.element.nodeType !== 1) throw "Rickshaw.Graph element was defined but not an HTML element";
+    this.render = function() {
 
-		this.element = args.element;
-		this.series = args.series;
-		this.window = {};
+        var stackedData = this.stackData();
+        this.discoverRange();
+
+        this.renderer.render();
 
-		this.updateCallbacks = [];
-		this.configureCallbacks = [];
+        this.updateCallbacks.forEach(function(callback) {
+            callback();
+        });
 
-		this.defaults = {
-			interpolation: 'cardinal',
-			offset: 'zero',
-			min: undefined,
-			max: undefined,
-			preserve: false,
-			xScale: undefined,
-			yScale: undefined
-		};
+    };
 
-		this._loadRenderers();
-		this.configure(args);
-		this.validateSeries(args.series);
+    this.update = this.render;
 
-		this.series.active = function() { return self.series.filter( function(s) { return !s.disabled } ) };
-		this.setSize({ width: args.width, height: args.height });
-		this.element.classList.add('rickshaw_graph');
+    this.stackData = function() {
 
-		this.vis = d3.select(this.element)
-			.append("svg:svg")
-			.attr('width', this.width)
-			.attr('height', this.height);
+        var data = this.series.active()
+                .map(function(d) {
+                    return d.data
+                })
+                .map(function(d) {
+                    return d.filter(function(d) {
+                        return this._slice(d)
+                    }, this)
+                }, this);
 
-		this.discoverRange();
-	};
+        var preserve = this.preserve;
+        if (!preserve) {
+            this.series.forEach(function(series) {
+                if (series.scale) {
+                    // data must be preserved when a scale is used
+                    preserve = true;
+                }
+            });
+        }
 
-	this._loadRenderers = function() {
+        data = preserve ? Rickshaw.clone(data) : data;
 
-		for (var name in Rickshaw.Graph.Renderer) {
-			if (!name || !Rickshaw.Graph.Renderer.hasOwnProperty(name)) continue;
-			var r = Rickshaw.Graph.Renderer[name];
-			if (!r || !r.prototype || !r.prototype.render) continue;
-			self.registerRenderer(new r( { graph: self } ));
-		}
-	};
+        this.series.active().forEach(function(series, index) {
+            if (series.scale) {
+                // apply scale to each series
+                var seriesData = data[index];
+                if (seriesData) {
+                    seriesData.forEach(function(d) {
+                        d.y = series.scale(d.y);
+                    });
+                }
+            }
+        });
 
-	this.validateSeries = function(series) {
+        this.stackData.hooks.data.forEach(function(entry) {
+            data = entry.f.apply(self, [data]);
+        });
 
-		if (!Array.isArray(series) && !(series instanceof Rickshaw.Series)) {
-			var seriesSignature = Object.prototype.toString.apply(series);
-			throw "series is not an array: " + seriesSignature;
-		}
+        var stackedData;
 
-		var pointsCount;
+        if (!this.renderer.unstack) {
 
-		series.forEach( function(s) {
+            this._validateStackable();
 
-			if (!(s instanceof Object)) {
-				throw "series element is not an object: " + s;
-			}
-			if (!(s.data)) {
-				throw "series has no data: " + JSON.stringify(s);
-			}
-			if (!Array.isArray(s.data)) {
-				throw "series data is not an array: " + JSON.stringify(s.data);
-			}
+            var layout = d3.layout.stack();
+            layout.offset(self.offset);
+            stackedData = layout(data);
+        }
 
-			var x = s.data[0].x;
-			var y = s.data[0].y;
+        stackedData = stackedData || data;
 
-			if (typeof x != 'number' || ( typeof y != 'number' && y !== null ) ) {
-				throw "x and y properties of points should be numbers instead of " +
-					(typeof x) + " and " + (typeof y);
-			}
+        if (this.renderer.unstack) {
+            stackedData.forEach(function(seriesData) {
+                seriesData.forEach(function(d) {
+                    d.y0 = d.y0 === undefined ? 0 : d.y0;
+                });
+            });
+        }
 
-			if (s.data.length >= 3) {
-				// probe to sanity check sort order
-				if (s.data[2].x < s.data[1].x || s.data[1].x < s.data[0].x || s.data[s.data.length - 1].x < s.data[0].x) {
-					throw "series data needs to be sorted on x values for series name: " + s.name;
-				}
-			}
+        this.stackData.hooks.after.forEach(function(entry) {
+            stackedData = entry.f.apply(self, [data]);
+        });
 
-		}, this );
-	};
+        var i = 0;
+        this.series.forEach(function(series) {
+            if (series.disabled)
+                return;
+            series.stack = stackedData[i++];
+        });
 
-	this.dataDomain = function() {
+        this.stackedData = stackedData;
+        return stackedData;
+    };
 
-		var data = this.series.map( function(s) { return s.data } );
+    this._validateStackable = function() {
 
-		var min = d3.min( data.map( function(d) { return d[0].x } ) );
-		var max = d3.max( data.map( function(d) { return d[d.length - 1].x } ) );
+        var series = this.series;
+        var pointsCount;
 
-		return [min, max];
-	};
+        series.forEach(function(s) {
 
-	this.discoverRange = function() {
+            pointsCount = pointsCount || s.data.length;
 
-		var domain = this.renderer.domain();
+            if (pointsCount && s.data.length != pointsCount) {
+                throw "stacked series cannot have differing numbers of points: " +
+                        pointsCount + " vs " + s.data.length + "; see Rickshaw.Series.fill()";
+            }
 
-		this.x = (this.xScale || d3.scale.linear()).domain(domain.x).range([0, this.width]);
-		this.y = (this.yScale || d3.scale.linear()).domain(domain.y).range([this.height, 0]);
+        }, this);
+    };
 
-		this.y.magnitude = d3.scale.linear()
-			.domain([domain.y[0] - domain.y[0], domain.y[1] - domain.y[0]])
-			.range([0, this.height]);
-	};
+    this.stackData.hooks = {data: [], after: []};
 
-	this.render = function() {
+    this._slice = function(d) {
 
-		var stackedData = this.stackData();
-		this.discoverRange();
+        if (this.window.xMin || this.window.xMax) {
 
-		this.renderer.render();
+            var isInRange = true;
 
-		this.updateCallbacks.forEach( function(callback) {
-			callback();
-		} );
+            if (this.window.xMin && d.x < this.window.xMin)
+                isInRange = false;
+            if (this.window.xMax && d.x > this.window.xMax)
+                isInRange = false;
 
-	};
+            return isInRange;
+        }
 
-	this.update = this.render;
+        return true;
+    };
 
-	this.stackData = function() {
+    this.onUpdate = function(callback) {
+        this.updateCallbacks.push(callback);
+    };
 
-		var data = this.series.active()
-			.map( function(d) { return d.data } )
-			.map( function(d) { return d.filter( function(d) { return this._slice(d) }, this ) }, this);
+    this.onConfigure = function(callback) {
+        this.configureCallbacks.push(callback);
+    };
 
-		var preserve = this.preserve;
-		if (!preserve) {
-			this.series.forEach( function(series) {
-				if (series.scale) {
-					// data must be preserved when a scale is used
-					preserve = true;
-				}
-			} );
-		}
+    this.registerRenderer = function(renderer) {
+        this._renderers = this._renderers || {};
+        this._renderers[renderer.name] = renderer;
+    };
 
-		data = preserve ? Rickshaw.clone(data) : data;
+    this.configure = function(args) {
 
-		this.series.active().forEach( function(series, index) {
-			if (series.scale) {
-				// apply scale to each series
-				var seriesData = data[index];
-				if(seriesData) {
-					seriesData.forEach( function(d) {
-						d.y = series.scale(d.y);
-					} );
-				}
-			}
-		} );
+        this.config = this.config || {};
 
-		this.stackData.hooks.data.forEach( function(entry) {
-			data = entry.f.apply(self, [data]);
-		} );
+        if (args.width || args.height) {
+            this.setSize(args);
+        }
 
-		var stackedData;
+        Rickshaw.keys(this.defaults).forEach(function(k) {
+            this.config[k] = k in args ? args[k]
+                    : k in this ? this[k]
+                    : this.defaults[k];
+        }, this);
 
-		if (!this.renderer.unstack) {
+        Rickshaw.keys(this.config).forEach(function(k) {
+            this[k] = this.config[k];
+        }, this);
 
-			this._validateStackable();
+        var renderer = args.renderer || (this.renderer && this.renderer.name) || 'stack';
+        this.setRenderer(renderer, args);
 
-			var layout = d3.layout.stack();
-			layout.offset( self.offset );
-			stackedData = layout(data);
-		}
+        this.configureCallbacks.forEach(function(callback) {
+            callback(args);
+        });
+    };
 
-		stackedData = stackedData || data;
+    this.setRenderer = function(r, args) {
+        if (typeof r == 'function') {
+            this.renderer = new r({graph: self});
+            this.registerRenderer(this.renderer);
+        } else {
+            if (!this._renderers[r]) {
+                throw "couldn't find renderer " + r;
+            }
+            this.renderer = this._renderers[r];
+        }
 
-		if (this.renderer.unstack) {
-			stackedData.forEach( function(seriesData) {
-				seriesData.forEach( function(d) {
-					d.y0 = d.y0 === undefined ? 0 : d.y0;
-				} );
-			} );
-		}
+        if (typeof args == 'object') {
+            this.renderer.configure(args);
+        }
+    };
 
-		this.stackData.hooks.after.forEach( function(entry) {
-			stackedData = entry.f.apply(self, [data]);
-		} );
+    this.setSize = function(args) {
 
-		var i = 0;
-		this.series.forEach( function(series) {
-			if (series.disabled) return;
-			series.stack = stackedData[i++];
-		} );
+        args = args || {};
 
-		this.stackedData = stackedData;
-		return stackedData;
-	};
+        if (typeof window !== undefined) {
+            var style = window.getComputedStyle(this.element, null);
+            var elementWidth = parseInt(style.getPropertyValue('width'), 10);
+            var elementHeight = parseInt(style.getPropertyValue('height'), 10);
+        }
 
-	this._validateStackable = function() {
+        this.width = args.width || elementWidth || 400;
+        this.height = args.height || elementHeight || 250;
 
-		var series = this.series;
-		var pointsCount;
+        this.vis && this.vis
+                .attr('width', this.width)
+                .attr('height', this.height);
+    };
 
-		series.forEach( function(s) {
-
-			pointsCount = pointsCount || s.data.length;
-
-			if (pointsCount && s.data.length != pointsCount) {
-				throw "stacked series cannot have differing numbers of points: " +
-					pointsCount + " vs " + s.data.length + "; see Rickshaw.Series.fill()";
-			}
-
-		}, this );
-	};
-
-	this.stackData.hooks = { data: [], after: [] };
-
-	this._slice = function(d) {
-
-		if (this.window.xMin || this.window.xMax) {
-
-			var isInRange = true;
-
-			if (this.window.xMin && d.x < this.window.xMin) isInRange = false;
-			if (this.window.xMax && d.x > this.window.xMax) isInRange = false;
-
-			return isInRange;
-		}
-
-		return true;
-	};
-
-	this.onUpdate = function(callback) {
-		this.updateCallbacks.push(callback);
-	};
-
-	this.onConfigure = function(callback) {
-		this.configureCallbacks.push(callback);
-	};
-
-	this.registerRenderer = function(renderer) {
-		this._renderers = this._renderers || {};
-		this._renderers[renderer.name] = renderer;
-	};
-
-	this.configure = function(args) {
-
-		this.config = this.config || {};
-
-		if (args.width || args.height) {
-			this.setSize(args);
-		}
-
-		Rickshaw.keys(this.defaults).forEach( function(k) {
-			this.config[k] = k in args ? args[k]
-				: k in this ? this[k]
-				: this.defaults[k];
-		}, this );
-
-		Rickshaw.keys(this.config).forEach( function(k) {
-			this[k] = this.config[k];
-		}, this );
-
-		var renderer = args.renderer || (this.renderer && this.renderer.name) || 'stack';
-		this.setRenderer(renderer, args);
-
-		this.configureCallbacks.forEach( function(callback) {
-			callback(args);
-		} );
-	};
-
-	this.setRenderer = function(r, args) {
-		if (typeof r == 'function') {
-			this.renderer = new r( { graph: self } );
-			this.registerRenderer(this.renderer);
-		} else {
-			if (!this._renderers[r]) {
-				throw "couldn't find renderer " + r;
-			}
-			this.renderer = this._renderers[r];
-		}
-
-		if (typeof args == 'object') {
-			this.renderer.configure(args);
-		}
-	};
-
-	this.setSize = function(args) {
-
-		args = args || {};
-
-		if (typeof window !== undefined) {
-			var style = window.getComputedStyle(this.element, null);
-			var elementWidth = parseInt(style.getPropertyValue('width'), 10);
-			var elementHeight = parseInt(style.getPropertyValue('height'), 10);
-		}
-
-		this.width = args.width || elementWidth || 400;
-		this.height = args.height || elementHeight || 250;
-
-		this.vis && this.vis
-			.attr('width', this.width)
-			.attr('height', this.height);
-	};
-
-	this.initialize(args);
+    this.initialize(args);
 };

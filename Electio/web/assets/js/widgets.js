@@ -5,7 +5,7 @@ $.simpleWeather({
     location: city,
     woeid: '',
     unit: 'f',
-    success: function (weather) {
+    success: function(weather) {
         city = weather.city;
         region = weather.country;
         tomorrow_date = weather.tomorrow.date;
@@ -33,13 +33,13 @@ $.simpleWeather({
 });
 
 /* We get city from input on change */
-$("#city-form").change(function () {
+$("#city-form").change(function() {
     city = document.getElementById("city-form").value;
     $.simpleWeather({
         location: city,
         woeid: '',
         unit: 'f',
-        success: function (weather) {
+        success: function(weather) {
             city = weather.city;
             region = weather.country;
             tomorrow_date = weather.tomorrow.date;
@@ -119,13 +119,13 @@ var data2 = [
 ];
 
 var plot = $.plot($("#chart_1"), [{
-    data: data1,
-    showLabels: true,
-    label: "Product 1",
-    labelPlacement: "below",
-    canvasRender: true,
-    cColor: "#FFFFFF"
-}], {
+        data: data1,
+        showLabels: true,
+        label: "Product 1",
+        labelPlacement: "below",
+        canvasRender: true,
+        cColor: "#FFFFFF"
+    }], {
     series: {
         lines: {
             show: true,
@@ -150,20 +150,19 @@ var plot = $.plot($("#chart_1"), [{
 
 //************************* SALE PRODUCT 2 CHART *************************//
 var plot = $.plot($("#chart_2"), [{
-    data: data2,
-    showLabels: true,
-    label: "Product 2",
-    labelPlacement: "below",
-    color: '#C75757',
-    canvasRender: true,
-    cColor: "#FFFFFF"
-}], {
+        data: data2,
+        showLabels: true,
+        label: "Product 2",
+        labelPlacement: "below",
+        color: '#C75757',
+        canvasRender: true,
+        cColor: "#FFFFFF"
+    }], {
     bars: {
         show: true,
         fill: true,
         lineWidth: 1,
         lineColor: '#121212',
-
         order: 1,
         fill: 0.8
     },
@@ -180,30 +179,30 @@ var plot = $.plot($("#chart_2"), [{
 //************************* SALE PRODUCT 1 & 2 CHART *************************//
 var chartColor = $(this).parent().parent().css("color");
 var plot = $.plot($("#chart_3"), [{
-    data: data1,
-    label: "Visits",
-    lines: {
-        show: true,
-        fill: true,
-        fillColor: "rgba(0, 162, 217, 0.1)",
-        lineWidth: 3
-    },
-    points: {
-        show: true,
-        lineWidth: 3,
-        fill: true
-    },
-    shadowSize: 0
-}, {
-    data: data2,
-    bars: {
-        show: true,
-        fill: false,
-        barWidth: 0.1,
-        align: "center",
-        lineWidth: 8
-    }
-}], {
+        data: data1,
+        label: "Visits",
+        lines: {
+            show: true,
+            fill: true,
+            fillColor: "rgba(0, 162, 217, 0.1)",
+            lineWidth: 3
+        },
+        points: {
+            show: true,
+            lineWidth: 3,
+            fill: true
+        },
+        shadowSize: 0
+    }, {
+        data: data2,
+        bars: {
+            show: true,
+            fill: false,
+            barWidth: 0.1,
+            align: "center",
+            lineWidth: 8
+        }
+    }], {
     grid: {
         show: false,
         hoverable: true,
@@ -239,7 +238,7 @@ function showTooltip(x, y, contents) {
 }
 
 var previousPoint = null;
-$("#chart_1, #chart_2, #chart_3").bind("plothover", function (event, pos, item) {
+$("#chart_1, #chart_2, #chart_3").bind("plothover", function(event, pos, item) {
     $("#x").text(pos.x.toFixed(2));
     $("#y").text(pos.y.toFixed(2));
     if (item) {
@@ -247,7 +246,7 @@ $("#chart_1, #chart_2, #chart_3").bind("plothover", function (event, pos, item) 
             previousPoint = item.dataIndex;
             $("#flot-tooltip").remove();
             var x = item.datapoint[0].toFixed(2),
-                y = item.datapoint[1].toFixed(2);
+                    y = item.datapoint[1].toFixed(2);
             showTooltip(item.pageX, item.pageY, y + "0 $");
         }
     } else {
@@ -290,62 +289,62 @@ var d2 = [
 var tickArray = ['Janv', 'Fev', 'Mars', 'Apri', 'May', 'June', 'July', 'Augu', 'Sept', 'Nov'];
 
 var graph_lines = [{
-    label: "Line 1",
-    data: d1,
-    lines: {
-        lineWidth: 2
-    },
-    shadowSize: 0,
-    color: '#3598DB'
-}, {
-    label: "Line 1",
-    data: d1,
-    points: {
-        show: true,
-        fill: true,
-        radius: 6,
-        fillColor: "#3598DB",
-        lineWidth: 3
-    },
-    color: '#fff'
-}, {
-    label: "Line 2",
-    data: d2,
-    animator: {
-        steps: 300,
-        duration: 1000,
-        start: 0
-    },
-    lines: {
-        fill: 0.4,
-        lineWidth: 0,
-    },
-    color: '#18a689'
-}, {
-    label: "Line 2",
-    data: d2,
-    points: {
-        show: true,
-        fill: true,
-        radius: 6,
-        fillColor: "#99dbbb",
-        lineWidth: 3
-    },
-    color: '#fff'
-}, ];
+        label: "Line 1",
+        data: d1,
+        lines: {
+            lineWidth: 2
+        },
+        shadowSize: 0,
+        color: '#3598DB'
+    }, {
+        label: "Line 1",
+        data: d1,
+        points: {
+            show: true,
+            fill: true,
+            radius: 6,
+            fillColor: "#3598DB",
+            lineWidth: 3
+        },
+        color: '#fff'
+    }, {
+        label: "Line 2",
+        data: d2,
+        animator: {
+            steps: 300,
+            duration: 1000,
+            start: 0
+        },
+        lines: {
+            fill: 0.4,
+            lineWidth: 0,
+        },
+        color: '#18a689'
+    }, {
+        label: "Line 2",
+        data: d2,
+        points: {
+            show: true,
+            fill: true,
+            radius: 6,
+            fillColor: "#99dbbb",
+            lineWidth: 3
+        },
+        color: '#fff'
+    }, ];
 var graph_bars = [{
-    // Visits
-    data: d1,
-    color: '#5CB85C'
-}, {
-    // Returning Visits
-    data: d2,
-    color: '#00A2D9',
-    points: {
-        radius: 4,
-        fillColor: '#00A2D9'
-    }
-}];
+        // Visits
+        data: d1,
+        color: '#5CB85C'
+    }, {
+        // Returning Visits
+        data: d2,
+        color: '#00A2D9',
+        points: {
+            radius: 4,
+            fillColor: '#00A2D9'
+        }
+    }];
 
 /** Line Chart **/
 var line_chart = $.plotAnimator($('#graph-lines'), graph_lines, {
@@ -403,11 +402,11 @@ var line_chart = $.plotAnimator($('#graph-lines'), graph_lines, {
     }
 });
 
-$("#graph-lines").on("animatorComplete", function () {
+$("#graph-lines").on("animatorComplete", function() {
     $("#lines, #bars").removeAttr("disabled");
 });
 
-$("#lines").on("click", function (e) {
+$("#lines").on("click", function(e) {
     e.preventDefault();
     $('#bars').removeClass('active');
     $('#graph-bars').fadeOut();
@@ -415,67 +414,67 @@ $("#lines").on("click", function (e) {
     $("#lines, #bars").attr("disabled", "disabled");
     $('#graph-lines').fadeIn();
     line_chart = $.plotAnimator($('#graph-lines'),
-        graph_lines, {
-            xaxis: {
-                tickLength: 0,
-                tickDecimals: 0,
-                min: 0,
-                ticks: [
-                    [0, 'Jan'],
-                    [1, 'Fev'],
-                    [2, 'Mar'],
-                    [3, 'Apr'],
-                    [4, 'May'],
-                    [5, 'Jun'],
-                    [6, 'Jul'],
-                    [7, 'Aug'],
-                    [8, 'Sept'],
-                    [9, 'Oct'],
-                    [10, 'Nov'],
-                    [11, 'Dec']
-                ],
-                font: {
-                    lineHeight: 12,
-                    weight: "bold",
-                    family: "Open sans",
-                    color: "#8D8D8D"
-                }
-            },
-            yaxis: {
-                ticks: 3,
-                tickDecimals: 0,
-                tickColor: "#f3f3f3",
-                font: {
-                    lineHeight: 13,
-                    weight: "bold",
-                    family: "Open sans",
-                    color: "#8D8D8D"
-                }
-            },
-            grid: {
-                backgroundColor: {
-                    colors: ["#fff", "#fff"]
+            graph_lines, {
+                xaxis: {
+                    tickLength: 0,
+                    tickDecimals: 0,
+                    min: 0,
+                    ticks: [
+                        [0, 'Jan'],
+                        [1, 'Fev'],
+                        [2, 'Mar'],
+                        [3, 'Apr'],
+                        [4, 'May'],
+                        [5, 'Jun'],
+                        [6, 'Jul'],
+                        [7, 'Aug'],
+                        [8, 'Sept'],
+                        [9, 'Oct'],
+                        [10, 'Nov'],
+                        [11, 'Dec']
+                    ],
+                    font: {
+                        lineHeight: 12,
+                        weight: "bold",
+                        family: "Open sans",
+                        color: "#8D8D8D"
+                    }
                 },
-                borderColor: "transparent",
-                borderWidth: 20,
-                margin: 0,
-                minBorderMargin: 0,
-                labelMargin: 15,
-                hoverable: true,
-                clickable: true,
-                mouseActiveRadius: 4
-            },
-            legend: {
-                show: false
-            }
-        });
+                yaxis: {
+                    ticks: 3,
+                    tickDecimals: 0,
+                    tickColor: "#f3f3f3",
+                    font: {
+                        lineHeight: 13,
+                        weight: "bold",
+                        family: "Open sans",
+                        color: "#8D8D8D"
+                    }
+                },
+                grid: {
+                    backgroundColor: {
+                        colors: ["#fff", "#fff"]
+                    },
+                    borderColor: "transparent",
+                    borderWidth: 20,
+                    margin: 0,
+                    minBorderMargin: 0,
+                    labelMargin: 15,
+                    hoverable: true,
+                    clickable: true,
+                    mouseActiveRadius: 4
+                },
+                legend: {
+                    show: false
+                }
+            });
 });
 
-$("#graph-bars").on("animatorComplete", function () {
+$("#graph-bars").on("animatorComplete", function() {
     $("#bars, #lines").removeAttr("disabled")
 });
 
-$("#bars").on("click", function (e) {
+$("#bars").on("click", function(e) {
     e.preventDefault();
     $("#bars, #lines").attr("disabled", "disabled");
     $('#lines').removeClass('active');
@@ -556,9 +555,10 @@ function showTooltip(x, y, contents) {
         'background-color': '#717171',
         opacity: 0.80
     }).appendTo("body").fadeIn(200);
-};
+}
+;
 
-$("#graph-lines, #graph-bars").bind("plothover", function (event, pos, item) {
+$("#graph-lines, #graph-bars").bind("plothover", function(event, pos, item) {
     $("#x").text(pos.x.toFixed(0));
     $("#y").text(pos.y.toFixed(0));
     if (item) {
@@ -566,7 +566,7 @@ $("#graph-lines, #graph-bars").bind("plothover", function (event, pos, item) {
             previousPoint = item.dataIndex;
             $("#flot-tooltip").remove();
             var x = item.datapoint[0].toFixed(0),
-                y = item.datapoint[1].toFixed(0);
+                    y = item.datapoint[1].toFixed(0);
             showTooltip(item.pageX, item.pageY, y + " visitors");
         }
     } else {
@@ -592,21 +592,21 @@ var graph = new Rickshaw.Graph({
     height: 310,
     renderer: 'area',
     series: [{
-        color: '#C75757',
-        data: seriesData[0],
-        name: 'Server Load'
-    }, {
-        color: '#00A2D9',
-        data: seriesData[1],
-        name: 'CPU'
-    }]
+            color: '#C75757',
+            data: seriesData[0],
+            name: 'Server Load'
+        }, {
+            color: '#00A2D9',
+            data: seriesData[1],
+            name: 'CPU'
+        }]
 });
 
 graph.render();
 
 var hoverDetail = new Rickshaw.Graph.HoverDetail({
     graph: graph,
-    xFormatter: function (x) {
+    xFormatter: function(x) {
         return new Date(x * 1000).toString();
     }
 });
@@ -626,7 +626,7 @@ var controls = new RenderControls({
     graph: graph
 });
 
-setInterval(function () {
+setInterval(function() {
     random.removeData(seriesData);
     random.addData(seriesData);
     graph.update();

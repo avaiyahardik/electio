@@ -1,112 +1,117 @@
 Rickshaw.namespace('Rickshaw.Graph.Renderer.Bar');
 
-Rickshaw.Graph.Renderer.Bar = Rickshaw.Class.create( Rickshaw.Graph.Renderer, {
+Rickshaw.Graph.Renderer.Bar = Rickshaw.Class.create(Rickshaw.Graph.Renderer, {
+    name: 'bar',
+    defaults: function($super) {
 
-	name: 'bar',
+        var defaults = Rickshaw.extend($super(), {
+            gapSize: 0.05,
+            unstack: false
+        });
 
-	defaults: function($super) {
+        delete defaults.tension;
+        return defaults;
+    },
+    initialize: function($super, args) {
+        args = args || {};
+        this.gapSize = args.gapSize || this.gapSize;
+        $super(args);
+    },
+    domain: function($super) {
 
-		var defaults = Rickshaw.extend( $super(), {
-			gapSize: 0.05,
-			unstack: false
-		} );
+        var domain = $super();
 
-		delete defaults.tension;
-		return defaults;
-	},
+        var frequentInterval = this._frequentInterval(this.graph.stackedData.slice(-1).shift());
+        domain.x[1] += Number(frequentInterval.magnitude);
 
-	initialize: function($super, args) {
-		args = args || {};
-		this.gapSize = args.gapSize || this.gapSize;
-		$super(args);
-	},
+        return domain;
+    },
+    barWidth: function(series) {
 
-	domain: function($super) {
+        var frequentInterval = this._frequentInterval(series.stack);
+        var barWidth = this.graph.x(series.stack[0].x + frequentInterval.magnitude * (1 - this.gapSize));
 
-		var domain = $super();
+        return barWidth;
+    },
+    render: function(args) {
 
-		var frequentInterval = this._frequentInterval(this.graph.stackedData.slice(-1).shift());
-		domain.x[1] += Number(frequentInterval.magnitude);
+        args = args || {};
 
-		return domain;
-	},
+        var graph = this.graph;
+        var series = args.series || graph.series;
 
-	barWidth: function(series) {
+        var vis = args.vis || graph.vis;
+        vis.selectAll('*').remove();
 
-		var frequentInterval = this._frequentInterval(series.stack);
-		var barWidth = this.graph.x(series.stack[0].x + frequentInterval.magnitude * (1 - this.gapSize)); 
+        var barWidth = this.barWidth(series.active()[0]);
+        var barXOffset = 0;
 
-		return barWidth;
-	},
+        var activeSeriesCount = series.filter(function(s) {
+            return !s.disabled;
+        }).length;
+        var seriesBarWidth = this.unstack ? barWidth / activeSeriesCount : barWidth;
 
-	render: function(args) {
+        var transform = function(d) {
+            // add a matrix transform for negative values
+            var matrix = [1, 0, 0, (d.y < 0 ? -1 : 1), 0, (d.y < 0 ? graph.y.magnitude(Math.abs(d.y)) * 2 : 0)];
+            return "matrix(" + matrix.join(',') + ")";
+        };
 
-		args = args || {};
+        series.forEach(function(series) {
 
-		var graph = this.graph;
-		var series = args.series || graph.series;
+            if (series.disabled)
+                return;
 
-		var vis = args.vis || graph.vis;
-		vis.selectAll('*').remove();
+            var barWidth = this.barWidth(series);
 
-		var barWidth = this.barWidth(series.active()[0]);
-		var barXOffset = 0;
+            var nodes = vis.selectAll("path")
+                    .data(series.stack.filter(function(d) {
+                        return d.y !== null
+                    }))
+                    .enter().append("svg:rect")
+                    .attr("x", function(d) {
+                        return graph.x(d.x) + barXOffset
+                    })
+                    .attr("y", function(d) {
+                        return (graph.y(d.y0 + Math.abs(d.y))) * (d.y < 0 ? -1 : 1)
+                    })
+                    .attr("width", seriesBarWidth)
+                    .attr("height", function(d) {
+                        return graph.y.magnitude(Math.abs(d.y))
+                    })
+                    .attr("transform", transform);
 
-		var activeSeriesCount = series.filter( function(s) { return !s.disabled; } ).length;
-		var seriesBarWidth = this.unstack ? barWidth / activeSeriesCount : barWidth;
+            Array.prototype.forEach.call(nodes[0], function(n) {
+                n.setAttribute('fill', series.color);
+            });
 
-		var transform = function(d) {
-			// add a matrix transform for negative values
-			var matrix = [ 1, 0, 0, (d.y < 0 ? -1 : 1), 0, (d.y < 0 ? graph.y.magnitude(Math.abs(d.y)) * 2 : 0) ];
-			return "matrix(" + matrix.join(',') + ")";
-		};
+            if (this.unstack)
+                barXOffset += seriesBarWidth;
 
-		series.forEach( function(series) {
+        }, this);
+    },
+    _frequentInterval: function(data) {
 
-			if (series.disabled) return;
+        var intervalCounts = {};
 
-			var barWidth = this.barWidth(series);
+        for (var i = 0; i < data.length - 1; i++) {
+            var interval = data[i + 1].x - data[i].x;
+            intervalCounts[interval] = intervalCounts[interval] || 0;
+            intervalCounts[interval]++;
+        }
 
-			var nodes = vis.selectAll("path")
-				.data(series.stack.filter( function(d) { return d.y !== null } ))
-				.enter().append("svg:rect")
-				.attr("x", function(d) { return graph.x(d.x) + barXOffset })
-				.attr("y", function(d) { return (graph.y(d.y0 + Math.abs(d.y))) * (d.y < 0 ? -1 : 1 ) })
-				.attr("width", seriesBarWidth)
-				.attr("height", function(d) { return graph.y.magnitude(Math.abs(d.y)) })
-				.attr("transform", transform);
+        var frequentInterval = {count: 0, magnitude: 1};
 
-			Array.prototype.forEach.call(nodes[0], function(n) {
-				n.setAttribute('fill', series.color);
-			} );
+        Rickshaw.keys(intervalCounts).forEach(function(i) {
+            if (frequentInterval.count < intervalCounts[i]) {
+                frequentInterval = {
+                    count: intervalCounts[i],
+                    magnitude: i
+                };
+            }
+        });
 
-			if (this.unstack) barXOffset += seriesBarWidth;
-
-		}, this );
-	},
-
-	_frequentInterval: function(data) {
-
-		var intervalCounts = {};
-
-		for (var i = 0; i < data.length - 1; i++) {
-			var interval = data[i + 1].x - data[i].x;
-			intervalCounts[interval] = intervalCounts[interval] || 0;
-			intervalCounts[interval]++;
-		}
-
-		var frequentInterval = { count: 0, magnitude: 1 };
-
-		Rickshaw.keys(intervalCounts).forEach( function(i) {
-			if (frequentInterval.count < intervalCounts[i]) {
-				frequentInterval = {
-					count: intervalCounts[i],
-					magnitude: i
-				};
-			}
-		} );
-
-		return frequentInterval;
-	}
-} );
+        return frequentInterval;
+    }
+});
 

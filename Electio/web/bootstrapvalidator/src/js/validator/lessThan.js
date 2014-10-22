@@ -10,10 +10,9 @@
             value: 'value',
             inclusive: 'inclusive'
         },
-
         enableByHtml5: function($field) {
             var type = $field.attr('type'),
-                max  = $field.attr('max');
+                    max = $field.attr('max');
             if (max && type !== 'date') {
                 return {
                     value: max
@@ -22,7 +21,6 @@
 
             return false;
         },
-
         /**
          * Return true if the input value is less than or equal to given number
          *
@@ -55,10 +53,10 @@
                         valid: value <= compareTo,
                         message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.lessThan['default'], compareTo)
                     }
-                    : {
-                        valid: value < compareTo,
-                        message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.lessThan.notInclusive, compareTo)
-                    };
+            : {
+                valid: value < compareTo,
+                message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.lessThan.notInclusive, compareTo)
+            };
         }
     };
 }(window.jQuery));

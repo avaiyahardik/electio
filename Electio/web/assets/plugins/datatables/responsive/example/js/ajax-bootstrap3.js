@@ -1,63 +1,63 @@
 'use strict';
 
-$(document).ready(function () {
+$(document).ready(function() {
     var responsiveHelper = undefined;
     var breakpointDefinition = {
         tablet: 1024,
-        phone : 480
+        phone: 480
     };
     var tableElement = $('#example');
 
     tableElement.dataTable({
         sPaginationType: 'bootstrap',
-        oLanguage      : {
+        oLanguage: {
             sLengthMenu: '_MENU_ records per page'
         },
         // disable sorting on the checkbox column
-        aoColumnDefs   : [
+        aoColumnDefs: [
             {
-                aTargets : [ 0 ],             // Column number which needs to be modified
-                bSortable: false,             // Column is not sortable
+                aTargets: [0], // Column number which needs to be modified
+                bSortable: false, // Column is not sortable
                 // Custom render function - add checkbox
-                mRender  : function (data, type) {
+                mRender: function(data, type) {
                     return '<input type="checkbox" name="id" value="' + data + '" class="checkbox"/>';
                 },
-                sClass   : 'centered-cell'    // Optional - class to be applied to this table cell
+                sClass: 'centered-cell'    // Optional - class to be applied to this table cell
             },
             {
-                aTargets: [ 4 ],              // Column number which needs to be modified
-                sClass  : 'centered-cell'     // Optional - class to be applied to this table cell
+                aTargets: [4], // Column number which needs to be modified
+                sClass: 'centered-cell'     // Optional - class to be applied to this table cell
             },
             {
-                aTargets: [ 5 ],              // Column number which needs to be modified
-                sClass  : 'centered-cell'     // Optional - class to be applied to this table cell
+                aTargets: [5], // Column number which needs to be modified
+                sClass: 'centered-cell'     // Optional - class to be applied to this table cell
             }
         ],
-        bProcessing    : true,
-        bAutoWidth     : false,
-        sAjaxSource    : '../arrays.txt',
+        bProcessing: true,
+        bAutoWidth: false,
+        sAjaxSource: '../arrays.txt',
         // Custom call back for AJAX
-        fnServerData   : function (sSource, aoData, fnCallback, oSettings) {
+        fnServerData: function(sSource, aoData, fnCallback, oSettings) {
             oSettings.jqXHR = $.ajax({
                 dataType: 'json',
-                type    : 'GET',
-                url     : sSource,
-                data    : aoData,
-                success : function (data) {
+                type: 'GET',
+                url: sSource,
+                data: aoData,
+                success: function(data) {
                     fnCallback(data);
                 }
             });
         },
-        fnPreDrawCallback: function () {
+        fnPreDrawCallback: function() {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper) {
                 responsiveHelper = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
             }
         },
-        fnRowCallback  : function (nRow) {
+        fnRowCallback: function(nRow) {
             responsiveHelper.createExpandIcon(nRow);
         },
-        fnDrawCallback : function () {
+        fnDrawCallback: function() {
             // This function will be called every the table redraws.
             // Specifically, we're interested when next/previous page
             // occurs.
@@ -66,14 +66,14 @@ $(document).ready(function () {
             // Respond to windows resize.
             responsiveHelper.respond();
         },
-        fnInitComplete : function (oSettings) {
+        fnInitComplete: function(oSettings) {
             initializeMasterCheckboxEventHandler();
             initializeCheckboxEventHandlers();
             initializeTableRowEventHandlers();
 
             oSettings.aoDestroyCallback.push({
                 'sName': 'UnregisterEventHandlers',
-                'fn': function () {
+                'fn': function() {
                     initializeMasterCheckboxEventHandler(false);
                     initializeCheckboxEventHandlers(false);
                     initializeTableRowEventHandlers(false);
@@ -100,7 +100,7 @@ $(document).ready(function () {
      * @param {Boolean} enable
      * @returns {Boolean}
      */
-    function enableMasterCheckbox (enable) {
+    function enableMasterCheckbox(enable) {
         enable = enable === undefined ? true : enable;
 
         if (enable && $('tbody tr', tableElement).length) {
@@ -143,7 +143,7 @@ $(document).ready(function () {
             enableMasterCheckbox();
 
             // Register master checkbox to check/uncheck all checkboxes
-            $('#masterCheck', tableElement).on('click', function () {
+            $('#masterCheck', tableElement).on('click', function() {
                 // Toggle all checkboxes by triggering a click event on them.  The click
                 // event will fire the changed event that we can handle.  Directly changing
                 // the checked property like this
@@ -196,7 +196,7 @@ $(document).ready(function () {
 
         if (on) {
             // Register elementCollection handlers
-            elementCollection.on('change', function (event) {
+            elementCollection.on('change', function(event) {
                 // Keep track of the checked checkboxes.
                 if (event.target.checked) {
                     // Do something with the checked item

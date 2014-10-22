@@ -29,14 +29,14 @@
             }
 
             var converted = $.map(value.split(''), function(item) {
-                                var code = item.charCodeAt(0);
-                                return (code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0))
-                                            // Replace A, B, C, ..., Z with 10, 11, ..., 35
-                                            ? (code - 'A'.charCodeAt(0) + 10)
-                                            : item;
-                            }),
-                length    = converted.length,
-                sum       = 0;
+                var code = item.charCodeAt(0);
+                return (code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0))
+                        // Replace A, B, C, ..., Z with 10, 11, ..., 35
+                        ? (code - 'A'.charCodeAt(0) + 10)
+                        : item;
+            }),
+                    length = converted.length,
+                    sum = 0;
             for (var i = 0; i < length - 1; i++) {
                 var num = parseInt(converted[i], 10);
                 if (i % 2 !== 0) {

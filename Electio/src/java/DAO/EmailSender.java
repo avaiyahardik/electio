@@ -27,7 +27,7 @@ public class EmailSender {
      * @param subject
      * @param body
      */
-    public static boolean sendMail(String from, String password,String subject, String message, String to[]) {
+    public static boolean sendMail(String from, String password, String subject, String message, String to[]) {
         String host = "smtp.gmail.com";
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
@@ -41,23 +41,23 @@ public class EmailSender {
         MimeMessage mimeMessage = new MimeMessage(session);
         try {
             mimeMessage.setFrom(new InternetAddress(from));
-            
-            InternetAddress[] toAddresses=new InternetAddress[to.length];
-            
-            for (int i=0;i<to.length;i++){
-                toAddresses[i]=new InternetAddress(to[i]);              
+
+            InternetAddress[] toAddresses = new InternetAddress[to.length];
+
+            for (int i = 0; i < to.length; i++) {
+                toAddresses[i] = new InternetAddress(to[i]);
             }
-            System.out.println("length addresses => "+toAddresses.length);
+            System.out.println("length addresses => " + toAddresses.length);
             mimeMessage.setRecipients(Message.RecipientType.TO, toAddresses);
-            
+
             mimeMessage.setSubject(subject);
             mimeMessage.setText(message);
-            
-            Transport transport=session.getTransport("smtp");
-            transport.connect(host,from,password);
+
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, password);
             transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
             transport.close();
-            
+
             return true;
 
         } catch (MessagingException me) {

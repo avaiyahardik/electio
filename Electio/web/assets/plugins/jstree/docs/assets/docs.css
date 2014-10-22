@@ -22,12 +22,12 @@ h3 > i { font-size:0.6em; }
 h4 { margin-top:1em; }
 
 #docs .nav {
-	margin:0 -15px 1em -15px; font-size:1.2em; padding-left:25px; text-align:center;
-	background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#eee), color-stop(0.6, #fff));
-	background-image: -webkit-linear-gradient(bottom, #eee, #fff 60%);
-	background-image: -moz-linear-gradient(bottom, #eee, #fff 60%);
-	background-image: -o-linear-gradient(bottom, #eee, #fff 60%);
-	background-image: linear-gradient(bottom, #eee, #fff 60%);
+    margin:0 -15px 1em -15px; font-size:1.2em; padding-left:25px; text-align:center;
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#eee), color-stop(0.6, #fff));
+    background-image: -webkit-linear-gradient(bottom, #eee, #fff 60%);
+    background-image: -moz-linear-gradient(bottom, #eee, #fff 60%);
+    background-image: -o-linear-gradient(bottom, #eee, #fff 60%);
+    background-image: linear-gradient(bottom, #eee, #fff 60%);
 }
 #docs h3 { margin-left:-15px; margin-right:-15px; padding-left:25px; }
 
@@ -80,9 +80,9 @@ pre .point { display:inline-block; border-radius:5px; width:100%; padding:5px 0;
 
 #no_res { text-align:center; border:0 !important; }
 @media (max-width: 740px) {
-	.param, .return, .trigger { float:none; }
-	.params p { margin-left:10px; margin-top:10px; line-height:26px; }
-	.features { max-width:100%; }
-	.features > li { width:auto; margin:0px 30px 0 0; }
-	.features > li > .glyphicon { margin-right:2px; }
+    .param, .return, .trigger { float:none; }
+    .params p { margin-left:10px; margin-top:10px; line-height:26px; }
+    .features { max-width:100%; }
+    .features > li { width:auto; margin:0px 30px 0 0; }
+    .features > li > .glyphicon { margin-right:2px; }
 }

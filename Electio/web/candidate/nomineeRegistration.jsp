@@ -4,6 +4,7 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,15 +33,20 @@
                             <h3 class="panel-title">Nominee Registration for 
                                 <strong>
                                     <!-- Election Name here -->
-
+                                    <%
+                                        long election_id = Long.parseLong(request.getParameter("election_id"));
+                                        String name = DBDAOImplementation.getInstance().getElectionName(election_id);
+                                    %>
+                                    <%= name%>
                                 </strong>
 
                             </h3>
                         </div>
 
                         <div class="panel-body">
-                            <form action="" method="POST" class="form-horizontal">
+                            <form action="NomineeRegistration" method="POST" class="form-horizontal">
                                 <fieldset>
+                                    <input type="hidden" name="election_id" value="<%= election_id%>">
                                     <div class="form-group">
                                         <!-- BEGIN ERROR BOX -->
 
@@ -218,7 +224,7 @@
 
                                     <div class="form-group">
                                         <div class="col-lg-7 col-lg-offset-4">
-                                            <button type="submit" name="action" value="" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
+                                            <button type="submit" name="action" value="register_nominee" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
                                             <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
                                         </div>
                                     </div>

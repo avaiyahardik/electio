@@ -28,9 +28,9 @@
 
             var sum = 0;
             for (var i = 0; i < value.length; i += 3) {
-                sum += parseInt(value.charAt(i),     10) * 3
-                    +  parseInt(value.charAt(i + 1), 10) * 7
-                    +  parseInt(value.charAt(i + 2), 10);
+                sum += parseInt(value.charAt(i), 10) * 3
+                        + parseInt(value.charAt(i + 1), 10) * 7
+                        + parseInt(value.charAt(i + 2), 10);
             }
             return (sum !== 0 && sum % 10 === 0);
         }

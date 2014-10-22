@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
     function editableTable() {
 
@@ -48,27 +48,27 @@ $(function () {
                 [5, 15, 20, -1],
                 [5, 15, 20, "All"] // change per page values here
             ],
-            "sDom" : "<'row'<'col-md-6 filter-left'f><'col-md-6'T>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
-            "oTableTools" : {
+            "sDom": "<'row'<'col-md-6 filter-left'f><'col-md-6'T>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+            "oTableTools": {
                 "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
-                "aButtons":[
+                "aButtons": [
                     {
-                        "sExtends":"pdf",
-                        "mColumns":[0, 1, 2, 3],
-                        "sPdfOrientation":"landscape"
+                        "sExtends": "pdf",
+                        "mColumns": [0, 1, 2, 3],
+                        "sPdfOrientation": "landscape"
                     },
                     {
-                        "sExtends":"print",
-                        "mColumns":[0, 1, 2, 3],
-                        "sPdfOrientation":"landscape"
-                    },{
-                        "sExtends":"xls",
-                        "mColumns":[0, 1, 2, 3],
-                        "sPdfOrientation":"landscape"
-                    },{
-                        "sExtends":"csv",
-                        "mColumns":[0, 1, 2, 3],
-                        "sPdfOrientation":"landscape"
+                        "sExtends": "print",
+                        "mColumns": [0, 1, 2, 3],
+                        "sPdfOrientation": "landscape"
+                    }, {
+                        "sExtends": "xls",
+                        "mColumns": [0, 1, 2, 3],
+                        "sPdfOrientation": "landscape"
+                    }, {
+                        "sExtends": "csv",
+                        "mColumns": [0, 1, 2, 3],
+                        "sPdfOrientation": "landscape"
                     }
                 ]
             },
@@ -82,7 +82,7 @@ $(function () {
                     "sPrevious": "Prev",
                     "sNext": "Next"
                 },
-                "sSearch": "" 
+                "sSearch": ""
             },
             "aoColumnDefs": [{
                     'bSortable': false,
@@ -96,17 +96,17 @@ $(function () {
 
         var nEditing = null;
 
-        $('#table-edit_new').click(function (e) {
+        $('#table-edit_new').click(function(e) {
             e.preventDefault();
             var aiNew = oTable.fnAddData(['', '', '', '',
-                    '<p class="text-center"><a class="edit btn btn-dark" href=""><i class="fa fa-pencil-square-o"></i>Edit</a> <a class="delete btn btn-danger" href=""><i class="fa fa-times-circle"></i> Remove</a></p>'
+                '<p class="text-center"><a class="edit btn btn-dark" href=""><i class="fa fa-pencil-square-o"></i>Edit</a> <a class="delete btn btn-danger" href=""><i class="fa fa-times-circle"></i> Remove</a></p>'
             ]);
             var nRow = oTable.fnGetNodes(aiNew[0]);
             editRow(oTable, nRow);
             nEditing = nRow;
         });
 
-        $('#table-editable a.delete').live('click', function (e) {
+        $('#table-editable a.delete').live('click', function(e) {
             e.preventDefault();
 
             if (confirm("Are you sure to delete this row ?") == false) {
@@ -119,7 +119,7 @@ $(function () {
             // alert("Deleted! Do not forget to do some ajax to sync with backend :)");
         });
 
-        $('#table-editable a.cancel').live('click', function (e) {
+        $('#table-editable a.cancel').live('click', function(e) {
             e.preventDefault();
             if ($(this).attr("data-mode") == "new") {
                 var nRow = $(this).parents('tr')[0];
@@ -130,7 +130,7 @@ $(function () {
             }
         });
 
-        $('#table-editable a.edit').live('click', function (e) {
+        $('#table-editable a.edit').live('click', function(e) {
             e.preventDefault();
             /* Get the row as a parent of the link that was clicked on */
             var nRow = $(this).parents('tr')[0];
@@ -140,12 +140,12 @@ $(function () {
                 editRow(oTable, nRow);
                 nEditing = nRow;
             } else if (nEditing == nRow && this.innerHTML == "Save") {
-                 /* This row is being edited and should be saved */
+                /* This row is being edited and should be saved */
                 saveRow(oTable, nEditing);
                 nEditing = null;
                 // alert("Updated! Do not forget to do some ajax to sync with backend :)");
             } else {
-                 /* No row currently being edited */
+                /* No row currently being edited */
                 editRow(oTable, nRow);
                 nEditing = nRow;
             }
@@ -153,7 +153,8 @@ $(function () {
 
         $('.dataTables_filter input').attr("placeholder", "Search a user...");
 
-    };
+    }
+    ;
 
     editableTable();
 

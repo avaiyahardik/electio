@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
     /**
      * Italian language package
      * Translated by @maramazza

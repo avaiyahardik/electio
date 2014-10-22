@@ -9,11 +9,9 @@
             multiple: 'multiple',
             separator: 'separator'
         },
-
         enableByHtml5: function($field) {
             return ('email' === $field.attr('type'));
         },
-
         /**
          * Return true if and only if the input value is a valid email address
          *
@@ -32,12 +30,12 @@
 
             // Email address regular expression
             // http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
-            var emailRegExp   = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-                allowMultiple = options.multiple === true || options.multiple === 'true';
+            var emailRegExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                    allowMultiple = options.multiple === true || options.multiple === 'true';
 
             if (allowMultiple) {
                 var separator = options.separator || /[,;]/,
-                    addresses = this._splitEmailAddresses(value, separator);
+                        addresses = this._splitEmailAddresses(value, separator);
 
                 for (var i = 0; i < addresses.length; i++) {
                     if (!emailRegExp.test(addresses[i])) {
@@ -50,17 +48,16 @@
                 return emailRegExp.test(value);
             }
         },
-
         _splitEmailAddresses: function(emailAddresses, separator) {
-            var quotedFragments     = emailAddresses.split(/"/),
-                quotedFragmentCount = quotedFragments.length,
-                emailAddressArray   = [],
-                nextEmailAddress    = '';
+            var quotedFragments = emailAddresses.split(/"/),
+                    quotedFragmentCount = quotedFragments.length,
+                    emailAddressArray = [],
+                    nextEmailAddress = '';
 
             for (var i = 0; i < quotedFragmentCount; i++) {
                 if (i % 2 === 0) {
-                    var splitEmailAddressFragments     = quotedFragments[i].split(separator),
-                        splitEmailAddressFragmentCount = splitEmailAddressFragments.length;
+                    var splitEmailAddressFragments = quotedFragments[i].split(separator),
+                            splitEmailAddressFragmentCount = splitEmailAddressFragments.length;
 
                     if (splitEmailAddressFragmentCount === 1) {
                         nextEmailAddress += splitEmailAddressFragments[0];

@@ -36,7 +36,7 @@
             'default': 'Please enter a different value'
         },
         digits: {
-             'default': 'Please enter only digits'
+            'default': 'Please enter only digits'
         },
         ean: {
             'default': 'Please enter a valid EAN number'

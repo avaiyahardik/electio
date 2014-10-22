@@ -1,13 +1,13 @@
-$(function () {
+$(function() {
 
-/*------------------------------------------------------------------------------------*/
-/*------------------------------  ECOMMERCE DASHBOARD --------------------------------*/
+    /*------------------------------------------------------------------------------------*/
+    /*------------------------------  ECOMMERCE DASHBOARD --------------------------------*/
 
-    if($('body').data('page') == 'ecommerce_dashboard'){
+    if ($('body').data('page') == 'ecommerce_dashboard') {
 
 
         /* Delete a product */
-        $('#products-table a.delete').live('click', function (e) {
+        $('#products-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this product ?") == false) {
                 return;
@@ -16,7 +16,7 @@ $(function () {
         });
 
         /* Delete a review */
-        $('#product-review a.delete').live('click', function (e) {
+        $('#product-review a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this comment ?") == false) {
                 return;
@@ -25,20 +25,20 @@ $(function () {
         });
 
         /* Validate a review */
-        $('#product-review a.edit').live('click', function (e) {
+        $('#product-review a.edit').live('click', function(e) {
             e.preventDefault();
 
             $(this).parent().parent().find('.label').removeClass('label-info').addClass('label-success').html('Approved');
             $(this).fadeOut();
         });
 
-/*
-<span class="label label-success w-300">Approved</span>
-
-*/
+        /*
+         <span class="label label-success w-300">Approved</span>
+         
+         */
 
         /* We have to recreate charts on resize to make them responsive */
-        $(window).resize(function () {
+        $(window).resize(function() {
 
 
         });
@@ -52,11 +52,11 @@ $(function () {
             [1, 5 + randomValue()], [2, 10 + randomValue()], [3, 10 + randomValue()], [4, 15 + randomValue()], [5, 20 + randomValue()], [6, 25 + randomValue()], [7, 30 + randomValue()], [8, 35 + randomValue()], [9, 40 + randomValue()], [10, 45 + randomValue()], [11, 50 + randomValue()], [12, 55 + randomValue()], [13, 60 + randomValue()], [14, 70 + randomValue()], [15, 75 + randomValue()], [16, 80 + randomValue()], [17, 85 + randomValue()], [18, 90 + randomValue()], [19, 95 + randomValue()], [20, 100 + randomValue()]
         ];
         var data2 = [
-            [6, 1425], [7, 1754], [8, 1964], [9, 2145], [10, 2550], [11, 2210], [12, 1760], [13, 1820], [14, 1880], [15, 1985],  [16, 2240]
+            [6, 1425], [7, 1754], [8, 1964], [9, 2145], [10, 2550], [11, 2210], [12, 1760], [13, 1820], [14, 1880], [15, 1985], [16, 2240]
         ];
 
         var plot = $.plot(
-            $('#chart_revenue'), [{
+                $('#chart_revenue'), [{
                 label: "Revenue",
                 data: data1,
                 color: '#0090D9',
@@ -64,35 +64,35 @@ $(function () {
                     fillColor: "#0090D9"
                 }
             }], {
-                grid: {
-                    color: '#fff',
-                    borderColor: "transparent",
-                    clickable: true,
-                    hoverable: true
+            grid: {
+                color: '#fff',
+                borderColor: "transparent",
+                clickable: true,
+                hoverable: true
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: false,
                 },
-                series: {
-                    lines: {
-                        show: true,
-                        fill: false,
-                    },
-                    points: {
-                        show: true
-                    }
-                },
-                xaxis: {
-                    show: false
-                },
-                yaxis: {
-                    tickColor: '#e8e8e8'
-                },
-                legend: {
-                    show: false
-                },
-                tooltip: true
-            });
+                points: {
+                    show: true
+                }
+            },
+            xaxis: {
+                show: false
+            },
+            yaxis: {
+                tickColor: '#e8e8e8'
+            },
+            legend: {
+                show: false
+            },
+            tooltip: true
+        });
 
         var previousPoint = null;
-        $("#chart_revenue").bind("plothover", function (event, pos, item) {
+        $("#chart_revenue").bind("plothover", function(event, pos, item) {
             $("#x").text(pos.x.toFixed(2));
             $("#y").text(pos.y.toFixed(2));
             if (item) {
@@ -100,7 +100,7 @@ $(function () {
                     previousPoint = item.dataIndex;
                     $("#flot-tooltip").remove();
                     var x = item.datapoint[0].toFixed(2),
-                        y = item.datapoint[1].toFixed(2);
+                            y = item.datapoint[1].toFixed(2);
                     showTooltip(item.pageX, item.pageY, y + "0 $");
                 }
             } else {
@@ -120,7 +120,8 @@ $(function () {
                 'background-color': '#717171',
                 opacity: 0.80
             }).appendTo("body").fadeIn(200);
-        };
+        }
+        ;
 
     }
 
@@ -128,20 +129,20 @@ $(function () {
     /*------------------------------------------------------------------------------------*/
     /*-----------------------------------  PRODUCTS --------------------------------------*/
 
-    if($('body').data('page') == 'products'){
-        
+    if ($('body').data('page') == 'products') {
+
         var opt = {};
         // Tools: export to Excel, CSV, PDF & Print
         opt.sDom = "<'row m-t-10'<'col-md-6'f><'col-md-6'T>r>t<'row'<'col-md-6'><'col-md-6 align-right'p>>",
-        opt.oLanguage = { "sSearch": "" } ,
+                opt.oLanguage = {"sSearch": ""},
         opt.iDisplayLength = 15,
-        opt.oTableTools = {
-            "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
-            "aButtons": ["csv", "xls", "pdf", "print"]
-        };
+                opt.oTableTools = {
+                    "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
+                    "aButtons": ["csv", "xls", "pdf", "print"]
+                };
         opt.aoColumnDefs = [
-              { 'bSortable': false, 'aTargets': [ 6,7,8,9 ] }
-           ];
+            {'bSortable': false, 'aTargets': [6, 7, 8, 9]}
+        ];
 
         var oTable = $('#products-table').dataTable(opt);
         oTable.fnDraw();
@@ -150,7 +151,7 @@ $(function () {
         $('.dataTables_filter input').attr("placeholder", "Search a product...");
 
         /* Delete a product */
-        $('#products-table a.delete').live('click', function (e) {
+        $('#products-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this product ?") == false) {
                 return;
@@ -162,11 +163,11 @@ $(function () {
 
     }
 
-    if($('body').data('page') == 'product_view'){
+    if ($('body').data('page') == 'product_view') {
 
 
         /* Delete a review */
-        $('#product-review a.delete').live('click', function (e) {
+        $('#product-review a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this comment ?") == false) {
                 return;
@@ -175,33 +176,33 @@ $(function () {
         });
 
         /* Delete an image */
-        $('#product-review a.delete-img').live('click', function (e) {
+        $('#product-review a.delete-img').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this image ?") == false) {
                 return;
             }
             $(this).parent().parent().fadeOut();
         });
-        
+
     }
 
     /*------------------------------------------------------------------------------------*/
     /*------------------------------------  ORDERS ---------------------------------------*/
 
-    if($('body').data('page') == 'orders'){
+    if ($('body').data('page') == 'orders') {
 
         var opt = {};
         // Tools: export to Excel, CSV, PDF & Print
         opt.sDom = "<'row m-t-10'<'col-md-6'f><'col-md-6'T>r>t<'row'<'col-md-6'><'col-md-6 align-right'p>>",
-        opt.oLanguage = { "sSearch": "" } ,
+                opt.oLanguage = {"sSearch": ""},
         opt.iDisplayLength = 15,
-        opt.oTableTools = {
-            "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
-            "aButtons": ["csv", "xls", "pdf", "print"]
-        };
+                opt.oTableTools = {
+                    "sSwfPath": "assets/plugins/datatables/swf/copy_csv_xls_pdf.swf",
+                    "aButtons": ["csv", "xls", "pdf", "print"]
+                };
         opt.aoColumnDefs = [
-              { 'bSortable': false, 'aTargets': [ 9 ] }
-           ];
+            {'bSortable': false, 'aTargets': [9]}
+        ];
 
         var oTable = $('#products-table').dataTable(opt);
         oTable.fnDraw();
@@ -210,7 +211,7 @@ $(function () {
         $('.dataTables_filter input').attr("placeholder", "Search an order...");
 
         /* Delete a product */
-        $('#products-table a.delete').live('click', function (e) {
+        $('#products-table a.delete').live('click', function(e) {
             e.preventDefault();
             if (confirm("Are you sure to delete this product ?") == false) {
                 return;

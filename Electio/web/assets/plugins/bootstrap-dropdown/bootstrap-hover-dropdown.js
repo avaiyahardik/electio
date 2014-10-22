@@ -11,10 +11,12 @@
  *
  * http://cameronspear.com/blog/bootstrap-dropdown-on-hover-plugin/
  */
-;(function($, window, undefined) {
+;
+(function($, window, undefined) {
     // don't do anything if touch is supported
     // (plugin causes some issues on mobile)
-    if('ontouchstart' in document) return;
+    if ('ontouchstart' in document)
+        return;
 
     // outside the scope of the jQuery plugin to
     // keep track of all dropdowns
@@ -30,25 +32,25 @@
 
         return this.each(function() {
             var $this = $(this),
-                $parent = $this.parent(),
-                defaults = {
-                    delay: 500,
-                    instantlyCloseOthers: true
-                },
-                data = {
-                    delay: $(this).data('delay'),
-                    instantlyCloseOthers: $(this).data('close-others')
-                },
-                settings = $.extend(true, {}, defaults, options, data),
-                timeout;
+                    $parent = $this.parent(),
+                    defaults = {
+                        delay: 500,
+                        instantlyCloseOthers: true
+                    },
+            data = {
+                delay: $(this).data('delay'),
+                instantlyCloseOthers: $(this).data('close-others')
+            },
+            settings = $.extend(true, {}, defaults, options, data),
+                    timeout;
 
             $parent.hover(function(event) {
                 // so a neighbor can't open the dropdown
-                if(!$parent.hasClass('open') && !$this.is(event.target)) {
+                if (!$parent.hasClass('open') && !$this.is(event.target)) {
                     return true;
                 }
 
-                if(settings.instantlyCloseOthers === true)
+                if (settings.instantlyCloseOthers === true)
                     $allDropdowns.removeClass('open');
 
                 window.clearTimeout(timeout);
@@ -63,7 +65,7 @@
 
             // this helps with button groups!
             $this.hover(function() {
-                if(settings.instantlyCloseOthers === true)
+                if (settings.instantlyCloseOthers === true)
                     $allDropdowns.removeClass('open');
 
                 window.clearTimeout(timeout);
@@ -72,7 +74,7 @@
             });
 
             // handle submenus
-            $parent.find('.dropdown-submenu').each(function(){
+            $parent.find('.dropdown-submenu').each(function() {
                 var $this = $(this);
                 var subTimeout;
                 $this.hover(function() {

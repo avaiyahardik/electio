@@ -24,8 +24,12 @@
         refresh_speed: 50,
         display_text: 'none',
         use_percentage: true,
-        percent_format: function(percent) { return percent + '%'; },
-        amount_format: function(amount_part, amount_total) { return amount_part + ' / ' + amount_total; },
+        percent_format: function(percent) {
+            return percent + '%';
+        },
+        amount_format: function(amount_part, amount_total) {
+            return amount_part + ' / ' + amount_total;
+        },
         update: $.noop,
         done: $.noop,
         fail: $.noop
@@ -138,7 +142,7 @@
     var old = $.fn.progressbar;
 
     $.fn.progressbar = function(option) {
-        return this.each(function () {
+        return this.each(function() {
             var $this = $(this);
             var data = $this.data('bs.progressbar');
             var options = typeof option === 'object' && option;
@@ -156,7 +160,7 @@
     // PROGRESSBAR NO CONFLICT
     // =======================
 
-    $.fn.progressbar.noConflict = function () {
+    $.fn.progressbar.noConflict = function() {
         $.fn.progressbar = old;
         return this;
     };

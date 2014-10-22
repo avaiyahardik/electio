@@ -24,16 +24,16 @@
             }
 
             switch (true) {
-                case /^\d{15}$/.test(value):
-                case /^\d{2}-\d{6}-\d{6}-\d{1}$/.test(value):
-                case /^\d{2}\s\d{6}\s\d{6}\s\d{1}$/.test(value):
+                case / ^ \d{15}$ / .test(value):
+                case / ^ \d{2} - \d{6} - \d{6} - \d{1}$ / .test(value):
+                case / ^ \d{2}\s\d{6}\s\d{6}\s\d{1}$ / .test(value):
                     value = value.replace(/[^0-9]/g, '');
                     return $.fn.bootstrapValidator.helpers.luhn(value);
 
-                case /^\d{14}$/.test(value):
-                case /^\d{16}$/.test(value):
-                case /^\d{2}-\d{6}-\d{6}(|-\d{2})$/.test(value):
-                case /^\d{2}\s\d{6}\s\d{6}(|\s\d{2})$/.test(value):
+                case / ^ \d{14}$ / .test(value):
+                case / ^ \d{16}$ / .test(value):
+                case / ^ \d{2} - \d{6} - \d{6}( | - \d{2})$ / .test(value):
+                case / ^ \d{2}\s\d{6}\s\d{6}( | \s\d{2})$ / .test(value):
                     return true;
 
                 default:

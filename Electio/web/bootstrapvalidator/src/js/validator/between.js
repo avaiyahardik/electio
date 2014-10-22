@@ -11,7 +11,6 @@
             max: 'max',
             inclusive: 'inclusive'
         },
-
         enableByHtml5: function($field) {
             if ('range' === $field.attr('type')) {
                 return {
@@ -22,7 +21,6 @@
 
             return false;
         },
-
         /**
          * Return true if the input value is between (strictly or not) two given numbers
          *
@@ -52,17 +50,17 @@
             }
 
             var min = $.isNumeric(options.min) ? options.min : validator.getDynamicOption($field, options.min),
-                max = $.isNumeric(options.max) ? options.max : validator.getDynamicOption($field, options.max);
+                    max = $.isNumeric(options.max) ? options.max : validator.getDynamicOption($field, options.max);
             value = parseFloat(value);
-			return (options.inclusive === true || options.inclusive === undefined)
+            return (options.inclusive === true || options.inclusive === undefined)
                     ? {
                         valid: value >= min && value <= max,
                         message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.between['default'], [min, max])
                     }
-                    : {
-                        valid: value > min  && value <  max,
-                        message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.between.notInclusive, [min, max])
-                    };
+            : {
+                valid: value > min && value < max,
+                message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.between.notInclusive, [min, max])
+            };
         }
     };
 }(window.jQuery));

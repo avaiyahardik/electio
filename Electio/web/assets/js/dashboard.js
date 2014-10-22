@@ -1,13 +1,13 @@
-$(function () {
+$(function() {
 
     /* Display message header */
-    setTimeout(function () {
+    setTimeout(function() {
         $('#chat-notification').removeClass('hide').addClass('animated bounceIn');
         $('#chat-popup').removeClass('hide').addClass('animated fadeIn');
     }, 5000);
 
     /* Hide message header */
-    setTimeout(function () {
+    setTimeout(function() {
         $('#chat-popup').removeClass('animated fadeIn').addClass('animated fadeOut').delay(800).hide(0);
     }, 8000);
 
@@ -22,59 +22,59 @@ $(function () {
     var tickArray = ['Janv', 'Fev', 'Mars', 'Apri', 'May', 'June', 'July', 'Augu', 'Sept', 'Nov'];
 
     /****  Line Chart  ****/
-        var graph_lines = [{
-        label: "Line 1",
-        data: d1,
-        lines: {
-            lineWidth: 2
-        },
-        shadowSize: 0,
-        color: '#0090D9'
-    }, {
-        label: "Line 1",
-        data: d1,
-        points: {
-            show: true,
-            fill: true,
-            radius: 6,
-            fillColor: "#0090D9",
-            lineWidth: 3
-        },
-        color: '#fff'
-    }, {
-        label: "Line 2",
-        data: d2,
-        animator: {
-            steps: 300,
-            duration: 1000,
-            start: 0
-        },
-        lines: {
-            fill: 0.7,
-            lineWidth: 0,
-        },
-        color: '#18A689'
-    }, {
-        label: "Line 2",
-        data: d2,
-        points: {
-            show: true,
-            fill: true,
-            radius: 6,
-            fillColor: "#18A689",
-            lineWidth: 3
-        },
-        color: '#fff'
-    }, ];
+    var graph_lines = [{
+            label: "Line 1",
+            data: d1,
+            lines: {
+                lineWidth: 2
+            },
+            shadowSize: 0,
+            color: '#0090D9'
+        }, {
+            label: "Line 1",
+            data: d1,
+            points: {
+                show: true,
+                fill: true,
+                radius: 6,
+                fillColor: "#0090D9",
+                lineWidth: 3
+            },
+            color: '#fff'
+        }, {
+            label: "Line 2",
+            data: d2,
+            animator: {
+                steps: 300,
+                duration: 1000,
+                start: 0
+            },
+            lines: {
+                fill: 0.7,
+                lineWidth: 0,
+            },
+            color: '#18A689'
+        }, {
+            label: "Line 2",
+            data: d2,
+            points: {
+                show: true,
+                fill: true,
+                radius: 6,
+                fillColor: "#18A689",
+                lineWidth: 3
+            },
+            color: '#fff'
+        }, ];
 
-    function lineCharts(){
+    function lineCharts() {
         var line_chart = $.plotAnimator($('#graph-lines'), graph_lines, {
             xaxis: {
                 tickLength: 0,
                 tickDecimals: 0,
                 min: 0,
                 ticks: [
-                    [0, 'Jan'], [1, 'Fev'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sept'],  [9, 'Oct'], [10, 'Nov'], [11, 'Dec']
+                    [0, 'Jan'], [1, 'Fev'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sept'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']
                 ],
                 font: {
                     lineHeight: 12,
@@ -115,20 +115,20 @@ $(function () {
 
     /****  Bars Chart  ****/
     var graph_bars = [{
-        // Visitors
-        data: d1,
-        color: '#00b5f3'
-    }, {
-        // Returning Visitors
-        data: d2,
-        color: '#008fc0',
-        points: {
-            radius: 4,
-            fillColor: '#008fc0'
-        }
-    }];
+            // Visitors
+            data: d1,
+            color: '#00b5f3'
+        }, {
+            // Returning Visitors
+            data: d2,
+            color: '#008fc0',
+            points: {
+                radius: 4,
+                fillColor: '#008fc0'
+            }
+        }];
 
-    function barCharts(){
+    function barCharts() {
         bar_chart = $.plotAnimator($('#graph-bars'), graph_bars, {
             series: {
                 bars: {
@@ -180,11 +180,11 @@ $(function () {
         });
     }
 
-    $("#graph-lines").on("animatorComplete", function () {
+    $("#graph-lines").on("animatorComplete", function() {
         $("#lines, #bars").removeAttr("disabled");
     });
 
-    $("#lines").on("click", function () {
+    $("#lines").on("click", function() {
         $('#bars').removeClass('active');
         $('#graph-bars').fadeOut();
         $(this).addClass('active');
@@ -193,11 +193,11 @@ $(function () {
         lineCharts();
     });
 
-    $("#graph-bars").on("animatorComplete", function () {
+    $("#graph-bars").on("animatorComplete", function() {
         $("#bars, #lines").removeAttr("disabled")
     });
 
-    $("#bars").on("click", function () {
+    $("#bars").on("click", function() {
         $("#bars, #lines").attr("disabled", "disabled");
         $('#lines').removeClass('active');
         $('#graph-lines').fadeOut();
@@ -219,9 +219,10 @@ $(function () {
             'background-color': '#717171',
             opacity: 0.80
         }).appendTo("body").fadeIn(200);
-    };
+    }
+    ;
 
-    $("#graph-lines, #graph-bars").bind("plothover", function (event, pos, item) {
+    $("#graph-lines, #graph-bars").bind("plothover", function(event, pos, item) {
         $("#x").text(pos.x.toFixed(0));
         $("#y").text(pos.y.toFixed(0));
         if (item) {
@@ -229,7 +230,7 @@ $(function () {
                 previousPoint = item.dataIndex;
                 $("#flot-tooltip").remove();
                 var x = item.datapoint[0].toFixed(0),
-                    y = item.datapoint[1].toFixed(0);
+                        y = item.datapoint[1].toFixed(0);
                 showTooltip(item.pageX, item.pageY, y + " visitors");
             }
         } else {
@@ -243,30 +244,30 @@ $(function () {
     new Morris.Donut({
         element: 'donut-chart1',
         data: [{
-            label: "Chrome",
-            value: 34
-        }, {
-            label: "Firefox",
-            value: 24
-        }, {
-            label: "Opera",
-            value: 12
-        }, {
-            label: "Safari",
-            value: 25
-        }, {
-            label: "Internet Explorer",
-            value: 5
-        }],
+                label: "Chrome",
+                value: 34
+            }, {
+                label: "Firefox",
+                value: 24
+            }, {
+                label: "Opera",
+                value: 12
+            }, {
+                label: "Safari",
+                value: 25
+            }, {
+                label: "Internet Explorer",
+                value: 5
+            }],
         colors: ['#C75757', '#18A689', '#0090D9', '#2B2E33', '#0090D9'],
-        formatter: function (x) {
+        formatter: function(x) {
             return x + "%"
         }
     });
 
 
     //************** SPARKLINE SMALL CHART *****************//
-    $(function () {
+    $(function() {
         /* Sparklines can also take their values from the first argument passed to the sparkline() function */
         var myvalues1 = [13, 14, 16, 15, 11, 14, 20, 14, 12, 16, 11, 17];
         var myvalues2 = [14, 17, 16, 12, 18, 16, 22, 15, 14, 17, 11, 18];
@@ -289,7 +290,7 @@ $(function () {
     });
 
     /* We have to recreate charts on resize to make them responsive */
-    $(window).resize(function () {
+    $(window).resize(function() {
         var myvalues1 = [13, 14, 16, 15, 11, 14, 20, 14, 12, 16, 11, 17];
         var myvalues2 = [14, 17, 16, 12, 18, 16, 22, 15, 14, 17, 11, 18];
         $('.spark-chart-1').sparkline(myvalues1, {
@@ -311,21 +312,21 @@ $(function () {
         new Morris.Donut({
             element: 'donut-chart1',
             data: [{
-                label: "Chrome",
-                value: 30
-            }, {
-                label: "Firefox",
-                value: 20
-            }, {
-                label: "Opera",
-                value: 20
-            }, {
-                label: "Safari",
-                value: 20
-            }, {
-                label: "Internet Explorer",
-                value: 10
-            }],
+                    label: "Chrome",
+                    value: 30
+                }, {
+                    label: "Firefox",
+                    value: 20
+                }, {
+                    label: "Opera",
+                    value: 20
+                }, {
+                    label: "Safari",
+                    value: 20
+                }, {
+                    label: "Internet Explorer",
+                    value: 10
+                }],
             colors: ['#C75757', '#18A689', '#0090D9', '#2B2E33', '#0090D9']
         });
     });
@@ -334,8 +335,8 @@ $(function () {
     //******************** TO DO LIST ********************//
     $("#sortable-todo").sortable();
 
-    $('.my_checkbox_all').on('click', function (event) {
-        if ($(this).prop('checked') ==  true){
+    $('.my_checkbox_all').on('click', function(event) {
+        if ($(this).prop('checked') == true) {
             $(this).closest('#task-manager').find('input:checkbox').prop('checked', true);
         } else {
             $(this).closest('#task-manager').find('input:checkbox').prop('checked', false);
@@ -352,11 +353,11 @@ $(function () {
         [1, 5 + randomValue()], [2, 10 + randomValue()], [3, 10 + randomValue()], [4, 15 + randomValue()], [5, 20 + randomValue()], [6, 25 + randomValue()], [7, 30 + randomValue()], [8, 35 + randomValue()], [9, 40 + randomValue()], [10, 45 + randomValue()], [11, 50 + randomValue()], [12, 55 + randomValue()], [13, 60 + randomValue()], [14, 70 + randomValue()], [15, 75 + randomValue()], [16, 80 + randomValue()], [17, 85 + randomValue()], [18, 90 + randomValue()], [19, 95 + randomValue()], [20, 100 + randomValue()]
     ];
     var data2 = [
-        [6, 1425], [7, 1754], [8, 1964], [9, 2145], [10, 2550], [11, 2210], [12, 1760], [13, 1820], [14, 1880], [15, 1985],  [16, 2240]
+        [6, 1425], [7, 1754], [8, 1964], [9, 2145], [10, 2550], [11, 2210], [12, 1760], [13, 1820], [14, 1880], [15, 1985], [16, 2240]
     ];
 
     var plot = $.plot(
-        $('#chart_revenue'), [{
+            $('#chart_revenue'), [{
             label: "Revenue",
             data: data1,
             color: '#fff',
@@ -364,35 +365,35 @@ $(function () {
                 fillColor: "#9182d4"
             }
         }], {
-            grid: {
-                color: '#fff',
-                borderColor: "transparent",
-                clickable: true,
-                hoverable: true
+        grid: {
+            color: '#fff',
+            borderColor: "transparent",
+            clickable: true,
+            hoverable: true
+        },
+        series: {
+            lines: {
+                show: true,
+                fill: false,
             },
-            series: {
-                lines: {
-                    show: true,
-                    fill: false,
-                },
-                points: {
-                    show: true
-                }
-            },
-            xaxis: {
-                show: false
-            },
-            yaxis: {
-                tickColor: '#B992DB'
-            },
-            legend: {
-                show: false
-            },
-            tooltip: true
-        });
+            points: {
+                show: true
+            }
+        },
+        xaxis: {
+            show: false
+        },
+        yaxis: {
+            tickColor: '#B992DB'
+        },
+        legend: {
+            show: false
+        },
+        tooltip: true
+    });
 
     var previousPoint = null;
-    $("#chart_revenue").bind("plothover", function (event, pos, item) {
+    $("#chart_revenue").bind("plothover", function(event, pos, item) {
         $("#x").text(pos.x.toFixed(2));
         $("#y").text(pos.y.toFixed(2));
         if (item) {
@@ -400,7 +401,7 @@ $(function () {
                 previousPoint = item.dataIndex;
                 $("#flot-tooltip").remove();
                 var x = item.datapoint[0].toFixed(2),
-                    y = item.datapoint[1].toFixed(2);
+                        y = item.datapoint[1].toFixed(2);
                 showTooltip(item.pageX, item.pageY, y + "0 $");
             }
         } else {
@@ -423,58 +424,58 @@ $(function () {
             overviewMapControl: false,
             zoom: 11,
             styles: [{
-                "featureType": "water",
-                "stylers": [{
-                    "color": "#0090d9"
+                    "featureType": "water",
+                    "stylers": [{
+                            "color": "#0090d9"
+                        }, {
+                            "visibility": "on"
+                        }]
                 }, {
-                    "visibility": "on"
-                }]
-            }, {
-                "featureType": "landscape",
-                "stylers": [{
-                    "color": "#ccdae5"
-                }]
-            }, {
-                "featureType": "road",
-                "stylers": [{
-                    "saturation": -100
+                    "featureType": "landscape",
+                    "stylers": [{
+                            "color": "#ccdae5"
+                        }]
                 }, {
-                    "lightness": 45
+                    "featureType": "road",
+                    "stylers": [{
+                            "saturation": -100
+                        }, {
+                            "lightness": 45
+                        }]
+                }, {
+                    "featureType": "road.highway",
+                    "stylers": [{
+                            "visibility": "simplified"
+                        }]
+                }, {
+                    "featureType": "road.arterial",
+                    "elementType": "labels.icon",
+                    "stylers": [{
+                            "visibility": "off"
+                        }]
+                }, {
+                    "featureType": "administrative",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{
+                            "color": "#444444"
+                        }]
+                }, {
+                    "featureType": "transit",
+                    "stylers": [{
+                            "visibility": "off"
+                        }]
+                }, {
+                    "featureType": "poi",
+                    "stylers": [{
+                            "visibility": "off"
+                        }]
                 }]
-            }, {
-                "featureType": "road.highway",
-                "stylers": [{
-                    "visibility": "simplified"
-                }]
-            }, {
-                "featureType": "road.arterial",
-                "elementType": "labels.icon",
-                "stylers": [{
-                    "visibility": "off"
-                }]
-            }, {
-                "featureType": "administrative",
-                "elementType": "labels.text.fill",
-                "stylers": [{
-                    "color": "#444444"
-                }]
-            }, {
-                "featureType": "transit",
-                "stylers": [{
-                    "visibility": "off"
-                }]
-            }, {
-                "featureType": "poi",
-                "stylers": [{
-                    "visibility": "off"
-                }]
-            }]
         });
-        $('#geocoding_form').submit(function (e) {
+        $('#geocoding_form').submit(function(e) {
             e.preventDefault();
             GMaps.geocode({
                 address: $('#address').val().trim(),
-                callback: function (results, status) {
+                callback: function(results, status) {
                     if (status == 'OK') {
                         var latlng = results[0].geometry.location;
                         geocoding_map.setCenter(latlng.lat(), latlng.lng());
@@ -496,7 +497,7 @@ $(function () {
         location: city,
         woeid: '',
         unit: 'f',
-        success: function (weather) {
+        success: function(weather) {
             city = weather.city;
             region = weather.country;
             tomorrow_date = weather.tomorrow.date;
@@ -524,13 +525,13 @@ $(function () {
     });
 
     /* We get city from input on change */
-    $("#city-form").change(function () {
+    $("#city-form").change(function() {
         city = document.getElementById("city-form").value;
         $.simpleWeather({
             location: city,
             woeid: '',
             unit: 'f',
-            success: function (weather) {
+            success: function(weather) {
                 city = weather.city;
                 region = weather.country;
                 tomorrow_date = weather.tomorrow.date;

@@ -1,9 +1,9 @@
 /*!
-* @@name
-* @@author
-* Version @@version - built @@timestamp
-* @@license Licensed
-*
-*/
+ * @@name
+ * @@author
+ * Version @@version - built @@timestamp
+ * @@license Licensed
+ *
+ */
 
 !(function($) {

@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
     /* Google Maps example */
     var simple_map;

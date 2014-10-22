@@ -39,7 +39,7 @@ public class MassMail extends HttpServlet {
 
         // Sender's email ID needs to be mentioned
         String subject = request.getParameter("subject");
-        
+
         String msg = request.getParameter("msg");
         PrintWriter out = response.getWriter();
         if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", subject, msg, toemail)) {
@@ -48,7 +48,7 @@ public class MassMail extends HttpServlet {
         } else {
             out.println("Some Error Occur");
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

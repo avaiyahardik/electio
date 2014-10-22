@@ -20,7 +20,7 @@
     <body>
         <div class="main-content">
             <h1>Test Page</h1>
-        
+
             <a href="#" data-modal="modal-19" class="btn btn-effect">While</a>
         </div>
 

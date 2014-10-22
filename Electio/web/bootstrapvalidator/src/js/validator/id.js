@@ -39,13 +39,11 @@
             message: 'message',
             country: 'country'
         },
-
         // Supported country codes
         COUNTRY_CODES: [
             'BA', 'BG', 'BR', 'CH', 'CL', 'CN', 'CZ', 'DK', 'EE', 'ES', 'FI', 'HR', 'IE', 'IS', 'LT', 'LV', 'ME', 'MK', 'NL',
             'RO', 'RS', 'SE', 'SI', 'SK', 'SM', 'TH', 'ZA'
         ],
-
         /**
          * Validate identification number in different countries
          *
@@ -76,10 +74,10 @@
             }
 
             if ($.inArray(country, this.COUNTRY_CODES) === -1) {
-                return { valid: false, message: $.fn.bootstrapValidator.helpers.format($.fn.bootstrapValidator.i18n.id.countryNotSupported, country) };
+                return {valid: false, message: $.fn.bootstrapValidator.helpers.format($.fn.bootstrapValidator.i18n.id.countryNotSupported, country)};
             }
 
-            var method  = ['_', country.toLowerCase()].join('');
+            var method = ['_', country.toLowerCase()].join('');
             return this[method](value)
                     ? true
                     : {
@@ -87,7 +85,6 @@
                         message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.id.country, $.fn.bootstrapValidator.i18n.id.countries[country.toUpperCase()])
                     };
         },
-
         /**
          * Validate Unique Master Citizen Number which uses in
          * - Bosnia and Herzegovina (country code: BA)
@@ -105,11 +102,11 @@
             if (!/^\d{13}$/.test(value)) {
                 return false;
             }
-            var day   = parseInt(value.substr(0, 2), 10),
-                month = parseInt(value.substr(2, 2), 10),
-                year  = parseInt(value.substr(4, 3), 10),
-                rr    = parseInt(value.substr(7, 2), 10),
-                k     = parseInt(value.substr(12, 1), 10);
+            var day = parseInt(value.substr(0, 2), 10),
+                    month = parseInt(value.substr(2, 2), 10),
+                    year = parseInt(value.substr(4, 3), 10),
+                    rr = parseInt(value.substr(7, 2), 10),
+                    k = parseInt(value.substr(12, 1), 10);
 
             // Validate date of birth
             // FIXME: Validate the year of birth
@@ -155,7 +152,6 @@
                     return true;
             }
         },
-
         _ba: function(value) {
             return this._validateJMBG(value, 'BA');
         },
@@ -168,14 +164,12 @@
         _rs: function(value) {
             return this._validateJMBG(value, 'RS');
         },
-
         /**
          * Examples: 0101006500006
          */
         _si: function(value) {
             return this._validateJMBG(value, 'SI');
         },
-
         /**
          * Validate Bulgarian national identification number (EGN)
          * Examples:
@@ -192,9 +186,9 @@
             }
             value = value.replace(/\s/g, '');
             // Check the birth date
-            var year  = parseInt(value.substr(0, 2), 10) + 1900,
-                month = parseInt(value.substr(2, 2), 10),
-                day   = parseInt(value.substr(4, 2), 10);
+            var year = parseInt(value.substr(0, 2), 10) + 1900,
+                    month = parseInt(value.substr(2, 2), 10),
+                    day = parseInt(value.substr(4, 2), 10);
             if (month > 40) {
                 year += 100;
                 month -= 40;
@@ -207,15 +201,14 @@
                 return false;
             }
 
-            var sum    = 0,
-                weight = [2, 4, 8, 5, 10, 9, 7, 3, 6];
+            var sum = 0,
+                    weight = [2, 4, 8, 5, 10, 9, 7, 3, 6];
             for (var i = 0; i < 9; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = (sum % 11) % 10;
             return (sum + '' === value.substr(9, 1));
         },
-
         /**
          * Validate Brazilian national identification number (CPF)
          * Examples:
@@ -258,7 +251,6 @@
 
             return (d2 + '' === value.charAt(10));
         },
-
         /**
          * Validate Swiss Social Security Number (AHV-Nr/No AVS)
          * Examples:
@@ -275,15 +267,14 @@
             }
             value = value.replace(/\D/g, '').substr(3);
             var length = value.length,
-                sum    = 0,
-                weight = (length === 8) ? [3, 1] : [1, 3];
+                    sum = 0,
+                    weight = (length === 8) ? [3, 1] : [1, 3];
             for (var i = 0; i < length - 1; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i % 2];
             }
             sum = 10 - sum % 10;
             return (sum + '' === value.charAt(length - 1));
         },
-
         /**
          * Validate Chilean national identification number (RUN/RUT)
          * Examples:
@@ -302,8 +293,8 @@
             while (value.length < 9) {
                 value = '0' + value;
             }
-            var sum    = 0,
-                weight = [3, 2, 7, 6, 5, 4, 3, 2];
+            var sum = 0,
+                    weight = [3, 2, 7, 6, 5, 4, 3, 2];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -315,7 +306,6 @@
             }
             return sum + '' === value.charAt(8).toUpperCase();
         },
-
         /**
          * Validate Chinese citizen identification number
          *
@@ -346,7 +336,7 @@
             if (!/^\d{15}$/.test(value) && !/^\d{17}[\dXx]{1}$/.test(value)) {
                 return false;
             }
-            
+
             // Check China PR Administrative division code
             var adminDivisionCodes = {
                 11: {
@@ -796,23 +786,23 @@
                     43: [0, 1, [21, 26]],
                     90: [[0, 4]], 27: [[0, 2], 22, 23]
                 },
-                71: { 0: [0] },
-                81: { 0: [0] },
-                82: { 0: [0] }
+                71: {0: [0]},
+                81: {0: [0]},
+                82: {0: [0]}
             };
-            
-            var provincial  = parseInt(value.substr(0, 2), 10),
-                prefectural = parseInt(value.substr(2, 2), 10),
-                county      = parseInt(value.substr(4, 2), 10);
-            
+
+            var provincial = parseInt(value.substr(0, 2), 10),
+                    prefectural = parseInt(value.substr(2, 2), 10),
+                    county = parseInt(value.substr(4, 2), 10);
+
             if (!adminDivisionCodes[provincial] || !adminDivisionCodes[provincial][prefectural]) {
                 return false;
             }
-            var inRange  = false,
-                rangeDef = adminDivisionCodes[provincial][prefectural];
+            var inRange = false,
+                    rangeDef = adminDivisionCodes[provincial][prefectural];
             for (var i = 0; i < rangeDef.length; i++) {
                 if (($.isArray(rangeDef[i]) && rangeDef[i][0] <= county && county <= rangeDef[i][1])
-                    || (!$.isArray(rangeDef[i]) && county === rangeDef[i]))
+                        || (!$.isArray(rangeDef[i]) && county === rangeDef[i]))
                 {
                     inRange = true;
                     break;
@@ -822,25 +812,25 @@
             if (!inRange) {
                 return false;
             }
-            
+
             // Check date of birth
             var dob;
             if (value.length === 18) {
                 dob = value.substr(6, 8);
-            } else /* length == 15 */ { 
+            } else /* length == 15 */ {
                 dob = '19' + value.substr(6, 6);
             }
-            var year  = parseInt(dob.substr(0, 4), 10),
-                month = parseInt(dob.substr(4, 2), 10),
-                day   = parseInt(dob.substr(6, 2), 10);
+            var year = parseInt(dob.substr(0, 4), 10),
+                    month = parseInt(dob.substr(4, 2), 10),
+                    day = parseInt(dob.substr(6, 2), 10);
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
                 return false;
             }
-            
+
             // Check checksum (18-digit system only)
             if (value.length === 18) {
-                var sum    = 0,
-                    weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+                var sum = 0,
+                        weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
                 for (i = 0; i < 17; i++) {
                     sum += parseInt(value.charAt(i), 10) * weight[i];
                 }
@@ -848,10 +838,9 @@
                 var checksum = (value.charAt(17).toUpperCase() !== 'X') ? parseInt(value.charAt(17), 10) : 10;
                 return checksum === sum;
             }
-            
+
             return true;
         },
-        
         /**
          * Validate Czech national identification number (RC)
          * Examples:
@@ -865,9 +854,9 @@
             if (!/^\d{9,10}$/.test(value)) {
                 return false;
             }
-            var year  = 1900 + parseInt(value.substr(0, 2), 10),
-                month = parseInt(value.substr(2, 2), 10) % 50 % 20,
-                day   = parseInt(value.substr(4, 2), 10);
+            var year = 1900 + parseInt(value.substr(0, 2), 10),
+                    month = parseInt(value.substr(2, 2), 10) % 50 % 20,
+                    day = parseInt(value.substr(4, 2), 10);
             if (value.length === 9) {
                 if (year >= 1980) {
                     year -= 100;
@@ -894,7 +883,6 @@
 
             return true;
         },
-
         /**
          * Validate Danish Personal Identification number (CPR)
          * Examples:
@@ -910,9 +898,9 @@
                 return false;
             }
             value = value.replace(/-/g, '');
-            var day   = parseInt(value.substr(0, 2), 10),
-                month = parseInt(value.substr(2, 2), 10),
-                year  = parseInt(value.substr(4, 2), 10);
+            var day = parseInt(value.substr(0, 2), 10),
+                    month = parseInt(value.substr(2, 2), 10),
+                    year = parseInt(value.substr(4, 2), 10);
 
             switch (true) {
                 case ('5678'.indexOf(value.charAt(6)) !== -1 && year >= 58):
@@ -929,7 +917,6 @@
 
             return $.fn.bootstrapValidator.helpers.date(year, month, day);
         },
-
         /**
          * Validate Estonian Personal Identification Code (isikukood)
          * Examples:
@@ -943,7 +930,6 @@
             // Use the same format as Lithuanian Personal Code
             return this._lt(value);
         },
-
         /**
          * Validate Spanish personal identity code (DNI)
          * Support i) DNI (for Spanish citizens) and ii) NIE (for foreign people)
@@ -958,7 +944,7 @@
          */
         _es: function(value) {
             if (!/^[0-9A-Z]{8}[-]{0,1}[0-9A-Z]$/.test(value)                    // DNI
-                && !/^[XYZ][-]{0,1}[0-9]{7}[-]{0,1}[0-9A-Z]$/.test(value)) {    // NIE
+                    && !/^[XYZ][-]{0,1}[0-9]{7}[-]{0,1}[0-9A-Z]$/.test(value)) {    // NIE
                 return false;
             }
 
@@ -973,7 +959,6 @@
             check = 'TRWAGMYFPDXBNJZSQVHLCKE'[check % 23];
             return (check === value.substr(8, 1));
         },
-
         /**
          * Validate Finnish Personal Identity Code (HETU)
          * Examples:
@@ -987,14 +972,14 @@
             if (!/^[0-9]{6}[-+A][0-9]{3}[0-9ABCDEFHJKLMNPRSTUVWXY]$/.test(value)) {
                 return false;
             }
-            var day       = parseInt(value.substr(0, 2), 10),
-                month     = parseInt(value.substr(2, 2), 10),
-                year      = parseInt(value.substr(4, 2), 10),
-                centuries = {
-                    '+': 1800,
-                    '-': 1900,
-                    'A': 2000
-                };
+            var day = parseInt(value.substr(0, 2), 10),
+                    month = parseInt(value.substr(2, 2), 10),
+                    year = parseInt(value.substr(4, 2), 10),
+                    centuries = {
+                        '+': 1800,
+                        '-': 1900,
+                        'A': 2000
+                    };
             year = centuries[value.charAt(6)] + year;
 
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
@@ -1009,7 +994,6 @@
             n = parseInt(n, 10);
             return '0123456789ABCDEFHJKLMNPRSTUVWXY'.charAt(n % 31) === value.charAt(10);
         },
-
         /**
          * Validate Croatian personal identification number (OIB)
          * Examples:
@@ -1025,7 +1009,6 @@
             }
             return $.fn.bootstrapValidator.helpers.mod11And10(value);
         },
-
         /**
          * Validate Irish Personal Public Service Number (PPS)
          * Examples:
@@ -1046,7 +1029,7 @@
                     value = '0' + value;
                 }
                 var alphabet = 'WABCDEFGHIJKLMNOPQRSTUV',
-                    sum      = 0;
+                        sum = 0;
                 for (var i = 0; i < 7; i++) {
                     sum += parseInt(value.charAt(i), 10) * (8 - i);
                 }
@@ -1063,7 +1046,6 @@
                 return value.charAt(7) === getCheckDigit(value.substr(0, 7));
             }
         },
-
         /**
          * Validate Iceland national identification number (Kennitala)
          * Examples:
@@ -1078,25 +1060,24 @@
                 return false;
             }
             value = value.replace(/-/g, '');
-            var day     = parseInt(value.substr(0, 2), 10),
-                month   = parseInt(value.substr(2, 2), 10),
-                year    = parseInt(value.substr(4, 2), 10),
-                century = parseInt(value.charAt(9), 10);
+            var day = parseInt(value.substr(0, 2), 10),
+                    month = parseInt(value.substr(2, 2), 10),
+                    year = parseInt(value.substr(4, 2), 10),
+                    century = parseInt(value.charAt(9), 10);
 
             year = (century === 9) ? (1900 + year) : ((20 + century) * 100 + year);
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day, true)) {
                 return false;
             }
             // Validate the check digit
-            var sum    = 0,
-                weight = [3, 2, 7, 6, 5, 4, 3, 2];
+            var sum = 0,
+                    weight = [3, 2, 7, 6, 5, 4, 3, 2];
             for (var i = 0; i < 8; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = 11 - sum % 11;
             return (sum + '' === value.charAt(8));
         },
-
         /**
          * Validate Lithuanian Personal Code (Asmens kodas)
          * Examples:
@@ -1112,19 +1093,19 @@
             if (!/^[0-9]{11}$/.test(value)) {
                 return false;
             }
-            var gender  = parseInt(value.charAt(0), 10),
-                year    = parseInt(value.substr(1, 2), 10),
-                month   = parseInt(value.substr(3, 2), 10),
-                day     = parseInt(value.substr(5, 2), 10),
-                century = (gender % 2 === 0) ? (17 + gender / 2) : (17 + (gender + 1) / 2);
+            var gender = parseInt(value.charAt(0), 10),
+                    year = parseInt(value.substr(1, 2), 10),
+                    month = parseInt(value.substr(3, 2), 10),
+                    day = parseInt(value.substr(5, 2), 10),
+                    century = (gender % 2 === 0) ? (17 + gender / 2) : (17 + (gender + 1) / 2);
             year = century * 100 + year;
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day, true)) {
                 return false;
             }
 
             // Validate the check digit
-            var sum    = 0,
-                weight = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
+            var sum = 0,
+                    weight = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
             for (var i = 0; i < 10; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -1134,7 +1115,7 @@
             }
 
             // Re-calculate the check digit
-            sum    = 0;
+            sum = 0;
             weight = [3, 4, 5, 6, 7, 8, 9, 1, 2, 3];
             for (i = 0; i < 10; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
@@ -1145,7 +1126,6 @@
             }
             return (sum + '' === value.charAt(10));
         },
-
         /**
          * Validate Latvian Personal Code (Personas kods)
          * Examples:
@@ -1162,9 +1142,9 @@
             }
             value = value.replace(/\D/g, '');
             // Check birth date
-            var day   = parseInt(value.substr(0, 2), 10),
-                month = parseInt(value.substr(2, 2), 10),
-                year  = parseInt(value.substr(4, 2), 10);
+            var day = parseInt(value.substr(0, 2), 10),
+                    month = parseInt(value.substr(2, 2), 10),
+                    year = parseInt(value.substr(4, 2), 10);
             year = year + 1800 + parseInt(value.charAt(6), 10) * 100;
 
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day, true)) {
@@ -1172,15 +1152,14 @@
             }
 
             // Check personal code
-            var sum    = 0,
-                weight = [10, 5, 8, 4, 2, 1, 6, 3, 7, 9];
+            var sum = 0,
+                    weight = [10, 5, 8, 4, 2, 1, 6, 3, 7, 9];
             for (var i = 0; i < 10; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = (sum + 1) % 11 % 10;
             return (sum + '' === value.charAt(10));
         },
-
         /**
          * Validate Dutch national identification number (BSN)
          * Examples:
@@ -1202,8 +1181,8 @@
             if (parseInt(value, 10) === 0) {
                 return false;
             }
-            var sum    = 0,
-                length = value.length;
+            var sum = 0,
+                    length = value.length;
             for (var i = 0; i < length - 1; i++) {
                 sum += (9 - i) * parseInt(value.charAt(i), 10);
             }
@@ -1213,7 +1192,6 @@
             }
             return (sum + '' === value.charAt(length - 1));
         },
-
         /**
          * Validate Romanian numerical personal code (CNP)
          * Examples:
@@ -1234,18 +1212,18 @@
             }
 
             // Determine the date of birth
-            var year      = parseInt(value.substr(1, 2), 10),
-                month     = parseInt(value.substr(3, 2), 10),
-                day       = parseInt(value.substr(5, 2), 10),
-                // The year of date is determined base on the gender
-                centuries = {
-                    '1': 1900,  // Male born between 1900 and 1999
-                    '2': 1900,  // Female born between 1900 and 1999
-                    '3': 1800,  // Male born between 1800 and 1899
-                    '4': 1800,  // Female born between 1800 and 1899
-                    '5': 2000,  // Male born after 2000
-                    '6': 2000   // Female born after 2000
-                };
+            var year = parseInt(value.substr(1, 2), 10),
+                    month = parseInt(value.substr(3, 2), 10),
+                    day = parseInt(value.substr(5, 2), 10),
+                    // The year of date is determined base on the gender
+                    centuries = {
+                        '1': 1900, // Male born between 1900 and 1999
+                        '2': 1900, // Female born between 1900 and 1999
+                        '3': 1800, // Male born between 1800 and 1899
+                        '4': 1800, // Female born between 1800 and 1899
+                        '5': 2000, // Male born after 2000
+                        '6': 2000   // Female born after 2000
+                    };
             if (day > 31 && month > 12) {
                 return false;
             }
@@ -1257,9 +1235,9 @@
             }
 
             // Validate the check digit
-            var sum    = 0,
-                weight = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9],
-                length = value.length;
+            var sum = 0,
+                    weight = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9],
+                    length = value.length;
             for (var i = 0; i < length - 1; i++) {
                 sum += parseInt(value.charAt(i), 10) * weight[i];
             }
@@ -1269,7 +1247,6 @@
             }
             return (sum + '' === value.charAt(length - 1));
         },
-
         /**
          * Validate Swedish personal identity number (personnummer)
          * Examples:
@@ -1286,9 +1263,9 @@
             }
             value = value.replace(/[^0-9]/g, '');
 
-            var year  = parseInt(value.substr(0, 2), 10) + 1900,
-                month = parseInt(value.substr(2, 2), 10),
-                day   = parseInt(value.substr(4, 2), 10);
+            var year = parseInt(value.substr(0, 2), 10) + 1900,
+                    month = parseInt(value.substr(2, 2), 10),
+                    day = parseInt(value.substr(4, 2), 10);
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
                 return false;
             }
@@ -1296,7 +1273,6 @@
             // Validate the last check digit
             return $.fn.bootstrapValidator.helpers.luhn(value);
         },
-
         /**
          * Validate Slovak national identifier number (RC)
          * Examples:
@@ -1310,7 +1286,6 @@
             // Slovakia uses the same format as Czech Republic
             return this._cz(value);
         },
-
         /**
          * Validate San Marino citizen number
          *
@@ -1321,7 +1296,6 @@
         _sm: function(value) {
             return /^\d{5}$/.test(value);
         },
-
         /**
          * Validate Thailand citizen number
          * Examples:
@@ -1344,7 +1318,6 @@
 
             return (11 - sum % 11) % 10 === parseInt(value.charAt(12), 10);
         },
-
         /**
          * Validate South African ID
          * Example:
@@ -1359,10 +1332,10 @@
             if (!/^[0-9]{10}[0|1][8|9][0-9]$/.test(value)) {
                 return false;
             }
-            var year        = parseInt(value.substr(0, 2), 10),
-                currentYear = new Date().getFullYear() % 100,
-                month       = parseInt(value.substr(2, 2), 10),
-                day         = parseInt(value.substr(4, 2), 10);
+            var year = parseInt(value.substr(0, 2), 10),
+                    currentYear = new Date().getFullYear() % 100,
+                    month = parseInt(value.substr(2, 2), 10),
+                    day = parseInt(value.substr(4, 2), 10);
             year = (year >= currentYear) ? (year + 1900) : (year + 2000);
 
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {

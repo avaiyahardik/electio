@@ -1,14 +1,14 @@
-$(function() { 
+$(function() {
 
     $('.magnific').magnificPopup({
-        type:'image',
+        type: 'image',
         gallery: {
             enabled: true
         },
         removalDelay: 300,
         mainClass: 'mfp-fade'
     });
-    
+
 });
 
 

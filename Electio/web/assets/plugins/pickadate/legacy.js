@@ -1,10 +1,10 @@
 
 /*jshint
-   asi: true,
-   unused: true,
-   boss: true,
-   loopfunc: true,
-   eqnull: true
+ asi: true,
+ unused: true,
+ boss: true,
+ loopfunc: true,
+ eqnull: true
  */
 
 
@@ -14,12 +14,12 @@
 
 
 // Map array support
-if ( ![].map ) {
-    Array.prototype.map = function ( callback, self ) {
-        var array = this, len = array.length, newArray = new Array( len )
-        for ( var i = 0; i < len; i++ ) {
-            if ( i in array ) {
-                newArray[ i ] = callback.call( self, array[ i ], i, array )
+if (![].map) {
+    Array.prototype.map = function(callback, self) {
+        var array = this, len = array.length, newArray = new Array(len)
+        for (var i = 0; i < len; i++) {
+            if (i in array) {
+                newArray[ i ] = callback.call(self, array[ i ], i, array)
             }
         }
         return newArray
@@ -28,17 +28,20 @@ if ( ![].map ) {
 
 
 // Filter array support
-if ( ![].filter ) {
-    Array.prototype.filter = function( callback ) {
-        if ( this == null ) throw new TypeError()
-        var t = Object( this ), len = t.length >>> 0
-        if ( typeof callback != 'function' ) throw new TypeError()
+if (![].filter) {
+    Array.prototype.filter = function(callback) {
+        if (this == null)
+            throw new TypeError()
+        var t = Object(this), len = t.length >>> 0
+        if (typeof callback != 'function')
+            throw new TypeError()
         var newArray = [], thisp = arguments[ 1 ]
-        for ( var i = 0; i < len; i++ ) {
-          if ( i in t ) {
-            var val = t[ i ]
-            if ( callback.call( thisp, val, i, t ) ) newArray.push( val )
-          }
+        for (var i = 0; i < len; i++) {
+            if (i in t) {
+                var val = t[ i ]
+                if (callback.call(thisp, val, i, t))
+                    newArray.push(val)
+            }
         }
         return newArray
     }
@@ -46,25 +49,29 @@ if ( ![].filter ) {
 
 
 // Index of array support
-if ( ![].indexOf ) {
-    Array.prototype.indexOf = function( searchElement ) {
-        if ( this == null ) throw new TypeError()
-        var t = Object( this ), len = t.length >>> 0
-        if ( len === 0 ) return -1
+if (![].indexOf) {
+    Array.prototype.indexOf = function(searchElement) {
+        if (this == null)
+            throw new TypeError()
+        var t = Object(this), len = t.length >>> 0
+        if (len === 0)
+            return -1
         var n = 0
-        if ( arguments.length > 1 ) {
-            n = Number( arguments[ 1 ] )
-            if ( n != n ) {
+        if (arguments.length > 1) {
+            n = Number(arguments[ 1 ])
+            if (n != n) {
                 n = 0
             }
-            else if ( n !== 0 && n != Infinity && n != -Infinity ) {
-                n = ( n > 0 || -1 ) * Math.floor( Math.abs( n ) )
+            else if (n !== 0 && n != Infinity && n != -Infinity) {
+                n = (n > 0 || -1) * Math.floor(Math.abs(n))
             }
         }
-        if ( n >= len ) return -1
-        var k = n >= 0 ? n : Math.max( len - Math.abs( n ), 0 )
-        for ( ; k < len; k++ ) {
-            if ( k in t && t[ k ] === searchElement ) return k
+        if (n >= len)
+            return -1
+        var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0)
+        for (; k < len; k++) {
+            if (k in t && t[ k ] === searchElement)
+                return k
         }
         return -1
     }
@@ -84,12 +91,12 @@ String.prototype.split = function(separator, limit) {
         return nativeSplit.call(str, separator, limit)
     }
     var output = [],
-        flags = (separator.ignoreCase ? 'i' : '') +
-                (separator.multiline  ? 'm' : '') +
-                (separator.extended   ? 'x' : '') +
-                (separator.sticky     ? 'y' : ''),
-        lastLastIndex = 0,
-        separator2, match, lastIndex, lastLength
+            flags = (separator.ignoreCase ? 'i' : '') +
+            (separator.multiline ? 'm' : '') +
+            (separator.extended ? 'x' : '') +
+            (separator.sticky ? 'y' : ''),
+            lastLastIndex = 0,
+            separator2, match, lastIndex, lastLength
     separator = new RegExp(separator.source, flags + 'g')
     str += ''
     if (!compliantExecNpcg) {
@@ -101,7 +108,7 @@ String.prototype.split = function(separator, limit) {
         if (lastIndex > lastLastIndex) {
             output.push(str.slice(lastLastIndex, match.index))
             if (!compliantExecNpcg && match.length > 1) {
-                match[0].replace(separator2, function () {
+                match[0].replace(separator2, function() {
                     for (var i = 1; i < arguments.length - 2; i++) {
                         if (arguments[i] === undefined) {
                             match[i] = undefined

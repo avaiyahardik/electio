@@ -4,6 +4,10 @@
         <servlet-name>Controller</servlet-name>
         <servlet-class>Controller.Controller</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NomineeRegistration</servlet-name>
+        <servlet-class>Controller.NomineeRegistration</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -19,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>MassMail</servlet-name>
         <url-pattern>/MassMail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NomineeRegistration</servlet-name>
+        <url-pattern>/NomineeRegistration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NomineeRegistration</servlet-name>
+        <url-pattern>/candidate/NomineeRegistration</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

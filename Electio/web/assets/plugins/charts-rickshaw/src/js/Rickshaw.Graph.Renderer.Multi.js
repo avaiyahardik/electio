@@ -1,161 +1,179 @@
 Rickshaw.namespace('Rickshaw.Graph.Renderer.Multi');
 
-Rickshaw.Graph.Renderer.Multi = Rickshaw.Class.create( Rickshaw.Graph.Renderer, {
+Rickshaw.Graph.Renderer.Multi = Rickshaw.Class.create(Rickshaw.Graph.Renderer, {
+    name: 'multi',
+    initialize: function($super, args) {
 
-	name: 'multi',
+        $super(args);
+    },
+    defaults: function($super) {
 
-	initialize: function($super, args) {
+        return Rickshaw.extend($super(), {
+            unstack: true,
+            fill: false,
+            stroke: true
+        });
+    },
+    configure: function($super, args) {
 
-		$super(args);
-	},
+        args = args || {};
+        this.config = args;
+        $super(args);
+    },
+    domain: function($super) {
 
-	defaults: function($super) {
+        this.graph.stackData();
 
-		return Rickshaw.extend( $super(), {
-			unstack: true,
-			fill: false,
-			stroke: true 
-		} );
-	},
+        var domains = [];
 
-	configure: function($super, args) {
+        var groups = this._groups();
+        this._stack(groups);
 
-		args = args || {};
-		this.config = args;
-		$super(args);
-	},
+        groups.forEach(function(group) {
 
-	domain: function($super) {
+            var data = group.series
+                    .filter(function(s) {
+                        return !s.disabled
+                    })
+                    .map(function(s) {
+                        return s.stack
+                    });
 
-		this.graph.stackData();
+            if (!data.length)
+                return;
 
-		var domains = [];
+            var domain = null;
+            if (group.renderer && group.renderer.domain) {
+                domain = group.renderer.domain(data);
+            }
+            else {
+                domain = $super(data);
+            }
+            domains.push(domain);
+        });
 
-		var groups = this._groups();
-		this._stack(groups);
+        var xMin = d3.min(domains.map(function(d) {
+            return d.x[0]
+        }));
+        var xMax = d3.max(domains.map(function(d) {
+            return d.x[1]
+        }));
+        var yMin = d3.min(domains.map(function(d) {
+            return d.y[0]
+        }));
+        var yMax = d3.max(domains.map(function(d) {
+            return d.y[1]
+        }));
 
-		groups.forEach( function(group) {
+        return {x: [xMin, xMax], y: [yMin, yMax]};
+    },
+    _groups: function() {
 
-			var data = group.series
-				.filter( function(s) { return !s.disabled } )
-				.map( function(s) { return s.stack });
+        var graph = this.graph;
 
-			if (!data.length) return;
-			
-			var domain = null;
-			if (group.renderer && group.renderer.domain) {
-				domain = group.renderer.domain(data);
-			}
-			else {
-				domain = $super(data);
-			}
-			domains.push(domain);
-		});
+        var renderGroups = {};
 
-		var xMin = d3.min(domains.map( function(d) { return d.x[0] } ));
-		var xMax = d3.max(domains.map( function(d) { return d.x[1] } ));
-		var yMin = d3.min(domains.map( function(d) { return d.y[0] } ));
-		var yMax = d3.max(domains.map( function(d) { return d.y[1] } ));
+        graph.series.forEach(function(series) {
 
-		return { x: [xMin, xMax], y: [yMin, yMax] };
-	},
+            if (series.disabled)
+                return;
 
-	_groups: function() {
+            if (!renderGroups[series.renderer]) {
 
-		var graph = this.graph;
+                var ns = "http://www.w3.org/2000/svg";
+                var vis = document.createElementNS(ns, 'g');
 
-		var renderGroups = {};
+                graph.vis[0][0].appendChild(vis);
 
-		graph.series.forEach( function(series) {
+                var renderer = graph._renderers[series.renderer];
 
-			if (series.disabled) return;
+                var config = {};
 
-			if (!renderGroups[series.renderer]) {
+                var defaults = [this.defaults(), renderer.defaults(), this.config, this.graph];
+                defaults.forEach(function(d) {
+                    Rickshaw.extend(config, d)
+                });
 
-				var ns = "http://www.w3.org/2000/svg";
-				var vis = document.createElementNS(ns, 'g');
+                renderer.configure(config);
 
-				graph.vis[0][0].appendChild(vis);
+                renderGroups[series.renderer] = {
+                    renderer: renderer,
+                    series: [],
+                    vis: d3.select(vis)
+                };
+            }
 
-				var renderer = graph._renderers[series.renderer];
+            renderGroups[series.renderer].series.push(series);
 
-				var config = {};
+        }, this);
 
-				var defaults = [ this.defaults(), renderer.defaults(), this.config, this.graph ];
-				defaults.forEach(function(d) { Rickshaw.extend(config, d) });
+        var groups = [];
 
-				renderer.configure(config);
+        Object.keys(renderGroups).forEach(function(key) {
+            var group = renderGroups[key];
+            groups.push(group);
+        });
 
-				renderGroups[series.renderer] = {
-					renderer: renderer,
-					series: [],
-					vis: d3.select(vis)
-				};
-			}
-				
-			renderGroups[series.renderer].series.push(series);
+        return groups;
+    },
+    _stack: function(groups) {
 
-		}, this);
+        groups.forEach(function(group) {
 
-		var groups = [];
+            var series = group.series
+                    .filter(function(series) {
+                        return !series.disabled
+                    });
 
-		Object.keys(renderGroups).forEach( function(key) {
-			var group = renderGroups[key];
-			groups.push(group);
-		});
+            var data = series
+                    .map(function(series) {
+                        return series.stack
+                    });
 
-		return groups;
-	},
+            if (!group.renderer.unstack) {
 
-	_stack: function(groups) {
+                var layout = d3.layout.stack();
+                var stackedData = Rickshaw.clone(layout(data));
 
-		groups.forEach( function(group) {
+                series.forEach(function(series, index) {
+                    series._stack = Rickshaw.clone(stackedData[index]);
+                });
+            }
 
-			var series = group.series
-				.filter( function(series) { return !series.disabled } );
+        }, this);
 
-			var data = series
-				.map( function(series) { return series.stack } );
+        return groups;
 
-			if (!group.renderer.unstack) {
+    },
+    render: function() {
 
-				var layout = d3.layout.stack();
-				var stackedData = Rickshaw.clone(layout(data));
+        this.graph.series.forEach(function(series) {
+            if (!series.renderer) {
+                throw new Error("Each series needs a renderer for graph 'multi' renderer");
+            }
+        });
 
-				series.forEach( function(series, index) {
-					series._stack = Rickshaw.clone(stackedData[index]);
-				});
-			}
+        this.graph.vis.selectAll('*').remove();
 
-		}, this );
+        var groups = this._groups();
+        groups = this._stack(groups);
 
-		return groups;
+        groups.forEach(function(group) {
 
-	},
+            var series = group.series
+                    .filter(function(series) {
+                        return !series.disabled
+                    });
 
-	render: function() {
+            series.active = function() {
+                return series
+            };
 
-		this.graph.series.forEach( function(series) {
-			if (!series.renderer) {
-				throw new Error("Each series needs a renderer for graph 'multi' renderer");
-			}
-		});
+            group.renderer.render({series: series, vis: group.vis});
+            series.forEach(function(s) {
+                s.stack = s._stack || s.stack || s.data;
+            });
+        });
+    }
 
-		this.graph.vis.selectAll('*').remove();
-
-		var groups = this._groups();
-		groups = this._stack(groups);
-
-		groups.forEach( function(group) {
-
-			var series = group.series
-				.filter( function(series) { return !series.disabled } );
-
-			series.active = function() { return series };
-
-			group.renderer.render({ series: series, vis: group.vis });
-			series.forEach(function(s) { s.stack = s._stack || s.stack || s.data; });
-		});
-	}
-
-} );
+});

@@ -36,7 +36,7 @@
             'default': 'Te rog sa introduci o valoare diferita'
         },
         digits: {
-             'default': 'Te rog sa introduci doar cifre'
+            'default': 'Te rog sa introduci doar cifre'
         },
         ean: {
             'default': 'Te rog sa introduci un numar EAN valid'

@@ -8,11 +8,9 @@
             message: 'message',
             separator: 'separator'
         },
-
         enableByHtml5: function($field) {
             return ('number' === $field.attr('type')) && ($field.attr('step') !== undefined) && ($field.attr('step') % 1 !== 0);
         },
-
         /**
          * Validate decimal number
          *

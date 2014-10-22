@@ -54,59 +54,59 @@
  * @extends google.maps.OverlayView
  */
 function MarkerClusterer(map, opt_markers, opt_options) {
-  // MarkerClusterer implements google.maps.OverlayView interface. We use the
-  // extend function to extend MarkerClusterer with google.maps.OverlayView
-  // because it might not always be available when the code is defined so we
-  // look for it at the last possible moment. If it doesn't exist now then
-  // there is no point going ahead :)
-  this.extend(MarkerClusterer, google.maps.OverlayView);
-  this.map_ = map;
-  this.markers_ = [];
-  this.clusters_ = [];
-  this.sizes = [53, 56, 66, 78, 90];
-  this.styles_ = [];
-  this.ready_ = false;
+    // MarkerClusterer implements google.maps.OverlayView interface. We use the
+    // extend function to extend MarkerClusterer with google.maps.OverlayView
+    // because it might not always be available when the code is defined so we
+    // look for it at the last possible moment. If it doesn't exist now then
+    // there is no point going ahead :)
+    this.extend(MarkerClusterer, google.maps.OverlayView);
+    this.map_ = map;
+    this.markers_ = [];
+    this.clusters_ = [];
+    this.sizes = [53, 56, 66, 78, 90];
+    this.styles_ = [];
+    this.ready_ = false;
 
-  var options = opt_options || {};
+    var options = opt_options || {};
 
-  this.gridSize_ = options['gridSize'] || 60;
-  this.maxZoom_ = options['maxZoom'] || null;
-  this.styles_ = options['styles'] || [];
-  this.imagePath_ = options['imagePath'] ||
-      this.MARKER_CLUSTER_IMAGE_PATH_;
-  this.imageExtension_ = options['imageExtension'] ||
-      this.MARKER_CLUSTER_IMAGE_EXTENSION_;
-  this.zoomOnClick_ = options['zoomOnClick'] || true;
+    this.gridSize_ = options['gridSize'] || 60;
+    this.maxZoom_ = options['maxZoom'] || null;
+    this.styles_ = options['styles'] || [];
+    this.imagePath_ = options['imagePath'] ||
+            this.MARKER_CLUSTER_IMAGE_PATH_;
+    this.imageExtension_ = options['imageExtension'] ||
+            this.MARKER_CLUSTER_IMAGE_EXTENSION_;
+    this.zoomOnClick_ = options['zoomOnClick'] || true;
 
-  this.setupStyles_();
+    this.setupStyles_();
 
-  this.setMap(map);
+    this.setMap(map);
 
-  this.prevZoom_ = this.map_.getZoom();
-    
-  // Add the map event listeners
-  var that = this;
-  google.maps.event.addListener(this.map_, 'zoom_changed', function() {
-  	var maxZoom = that.map_.mapTypes[that.map_.getMapTypeId()].maxZoom;
-  	var zoom = that.map_.getZoom();
-  	if (zoom < 0 || zoom > maxZoom) {
-  	  return;
-  	}
-  	
-    if (that.prevZoom_ != zoom) {
-      that.prevZoom_ = that.map_.getZoom();
-      that.resetViewport();
+    this.prevZoom_ = this.map_.getZoom();
+
+    // Add the map event listeners
+    var that = this;
+    google.maps.event.addListener(this.map_, 'zoom_changed', function() {
+        var maxZoom = that.map_.mapTypes[that.map_.getMapTypeId()].maxZoom;
+        var zoom = that.map_.getZoom();
+        if (zoom < 0 || zoom > maxZoom) {
+            return;
+        }
+
+        if (that.prevZoom_ != zoom) {
+            that.prevZoom_ = that.map_.getZoom();
+            that.resetViewport();
+        }
+    });
+
+    google.maps.event.addListener(this.map_, 'bounds_changed', function() {
+        that.redraw();
+    });
+
+    // Finally, add the markers
+    if (opt_markers && opt_markers.length) {
+        this.addMarkers(opt_markers, false);
     }
-  });
-
-  google.maps.event.addListener(this.map_, 'bounds_changed', function() {
-    that.redraw();
-  });
-
-  // Finally, add the markers
-  if (opt_markers && opt_markers.length) {
-    this.addMarkers(opt_markers, false);
-  }
 }
 
 
@@ -117,8 +117,8 @@ function MarkerClusterer(map, opt_markers, opt_options) {
  * @private
  */
 MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ =
-    'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/' +
-    'images/m';
+        'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/' +
+        'images/m';
 
 
 /**
@@ -139,12 +139,12 @@ MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_EXTENSION_ = 'png';
  * @ignore
  */
 MarkerClusterer.prototype.extend = function(obj1, obj2) {
-  return (function(object) {
-    for (property in object.prototype) {
-      this.prototype[property] = object.prototype[property];
-    }
-    return this;
-  }).apply(obj1, [obj2]);
+    return (function(object) {
+        for (property in object.prototype) {
+            this.prototype[property] = object.prototype[property];
+        }
+        return this;
+    }).apply(obj1, [obj2]);
 };
 
 
@@ -153,7 +153,7 @@ MarkerClusterer.prototype.extend = function(obj1, obj2) {
  * @ignore
  */
 MarkerClusterer.prototype.onAdd = function() {
-  this.setReady_(true);
+    this.setReady_(true);
 };
 
 
@@ -161,14 +161,16 @@ MarkerClusterer.prototype.onAdd = function() {
  * Implementation of the interface.
  * @ignore
  */
-MarkerClusterer.prototype.idle = function() {};
+MarkerClusterer.prototype.idle = function() {
+};
 
 
 /**
  * Implementation of the interface.
  * @ignore
  */
-MarkerClusterer.prototype.draw = function() {};
+MarkerClusterer.prototype.draw = function() {
+};
 
 
 /**
@@ -177,13 +179,13 @@ MarkerClusterer.prototype.draw = function() {};
  * @private
  */
 MarkerClusterer.prototype.setupStyles_ = function() {
-  for (var i = 0, size; size = this.sizes[i]; i++) {
-    this.styles_.push({
-      url: this.imagePath_ + (i + 1) + '.' + this.imageExtension_,
-      height: size,
-      width: size
-    });
-  }
+    for (var i = 0, size; size = this.sizes[i]; i++) {
+        this.styles_.push({
+            url: this.imagePath_ + (i + 1) + '.' + this.imageExtension_,
+            height: size,
+            width: size
+        });
+    }
 };
 
 
@@ -193,7 +195,7 @@ MarkerClusterer.prototype.setupStyles_ = function() {
  *  @param {Object} styles The style to set.
  */
 MarkerClusterer.prototype.setStyles = function(styles) {
-  this.styles_ = styles;
+    this.styles_ = styles;
 };
 
 
@@ -203,7 +205,7 @@ MarkerClusterer.prototype.setStyles = function(styles) {
  *  @return {Object} The styles object.
  */
 MarkerClusterer.prototype.getStyles = function() {
-  return this.styles_;
+    return this.styles_;
 };
 
 
@@ -213,7 +215,7 @@ MarkerClusterer.prototype.getStyles = function() {
  * @return {boolean} True if zoomOnClick_ is set.
  */
 MarkerClusterer.prototype.isZoomOnClick = function() {
-  return this.zoomOnClick_;
+    return this.zoomOnClick_;
 };
 
 
@@ -223,7 +225,7 @@ MarkerClusterer.prototype.isZoomOnClick = function() {
  *  @return {Array.<google.maps.Marker>} The markers.
  */
 MarkerClusterer.prototype.getMarkers = function() {
-  return this.markers_;
+    return this.markers_;
 };
 
 
@@ -233,7 +235,7 @@ MarkerClusterer.prototype.getMarkers = function() {
  *  @return {Array.<google.maps.Marker>} The number of markers.
  */
 MarkerClusterer.prototype.getTotalMarkers = function() {
-  return this.markers_;
+    return this.markers_;
 };
 
 
@@ -243,7 +245,7 @@ MarkerClusterer.prototype.getTotalMarkers = function() {
  *  @param {number} maxZoom The max zoom level.
  */
 MarkerClusterer.prototype.setMaxZoom = function(maxZoom) {
-  this.maxZoom_ = maxZoom;
+    this.maxZoom_ = maxZoom;
 };
 
 
@@ -253,7 +255,7 @@ MarkerClusterer.prototype.setMaxZoom = function(maxZoom) {
  *  @return {number} The max zoom level.
  */
 MarkerClusterer.prototype.getMaxZoom = function() {
-  return this.maxZoom_ || this.map_.mapTypes[this.map_.getMapTypeId()].maxZoom;
+    return this.maxZoom_ || this.map_.mapTypes[this.map_.getMapTypeId()].maxZoom;
 };
 
 
@@ -266,19 +268,19 @@ MarkerClusterer.prototype.getMaxZoom = function() {
  *  @private
  */
 MarkerClusterer.prototype.calculator_ = function(markers, numStyles) {
-  var index = 0;
-  var count = markers.length;
-  var dv = count;
-  while (dv !== 0) {
-    dv = parseInt(dv / 10, 10);
-    index++;
-  }
+    var index = 0;
+    var count = markers.length;
+    var dv = count;
+    while (dv !== 0) {
+        dv = parseInt(dv / 10, 10);
+        index++;
+    }
 
-  index = Math.min(index, numStyles);
-  return {
-    text: count,
-    index: index
-  };
+    index = Math.min(index, numStyles);
+    return {
+        text: count,
+        index: index
+    };
 };
 
 
@@ -291,7 +293,7 @@ MarkerClusterer.prototype.calculator_ = function(markers, numStyles) {
  *
  */
 MarkerClusterer.prototype.setCalculator = function(calculator) {
-  this.calculator_ = calculator;
+    this.calculator_ = calculator;
 };
 
 
@@ -301,7 +303,7 @@ MarkerClusterer.prototype.setCalculator = function(calculator) {
  * @return {function(Array, number)} the calculator function.
  */
 MarkerClusterer.prototype.getCalculator = function() {
-  return this.calculator_;
+    return this.calculator_;
 };
 
 
@@ -312,12 +314,12 @@ MarkerClusterer.prototype.getCalculator = function() {
  * @param {boolean} opt_nodraw Whether to redraw the clusters.
  */
 MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw) {
-  for (var i = 0, marker; marker = markers[i]; i++) {
-    this.pushMarkerTo_(marker);
-  }
-  if (!opt_nodraw) {
-    this.redraw();
-  }
+    for (var i = 0, marker; marker = markers[i]; i++) {
+        this.pushMarkerTo_(marker);
+    }
+    if (!opt_nodraw) {
+        this.redraw();
+    }
 };
 
 
@@ -328,20 +330,20 @@ MarkerClusterer.prototype.addMarkers = function(markers, opt_nodraw) {
  * @private
  */
 MarkerClusterer.prototype.pushMarkerTo_ = function(marker) {
-  marker.setVisible(false);
-  marker.setMap(null);
-  marker.isAdded = false;
-  if (marker['draggable']) {
-    // If the marker is draggable add a listener so we update the clusters on
-    // the drag end.
-    var that = this;
-    google.maps.event.addListener(marker, 'dragend', function() {
-      marker.isAdded = false;
-      that.resetViewport();
-      that.redraw();
-    });
-  }
-  this.markers_.push(marker);
+    marker.setVisible(false);
+    marker.setMap(null);
+    marker.isAdded = false;
+    if (marker['draggable']) {
+        // If the marker is draggable add a listener so we update the clusters on
+        // the drag end.
+        var that = this;
+        google.maps.event.addListener(marker, 'dragend', function() {
+            marker.isAdded = false;
+            that.resetViewport();
+            that.redraw();
+        });
+    }
+    this.markers_.push(marker);
 };
 
 
@@ -352,10 +354,10 @@ MarkerClusterer.prototype.pushMarkerTo_ = function(marker) {
  * @param {boolean} opt_nodraw Whether to redraw the clusters.
  */
 MarkerClusterer.prototype.addMarker = function(marker, opt_nodraw) {
-  this.pushMarkerTo_(marker);
-  if (!opt_nodraw) {
-    this.redraw();
-  }
+    this.pushMarkerTo_(marker);
+    if (!opt_nodraw) {
+        this.redraw();
+    }
 };
 
 
@@ -366,30 +368,30 @@ MarkerClusterer.prototype.addMarker = function(marker, opt_nodraw) {
  * @return {boolean} True if the marker was removed.
  */
 MarkerClusterer.prototype.removeMarker = function(marker) {
-  var index = -1;
-  if (this.markers_.indexOf) {
-    index = this.markers_.indexOf(marker);
-  } else {
-    for (var i = 0, m; m = this.markers_[i]; i++) {
-      if (m == marker) {
-        index = i;
-        continue;
-      }
+    var index = -1;
+    if (this.markers_.indexOf) {
+        index = this.markers_.indexOf(marker);
+    } else {
+        for (var i = 0, m; m = this.markers_[i]; i++) {
+            if (m == marker) {
+                index = i;
+                continue;
+            }
+        }
     }
-  }
 
-  if (index == -1) {
-    // Marker is not in our list of markers.
-    return false;
-  }
+    if (index == -1) {
+        // Marker is not in our list of markers.
+        return false;
+    }
 
-  this.markers_.splice(index, 1);
-  marker.setVisible(false);
-  marker.setMap(null);
+    this.markers_.splice(index, 1);
+    marker.setVisible(false);
+    marker.setMap(null);
 
-  this.resetViewport();
-  this.redraw();
-  return true;
+    this.resetViewport();
+    this.redraw();
+    return true;
 };
 
 
@@ -400,10 +402,10 @@ MarkerClusterer.prototype.removeMarker = function(marker) {
  * @private
  */
 MarkerClusterer.prototype.setReady_ = function(ready) {
-  if (!this.ready_) {
-    this.ready_ = ready;
-    this.createClusters_();
-  }
+    if (!this.ready_) {
+        this.ready_ = ready;
+        this.createClusters_();
+    }
 };
 
 
@@ -413,7 +415,7 @@ MarkerClusterer.prototype.setReady_ = function(ready) {
  * @return {number} The number of clusters.
  */
 MarkerClusterer.prototype.getTotalClusters = function() {
-  return this.clusters_.length;
+    return this.clusters_.length;
 };
 
 
@@ -423,7 +425,7 @@ MarkerClusterer.prototype.getTotalClusters = function() {
  * @return {google.maps.Map} The map.
  */
 MarkerClusterer.prototype.getMap = function() {
-  return this.map_;
+    return this.map_;
 };
 
 
@@ -433,7 +435,7 @@ MarkerClusterer.prototype.getMap = function() {
  * @param {google.maps.Map} map The map.
  */
 MarkerClusterer.prototype.setMap = function(map) {
-  this.map_ = map;
+    this.map_ = map;
 };
 
 
@@ -443,7 +445,7 @@ MarkerClusterer.prototype.setMap = function(map) {
  * @return {number} The grid size.
  */
 MarkerClusterer.prototype.getGridSize = function() {
-  return this.gridSize_;
+    return this.gridSize_;
 };
 
 
@@ -453,7 +455,7 @@ MarkerClusterer.prototype.getGridSize = function() {
  * @param {number} size The grid size.
  */
 MarkerClusterer.prototype.setGridSize = function(size) {
-  this.gridSize_ = size;
+    this.gridSize_ = size;
 };
 
 
@@ -464,32 +466,32 @@ MarkerClusterer.prototype.setGridSize = function(size) {
  * @return {google.maps.LatLngBounds} The extended bounds.
  */
 MarkerClusterer.prototype.getExtendedBounds = function(bounds) {
-  var projection = this.getProjection();
+    var projection = this.getProjection();
 
-  // Turn the bounds into latlng.
-  var tr = new google.maps.LatLng(bounds.getNorthEast().lat(),
-      bounds.getNorthEast().lng());
-  var bl = new google.maps.LatLng(bounds.getSouthWest().lat(),
-      bounds.getSouthWest().lng());
+    // Turn the bounds into latlng.
+    var tr = new google.maps.LatLng(bounds.getNorthEast().lat(),
+            bounds.getNorthEast().lng());
+    var bl = new google.maps.LatLng(bounds.getSouthWest().lat(),
+            bounds.getSouthWest().lng());
 
-  // Convert the points to pixels and the extend out by the grid size.
-  var trPix = projection.fromLatLngToDivPixel(tr);
-  trPix.x += this.gridSize_;
-  trPix.y -= this.gridSize_;
+    // Convert the points to pixels and the extend out by the grid size.
+    var trPix = projection.fromLatLngToDivPixel(tr);
+    trPix.x += this.gridSize_;
+    trPix.y -= this.gridSize_;
 
-  var blPix = projection.fromLatLngToDivPixel(bl);
-  blPix.x -= this.gridSize_;
-  blPix.y += this.gridSize_;
+    var blPix = projection.fromLatLngToDivPixel(bl);
+    blPix.x -= this.gridSize_;
+    blPix.y += this.gridSize_;
 
-  // Convert the pixel points back to LatLng
-  var ne = projection.fromDivPixelToLatLng(trPix);
-  var sw = projection.fromDivPixelToLatLng(blPix);
+    // Convert the pixel points back to LatLng
+    var ne = projection.fromDivPixelToLatLng(trPix);
+    var sw = projection.fromDivPixelToLatLng(blPix);
 
-  // Extend the bounds to contain the new bounds.
-  bounds.extend(ne);
-  bounds.extend(sw);
+    // Extend the bounds to contain the new bounds.
+    bounds.extend(ne);
+    bounds.extend(sw);
 
-  return bounds;
+    return bounds;
 };
 
 
@@ -502,7 +504,7 @@ MarkerClusterer.prototype.getExtendedBounds = function(bounds) {
  * @private
  */
 MarkerClusterer.prototype.isMarkerInBounds_ = function(marker, bounds) {
-  return bounds.contains(marker.getPosition());
+    return bounds.contains(marker.getPosition());
 };
 
 
@@ -510,10 +512,10 @@ MarkerClusterer.prototype.isMarkerInBounds_ = function(marker, bounds) {
  * Clears all clusters and markers from the clusterer.
  */
 MarkerClusterer.prototype.clearMarkers = function() {
-  this.resetViewport();
+    this.resetViewport();
 
-  // Set the markers a empty array.
-  this.markers_ = [];
+    // Set the markers a empty array.
+    this.markers_ = [];
 };
 
 
@@ -521,19 +523,19 @@ MarkerClusterer.prototype.clearMarkers = function() {
  * Clears all existing clusters and recreates them.
  */
 MarkerClusterer.prototype.resetViewport = function() {
-  // Remove all the clusters
-  for (var i = 0, cluster; cluster = this.clusters_[i]; i++) {
-    cluster.remove();
-  }
+    // Remove all the clusters
+    for (var i = 0, cluster; cluster = this.clusters_[i]; i++) {
+        cluster.remove();
+    }
 
-  // Reset the markers to not be added and to be invisible.
-  for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    marker.isAdded = false;
-    marker.setMap(null);
-    marker.setVisible(false);
-  }
+    // Reset the markers to not be added and to be invisible.
+    for (var i = 0, marker; marker = this.markers_[i]; i++) {
+        marker.isAdded = false;
+        marker.setMap(null);
+        marker.setVisible(false);
+    }
 
-  this.clusters_ = [];
+    this.clusters_ = [];
 };
 
 
@@ -541,7 +543,7 @@ MarkerClusterer.prototype.resetViewport = function() {
  * Redraws the clusters.
  */
 MarkerClusterer.prototype.redraw = function() {
-  this.createClusters_();
+    this.createClusters_();
 };
 
 
@@ -551,36 +553,36 @@ MarkerClusterer.prototype.redraw = function() {
  * @private
  */
 MarkerClusterer.prototype.createClusters_ = function() {
-  if (!this.ready_) {
-    return;
-  }
-
-  // Get our current map view bounds.
-  // Create a new bounds object so we don't affect the map.
-  var mapBounds = new google.maps.LatLngBounds(this.map_.getBounds().getSouthWest(),
-      this.map_.getBounds().getNorthEast());
-  var bounds = this.getExtendedBounds(mapBounds);
-
-  for (var i = 0, marker; marker = this.markers_[i]; i++) {
-    var added = false;
-    if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {
-      for (var j = 0, cluster; cluster = this.clusters_[j]; j++) {
-        if (!added && cluster.getCenter() &&
-            cluster.isMarkerInClusterBounds(marker)) {
-          added = true;
-          cluster.addMarker(marker);
-          break;
-        }
-      }
-
-      if (!added) {
-        // Create a new cluster.
-        var cluster = new Cluster(this);
-        cluster.addMarker(marker);
-        this.clusters_.push(cluster);
-      }
+    if (!this.ready_) {
+        return;
     }
-  }
+
+    // Get our current map view bounds.
+    // Create a new bounds object so we don't affect the map.
+    var mapBounds = new google.maps.LatLngBounds(this.map_.getBounds().getSouthWest(),
+            this.map_.getBounds().getNorthEast());
+    var bounds = this.getExtendedBounds(mapBounds);
+
+    for (var i = 0, marker; marker = this.markers_[i]; i++) {
+        var added = false;
+        if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {
+            for (var j = 0, cluster; cluster = this.clusters_[j]; j++) {
+                if (!added && cluster.getCenter() &&
+                        cluster.isMarkerInClusterBounds(marker)) {
+                    added = true;
+                    cluster.addMarker(marker);
+                    break;
+                }
+            }
+
+            if (!added) {
+                // Create a new cluster.
+                var cluster = new Cluster(this);
+                cluster.addMarker(marker);
+                this.clusters_.push(cluster);
+            }
+        }
+    }
 };
 
 
@@ -593,14 +595,14 @@ MarkerClusterer.prototype.createClusters_ = function() {
  * @ignore
  */
 function Cluster(markerClusterer) {
-  this.markerClusterer_ = markerClusterer;
-  this.map_ = markerClusterer.getMap();
-  this.gridSize_ = markerClusterer.getGridSize();
-  this.center_ = null;
-  this.markers_ = [];
-  this.bounds_ = null;
-  this.clusterIcon_ = new ClusterIcon(this, markerClusterer.getStyles(),
-      markerClusterer.getGridSize());
+    this.markerClusterer_ = markerClusterer;
+    this.map_ = markerClusterer.getMap();
+    this.gridSize_ = markerClusterer.getGridSize();
+    this.center_ = null;
+    this.markers_ = [];
+    this.bounds_ = null;
+    this.clusterIcon_ = new ClusterIcon(this, markerClusterer.getStyles(),
+            markerClusterer.getGridSize());
 }
 
 
@@ -611,16 +613,16 @@ function Cluster(markerClusterer) {
  * @return {boolean} True if the marker is already added.
  */
 Cluster.prototype.isMarkerAlreadyAdded = function(marker) {
-  if (this.markers_.indexOf) {
-    return this.markers_.indexOf(marker) != -1;
-  } else {
-    for (var i = 0, m; m = this.markers_[i]; i++) {
-      if (m == marker) {
-        return true;
-      }
+    if (this.markers_.indexOf) {
+        return this.markers_.indexOf(marker) != -1;
+    } else {
+        for (var i = 0, m; m = this.markers_[i]; i++) {
+            if (m == marker) {
+                return true;
+            }
+        }
     }
-  }
-  return false;
+    return false;
 };
 
 
@@ -631,30 +633,30 @@ Cluster.prototype.isMarkerAlreadyAdded = function(marker) {
  * @return {boolean} True if the marker was added.
  */
 Cluster.prototype.addMarker = function(marker) {
-  if (this.isMarkerAlreadyAdded(marker)) {
-    return false;
-  }
+    if (this.isMarkerAlreadyAdded(marker)) {
+        return false;
+    }
 
-  if (!this.center_) {
-    this.center_ = marker.getPosition();
-    this.calculateBounds_();
-  }
+    if (!this.center_) {
+        this.center_ = marker.getPosition();
+        this.calculateBounds_();
+    }
 
-  if (this.markers_.length == 0) {
-    // Only 1 marker in this cluster so show the marker.
-    marker.setMap(this.map_);
-    marker.setVisible(true);
-  } else if (this.markers_.length == 1) {
-    // Hide the 1 marker that was showing.
-    this.markers_[0].setMap(null);
-    this.markers_[0].setVisible(false);
-  }
+    if (this.markers_.length == 0) {
+        // Only 1 marker in this cluster so show the marker.
+        marker.setMap(this.map_);
+        marker.setVisible(true);
+    } else if (this.markers_.length == 1) {
+        // Hide the 1 marker that was showing.
+        this.markers_[0].setMap(null);
+        this.markers_[0].setVisible(false);
+    }
 
-  marker.isAdded = true;
-  this.markers_.push(marker);
+    marker.isAdded = true;
+    this.markers_.push(marker);
 
-  this.updateIcon();
-  return true;
+    this.updateIcon();
+    return true;
 };
 
 
@@ -664,7 +666,7 @@ Cluster.prototype.addMarker = function(marker) {
  * @return {MarkerClusterer} The associated marker clusterer.
  */
 Cluster.prototype.getMarkerClusterer = function() {
-  return this.markerClusterer_;
+    return this.markerClusterer_;
 };
 
 
@@ -674,8 +676,8 @@ Cluster.prototype.getMarkerClusterer = function() {
  * @return {google.maps.LatLngBounds} the cluster bounds.
  */
 Cluster.prototype.getBounds = function() {
-  this.calculateBounds_();
-  return this.bounds_;
+    this.calculateBounds_();
+    return this.bounds_;
 };
 
 
@@ -683,8 +685,8 @@ Cluster.prototype.getBounds = function() {
  * Removes the cluster
  */
 Cluster.prototype.remove = function() {
-  this.clusterIcon_.remove();
-  delete this.markers_;
+    this.clusterIcon_.remove();
+    delete this.markers_;
 };
 
 
@@ -694,7 +696,7 @@ Cluster.prototype.remove = function() {
  * @return {google.maps.LatLng} The cluster center.
  */
 Cluster.prototype.getCenter = function() {
-  return this.center_;
+    return this.center_;
 };
 
 
@@ -704,8 +706,8 @@ Cluster.prototype.getCenter = function() {
  * @private
  */
 Cluster.prototype.calculateBounds_ = function() {
-  var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
-  this.bounds_ = this.markerClusterer_.getExtendedBounds(bounds);
+    var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
+    this.bounds_ = this.markerClusterer_.getExtendedBounds(bounds);
 };
 
 
@@ -716,7 +718,7 @@ Cluster.prototype.calculateBounds_ = function() {
  * @return {boolean} True if the marker lies in the bounds.
  */
 Cluster.prototype.isMarkerInClusterBounds = function(marker) {
-  return this.bounds_.contains(marker.getPosition());
+    return this.bounds_.contains(marker.getPosition());
 };
 
 
@@ -726,7 +728,7 @@ Cluster.prototype.isMarkerInClusterBounds = function(marker) {
  * @return {google.maps.Map} The map.
  */
 Cluster.prototype.getMap = function() {
-  return this.map_;
+    return this.map_;
 };
 
 
@@ -734,29 +736,29 @@ Cluster.prototype.getMap = function() {
  * Updates the cluster icon
  */
 Cluster.prototype.updateIcon = function() {
-  var zoom = this.map_.getZoom();
-  var mz = this.markerClusterer_.getMaxZoom();
+    var zoom = this.map_.getZoom();
+    var mz = this.markerClusterer_.getMaxZoom();
 
-  if (zoom > mz) {
-    // The zoom is greater than our max zoom so show all the markers in cluster.
-    for (var i = 0, marker; marker = this.markers_[i]; i++) {
-      marker.setMap(this.map_);
-      marker.setVisible(true);
+    if (zoom > mz) {
+        // The zoom is greater than our max zoom so show all the markers in cluster.
+        for (var i = 0, marker; marker = this.markers_[i]; i++) {
+            marker.setMap(this.map_);
+            marker.setVisible(true);
+        }
+        return;
     }
-    return;
-  }
 
-  if (this.markers_.length < 2) {
-    // We have 0 or 1 markers so hide the icon.
-    this.clusterIcon_.hide();
-    return;
-  }
+    if (this.markers_.length < 2) {
+        // We have 0 or 1 markers so hide the icon.
+        this.clusterIcon_.hide();
+        return;
+    }
 
-  var numStyles = this.markerClusterer_.getStyles().length;
-  var sums = this.markerClusterer_.getCalculator()(this.markers_, numStyles);
-  this.clusterIcon_.setCenter(this.center_);
-  this.clusterIcon_.setSums(sums);
-  this.clusterIcon_.show();
+    var numStyles = this.markerClusterer_.getStyles().length;
+    var sums = this.markerClusterer_.getCalculator()(this.markers_, numStyles);
+    this.clusterIcon_.setCenter(this.center_);
+    this.clusterIcon_.setSums(sums);
+    this.clusterIcon_.show();
 };
 
 
@@ -777,18 +779,18 @@ Cluster.prototype.updateIcon = function() {
  * @ignore
  */
 function ClusterIcon(cluster, styles, opt_padding) {
-  cluster.getMarkerClusterer().extend(ClusterIcon, google.maps.OverlayView);
+    cluster.getMarkerClusterer().extend(ClusterIcon, google.maps.OverlayView);
 
-  this.styles_ = styles;
-  this.padding_ = opt_padding || 0;
-  this.cluster_ = cluster;
-  this.center_ = null;
-  this.map_ = cluster.getMap();
-  this.div_ = null;
-  this.sums_ = null;
-  this.visible_ = false;
+    this.styles_ = styles;
+    this.padding_ = opt_padding || 0;
+    this.cluster_ = cluster;
+    this.center_ = null;
+    this.map_ = cluster.getMap();
+    this.div_ = null;
+    this.sums_ = null;
+    this.visible_ = false;
 
-  this.setMap(this.map_);
+    this.setMap(this.map_);
 }
 
 
@@ -796,18 +798,18 @@ function ClusterIcon(cluster, styles, opt_padding) {
  * Triggers the clusterclick event and zoom's if the option is set.
  */
 ClusterIcon.prototype.triggerClusterClick = function() {
-  var markerClusterer = this.cluster_.getMarkerClusterer();
+    var markerClusterer = this.cluster_.getMarkerClusterer();
 
-  // Trigger the clusterclick event.
-  google.maps.event.trigger(markerClusterer, 'clusterclick', [this.cluster_]);
+    // Trigger the clusterclick event.
+    google.maps.event.trigger(markerClusterer, 'clusterclick', [this.cluster_]);
 
-  if (markerClusterer.isZoomOnClick()) {
-    // Center the map on this cluster.
-    this.map_.panTo(this.cluster_.getCenter());
+    if (markerClusterer.isZoomOnClick()) {
+        // Center the map on this cluster.
+        this.map_.panTo(this.cluster_.getCenter());
 
-    // Zoom into the cluster.
-    this.map_.fitBounds(this.cluster_.getBounds());
-  }
+        // Zoom into the cluster.
+        this.map_.fitBounds(this.cluster_.getBounds());
+    }
 };
 
 
@@ -816,20 +818,20 @@ ClusterIcon.prototype.triggerClusterClick = function() {
  * @ignore
  */
 ClusterIcon.prototype.onAdd = function() {
-  this.div_ = document.createElement('DIV');
-  if (this.visible_) {
-    var pos = this.getPosFromLatLng_(this.center_);
-    this.div_.style.cssText = this.createCss(pos);
-    this.div_.innerHTML = this.sums_.text;
-  }
+    this.div_ = document.createElement('DIV');
+    if (this.visible_) {
+        var pos = this.getPosFromLatLng_(this.center_);
+        this.div_.style.cssText = this.createCss(pos);
+        this.div_.innerHTML = this.sums_.text;
+    }
 
-  var panes = this.getPanes();
-  panes.overlayImage.appendChild(this.div_);
+    var panes = this.getPanes();
+    panes.overlayImage.appendChild(this.div_);
 
-  var that = this;
-  google.maps.event.addDomListener(this.div_, 'click', function() {
-    that.triggerClusterClick();
-  });
+    var that = this;
+    google.maps.event.addDomListener(this.div_, 'click', function() {
+        that.triggerClusterClick();
+    });
 };
 
 
@@ -841,10 +843,10 @@ ClusterIcon.prototype.onAdd = function() {
  * @private
  */
 ClusterIcon.prototype.getPosFromLatLng_ = function(latlng) {
-  var pos = this.getProjection().fromLatLngToDivPixel(latlng);
-  pos.x -= parseInt(this.width_ / 2, 10);
-  pos.y -= parseInt(this.height_ / 2, 10);
-  return pos;
+    var pos = this.getProjection().fromLatLngToDivPixel(latlng);
+    pos.x -= parseInt(this.width_ / 2, 10);
+    pos.y -= parseInt(this.height_ / 2, 10);
+    return pos;
 };
 
 
@@ -853,11 +855,11 @@ ClusterIcon.prototype.getPosFromLatLng_ = function(latlng) {
  * @ignore
  */
 ClusterIcon.prototype.draw = function() {
-  if (this.visible_) {
-    var pos = this.getPosFromLatLng_(this.center_);
-    this.div_.style.top = pos.y + 'px';
-    this.div_.style.left = pos.x + 'px';
-  }
+    if (this.visible_) {
+        var pos = this.getPosFromLatLng_(this.center_);
+        this.div_.style.top = pos.y + 'px';
+        this.div_.style.left = pos.x + 'px';
+    }
 };
 
 
@@ -865,10 +867,10 @@ ClusterIcon.prototype.draw = function() {
  * Hide the icon.
  */
 ClusterIcon.prototype.hide = function() {
-  if (this.div_) {
-    this.div_.style.display = 'none';
-  }
-  this.visible_ = false;
+    if (this.div_) {
+        this.div_.style.display = 'none';
+    }
+    this.visible_ = false;
 };
 
 
@@ -876,12 +878,12 @@ ClusterIcon.prototype.hide = function() {
  * Position and show the icon.
  */
 ClusterIcon.prototype.show = function() {
-  if (this.div_) {
-    var pos = this.getPosFromLatLng_(this.center_);
-    this.div_.style.cssText = this.createCss(pos);
-    this.div_.style.display = '';
-  }
-  this.visible_ = true;
+    if (this.div_) {
+        var pos = this.getPosFromLatLng_(this.center_);
+        this.div_.style.cssText = this.createCss(pos);
+        this.div_.style.display = '';
+    }
+    this.visible_ = true;
 };
 
 
@@ -889,7 +891,7 @@ ClusterIcon.prototype.show = function() {
  * Remove the icon from the map
  */
 ClusterIcon.prototype.remove = function() {
-  this.setMap(null);
+    this.setMap(null);
 };
 
 
@@ -898,11 +900,11 @@ ClusterIcon.prototype.remove = function() {
  * @ignore
  */
 ClusterIcon.prototype.onRemove = function() {
-  if (this.div_ && this.div_.parentNode) {
-    this.hide();
-    this.div_.parentNode.removeChild(this.div_);
-    this.div_ = null;
-  }
+    if (this.div_ && this.div_.parentNode) {
+        this.hide();
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_ = null;
+    }
 };
 
 
@@ -914,14 +916,14 @@ ClusterIcon.prototype.onRemove = function() {
  *   'index': (number) The style index of the icon.
  */
 ClusterIcon.prototype.setSums = function(sums) {
-  this.sums_ = sums;
-  this.text_ = sums.text;
-  this.index_ = sums.index;
-  if (this.div_) {
-    this.div_.innerHTML = sums.text;
-  }
+    this.sums_ = sums;
+    this.text_ = sums.text;
+    this.index_ = sums.index;
+    if (this.div_) {
+        this.div_.innerHTML = sums.text;
+    }
 
-  this.useStyle();
+    this.useStyle();
 };
 
 
@@ -929,15 +931,15 @@ ClusterIcon.prototype.setSums = function(sums) {
  * Sets the icon to the the styles.
  */
 ClusterIcon.prototype.useStyle = function() {
-  var index = Math.max(0, this.sums_.index - 1);
-  index = Math.min(this.styles_.length - 1, index);
-  var style = this.styles_[index];
-  this.url_ = style.url;
-  this.height_ = style.height;
-  this.width_ = style.width;
-  this.textColor_ = style.opt_textColor;
-  this.anchor = style.opt_anchor;
-  this.textSize_ = style.opt_textSize;
+    var index = Math.max(0, this.sums_.index - 1);
+    index = Math.min(this.styles_.length - 1, index);
+    var style = this.styles_[index];
+    this.url_ = style.url;
+    this.height_ = style.height;
+    this.width_ = style.width;
+    this.textColor_ = style.opt_textColor;
+    this.anchor = style.opt_anchor;
+    this.textSize_ = style.opt_textSize;
 };
 
 
@@ -947,7 +949,7 @@ ClusterIcon.prototype.useStyle = function() {
  * @param {google.maps.LatLng} center The latlng to set as the center.
  */
 ClusterIcon.prototype.setCenter = function(center) {
-  this.center_ = center;
+    this.center_ = center;
 };
 
 
@@ -958,42 +960,42 @@ ClusterIcon.prototype.setCenter = function(center) {
  * @return {string} The css style text.
  */
 ClusterIcon.prototype.createCss = function(pos) {
-  var style = [];
-  if (document.all) {
-    style.push('filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(' +
-        'sizingMethod=scale,src="' + this.url_ + '");');
-  } else {
-    style.push('background:url(' + this.url_ + ');');
-  }
-
-  if (typeof this.anchor_ === 'object') {
-    if (typeof this.anchor_[0] === 'number' && this.anchor_[0] > 0 &&
-        this.anchor_[0] < this.height_) {
-      style.push('height:' + (this.height_ - this.anchor_[0]) +
-          'px; padding-top:' + this.anchor_[0] + 'px;');
+    var style = [];
+    if (document.all) {
+        style.push('filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(' +
+                'sizingMethod=scale,src="' + this.url_ + '");');
     } else {
-      style.push('height:' + this.height_ + 'px; line-height:' + this.height_ +
-          'px;');
+        style.push('background:url(' + this.url_ + ');');
     }
-    if (typeof this.anchor_[1] === 'number' && this.anchor_[1] > 0 &&
-        this.anchor_[1] < this.width_) {
-      style.push('width:' + (this.width_ - this.anchor_[1]) +
-          'px; padding-left:' + this.anchor_[1] + 'px;');
+
+    if (typeof this.anchor_ === 'object') {
+        if (typeof this.anchor_[0] === 'number' && this.anchor_[0] > 0 &&
+                this.anchor_[0] < this.height_) {
+            style.push('height:' + (this.height_ - this.anchor_[0]) +
+                    'px; padding-top:' + this.anchor_[0] + 'px;');
+        } else {
+            style.push('height:' + this.height_ + 'px; line-height:' + this.height_ +
+                    'px;');
+        }
+        if (typeof this.anchor_[1] === 'number' && this.anchor_[1] > 0 &&
+                this.anchor_[1] < this.width_) {
+            style.push('width:' + (this.width_ - this.anchor_[1]) +
+                    'px; padding-left:' + this.anchor_[1] + 'px;');
+        } else {
+            style.push('width:' + this.width_ + 'px; text-align:center;');
+        }
     } else {
-      style.push('width:' + this.width_ + 'px; text-align:center;');
+        style.push('height:' + this.height_ + 'px; line-height:' +
+                this.height_ + 'px; width:' + this.width_ + 'px; text-align:center;');
     }
-  } else {
-    style.push('height:' + this.height_ + 'px; line-height:' +
-        this.height_ + 'px; width:' + this.width_ + 'px; text-align:center;');
-  }
 
-  var txtColor = this.textColor_ ? this.textColor_ : 'black';
-  var txtSize = this.textSize_ ? this.textSize_ : 11;
+    var txtColor = this.textColor_ ? this.textColor_ : 'black';
+    var txtSize = this.textSize_ ? this.textSize_ : 11;
 
-  style.push('cursor:pointer; top:' + pos.y + 'px; left:' +
-      pos.x + 'px; color:' + txtColor + '; position:absolute; font-size:' +
-      txtSize + 'px; font-family:Arial,sans-serif; font-weight:bold');
-  return style.join('');
+    style.push('cursor:pointer; top:' + pos.y + 'px; left:' +
+            pos.x + 'px; color:' + txtColor + '; position:absolute; font-size:' +
+            txtSize + 'px; font-family:Arial,sans-serif; font-weight:bold');
+    return style.join('');
 };
 
 
@@ -1004,28 +1006,28 @@ window['MarkerClusterer'] = MarkerClusterer;
 MarkerClusterer.prototype['addMarker'] = MarkerClusterer.prototype.addMarker;
 MarkerClusterer.prototype['addMarkers'] = MarkerClusterer.prototype.addMarkers;
 MarkerClusterer.prototype['clearMarkers'] =
-    MarkerClusterer.prototype.clearMarkers;
+        MarkerClusterer.prototype.clearMarkers;
 MarkerClusterer.prototype['getCalculator'] =
-    MarkerClusterer.prototype.getCalculator;
+        MarkerClusterer.prototype.getCalculator;
 MarkerClusterer.prototype['getGridSize'] =
-    MarkerClusterer.prototype.getGridSize;
+        MarkerClusterer.prototype.getGridSize;
 MarkerClusterer.prototype['getMap'] = MarkerClusterer.prototype.getMap;
 MarkerClusterer.prototype['getMarkers'] = MarkerClusterer.prototype.getMarkers;
 MarkerClusterer.prototype['getMaxZoom'] = MarkerClusterer.prototype.getMaxZoom;
 MarkerClusterer.prototype['getStyles'] = MarkerClusterer.prototype.getStyles;
 MarkerClusterer.prototype['getTotalClusters'] =
-    MarkerClusterer.prototype.getTotalClusters;
+        MarkerClusterer.prototype.getTotalClusters;
 MarkerClusterer.prototype['getTotalMarkers'] =
-    MarkerClusterer.prototype.getTotalMarkers;
+        MarkerClusterer.prototype.getTotalMarkers;
 MarkerClusterer.prototype['redraw'] = MarkerClusterer.prototype.redraw;
 MarkerClusterer.prototype['removeMarker'] =
-    MarkerClusterer.prototype.removeMarker;
+        MarkerClusterer.prototype.removeMarker;
 MarkerClusterer.prototype['resetViewport'] =
-    MarkerClusterer.prototype.resetViewport;
+        MarkerClusterer.prototype.resetViewport;
 MarkerClusterer.prototype['setCalculator'] =
-    MarkerClusterer.prototype.setCalculator;
+        MarkerClusterer.prototype.setCalculator;
 MarkerClusterer.prototype['setGridSize'] =
-    MarkerClusterer.prototype.setGridSize;
+        MarkerClusterer.prototype.setGridSize;
 MarkerClusterer.prototype['onAdd'] = MarkerClusterer.prototype.onAdd;
 MarkerClusterer.prototype['draw'] = MarkerClusterer.prototype.draw;
 MarkerClusterer.prototype['idle'] = MarkerClusterer.prototype.idle;

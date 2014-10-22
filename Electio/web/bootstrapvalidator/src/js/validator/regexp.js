@@ -8,7 +8,6 @@
             message: 'message',
             regexp: 'regexp'
         },
-
         enableByHtml5: function($field) {
             var pattern = $field.attr('pattern');
             if (pattern) {
@@ -19,7 +18,6 @@
 
             return false;
         },
-
         /**
          * Check if the element value matches given regular expression
          *
