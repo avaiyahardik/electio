@@ -394,7 +394,7 @@ public class DBDAOImplementation {
 
     public ArrayList<Nominee> getNominees(long election_id) throws SQLException {
         ArrayList<Nominee> nominees = new ArrayList<Nominee>();
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info INNER JOIN tbl_election_nominee WHERE election_id=?");
+        PreparedStatement ps = con.prepareStatement("select * from tbl_user_info as u INNER JOIN tbl_election_nominee as n ON u.email=n.email WHERE election_id=?");
         ps.setLong(1, election_id);
         ResultSet rs = ps.executeQuery();
         Nominee nominee;
