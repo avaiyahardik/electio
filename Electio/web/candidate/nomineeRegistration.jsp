@@ -245,9 +245,10 @@
                 <div>
                     <p>A person can file a nomination for the said election, if he/she has the following eligibilities</p>
                     <p>
-                        <!--
-                        Criteria from database here
-                        -->
+                        <%
+                            String requirements = DBDAOImplementation.getInstance().getElectionRequirements(election_id);
+                        %>
+                        <%=requirements%>
                     </p>
                     <button class="btn btn-modal btn-default">Continue</button>
                 </div>
