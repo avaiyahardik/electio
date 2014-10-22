@@ -71,7 +71,7 @@ public class NomineeRegistration extends HttpServlet {
                         Nominee nominee = new Nominee(firstname, lastname, email, mobile, organization_id, image, password, organization_id, requirements_file, status);
                         System.out.println("4");
                         if (obj.registerNominee(nominee)) {
-                            msg = "Nominee registerd successfully";
+                            msg = "Nominee registered successfully";
                         } else {
                             err = "Fail to register nominee, please retry";
                         }
