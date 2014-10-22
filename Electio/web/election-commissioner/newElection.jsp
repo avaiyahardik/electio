@@ -47,14 +47,14 @@
                         <div class="form-group">
                             <label for="name" class="control-label col-lg-3"><strong>Election Name</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="name">
+                                <input type="text" class="form-control" name="name" required/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="description" class="control-label col-lg-3"><strong>Description</strong></label>
                             <div class="col-lg-7">
-                                <textarea class="form-control" name="description"></textarea>
+                                <textarea class="form-control" name="description" required></textarea>
                             </div>
                         </div>
 
