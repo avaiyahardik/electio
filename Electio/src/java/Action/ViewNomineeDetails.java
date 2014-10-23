@@ -36,13 +36,14 @@ public class ViewNomineeDetails implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
-
+            System.out.println("2");
             if (req.getParameter("election_id") == null || req.getParameter("email") == null) {
                 view = "Controller?action=view_elections";
                 title = "Elections";
                 err = "Fail to locate election id or nominee email, please retry";
             } else {
-                long id = Long.parseLong(req.getParameter("id"));
+                System.out.println("3");
+                long id = Long.parseLong(req.getParameter("election_id"));
                 String nominee_email = req.getParameter("email");
                 view = "nomineeDetails.jsp";
                 title = "Nominee Details";
@@ -50,7 +51,11 @@ public class ViewNomineeDetails implements Controller.Action {
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Nominee n = obj.getNominee(id, nominee_email);
+                    Organization org = obj.getOrganization(n.getOrganization_id());
                     req.setAttribute("nominee", n);
+                    System.out.println("NOM: " + n.getOrganization_id());
+                    System.out.println("OrG: "+org.getName());
+                    req.setAttribute("organization", org);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("View Nominee Detail Err: " + ex.getMessage());
