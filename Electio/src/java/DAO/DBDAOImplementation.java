@@ -216,11 +216,24 @@ public class DBDAOImplementation {
         return result;
     }
 
+    public boolean updateVoter(long election_id, String old_email, String new_email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET email=? WHERE email=? AND election_id=?");
+        ps.setString(1, new_email);
+        ps.setString(2, old_email);
+        ps.setLong(3, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
     public boolean deleteVoter(String email, long election_id) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_voter WHERE election_id=?");
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_voter WHERE election_id=? AND email=?");
         ps.setLong(1, election_id);
-        if (ps.execute()) {
+        ps.setString(2, email);
+        if (ps.executeUpdate() > 0) {
             result = true;
         }
         return result;

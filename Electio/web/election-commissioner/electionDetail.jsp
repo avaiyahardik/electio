@@ -290,8 +290,8 @@
                                     <td><%= v.getEmail()%></td>
                                     <td><%= v.getStatus()%></td>
                                     <td>
-                                        <a href="Controller?action=edit_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Update</a>
-                                        <a href="Controller?action=delete_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+                                        <a href="UpdateVoter?cmd=update&election_id=<%= v.getElection_id()%>&old_email=<%= v.getEmail()%>&new_email=new_email@apnamail.com" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Update</a>
+                                        <a href="UpdateVoter?cmd=delete&election_id=<%= v.getElection_id()%>&voter_email=<%= v.getEmail()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
                                     </td>
                                 </tr>
                                 <%}%>

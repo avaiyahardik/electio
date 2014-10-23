@@ -8,6 +8,10 @@
         <servlet-name>NomineeRegistration</servlet-name>
         <servlet-class>Controller.NomineeRegistration</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateVoter</servlet-name>
+        <servlet-class>Controller.UpdateVoter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -31,6 +35,14 @@
     <servlet-mapping>
         <servlet-name>NomineeRegistration</servlet-name>
         <url-pattern>/candidate/NomineeRegistration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateVoter</servlet-name>
+        <url-pattern>/UpdateVoter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateVoter</servlet-name>
+        <url-pattern>/election-commissioner/UpdateVoter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
