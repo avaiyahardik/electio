@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.Candidate"%>
 <%@page import="Model.Nominee"%>
 <%@page import="java.util.ArrayList"%>
@@ -12,6 +14,7 @@
 
 <!-- END PAGE LEVEL STYLE -->
 <% Election el = (Election) request.getAttribute("election");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 %>
 <div id="main-content">
     <div class="page-title">
@@ -114,7 +117,7 @@
                                     <div class="form-group">
                                         <label for="nomination_start" class="control-label col-lg-3"><strong>Nomination Starts on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="nomination_start" id="nomination_start" placeholder="Click to choose date" value="<%= el.getNomination_start()%>"/>
+                                            <input type="text" class="form-control" name="nomination_start" id="nomination_start" placeholder="Click to choose date" value="<%= sdf.format(new Date(el.getNomination_start().getTime()))%>"/>
                                         </div>
                                     </div>
 
@@ -122,14 +125,14 @@
                                     <div class="form-group">
                                         <label for="nomination_end" class="control-label col-lg-3"><strong>Nomination Ends on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="nomination_end" id="nomination_end" placeholder="Click to choose date" value="<%= el.getNomination_end()%>"/>
+                                            <input type="text" class="form-control" name="nomination_end" id="nomination_end" placeholder="Click to choose date" value="<%= sdf.format(new Date(el.getNomination_end().getTime()))%>"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="withdrawal_start" class="control-label col-lg-3"><strong>Withdrawal Starts on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="withdrawal_start" id="withdrawal_start" placeholder="Click to choose date" value="<%= el.getWithdrawal_start()%>"/>
+                                            <input type="text" class="form-control" name="withdrawal_start" id="withdrawal_start" placeholder="Click to choose date" value="<%= sdf.format(new Date(el.getWithdrawal_start().getTime()))%>"/>
                                         </div>
                                     </div>
 
@@ -137,14 +140,14 @@
                                     <div class="form-group">
                                         <label for="withdrawal_end" class="control-label col-lg-3"><strong>Withdrawal Ends on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="withdrawal_end" id="withdrawal_end" placeholder="Click to choose date" value="<%= el.getWithdrawal_end()%>"/>
+                                            <input type="text" class="form-control" name="withdrawal_end" id="withdrawal_end" placeholder="Click to choose date" value="<%= sdf.format(new Date(el.getWithdrawal_end().getTime()))%>"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="voting_start" class="control-label col-lg-3"><strong>Voting Starts on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="voting_start" id="voting_start" placeholder="Click to choose date" value="<%= el.getVoting_start()%>"/>
+                                            <input type="text" class="form-control" name="voting_start" id="voting_start" placeholder="Click to choose date" value="<%= sdf.format(new Date(el.getVoting_start().getTime()))%>"/>
                                         </div>
                                     </div>
 
@@ -152,7 +155,7 @@
                                     <div class="form-group">
                                         <label for="voting_end" class="control-label col-lg-3"><strong>Voting Ends on</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="voting_end" id="voting_end" placeholder="Click to choose date" value="<%= el.getVoting_end()%>"/>
+                                            <input type="text" class="form-control" name="voting_end" id="voting_end" placeholder="Click to choose date" value="<%= sdf.format(new Date(el.getVoting_end().getTime()))%>"/>
                                         </div>
                                     </div>
 

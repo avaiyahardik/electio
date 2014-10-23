@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-md-12 profile-info">
                                 <h1>
-                                    Vishal Jain
+                                    Vishal
                                     <!-- Remove the Above name and put the name from DB -->
                                     
                                 </h1>
