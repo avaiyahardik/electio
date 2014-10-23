@@ -44,7 +44,7 @@ public class ApproveNominee implements Controller.Action {
                     System.out.println("Req File: " + requirements_file);
                     try {
                         DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                        if (obj.rejectNominee(election_id, email) && obj.approveNominee(election_id, nominee_email, requirements_file)) {
+                        if (obj.approveNominee(election_id, nominee_email, requirements_file)) {
                             msg = "Nominee approved successfully";
                         } else {
                             err = "Error occured while approving nominee, please try again";
