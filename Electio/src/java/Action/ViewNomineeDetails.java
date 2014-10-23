@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Vishal Jain
  */
-public class ViewNomineeDetail implements Controller.Action {
+public class ViewNomineeDetails implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
@@ -44,8 +44,8 @@ public class ViewNomineeDetail implements Controller.Action {
             } else {
                 long id = Long.parseLong(req.getParameter("id"));
                 String nominee_email = req.getParameter("email");
-                view = "nomineeDetail.jsp";
-                title = "Nominee Detail";
+                view = "nomineeDetails.jsp";
+                title = "Nominee Details";
                 System.out.println("Election ID: " + id);
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
