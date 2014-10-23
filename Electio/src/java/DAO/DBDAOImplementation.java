@@ -510,8 +510,13 @@ public class DBDAOImplementation {
         ps2.setLong(2, election_id);
         ps2.setString(3, requirements_file);
         ps2.setLong(4, 0);
+        
+        PreparedStatement ps3 = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=? AND email=?");
+        ps3.setLong(1,election_id);
+        ps3.setString(2, email);
+        
         System.out.println("MSG 2");
-        if (ps2.executeUpdate() > 0) {
+        if (ps2.executeUpdate() > 0 && ps3.executeUpdate() > 0) {
             System.out.println("MSG 3");
             result = true;
         }

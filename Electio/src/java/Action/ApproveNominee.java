@@ -33,12 +33,13 @@ public class ApproveNominee implements Controller.Action {
                 err = "Could not locate election id";
             } else {
                 long election_id = Long.parseLong(req.getParameter("election_id"));
-                // view = "Controller?action=view_election_detail&id=" + election_id;
+                 view = "Controller?action=view_election_detail&id=" + election_id;
                 title = "Election Detail";
 
                 if (req.getParameter("email") == null) {
                     err = "Could not locate nominee email";
                 } else {
+                    
                     String nominee_email = req.getParameter("email");
                     String requirements_file = req.getParameter("requirements_file");
                     System.out.println("Req File: " + requirements_file);
