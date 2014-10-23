@@ -27,6 +27,7 @@ public class DBDAOImplementation {
 
     public static DBDAOImplementation getInstance() throws SQLException {
         if (obj == null) {
+            System.out.println("New DBDAOImpl created");
             obj = new DBDAOImplementation();
         }
         return obj;
@@ -485,6 +486,37 @@ public class DBDAOImplementation {
         } else {
             con.rollback();
         }
+        return result;
+    }
+
+    public boolean approveNominee(long election_id, String email, String requirements_file) throws SQLException {
+        boolean result = false;
+        //con.setAutoCommit(false);
+        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_candidate(email, election_id, requirements_file, votes) VALUES(?,?,?,?)");
+        ps2.setString(1, email);
+        ps2.setLong(2, election_id);
+        ps2.setString(3, requirements_file);
+        ps2.setLong(4, 0);
+        System.out.println("MSG 2");
+        if (ps2.executeUpdate() > 0) {
+            System.out.println("MSG 3");
+            result = true;
+        }
+        System.out.println("Apprvd Status: " + result);
+        return result;
+    }
+
+    public boolean rejectNominee(long election_id, String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps1 = con.prepareStatement("UPDATE tbl_election_nominee SET status=? WHERE election_id=? AND email=?");
+        ps1.setBoolean(1, true);
+        ps1.setLong(2, election_id);
+        ps1.setString(3, email);
+
+        if (ps1.executeUpdate() > 0) {
+            result = true;
+        }
+        System.out.println("Rejected status: " + result);
         return result;
     }
 }

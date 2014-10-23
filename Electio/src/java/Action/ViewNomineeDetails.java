@@ -47,14 +47,11 @@ public class ViewNomineeDetails implements Controller.Action {
                 String nominee_email = req.getParameter("email");
                 view = "nomineeDetails.jsp";
                 title = "Nominee Details";
-                System.out.println("Election ID: " + id);
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Nominee n = obj.getNominee(id, nominee_email);
                     Organization org = obj.getOrganization(n.getOrganization_id());
                     req.setAttribute("nominee", n);
-                    System.out.println("NOM: " + n.getOrganization_id());
-                    System.out.println("OrG: "+org.getName());
                     req.setAttribute("organization", org);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
