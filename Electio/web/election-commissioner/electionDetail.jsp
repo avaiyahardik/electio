@@ -195,7 +195,7 @@
                                 <!-- Display Nominees Data by Loop -->
                                 <tr>
                                     <td>
-                                        <a href="Controller?action=nominee_detail&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>"><strong><%= n.getFirstname()%> <%= n.getLastname()%></strong></a>
+                                        <a href="Controller?action=nominee_details&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>"><strong><%= n.getFirstname()%> <%= n.getLastname()%></strong></a>
                                     </td>
                                     <td><%= n.getEmail()%></td>
                                     <td><%= n.getMobile()%></td>
@@ -239,7 +239,7 @@
                                 %>
                                 <tr>
                                     <td>
-                                        <a href="Controller?action=candidate_detail&election_id=<%= c.getElection_id()%>&email=<%= c.getEmail()%>"><strong><%= c.getFirstname()%> <%= c.getLastname()%></strong></a>
+                                        <a href="Controller?action=candidate_details&election_id=<%= c.getElection_id()%>&email=<%= c.getEmail()%>"><strong><%= c.getFirstname()%> <%= c.getLastname()%></strong></a>
                                     </td>
                                     <td><%= c.getEmail()%></td>
                                     <td><%= c.getMobile()%></td>
