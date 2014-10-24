@@ -450,6 +450,28 @@ public class DBDAOImplementation {
         }
         return nominee;
     }
+    
+    public Candidate getCandidate(long election_id, String email) throws SQLException {
+        PreparedStatement ps = con.prepareStatement("select * from tbl_user_info as u INNER JOIN tbl_election_candidate as c ON u.email=c.email WHERE election_id=? and u.email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        Candidate candidate = null;
+        if (rs.next()) {
+            candidate = new Candidate();
+            candidate.setEmail(rs.getString("email"));
+            candidate.setFirstname(rs.getString("firstname"));
+            candidate.setLastname(rs.getString("lastname"));
+            candidate.setMobile(rs.getString("mobile"));
+            candidate.setOrganization_id(rs.getLong("organization_id"));
+            candidate.setImage(rs.getString("image"));
+            candidate.setPassword(rs.getString("password"));
+            candidate.setElection_id(rs.getLong("election_id"));
+            candidate.setRequirements_file(rs.getString("requirements_file"));
+            
+        }
+        return candidate;
+    }
 
     public ArrayList<Candidate> getCandidates(long election_id) throws SQLException {
         ArrayList<Candidate> candidates = new ArrayList<Candidate>();
@@ -499,37 +521,6 @@ public class DBDAOImplementation {
         } else {
             con.rollback();
         }
-        return result;
-    }
-
-    public boolean approveNominee(long election_id, String email, String requirements_file) throws SQLException {
-        boolean result = false;
-        //con.setAutoCommit(false);
-        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_candidate(email, election_id, requirements_file, votes) VALUES(?,?,?,?)");
-        ps2.setString(1, email);
-        ps2.setLong(2, election_id);
-        ps2.setString(3, requirements_file);
-        ps2.setLong(4, 0);
-        System.out.println("MSG 2");
-        if (ps2.executeUpdate() > 0) {
-            System.out.println("MSG 3");
-            result = true;
-        }
-        System.out.println("Apprvd Status: " + result);
-        return result;
-    }
-
-    public boolean rejectNominee(long election_id, String email) throws SQLException {
-        boolean result = false;
-        PreparedStatement ps1 = con.prepareStatement("UPDATE tbl_election_nominee SET status=? WHERE election_id=? AND email=?");
-        ps1.setBoolean(1, true);
-        ps1.setLong(2, election_id);
-        ps1.setString(3, email);
-
-        if (ps1.executeUpdate() > 0) {
-            result = true;
-        }
-        System.out.println("Rejected status: " + result);
         return result;
     }
 }
