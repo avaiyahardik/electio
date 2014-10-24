@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.Candidate"%>
@@ -350,4 +351,5 @@
     tinymce.init({selector: '#requirements'});
 
 </script>
+
 <jsp:include page="footer.jsp"/>
