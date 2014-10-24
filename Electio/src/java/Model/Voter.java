@@ -16,6 +16,16 @@ public class Voter {
     private String password;
     private boolean status;
 
+    public Voter() {
+    }
+
+    public Voter(String email, long election_id, String password, boolean status) {
+        this.email = email;
+        this.election_id = election_id;
+        this.password = password;
+        this.status = status;
+    }
+
     public String getEmail() {
         return email;
     }

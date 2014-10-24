@@ -450,7 +450,7 @@ public class DBDAOImplementation {
         }
         return nominee;
     }
-    
+
     public Candidate getCandidate(long election_id, String email) throws SQLException {
         PreparedStatement ps = con.prepareStatement("select * from tbl_user_info as u INNER JOIN tbl_election_candidate as c ON u.email=c.email WHERE election_id=? and u.email=?");
         ps.setLong(1, election_id);
@@ -468,7 +468,7 @@ public class DBDAOImplementation {
             candidate.setPassword(rs.getString("password"));
             candidate.setElection_id(rs.getLong("election_id"));
             candidate.setRequirements_file(rs.getString("requirements_file"));
-            
+
         }
         return candidate;
     }

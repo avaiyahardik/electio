@@ -6,6 +6,7 @@
 package Controller;
 
 import DAO.DBDAOImplementation;
+import Model.Voter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -60,8 +61,15 @@ public class UpdateVoter extends HttpServlet {
                             } else {
                                 out.print("Error");
                             }
-                        } else {
-                            out.print("Invalid command");
+                        } else if (cmd.equals("add")) {
+                            long election_id = Long.parseLong(request.getParameter("election_id"));
+                            String voter_email = request.getParameter("email");
+                            Voter voter = new Voter(voter_email, election_id, "", false);
+                            if (obj.addVoter(voter)) {
+                                out.print("Added");
+                            } else {
+                                out.print("Error");
+                            }
                         }
                     }
                 } catch (Exception ex) {
