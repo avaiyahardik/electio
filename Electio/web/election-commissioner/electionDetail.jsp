@@ -271,6 +271,8 @@
 
                     <div class="tab-pane fade active in" id="election_voters">
                         <h4>Voters' List for the election</h4>
+                        <br>
+                        <button class="btn btn-primary"><i class="fa fa-plus"></i> Add Voter</button>
                         <table class="table table-hover table-dynamic table-tools">
                             <thead>
                                 <tr>
@@ -280,18 +282,25 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody  id="tbl_voters">
                                 <% ArrayList<Voter> voters = (ArrayList<Voter>) request.getAttribute("voters");
                                     for (Voter v : voters) {
                                 %>
 
+                                
                                 <!-- Display Voter Data by Loop -->
                                 <tr>
                                     <td><%= v.getEmail()%></td>
                                     <td><%= v.getStatus()%></td>
                                     <td>
+
+                                        <!--
                                         <a href="Controller?action=edit_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Update</a>
                                         <a href="Controller?action=delete_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+                                        
+                                        -->
+                                        <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
+                                        <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
                                     </td>
                                 </tr>
                                 <%}%>
@@ -320,6 +329,8 @@
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
+
+<script type="text/javascript" src="../js/script.js"></script>
 <!-- END  PAGE LEVEL SCRIPTS -->
 
 
