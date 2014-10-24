@@ -287,18 +287,12 @@
                                     for (Voter v : voters) {
                                 %>
 
-                                
+
                                 <!-- Display Voter Data by Loop -->
                                 <tr>
                                     <td><%= v.getEmail()%></td>
                                     <td><%= v.getStatus()%></td>
                                     <td>
-
-                                        <!--
-                                        <a href="Controller?action=edit_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Update</a>
-                                        <a href="Controller?action=delete_voter&election_id=<%= v.getElection_id()%>&email=<%= v.getEmail()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
-                                        
-                                        -->
                                         <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                         <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
                                     </td>
