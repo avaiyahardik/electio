@@ -47,18 +47,18 @@ public class UpdateVoter extends HttpServlet {
                             long election_id = Long.parseLong(request.getParameter("election_id"));
                             String voter_email = request.getParameter("voter_email");
                             if (obj.deleteVoter(voter_email, election_id)) {
-                                out.print("Voter deleted");
+                                out.print("Deleted");
                             } else {
-                                out.print("Fail to delete");
+                                out.print("Error");
                             }
                         } else if (cmd.equals("update")) {
                             long election_id = Long.parseLong(request.getParameter("election_id"));
                             String old_email = request.getParameter("old_email");
                             String new_email = request.getParameter("new_email");
                             if (obj.updateVoter(election_id, old_email, new_email)) {
-                                out.print("Voter updated");
+                                out.print("Updated");
                             } else {
-                                out.print("Fail to update");
+                                out.print("Error");
                             }
                         } else {
                             out.print("Invalid command");
