@@ -272,26 +272,61 @@
                     <div class="tab-pane fade active in" id="election_voters">
                         <h4>Voters' List for the election</h4>
                         <br>
-                        <button class="btn btn-primary"><i class="fa fa-plus"></i> Add Voter</button>
-                        <table class="table table-hover table-dynamic table-tools">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-sm btn-add" value="<%=el.getId()%>"><i class="fa fa-plus"></i> Add Voter</button>
+                                <a href="#" id="link-upload">Upload CSV file</a>
+                            </div>
+
+                            <div id="upload-voters" style="display: none" class="col-md-6">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <input class="form-control" type="file" name="voter_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-upload"></i> Upload</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+
+                        <br><br>
+                        <div class="align-left well">
+                            Voter Status - 
+                            <i class="fa fa-check-circle" style="color:green"></i> Voted
+                            <i class="fa fa-circle" style="color:red"></i> Not Voted
+                        </div>
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Voter Email</th>
-                                    <th>Status</th>
+                                    <th class="align-center">Vote Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
-                            <tbody  id="tbl_voters">
+                            <tbody>
+                                <tr id="blank_row"></tr>
+                                <!-- Display Voter Data by Loop -->
                                 <% ArrayList<Voter> voters = (ArrayList<Voter>) request.getAttribute("voters");
                                     for (Voter v : voters) {
                                 %>
-
-
-                                <!-- Display Voter Data by Loop -->
                                 <tr>
                                     <td><%= v.getEmail()%></td>
-                                    <td><%= v.getStatus()%></td>
+                                    <td class="align-center"><%
+                                        if (v.getStatus()) {
+                                        %>
+                                        <i class="fa fa-check-circle" style="color:green"></i>
+                                        <%
+                                        } else {
+                                        %>
+                                        <i class="fa fa-circle" style="color:red">
+                                            <%
+                                                }
+                                            %></td>
                                     <td>
                                         <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                         <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
