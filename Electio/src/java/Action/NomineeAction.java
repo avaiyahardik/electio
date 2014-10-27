@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hardik
  */
-public class RejectNominee implements Controller.Action {
+public class NomineeAction implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
@@ -27,31 +27,42 @@ public class RejectNominee implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "You are not logged in, or session already expired";
         } else {
-            if (req.getParameter("election_id") == null) {
+            String cmd = req.getParameter("cmd");
+
+            if (cmd == null || req.getParameter("election_id") == null || req.getParameter("email") == null) {
                 view = "Controller?action=view_elections";
                 title = "Elections";
-                err = "Could not locate election id";
+                err = "Insufficient parameters";
             } else {
                 long election_id = Long.parseLong(req.getParameter("election_id"));
                 view = "Controller?action=view_election_detail&id=" + election_id;
                 title = "Election Detail";
+                String nominee_email = req.getParameter("email");
+                try {
+                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
 
-                if (req.getParameter("email") == null) {
-                    err = "Could not locate nominee email";
-                } else {
-                    String nominee_email = req.getParameter("email");
-                    try {
-                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    if (cmd.equals("approve")) {
+                        String requirements_file = req.getParameter("requirements_file");
+                        if (obj.approveNominee(election_id, nominee_email, requirements_file)) {
+                            msg = "Nominee approved successfully";
+                        } else {
+                            err = "Error occured while approving nominee, please try again";
+                        }
+
+                    } else if (cmd.equals("reject")) {
+
                         if (obj.rejectNominee(election_id, nominee_email)) {
                             msg = "Nominee rejeced successfully";
                         } else {
                             err = "Error occured while rejecting nominee, please try again";
                         }
-                    } catch (SQLException ex) {
-                        err = ex.getMessage();
-                        System.out.println("RejectNominee Err: " + ex.getMessage());
                     }
+                } catch (Exception ex) {
+                    err = ex.getMessage();
+                    System.out.println("RejectNominee Err: " + ex.getMessage());
+
                 }
+
             }
         }
         req.setAttribute("msg", msg);

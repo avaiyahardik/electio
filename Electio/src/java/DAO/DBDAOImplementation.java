@@ -475,7 +475,7 @@ public class DBDAOImplementation {
 
     public ArrayList<Candidate> getCandidates(long election_id) throws SQLException {
         ArrayList<Candidate> candidates = new ArrayList<Candidate>();
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info INNER JOIN tbl_election_candidate WHERE election_id=?");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info AS u INNER JOIN tbl_election_candidate AS c ON u.email=c.email WHERE election_id=?");
         ps.setLong(1, election_id);
         ResultSet rs = ps.executeQuery();
         Candidate candidate;
@@ -520,6 +520,43 @@ public class DBDAOImplementation {
             con.commit();
         } else {
             con.rollback();
+        }
+        return result;
+    }
+
+    public boolean approveNominee(long election_id, String email, String requirements_file) throws SQLException {
+        boolean result = false;
+        // status = 1 means approved
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
+        ps.setInt(1, 1);
+        ps.setLong(2, election_id);
+        ps.setString(3, email);
+
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+
+        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_candidate VALUES(?,?,?,?,?)");
+        ps2.setString(1, email);
+        ps2.setLong(2, election_id);
+        ps2.setString(3, requirements_file);
+        ps2.setInt(4, 0);
+        ps2.setString(5, "no manifesto");
+        if (ps2.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean rejectNominee(long election_id, String emai) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
+        ps.setInt(1, 2);    // status 2 means disapproved
+        ps.setLong(2, election_id);
+        ps.setString(3, emai);
+
+        if (ps.executeUpdate() > 0) {
+            result = true;
         }
         return result;
     }

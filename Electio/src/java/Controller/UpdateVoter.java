@@ -7,6 +7,7 @@ package Controller;
 
 import DAO.DBDAOImplementation;
 import Model.Voter;
+import Util.RandomString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -64,7 +65,7 @@ public class UpdateVoter extends HttpServlet {
                         } else if (cmd.equals("add")) {
                             long election_id = Long.parseLong(request.getParameter("election_id"));
                             String voter_email = request.getParameter("email");
-                            Voter voter = new Voter(voter_email, election_id, "", false);
+                            Voter voter = new Voter(voter_email, election_id, RandomString.generateRandomPassword(), false);
                             if (obj.addVoter(voter)) {
                                 out.print("Added");
                             } else {
