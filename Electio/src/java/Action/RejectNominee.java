@@ -42,11 +42,12 @@ public class RejectNominee implements Controller.Action {
                     String nominee_email = req.getParameter("email");
                     try {
                         DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                        if (obj.rejectNominee(election_id, nominee_email)) {
-                            msg = "Nominee rejeced successfully";
-                        } else {
-                            err = "Error occured while rejecting nominee, please try again";
-                        }
+                        /*     if (obj.rejectNominee(election_id, nominee_email)) {
+                         msg = "Nominee rejeced successfully";
+                         } else {
+                         err = "Error occured while rejecting nominee, please try again";
+                         }
+                         */
                     } catch (SQLException ex) {
                         err = ex.getMessage();
                         System.out.println("RejectNominee Err: " + ex.getMessage());

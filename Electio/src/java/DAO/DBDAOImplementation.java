@@ -423,7 +423,7 @@ public class DBDAOImplementation {
             nominee.setPassword(rs.getString("password"));
             nominee.setElection_id(rs.getLong("election_id"));
             nominee.setRequirements_file(rs.getString("requirements_file"));
-            nominee.setStatus(rs.getBoolean("status"));
+            nominee.setStatus(rs.getInt("status"));
             nominees.add(nominee);
         }
         return nominees;
@@ -446,7 +446,7 @@ public class DBDAOImplementation {
             nominee.setPassword(rs.getString("password"));
             nominee.setElection_id(rs.getLong("election_id"));
             nominee.setRequirements_file(rs.getString("requirements_file"));
-            nominee.setStatus(rs.getBoolean("status"));
+            nominee.setStatus(rs.getInt("status"));
         }
         return nominee;
     }
@@ -513,7 +513,7 @@ public class DBDAOImplementation {
         ps2.setString(1, nominee.getEmail());
         ps2.setLong(2, nominee.getElection_id());
         ps2.setString(3, nominee.getRequirements_file());
-        ps2.setBoolean(4, nominee.getStatus());
+        ps2.setInt(4, nominee.getStatus());
 
         if (ps1.executeUpdate() > 0 && ps2.executeUpdate() > 0) {
             result = true;

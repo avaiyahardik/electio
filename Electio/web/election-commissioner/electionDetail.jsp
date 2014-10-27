@@ -187,6 +187,7 @@
                                     <th>Email</th>
                                     <th>Mobile</th>
                                     <th>Image</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
 
@@ -207,6 +208,24 @@
                                             <img src="<%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
                                         </a>
                                     </td>
+
+                                    <td>
+                                        <% int status = n.getStatus();
+                                            if (status == 0) {
+                                        %>
+                                        <label class="label label-warning" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+                                        <%
+                                        } else if (status == 1) {
+                                        %>
+                                        <label class="label label-success" style="font-size:13px"><i class="glyphicon glyphicon-check"></i> Approved</label>
+                                        <%} else {
+                                        %>
+                                        <label class="label label-danger" style="font-size:13px"><i class="glyphicon glyphicon-remove"></i> Rejected</label>
+                                        <%
+                                            }
+                                        %>
+                                    </td>
+
                                 </tr>
                                 <%}%>
                                 <%
@@ -323,10 +342,10 @@
                                         <%
                                         } else {
                                         %>
-                                        <i class="fa fa-circle" style="color:red">
-                                            <%
-                                                }
-                                            %></td>
+                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <%
+                                            }
+                                        %></td>
                                     <td>
                                         <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                         <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>

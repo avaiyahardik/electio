@@ -51,7 +51,7 @@
                     </a>
 
                 </div>
-                <div class="navbar-center"><a  href="dashboard.jsp" style="color:#FFF; text-decoration:none;"><%=title%></a></div>
+                <div class="navbar-center"><a  href="#" style="color:#FFF; text-decoration:none;"><%=title%></a></div>
                 <div class="navbar-collapse collapse">
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <ul class="nav navbar-nav pull-right header-menu">

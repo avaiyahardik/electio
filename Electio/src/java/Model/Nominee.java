@@ -13,12 +13,12 @@ public class Nominee extends UserInfo {
 
     private long election_id;
     private String requirements_file;
-    private boolean status;
+    private int status;
 
     public Nominee() {
     }
 
-    public Nominee(String firstname, String lastname, String email, String mobile, long organization_id, String image, String password, long election_id, String requirements_file, boolean status) {
+    public Nominee(String firstname, String lastname, String email, String mobile, long organization_id, String image, String password, long election_id, String requirements_file, int status) {
         super.setFirstname(firstname);
         super.setLastname(lastname);
         super.setEmail(email);
@@ -47,11 +47,11 @@ public class Nominee extends UserInfo {
         this.requirements_file = requirements_file;
     }
 
-    public boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
