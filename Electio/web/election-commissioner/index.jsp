@@ -77,7 +77,7 @@
                                 <button type="submit"  name="action" value="election_commissioner_login" class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">login</span></button>
                             </form>
                             <div class="login-links">
-                                <a href="password.jsp">Forgot password?</a>
+                                <a href="forgotPassword.jsp">Forgot password?</a>
                                 <br>
                                 <a href="registration.jsp">Don't have an account? <strong>Sign Up</strong></a>
 
