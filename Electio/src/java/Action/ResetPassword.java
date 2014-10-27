@@ -1,6 +1,7 @@
 package Action;
 
 import DAO.DBDAOImplementation;
+import DAOImpl.EmailSender;
 import Util.RandomString;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -12,7 +13,7 @@ public class ResetPassword implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String email = (String) req.getSession().getAttribute("email");
+        String email = (String) req.getParameter("email");
         String view = "forgotPassword.jsp";
         String msg = null;
         String err = null;
@@ -26,6 +27,13 @@ public class ResetPassword implements Controller.Action {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 obj.changeElectionCommissionerPassword(email, newPassword); // it'll update password
 
+                String s[]={email};
+                if(EmailSender.sendMail("sen.daiict@gmail.com","#password2014","New Password",newPassword,s)){
+                    msg="Password Sent To your email successfully";
+                }
+                else{
+                    err="Some error occur";
+                }
                 // write a code to send email containing password
                 // stored in "newPassword" variable to election commissioner
                 // at email id stored in "email" variable.
