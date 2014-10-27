@@ -199,7 +199,7 @@ public class DBDAOImplementation {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=?");
         ps.setLong(1, id);
-        if (ps.execute()) {
+        if (ps.executeUpdate() > 0) {
             result = true;
         }
         return result;
@@ -212,7 +212,9 @@ public class DBDAOImplementation {
         ps.setLong(2, voter.getElection_id());
         ps.setString(3, voter.getPassword());
         ps.setBoolean(4, voter.getStatus());
-        result = ps.execute();
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
         return result;
     }
 

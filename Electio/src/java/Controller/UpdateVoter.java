@@ -63,6 +63,7 @@ public class UpdateVoter extends HttpServlet {
                                 out.print("Error");
                             }
                         } else if (cmd.equals("add")) {
+                            System.out.println("CMD: Add");
                             long election_id = Long.parseLong(request.getParameter("election_id"));
                             String voter_email = request.getParameter("email");
                             Voter voter = new Voter(voter_email, election_id, RandomString.generateRandomPassword(), false);
