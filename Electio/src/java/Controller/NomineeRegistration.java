@@ -57,7 +57,7 @@ public class NomineeRegistration extends HttpServlet {
             String retype_password = request.getParameter("retype_password");
             String image = "Image_path";
             String requirements_file = "requirements_path";
-            boolean status = false;
+            int  status = 0;
             System.out.println("3");
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
                 err = "Please fill all required fields";

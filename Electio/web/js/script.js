@@ -61,21 +61,23 @@ $(document).ready(function () {
             to_remove.html(old_html);
         }
         else {
-            $.post("UpdateVoter", {
-                cmd: "update",
-                old_email: old_email,
-                new_email: new_email,
-                election_id: election_id
-            }, function (data, status) {
-                if (data == "Updated") {
-                    alert(old_html);
-                    var new_html = old_html.split(old_email).join(new_email);
-                    alert(new_html);
-                    to_remove.html(new_html);
-                } else {
-                    alert("Error Updating voter's data, try again.");
-                }
-            });
+            if (validateEmail(new_email)) {
+                $.post("UpdateVoter", {
+                    cmd: "update",
+                    old_email: old_email,
+                    new_email: new_email,
+                    election_id: election_id
+                }, function (data, status) {
+                    if (data == "Updated") {
+                        var new_html = old_html.split(old_email).join(new_email);
+                        to_remove.html(new_html);
+                    } else {
+                        alert("Error Updating voter's data, try again.");
+                    }
+                });
+            } else {
+                alert("Invalid email address, try again.");
+            }
 
         }
         editing = 0;
@@ -119,8 +121,8 @@ $(document).ready(function () {
         }
 
     });
-    
-    $('#link-upload').click(function(){
+
+    $('#link-upload').click(function () {
         $(this).hide();
         $('#upload-voters').fadeIn('fast');
     });
