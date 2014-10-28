@@ -34,8 +34,12 @@
                                 <strong>
                                     <!-- Election Name here -->
                                     <%
-                                        long election_id = Long.parseLong(request.getParameter("election_id"));
-                                        String name = DBDAOImplementation.getInstance().getElectionName(election_id);
+                                        String name = "";
+                                        long election_id = 0;
+                                        if (request.getParameter("election_id") != null) {
+                                            election_id = Long.parseLong(request.getParameter("election_id"));
+                                            name = DBDAOImplementation.getInstance().getElectionName(election_id);
+                                        }
                                     %>
                                     <%= name%>
                                 </strong>
@@ -45,11 +49,10 @@
 
                         <div class="panel-body">
                             <form action="NomineeRegistration" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                                <fieldset>
-                                    <input type="hidden" name="election_id" value="<%= election_id%>">
+                                <input type="hidden" name="election_id" value="<%= election_id%>">
+                                <fieldset> 
                                     <div class="form-group">
                                         <!-- BEGIN ERROR BOX -->
-
                                         <%
                                             String msg = (String) request.getAttribute("msg");
                                             if (msg != null) {
@@ -151,7 +154,7 @@
                                                     <span class="arrow"></span>
                                                     <i class="fa fa-paperclip"></i> 
                                                 </span>
-                                                <input type="file" class="form-control" name="requirements"  accept="application/pdf"  required/>
+                                                <input type="file" class="form-control" name="requirements_file"  accept="application/pdf"  required/>
                                             </div>
 
                                             <a href="#" class="btn btn-effect" data-modal="requirements-modal"><i class="fa fa-search"></i> View Requirements</a>

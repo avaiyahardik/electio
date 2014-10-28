@@ -8,7 +8,7 @@ $(document).ready(function () {
     $(':button.btn-del').live("click", function () {
         if (confirm("Do you really want to delete the voter")) {
             var to_remove = $(this).parent().parent();
-            var data_array = $(this).live.val().split("-");
+            var data_array = $(this).val().split("-");
             var election_id = data_array[0];
             var voter_email = data_array[1];
 
