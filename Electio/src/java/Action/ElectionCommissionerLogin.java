@@ -6,6 +6,7 @@
 package Action;
 
 import DAO.DBDAOImplementation;
+import Util.RandomString;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
         if (email == null || email.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields"; // error message should be displayed on view page
         } else {
+            password = RandomString.encryptPassword(password);
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 if (obj.loginElectionCommissioner(email, password)) {

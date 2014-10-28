@@ -11,6 +11,7 @@ import Model.Organization;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -74,11 +75,14 @@ public class NomineeRegistration extends HttpServlet {
         try {
             List<FileItem> fileItemsList = uploader.parseRequest(request);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
+            Date date;
+            String ext;
+            String fileName;
             while (fileItemsIterator.hasNext()) {
                 FileItem fileItem = fileItemsIterator.next();
                 String fieldName = fileItem.getFieldName();
 //                System.out.println("FieldName=" + fieldName + fileItem.getString());
-                if (fieldName.equals("")) {
+                if (fieldName.equals("election_id")) {
                     election_id = Long.parseLong(fileItem.getString());
                 } else if (fieldName.equals("firstname")) {
                     firstname = fileItem.getString();
@@ -103,23 +107,27 @@ public class NomineeRegistration extends HttpServlet {
                     System.out.println("ContentType=" + fileItem.getContentType());
                     System.out.println("Size in bytes=" + fileItem.getSize());
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
-                    File file = new File(request.getServletContext().getRealPath("/user_images") + File.separator + fileItem.getName());
+                    fileName = fileItem.getName();
+                    date = new Date();
+                    ext = fileName.substring(fileName.lastIndexOf('.'));
+                    File file = new File(request.getServletContext().getRealPath("/user_images") + File.separator + date.getTime() + "." + ext);
                     fileItem.write(file);
-                    image = file.getAbsolutePath();
+                    image = "user_images" + File.separator + date.getTime() + "." + ext;
                     System.out.println("Absolute Path at server=" + image);
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                    System.out.println("<a href=\"UploadServlet?fileName=" + fileItem.getName() + "\">Download " + fileItem.getName() + "</a>");
                 } else if (fileItem.getFieldName().equals("requirements_file")) {
                     System.out.println("FileName=" + fileItem.getName());
                     System.out.println("ContentType=" + fileItem.getContentType());
                     System.out.println("Size in bytes=" + fileItem.getSize());
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
-                    File file = new File(request.getServletContext().getRealPath("/requirements_files") + File.separator + fileItem.getName());
+                    fileName = fileItem.getName();
+                    date = new Date();
+                    ext = fileName.substring(fileName.lastIndexOf('.'));
+                    File file = new File(request.getServletContext().getRealPath("/requirements_files") + File.separator + date.getTime() + "." + ext);
                     fileItem.write(file);
-                    requirements_file = file.getAbsolutePath();
+                    requirements_file = "requirements_files" + File.separator + date.getTime() + "." + ext;
                     System.out.println("Absolute Path at server=" + requirements_file);
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                    System.out.println("<a href=\"UploadServlet?fileName=" + fileItem.getName() + "\">Download " + fileItem.getName() + "</a>");
                 }
             }
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
@@ -130,7 +138,7 @@ public class NomineeRegistration extends HttpServlet {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Organization org = new Organization(organization_name, organization_address, about_organization);
                     long organization_id = obj.addNewOrganization(org);
-                    Nominee nominee = new Nominee(firstname, lastname, email, mobile, organization_id, image, password, organization_id, requirements_file, status);
+                    Nominee nominee = new Nominee(firstname, lastname, email, mobile, organization_id, image, password, election_id, requirements_file, status);
                     if (obj.registerNominee(nominee)) {
                         msg = "Nominee registered successfully";
                     } else {

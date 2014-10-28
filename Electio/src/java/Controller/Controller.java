@@ -47,7 +47,7 @@ public class Controller extends HttpServlet {
 
             System.out.println("Action Class: " + action_class);
             Action action = (Action) ObjectCreator.createObject(action_class);
-            System.out.println("Object Created");
+            System.out.println("Action Object Created");
             view = action.execute(request, response);
             System.out.println("View: " + view);
             RequestDispatcher rd = request.getRequestDispatcher(view);

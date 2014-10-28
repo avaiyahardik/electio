@@ -204,9 +204,13 @@
                                     <td><%= n.getEmail()%></td>
                                     <td><%= n.getMobile()%></td>
                                     <td>
-                                        <a href="#">
-                                            <img src="<%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
+                                        <!--        
+                                        <a href="#"> 
+                                        -->
+                                        <img src="../<%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
+                                        <!--
                                         </a>
+                                        --> 
                                     </td>
 
                                     <td>

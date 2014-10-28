@@ -8,6 +8,7 @@ package Action;
 import DAO.DBDAOImplementation;
 import Model.ElectionCommissioner;
 import Model.Organization;
+import Util.RandomString;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,8 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String organization_address = req.getParameter("organization_address");
         String about_organization = req.getParameter("about_organization");
         String password = req.getParameter("password");
+        password = RandomString.encryptPassword(password);  // encrypt password for security reason
+        System.out.println("Encrypted Pwd: " + password);
         String view = "registration.jsp";
         String title = "Registration";
         String msg = null;
@@ -41,7 +44,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 Organization org = new Organization(organization_name, organization_address, about_organization);
                 long id = obj.addNewOrganization(org);
-                System.out.println("ID; " + id);
+                System.out.println("Org ID; " + id);
                 ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, id, password);
                 if (obj.registerElectionCommissioner(ec)) {
                     msg = "You're registered successfully";
@@ -49,6 +52,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                     title = "Login";
                 } else {
                     err = "Fail to register, please try again later";
+                    System.out.println("Fail to register, please try again later");
                 }
             } catch (SQLException ex) {
                 err = ex.getMessage();
