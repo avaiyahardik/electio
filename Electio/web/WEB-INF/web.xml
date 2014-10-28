@@ -20,14 +20,6 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/election-commissioner/Controller</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>MassMail</servlet-name>
-        <servlet-class>Controller.MassMail</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MassMail</servlet-name>
-        <url-pattern>/MassMail</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NomineeRegistration</servlet-name>
         <url-pattern>/NomineeRegistration</url-pattern>

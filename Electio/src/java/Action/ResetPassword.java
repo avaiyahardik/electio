@@ -1,7 +1,7 @@
 package Action;
 
 import DAO.DBDAOImplementation;
-import DAOImpl.EmailSender;
+import Util.EmailSender;
 import Util.RandomString;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -28,7 +28,7 @@ public class ResetPassword implements Controller.Action {
                 obj.changeElectionCommissionerPassword(email, newPassword); // it'll update password
 
                 String s[] = {email};
-                if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "New Password", "Your new password is " + newPassword, s)) {
+                if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "New Password", newPassword, s)) {
                     msg = "Password Sent To your email successfully";
                 } else {
                     err = "Some error occur";
