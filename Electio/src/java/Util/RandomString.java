@@ -5,7 +5,13 @@
  */
 package Util;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -38,6 +44,23 @@ public class RandomString {
         } else {
             return randomInt - 1;
         }
+    }
+    public static String encryptPassword(String password){
+        MessageDigest msgDigest = null;
+        String encrptedPassword=null;
+        
+        try{
+        msgDigest = MessageDigest.getInstance("SHA-1");
+        msgDigest.update(password.getBytes("UTF-8"));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RandomString.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(RandomString.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        byte rawByte[] = msgDigest.digest();
+        encrptedPassword = (new BASE64Encoder()).encode(rawByte);
+
+        return encrptedPassword;
     }
 
 }
