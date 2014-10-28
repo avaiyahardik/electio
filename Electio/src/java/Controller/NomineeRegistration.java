@@ -8,18 +8,24 @@ package Controller;
 import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Hardik
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class NomineeRegistration extends HttpServlet {
 
     /**
@@ -57,13 +63,14 @@ public class NomineeRegistration extends HttpServlet {
             String retype_password = request.getParameter("retype_password");
             String image = "Image_path";
             String requirements_file = "requirements_path";
-            int  status = 0;
+            int status = 0;
             System.out.println("3");
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
                 err = "Please fill all required fields";
             } else {
                 if (retype_password.equals(password)) {
                     // upload image and pdf file here...
+                    uploadImage(request, response);
                     try {
                         DBDAOImplementation obj = DBDAOImplementation.getInstance();
                         Organization org = new Organization(organization_name, organization_address, about_organization);
@@ -90,6 +97,52 @@ public class NomineeRegistration extends HttpServlet {
         request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
+    }
+
+    private static final String SAVE_DIR = "user_images";
+
+    /**
+     * handles file upload
+     */
+    private boolean uploadImage(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        // gets absolute path of the web application
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        String savePath = appPath + File.separator + SAVE_DIR;
+        System.out.println("Upload Image Path: " + savePath);
+        // temporary change location manually
+//        savePath = "D:\\work";
+        // creates the save directory if it does not exists
+        File fileSaveDir = new File(savePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
+
+        for (Part part : request.getParts()) {
+            String fileName = extractFileName(part);
+            System.out.println("File Name: " + fileName);
+            part.write(savePath + File.separator + fileName);
+        }
+
+//        request.setAttribute("message", "Upload has been done successfully!");
+//        getServletContext().getRequestDispatcher("/message.jsp").forward(
+//                request, response);
+        return true;
+    }
+
+    /**
+     * Extracts file name from HTTP header content-disposition
+     */
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

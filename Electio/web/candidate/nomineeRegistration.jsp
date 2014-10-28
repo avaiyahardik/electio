@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="panel-body">
-                            <form action="NomineeRegistration" method="POST" class="form-horizontal">
+                            <form action="NomineeRegistration" method="POST" class="form-horizontal" enctype="multipart/form-data">
                                 <fieldset>
                                     <input type="hidden" name="election_id" value="<%= election_id%>">
                                     <div class="form-group">

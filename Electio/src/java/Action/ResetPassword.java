@@ -27,12 +27,11 @@ public class ResetPassword implements Controller.Action {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 obj.changeElectionCommissionerPassword(email, newPassword); // it'll update password
 
-                String s[]={email};
-                if(EmailSender.sendMail("sen.daiict@gmail.com","#password2014","New Password",newPassword,s)){
-                    msg="Password Sent To your email successfully";
-                }
-                else{
-                    err="Some error occur";
+                String s[] = {email};
+                if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "New Password", "Your new password is " + newPassword, s)) {
+                    msg = "Password Sent To your email successfully";
+                } else {
+                    err = "Some error occur";
                 }
                 // write a code to send email containing password
                 // stored in "newPassword" variable to election commissioner
