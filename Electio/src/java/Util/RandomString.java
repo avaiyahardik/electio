@@ -45,17 +45,20 @@ public class RandomString {
             return randomInt - 1;
         }
     }
-    public static String encryptPassword(String password){
+
+    public static String encryptPassword(String password) {
         MessageDigest msgDigest = null;
-        String encrptedPassword=null;
-        
-        try{
-        msgDigest = MessageDigest.getInstance("SHA-1");
-        msgDigest.update(password.getBytes("UTF-8"));
+        String encrptedPassword = null;
+
+        try {
+            msgDigest = MessageDigest.getInstance("SHA-1");
+            msgDigest.update(password.getBytes("UTF-8"));
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(RandomString.class.getName()).log(Level.SEVERE, null, ex);
+            //         Logger.getLogger(RandomString.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("EncryptPassword Error: " + ex.getMessage());
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(RandomString.class.getName()).log(Level.SEVERE, null, ex);
+            //  Logger.getLogger(RandomString.class.getName()).log(Level.SEVEREnull, ex);
+            System.out.println("EncryptPassword Error: " + ex.getMessage());
         }
         byte rawByte[] = msgDigest.digest();
         encrptedPassword = (new BASE64Encoder()).encode(rawByte);
