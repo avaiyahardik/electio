@@ -422,6 +422,7 @@ public class DBDAOImplementation {
             nominee.setMobile(rs.getString("mobile"));
             nominee.setOrganization_id(rs.getLong("organization_id"));
             nominee.setImage(rs.getString("image"));
+            System.out.println("Nominee Image: " + nominee.getImage());
             nominee.setPassword(rs.getString("password"));
             nominee.setElection_id(rs.getLong("election_id"));
             nominee.setRequirements_file(rs.getString("requirements_file"));
