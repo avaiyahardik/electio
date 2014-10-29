@@ -1,9 +1,7 @@
 <jsp:include page="header.jsp"/>
-        <title>Home</title>
+<title>Disclaimer</title>
 <div class="page-title">
-    <h1>Electio Home Page</h1>
+    <h1>Disclaimer</h1>
 </div>
 <hr>
-
-
 <jsp:include page="footer.jsp"/>
