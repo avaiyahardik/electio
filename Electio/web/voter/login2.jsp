@@ -22,18 +22,6 @@
         </script>
     </head>
     <body>
-
-        <%
-            String election_id = request.getParameter("election_id");
-            if (election_id == null || election_id.equals("")) {
-        %>
-        <script>
-            window.location = "index.jsp";
-
-        </script>
-        <%
-            }
-        %>
         <div class="navbar navbar-default ">
             <div class="container">
                 <div class="navbar-header">
@@ -50,22 +38,37 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    
+
                     <div class="col-lg-6 col-lg-offset-3">
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h1 class="panel-title">Voter Login</h1>
                             </div>
                             <div class="panel-body">
-                                
+
+
+
+                                <%
+                                    String election_id = (String) request.getAttribute("election_id");
+                                    String email = (String) request.getAttribute("email");
+
+                                    if (election_id == null || election_id.equals("")) {
+                                %>
+                                <script> window.location = "index.jsp"; </script>
+
+                                <%
+                                    }
+                                %>
                                 
                                 <form class="form-horizontal" action="Controller" method="POST">
                                     <input type="hidden" name="election_id" value="<%=election_id%>">
-                                    <input type="hidden" name="step" value="1">
+                                    <input type="hidden" name="email" value="<%=email%>">
+                                    <input type="hidden" name="step" value="2">
+                                    
                                     <div class="form-group">
-                                        <label for="email" class="control-label col-sm-4">Email ID</label>
+                                        <label for="password" class="control-label col-sm-4">Password</label>
                                         <div class="col-sm-7">
-                                            <input type="text" name="email" class="form-control" required>
+                                            <input type="password" name="password" class="form-control" required>
                                         </div>
                                     </div>
 
@@ -74,7 +77,7 @@
                                             <button type="submit" class="btn btn-info" name="action" value="voter_login">Continue <i class="fa fa-arrow-circle-o-right"></i></button>
                                         </div></div>
                                 </form>
-                                    
+
                             </div>
                         </div>
                     </div>
