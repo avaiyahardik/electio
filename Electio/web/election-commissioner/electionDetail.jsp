@@ -303,12 +303,13 @@
                             </div>
 
                             <div id="upload-voters" style="display: none" class="col-md-6">
-                                <form class="form-inline">
+                                <form class="form-inline" action="UploadVoterFile" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="election_id" value="<%= el.getId()%>">
                                     <div class="form-group">
                                         <input class="form-control" type="file" name="voter_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-upload"></i> Upload</button>
+                                        <button class="btn btn-default btn-sm" name="action" value="import_voter" type="submit"><i class="fa fa-upload"></i> Upload</button>
                                     </div>
                                 </form>
 

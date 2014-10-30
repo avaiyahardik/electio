@@ -12,6 +12,10 @@
         <servlet-name>UpdateVoter</servlet-name>
         <servlet-class>Controller.UpdateVoter</servlet-class>
     </servlet>
+        <servlet>
+        <servlet-name>UploadVoterFile</servlet-name>
+        <servlet-class>Controller.UploadVoterFile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -35,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>UpdateVoter</servlet-name>
         <url-pattern>/election-commissioner/UpdateVoter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadVoterFile</servlet-name>
+        <url-pattern>/UploadVoterFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadVoterFile</servlet-name>
+        <url-pattern>/election-commissioner/UploadVoterFile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
