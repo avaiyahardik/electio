@@ -30,7 +30,7 @@
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="../assets/css/plugins.min.css" rel="stylesheet">
         <link href="../assets/css/style.min.css" rel="stylesheet">
-        <link href="../#" rel="stylesheet" id="theme-color">
+        <link href="../assets/css/colors/color-light.css" rel="stylesheet">
         <!-- END  MANDATORY STYLE -->
         <script src="../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
@@ -139,47 +139,17 @@
                         </li>
 
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-tasks"></i><span class="sidebar-text">Election</span>
-                                <span class="fa arrow"></span></a>
-                            <ul class="submenu collapse">
-                                <li>
-                                    <a href="Controller?action=view_elections"><span class="sidebar-text"><i class="fa fa-list"></i> List All</span></a>
-                                </li>
-
-                                <li>
-                                    <a href="Controller?action=create_new_election"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New</span></a>
-                                </li>
-
-                            </ul>
+                        <li>
+                            <a href="Controller?action=view_elections"><span class="sidebar-text"><i class="fa fa-list"></i>List All Election</span></a>
                         </li>
 
-
-
                         <li>
-                            <a href="#"><i class="fa fa-pencil"></i><span class="sidebar-text">Dashboard Colors</span>
-                                <span class="fa arrow"></span></a>
-                            <ul class="submenu collapse">
-                                <li>
-                                    <a href="#" data-style="dark" class="theme-color"><span class="sidebar-text">Dark Skin</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" data-style="light" class="theme-color"><span class="sidebar-text">Light Skin</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" data-style="cafe" class="theme-color"><span class="sidebar-text">Cafe Skin</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" data-style="blue" class="theme-color"><span class="sidebar-text">Blue Skin</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" data-style="red" class="theme-color"><span class="sidebar-text">Red Skin</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" data-style="green" class="theme-color"><span class="sidebar-text">Green Skin</span></a>
-                                </li>
-                            </ul>
+                            <a href="Controller?action=create_new_election"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New Election</span></a>
+                        </li>
+
                         </li>
                     </ul>
                 </div>
             </nav>
             <!-- END MAIN SIDEBAR -->
+<div id="main-content">

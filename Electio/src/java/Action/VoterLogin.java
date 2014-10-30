@@ -21,7 +21,7 @@ public class VoterLogin implements Controller.Action {
         String elec_id = req.getParameter("election_id");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String view = "voterLogin.jsp";  // default view should be login page itself
+        String view = "login.jsp";  // default view should be login page itself
         String title = "Voter Login";
         String msg = null;
         String err = null;
