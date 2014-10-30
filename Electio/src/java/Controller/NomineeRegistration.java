@@ -57,7 +57,7 @@ public class NomineeRegistration extends HttpServlet {
         String title = "Nominee Registration";
         String msg = null;
         String err = null;
-//        System.out.println("MSG: " + request.getParameter("election_id"));
+//      System.out.println("MSG: " + request.getParameter("election_id"));
         long election_id = 0;
         String firstname = null;
         String lastname = null;
@@ -108,11 +108,12 @@ public class NomineeRegistration extends HttpServlet {
                     System.out.println("Size in bytes=" + fileItem.getSize());
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
                     fileName = fileItem.getName();
+                    System.out.println("File Name: " + fileName);
                     date = new Date();
                     ext = fileName.substring(fileName.lastIndexOf('.'));
-                    File file = new File(request.getServletContext().getRealPath("/user_images") + File.separator + date.getTime() + "." + ext);
+                    File file = new File(request.getServletContext().getRealPath("/user_images") + File.separator + date.getTime() + ext);
                     fileItem.write(file);
-                    image = "user_images" + File.separator + date.getTime() + "." + ext;
+                    image = "user_images" + File.separator + date.getTime() + ext;
                     System.out.println("Absolute Path at server=" + image);
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                 } else if (fileItem.getFieldName().equals("requirements_file")) {
@@ -123,9 +124,9 @@ public class NomineeRegistration extends HttpServlet {
                     fileName = fileItem.getName();
                     date = new Date();
                     ext = fileName.substring(fileName.lastIndexOf('.'));
-                    File file = new File(request.getServletContext().getRealPath("/requirements_files") + File.separator + date.getTime() + "." + ext);
+                    File file = new File(request.getServletContext().getRealPath("/requirements_files") + File.separator + date.getTime() + ext);
                     fileItem.write(file);
-                    requirements_file = "requirements_files" + File.separator + date.getTime() + "." + ext;
+                    requirements_file = "requirements_files" + File.separator + date.getTime() + ext;
                     System.out.println("Absolute Path at server=" + requirements_file);
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                 }
