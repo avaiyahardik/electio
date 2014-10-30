@@ -91,14 +91,12 @@
 
                                     <div class="form-group">
                                         <div class="col-sm-7 col-sm-offset-4">
-                                            <button type="submit" class="btn btn-info">Continue <i class="fa fa-arrow-circle-o-right"></i></button>
+                                            <button type="submit" class="btn btn-info" name="action" value="voter_login">Continue <i class="fa fa-arrow-circle-o-right"></i></button>
                                             <br>
                                             <a href="#" id="password-help">Password Help</a>
 
                                         </div>
-                                        <div class="alert alert-info">
-                                            Password
-                                        </div>
+                                      
                                     </div>
                                 </form>
 
