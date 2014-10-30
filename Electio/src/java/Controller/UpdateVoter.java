@@ -45,8 +45,8 @@ public class UpdateVoter extends HttpServlet {
                         out.print("Command not found");
                     } else {
                         DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                        long election_id = Long.parseLong(request.getParameter("election_id"));
                         if (cmd.equals("delete")) {
-                            long election_id = Long.parseLong(request.getParameter("election_id"));
                             String voter_email = request.getParameter("voter_email");
                             if (obj.deleteVoter(voter_email, election_id)) {
                                 out.print("Deleted");
@@ -54,7 +54,6 @@ public class UpdateVoter extends HttpServlet {
                                 out.print("Error");
                             }
                         } else if (cmd.equals("update")) {
-                            long election_id = Long.parseLong(request.getParameter("election_id"));
                             String old_email = request.getParameter("old_email");
                             String new_email = request.getParameter("new_email");
                             if (obj.updateVoter(election_id, old_email, new_email)) {
@@ -64,7 +63,6 @@ public class UpdateVoter extends HttpServlet {
                             }
                         } else if (cmd.equals("add")) {
                             System.out.println("CMD: Add");
-                            long election_id = Long.parseLong(request.getParameter("election_id"));
                             String voter_email = request.getParameter("email");
                             Voter voter = new Voter(voter_email, election_id, RandomString.generateRandomPassword(), false);
                             if (obj.addVoter(voter)) {
