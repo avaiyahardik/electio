@@ -10,7 +10,7 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-1">
-    <% Election el=(Election)request.getSession().getAttribute("election");%>
+    <% Election el=(Election)request.getAttribute("election");%>
                 <table class="responsiveExpander">
                     <tr>
                         <th>Election Name</th>
