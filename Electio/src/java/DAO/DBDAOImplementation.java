@@ -616,7 +616,7 @@ public class DBDAOImplementation {
     public boolean updateVoterStatus(long election_id,String email) throws SQLException{
         boolean result=false;
         PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_voter SET status =? WHERE election_id=? and email=?");
-        ps2.setBoolean(1, true);
+        ps2.setInt(1, 1);
         ps2.setLong(2, election_id);
         ps2.setString(3, email);
         if (ps2.executeUpdate() > 0) {
