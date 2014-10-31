@@ -229,6 +229,17 @@ public class DBDAOImplementation {
         }
         return result;
     }
+    public boolean insertVoterPassword(long election_id, String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET password=? WHERE email=? AND election_id=?");
+        ps.setString(1, password);
+        ps.setString(2, email);
+        ps.setLong(3, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
 
     public boolean deleteVoter(String email, long election_id) throws SQLException {
         boolean result = false;
