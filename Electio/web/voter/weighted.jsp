@@ -25,7 +25,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <input type="radio" name="ballot" value="<%=c.getEmail()%>">
+                        <input type="radio" name="candidate_email" value="<%=c.getEmail()%>">
                     </span>
                     <label class="form-control"><%= c.getFirstname()%> <%= c.getLastname()%></label>
                 </div>
@@ -35,6 +35,7 @@
         <div class="col-lg-8 col-lg-offset-2">
             <div class="form-group">
                 <button type="submit" name="action" value="save_vote" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i> Caste Your Vote !!</button>
+                <button type="reset" name="clear"><i class="glyphicon glyphicon-remove"></i> Clear Selection</button>
             </div>
         </div>
 

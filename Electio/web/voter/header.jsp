@@ -17,6 +17,15 @@
         <script src="../assets/readable/bootstrap.min.js"></script>
     </head>
     <body>
+
+        <%
+            String email = (String) request.getSession().getAttribute("voter_email");
+            if (email == null || email.equals("")) {
+        %>
+        <script>window.location = "index.jsp";</script>
+        <%
+            }
+        %>
         <div class="navbar navbar-default ">
             <div class="container">
                 <div class="navbar-header">
@@ -32,12 +41,13 @@
                     <ul class="nav navbar-nav">
                         <li><a href="electionDetails.jsp">Election Details</a></li>
                         <li><a href="">Candidates</a></li>
-                        <li><a href="voteNow.jsp">Vote Now</a></li>
+                        <li><a href="Controller?action=vote_now">Vote Now</a></li>
                         <li><a href="#"></a></li>
                     </ul>
-                    
+
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Welcome,  <!-- Voter's Email here --></a></li>
+                        <li><a href="#">Welcome, <%=email%>
+                            </a></li>
                         <li><a href="#" class="btn btn-default">Logout</a></li>
                     </ul>
                 </div>
@@ -45,4 +55,4 @@
         </div>
 
         <div class="container well">
-            
+
