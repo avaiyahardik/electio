@@ -77,7 +77,7 @@
 
                                     <div class="form-group">
                                         <div class="col-sm-7 col-sm-offset-4">
-                                            <button type="submit" class="btn btn-info" name="action" value="candidate_login">Continue <i class="fa fa-arrow-circle-o-right"></i></button>
+                                            <button type="submit" class="btn btn-info btn-sm" name="action" value="candidate_login"><i class="fa fa-lock"></i> Log In</button>
                                         </div>
                                     </div>
                                 </form>
