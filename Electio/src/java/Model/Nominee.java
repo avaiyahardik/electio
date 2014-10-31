@@ -18,10 +18,11 @@ public class Nominee extends UserInfo {
     public Nominee() {
     }
 
-    public Nominee(String firstname, String lastname, String email, String mobile, long organization_id, String image, String password, long election_id, String requirements_file, int status) {
+    public Nominee(String firstname, String lastname, String email, int gender, String mobile, long organization_id, String image, String password, long election_id, String requirements_file, int status) {
         super.setFirstname(firstname);
         super.setLastname(lastname);
         super.setEmail(email);
+        super.setGender(gender);
         super.setMobile(mobile);
         super.setOrganization_id(organization_id);
         super.setImage(image);

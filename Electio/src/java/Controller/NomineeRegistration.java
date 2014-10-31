@@ -63,6 +63,7 @@ public class NomineeRegistration extends HttpServlet {
         String firstname = null;
         String lastname = null;
         String email = null;
+        String gender = null;
         String mobile = null;
         String organization_name = null;
         String organization_address = null;
@@ -91,6 +92,8 @@ public class NomineeRegistration extends HttpServlet {
                     lastname = fileItem.getString();
                 } else if (fieldName.equals("email")) {
                     email = fileItem.getString();
+                } else if (fieldName.equals("gender")) {
+                    gender = fileItem.getString();
                 } else if (fieldName.equals("mobile")) {
                     mobile = fileItem.getString();
                 } else if (fieldName.equals("organization_name")) {
@@ -132,7 +135,7 @@ public class NomineeRegistration extends HttpServlet {
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                 }
             }
-            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
+            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
                 err = "Please fill all required fields";
             } else {
                 if (retype_password.equals(password)) {
@@ -140,7 +143,8 @@ public class NomineeRegistration extends HttpServlet {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Organization org = new Organization(organization_name, organization_address, about_organization);
                     long organization_id = obj.addNewOrganization(org);
-                    Nominee nominee = new Nominee(firstname, lastname, email, mobile, organization_id, image, password, election_id, requirements_file, status);
+                    int gen = Integer.parseInt(gender);
+                    Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
                     if (obj.registerNominee(nominee)) {
                         msg = "Nominee registered successfully";
                     } else {
@@ -157,94 +161,13 @@ public class NomineeRegistration extends HttpServlet {
             System.out.println("ERR NomineeRegistration: " + e.toString());
         }
 
-        /*  if (request.getParameter("election_id") == null) {
-         err = "Invalid url, could not find election id";
-         } else {
-         System.out.println("2");
-         long election_id = Long.parseLong(request.getParameter("election_id"));
-         System.out.println("El ID: " + election_id);
-         String firstname = request.getParameter("firstname");
-         String lastname = request.getParameter("lastname");
-         String email = request.getParameter("email");
-         String mobile = request.getParameter("mobile");
-         String organization_name = request.getParameter("organization_name");
-         String organization_address = request.getParameter("organization_address");
-         String about_organization = request.getParameter("about_organization");
-         String password = request.getParameter("password");
-         String retype_password = request.getParameter("retype_password");
-         String image = "Image_path";
-         String requirements_file = "requirements_path";
-         int status = 0;
-         System.out.println("3");
-         if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
-         err = "Please fill all required fields";
-         } else {
-         if (retype_password.equals(password)) {
-         // upload image and pdf file here...
-         try {
-         DBDAOImplementation obj = DBDAOImplementation.getInstance();
-         Organization org = new Organization(organization_name, organization_address, about_organization);
-         long organization_id = obj.addNewOrganization(org);
-         Nominee nominee = new Nominee(firstname, lastname, email, mobile, organization_id, image, password, organization_id, requirements_file, status);
-         System.out.println("4");
-         if (obj.registerNominee(nominee)) {
-         msg = "Nominee registered successfully";
-         } else {
-         err = "Fail to register nominee, please retry";
-         }
-         } catch (Exception ex) {
-         err = ex.getMessage();
-         System.out.println("NomineeRegistration Err: " + ex.getMessage());
-         }
-         } else {
-         err = "Retype password doesn't match";
-         }
-         }
-         }
-         */
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
         request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
     }
-    /*
-     private static final String SAVE_DIR = "user_images";
 
-    
-     private boolean uploadImage(HttpServletRequest request,
-     HttpServletResponse response) throws ServletException, IOException {
-     if (!ServletFileUpload.isMultipartContent(request)) {
-     throw new ServletException("Content type is not multipart/form-data");
-     }
-     response.setContentType("text/html");
-     PrintWriter out = response.getWriter();
-     try {
-     List<FileItem> fileItemsList = uploader.parseRequest(request);
-     Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
-     while (fileItemsIterator.hasNext()) {
-     FileItem fileItem = fileItemsIterator.next();
-     System.out.println("FieldName=" + fileItem.getFieldName());
-     if (fileItem.getFieldName().equals("photo")) {
-     System.out.println("FileName=" + fileItem.getName());
-     System.out.println("ContentType=" + fileItem.getContentType());
-     System.out.println("Size in bytes=" + fileItem.getSize());
-     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
-     File file = new File(request.getServletContext().getRealPath("") + File.separator + fileItem.getName());
-     System.out.println("Absolute Path at server=" + file.getAbsolutePath());
-     fileItem.write(file);
-     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-     System.out.println("<a href=\"UploadServlet?fileName=" + fileItem.getName() + "\">Download " + fileItem.getName() + "</a>");
-     }
-     }
-     } catch (FileUploadException e) {
-     System.out.println("File Not Found Exception in uploading file.");
-     } catch (Exception e) {
-     System.out.println("Exception in uploading file.");
-     }
-     return true;
-     }
-     */
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
