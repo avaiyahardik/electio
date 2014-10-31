@@ -8,6 +8,7 @@ package Controller;
 import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
+import Util.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -135,7 +136,7 @@ public class NomineeRegistration extends HttpServlet {
                 err = "Please fill all required fields";
             } else {
                 if (retype_password.equals(password)) {
-
+                    password = RandomString.encryptPassword(password);
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Organization org = new Organization(organization_name, organization_address, about_organization);
                     long organization_id = obj.addNewOrganization(org);

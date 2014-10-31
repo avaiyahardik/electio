@@ -229,6 +229,7 @@ public class DBDAOImplementation {
         }
         return result;
     }
+
     public boolean insertVoterPassword(long election_id, String email, String password) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET password=? WHERE email=? AND election_id=?");
@@ -331,8 +332,8 @@ public class DBDAOImplementation {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=?");
         ps.setString(1, email);
         ps.setLong(2, election_id);
-     
-        Voter v=new Voter();
+
+        Voter v = new Voter();
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             v.setPassword(rs.getString("password"));
@@ -343,7 +344,7 @@ public class DBDAOImplementation {
         }
 
     }
-    
+
     public boolean loginVoter2(long election_id, String email, String password) throws SQLException {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=? and password=?");
         ps.setString(1, email);
@@ -482,6 +483,20 @@ public class DBDAOImplementation {
         return nominee;
     }
 
+    public boolean candidateLogin(long election_id, String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=? AND email=? AND password=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+
+        return result;
+    }
+
     public Candidate getCandidate(long election_id, String email) throws SQLException {
         PreparedStatement ps = con.prepareStatement("select * from tbl_user_info as u INNER JOIN tbl_election_candidate as c ON u.email=c.email WHERE election_id=? and u.email=?");
         ps.setLong(1, election_id);
@@ -591,18 +606,18 @@ public class DBDAOImplementation {
         }
         return result;
     }
-    
-    public boolean saveVote(long election_id,String email) throws SQLException{
-        boolean result=false;
+
+    public boolean saveVote(long election_id, String email) throws SQLException {
+        boolean result = false;
         PreparedStatement ps = con.prepareStatement("SELECT votes tbl_election_candidate WHERE election_id=? and email=?");
         ps.setLong(1, election_id);
         ps.setString(2, email);
-        ResultSet rs=ps.executeQuery();
-        long votes=0;
-        if(rs.next()){
-            votes=rs.getLong("votes");
+        ResultSet rs = ps.executeQuery();
+        long votes = 0;
+        if (rs.next()) {
+            votes = rs.getLong("votes");
         }
-        votes+=1;
+        votes += 1;
         PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_candidate SET votes =? WHERE election_id=? and email=?");
         ps2.setLong(1, votes);
         ps2.setLong(2, election_id);
@@ -612,9 +627,9 @@ public class DBDAOImplementation {
         }
         return result;
     }
-    
-    public boolean updateVoterStatus(long election_id,String email) throws SQLException{
-        boolean result=false;
+
+    public boolean updateVoterStatus(long election_id, String email) throws SQLException {
+        boolean result = false;
         PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_voter SET status =? WHERE election_id=? and email=?");
         ps2.setInt(1, 1);
         ps2.setLong(2, election_id);
