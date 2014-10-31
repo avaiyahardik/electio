@@ -79,7 +79,7 @@ public class VoterLogin implements Controller.Action {
                              req.setAttribute("election_type", election_type);
                              req.setAttribute("election", el);
                             req.getSession().setAttribute("election_id", election_id);
-                            req.getSession().setAttribute("email", email);
+                            req.getSession().setAttribute("voter_email", email);
                         }
                     }
                     else {
