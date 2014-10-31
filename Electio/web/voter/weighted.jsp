@@ -1,6 +1,6 @@
+<jsp:include page="header.jsp"/>
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
-<jsp:include page="header.jsp"/>
 <title>Voting now</title>
 
 <div class="col-md-12">
@@ -17,8 +17,6 @@
     %>
     <form class="form-horizontal">
         <input type="hidden" name="type" value="1">
-        
-
         <!-- Candidate List -->
 
         <div class="col-lg-8 col-lg-offset-2">
@@ -32,6 +30,9 @@
             </div>
         </div>
 
+        <%
+            }
+        %>
         <div class="col-lg-8 col-lg-offset-2">
             <div class="form-group">
                 <button type="submit" name="action" value="save_vote" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i> Caste Your Vote !!</button>

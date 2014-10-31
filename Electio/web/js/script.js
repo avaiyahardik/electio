@@ -107,7 +107,6 @@ $(document).ready(function () {
                     email: email_id,
                     election_id: election_id
                 }, function (data, status) {
-                    alert(data);
                     if (data == "Added") {
                         alert("New Voter added successfully.");
                         $(email_id).insertAfter('#blank_space');
@@ -118,6 +117,8 @@ $(document).ready(function () {
             } else {
                 alert("Invalid email address, try again.");
             }
+        }else{
+            alert("Please enter an email address");
         }
 
     });
