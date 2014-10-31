@@ -448,6 +448,7 @@ public class DBDAOImplementation {
             nominee.setEmail(rs.getString("email"));
             nominee.setFirstname(rs.getString("firstname"));
             nominee.setLastname(rs.getString("lastname"));
+            nominee.setGender(rs.getInt("gender"));
             nominee.setMobile(rs.getString("mobile"));
             nominee.setOrganization_id(rs.getLong("organization_id"));
             nominee.setImage(rs.getString("image"));
@@ -472,6 +473,7 @@ public class DBDAOImplementation {
             nominee.setEmail(rs.getString("email"));
             nominee.setFirstname(rs.getString("firstname"));
             nominee.setLastname(rs.getString("lastname"));
+            nominee.setGender(rs.getInt("gender"));
             nominee.setMobile(rs.getString("mobile"));
             nominee.setOrganization_id(rs.getLong("organization_id"));
             nominee.setImage(rs.getString("image"));
@@ -508,6 +510,7 @@ public class DBDAOImplementation {
             candidate.setEmail(rs.getString("email"));
             candidate.setFirstname(rs.getString("firstname"));
             candidate.setLastname(rs.getString("lastname"));
+            candidate.setGender(rs.getInt("gender"));
             candidate.setMobile(rs.getString("mobile"));
             candidate.setOrganization_id(rs.getLong("organization_id"));
             candidate.setImage(rs.getString("image"));
@@ -530,6 +533,7 @@ public class DBDAOImplementation {
             candidate.setEmail(rs.getString("email"));
             candidate.setFirstname(rs.getString("firstname"));
             candidate.setLastname(rs.getString("lastname"));
+            candidate.setGender(rs.getInt("gender"));
             candidate.setMobile(rs.getString("mobile"));
             candidate.setOrganization_id(rs.getLong("organization_id"));
             candidate.setImage(rs.getString("image"));
@@ -546,14 +550,15 @@ public class DBDAOImplementation {
     public boolean registerNominee(Nominee nominee) throws SQLException {
         boolean result = false;
         con.setAutoCommit(false);
-        PreparedStatement ps1 = con.prepareStatement("INSERT INTO tbl_user_info(email, firstname,lastname,mobile,organization_id, image, password) VALUES(?,?,?,?,?,?,?)");
+        PreparedStatement ps1 = con.prepareStatement("INSERT INTO tbl_user_info(email, firstname,lastname,gender,mobile,organization_id, image, password) VALUES(?,?,?,?,?,?,?,?)");
         ps1.setString(1, nominee.getEmail());
         ps1.setString(2, nominee.getFirstname());
         ps1.setString(3, nominee.getLastname());
-        ps1.setString(4, nominee.getMobile());
-        ps1.setLong(5, nominee.getOrganization_id());
-        ps1.setString(6, nominee.getImage());
-        ps1.setString(7, nominee.getPassword());
+        ps1.setInt(4, nominee.getGender());
+        ps1.setString(5, nominee.getMobile());
+        ps1.setLong(6, nominee.getOrganization_id());
+        ps1.setString(7, nominee.getImage());
+        ps1.setString(8, nominee.getPassword());
 
         PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_nominee(email, election_id,requirements_file, status) VALUES(?,?,?,?)");
         ps2.setString(1, nominee.getEmail());

@@ -14,6 +14,7 @@ public abstract class UserInfo {
     private String email;
     private String firstname;
     private String lastname;
+    private int gender;
     private String mobile;
     private long organization_id;
     private String image;
@@ -37,6 +38,14 @@ public abstract class UserInfo {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public void setLastname(String lastname) {
