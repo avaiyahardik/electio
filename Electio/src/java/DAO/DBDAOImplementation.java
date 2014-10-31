@@ -316,7 +316,24 @@ public class DBDAOImplementation {
         return et;
     }
 
-    public boolean loginVoter(long election_id, String email, String password) throws SQLException {
+    public Voter loginVoter1(long election_id, String email) throws SQLException {
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=?");
+        ps.setString(1, email);
+        ps.setLong(2, election_id);
+     
+        Voter v=new Voter();
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            v.setPassword(rs.getString("password"));
+            v.setStatus(rs.getBoolean("status"));
+            return v;
+        } else {
+            return null;
+        }
+
+    }
+    
+    public boolean loginVoter2(long election_id, String email, String password) throws SQLException {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=? and password=?");
         ps.setString(1, email);
         ps.setLong(2, election_id);

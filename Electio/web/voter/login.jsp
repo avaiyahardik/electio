@@ -58,7 +58,7 @@
                             </div>
                             <div class="panel-body">
                                 
-                                
+                    
                                 <form class="form-horizontal" action="Controller" method="POST">
                                     <input type="hidden" name="election_id" value="<%=election_id%>">
                                     <input type="hidden" name="step" value="1">
