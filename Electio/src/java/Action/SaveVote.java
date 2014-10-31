@@ -22,21 +22,22 @@ public class SaveVote implements Controller.Action{
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getSession().getAttribute("voter_email");
-        String election_id = (String) req.getSession().getAttribute("election_id");
-        String election_type=req.getParameter("type");
+        long election_type=(Long) req.getSession().getAttribute("election_type");
         String candidate_email=req.getParameter("candidate_email");
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
-        if (email == null || email.equals("") || election_id == null || election_id.equals("")) {
+        if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
-            
+            if (req.getSession().getAttribute("election_id") == null) {
+                err = "Fail to locate election id, please retry";
+            } else {
                 System.out.println("Yes");
-                long id = Long.parseLong(election_id);
-                if(election_type.equals("1")){
-                view = "weighted.jsp";
+                long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
+                if(election_type==1){
+                view = "Controller?action=election_details";
                 title = "";
                 System.out.println("Election ID: " + id);
                 try {
@@ -49,9 +50,10 @@ public class SaveVote implements Controller.Action{
                     System.out.println("Save vote Err: " + ex.getMessage());
                 }
                 }
-                else if(election_type.equals("2")){
+                else if(election_type==2){
                     
                 }
+            }
             
         }
         req.setAttribute("msg", msg);

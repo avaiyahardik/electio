@@ -609,7 +609,7 @@ public class DBDAOImplementation {
 
     public boolean saveVote(long election_id, String email) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("SELECT votes tbl_election_candidate WHERE election_id=? and email=?");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=? and email=?");
         ps.setLong(1, election_id);
         ps.setString(2, email);
         ResultSet rs = ps.executeQuery();
@@ -630,7 +630,7 @@ public class DBDAOImplementation {
 
     public boolean updateVoterStatus(long election_id, String email) throws SQLException {
         boolean result = false;
-        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_voter SET status =? WHERE election_id=? and email=?");
+        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_voter SET status =? WHERE election_id=? and email=?");
         ps2.setInt(1, 1);
         ps2.setLong(2, election_id);
         ps2.setString(3, email);
