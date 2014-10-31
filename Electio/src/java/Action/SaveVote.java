@@ -24,6 +24,7 @@ public class SaveVote implements Controller.Action{
         String email = (String) req.getSession().getAttribute("voter_email");
         String election_id = (String) req.getSession().getAttribute("election_id");
         String election_type=req.getParameter("type");
+        String candidate_email=req.getParameter("candidate_email");
         String view = "index.jsp";
         String msg = null;
         String err = null;
@@ -36,15 +37,16 @@ public class SaveVote implements Controller.Action{
                 long id = Long.parseLong(election_id);
                 if(election_type.equals("1")){
                 view = "weighted.jsp";
-                title = "Election Detail";
+                title = "";
                 System.out.println("Election ID: " + id);
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    ArrayList<Candidate> candidates = obj.getCandidates(id);
-                    req.setAttribute("candidates", candidates);                    
+                    if(obj.saveVote(id, candidate_email) && obj.updateVoterStatus(id, email)){//update votes in candidate and update voter status as voted
+                        msg="Saved Your vote successfully";
+                    }
                 } catch (SQLException ex) {
                     err = ex.getMessage();
-                    System.out.println("View Candidate Detail Err: " + ex.getMessage());
+                    System.out.println("Save vote Err: " + ex.getMessage());
                 }
                 }
                 else if(election_type.equals("2")){

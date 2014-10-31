@@ -591,4 +591,37 @@ public class DBDAOImplementation {
         }
         return result;
     }
+    
+    public boolean saveVote(long election_id,String email) throws SQLException{
+        boolean result=false;
+        PreparedStatement ps = con.prepareStatement("SELECT votes tbl_election_candidate WHERE election_id=? and email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs=ps.executeQuery();
+        long votes=0;
+        if(rs.next()){
+            votes=rs.getLong("votes");
+        }
+        votes+=1;
+        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_candidate SET votes =? WHERE election_id=? and email=?");
+        ps2.setLong(1, votes);
+        ps2.setLong(2, election_id);
+        ps2.setString(3, email);
+        if (ps2.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+    
+    public boolean updateVoterStatus(long election_id,String email) throws SQLException{
+        boolean result=false;
+        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_voter SET status =? WHERE election_id=? and email=?");
+        ps2.setBoolean(1, true);
+        ps2.setLong(2, election_id);
+        ps2.setString(3, email);
+        if (ps2.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
 }
