@@ -63,7 +63,10 @@ public class VoterLogin implements Controller.Action {
                                 view = "login.jsp?election_id=" + election_id;
                             }
                         }
+                    else {
+                        err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
+                    } 
                 } else if (step.equals("2")) {
                     password = req.getParameter("password");
                     if (obj.loginVoter2(election_id, email, password)) {
@@ -84,8 +87,6 @@ public class VoterLogin implements Controller.Action {
                     } else {
                         err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
-                } else {
-                    err = "Fail to login, please retry"; // error message should be displayed on view page
                 }
             } catch (SQLException ex) {
                 err = ex.getMessage(); // error message should be displayed on the view page
