@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2014 at 07:19 PM
+-- Generation Time: Nov 01, 2014 at 11:49 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `tbl_election_nominee` (
 --
 
 INSERT INTO `tbl_election_nominee` (`email`, `election_id`, `requirements_file`, `status`) VALUES
-('akashvirani174@gmail.com', 9, 'requirements_files\\1414657575359..pdf', 0),
+('akashvirani174@gmail.com', 1, 'requirements_files\\1414657575359..pdf', 0),
 ('nikita@birmi.com', 1, 'requirements_files\\1414660880004.pdf', 1);
 
 -- --------------------------------------------------------
@@ -161,6 +161,19 @@ INSERT INTO `tbl_organization` (`id`, `name`, `address`, `about`) VALUES
 (18, 'DA-IICT', 'Gandhinagar', 'Best College'),
 (19, 'DA-IICT', '464, Barpara street', 'Best'),
 (20, 'DA-IICT', 'Gandhinagar', 'Best');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_rejected_nominee`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_rejected_nominee` (
+  `election_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `reason` text NOT NULL,
+  PRIMARY KEY (`election_id`,`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
