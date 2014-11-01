@@ -1,7 +1,9 @@
+<%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Election"%>
 <jsp:include page="header.jsp"/>
 <%
-    Election el = (Election) request.getAttribute("election");
+    DBDAOImplementation obj=DBDAOImplementation.getInstance();
+    Election el = obj.getElection(Long.parseLong(request.getSession().getAttribute("election_id").toString()));
 %>
 
 <div class="page-header">

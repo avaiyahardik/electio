@@ -30,7 +30,7 @@ public class VoteNow implements Controller.Action {
 
         String email = (String) req.getSession().getAttribute("voter_email");
 
-        long election_type=(Long) req.getSession().getAttribute("election_type");
+        long election_type = (Long) req.getSession().getAttribute("election_type");
         String view = "index.jsp";
         String msg = null;
         String err = null;
@@ -44,21 +44,22 @@ public class VoteNow implements Controller.Action {
                 System.out.println("Yes");
 
                 long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
-System.out.println("type->"+election_type);
-                if (election_type==1) {
+                System.out.println("type->" + election_type);
+                try {
+                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    ArrayList<Candidate> candidates = obj.getCandidates(id);
+                    req.setAttribute("candidates", candidates);
+                } catch (SQLException ex) {
+                    err = ex.getMessage();
+                    System.out.println("View Candidate Detail Err: " + ex.getMessage());
+                }
+                title = "Voting Now";
+                if (election_type == 1) {
                     view = "weighted.jsp";
-                    title = "";
                     System.out.println("Election ID: " + id);
-                    try {
-                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                        ArrayList<Candidate> candidates = obj.getCandidates(id);
-                        req.setAttribute("candidates", candidates);
-                    } catch (SQLException ex) {
-                        err = ex.getMessage();
-                        System.out.println("View Candidate Detail Err: " + ex.getMessage());
-                    }
-                } else if (election_type==2) {
 
+                } else if (election_type == 2) {
+                    view = "preferential.jsp";
                 }
             }
 

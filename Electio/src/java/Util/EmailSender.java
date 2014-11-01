@@ -41,6 +41,9 @@ public class EmailSender {
         MimeMessage mimeMessage = new MimeMessage(session);
         try {
             mimeMessage.setFrom(new InternetAddress(from));
+            
+            mimeMessage.setHeader("Content-Type", "text/html; charset=UTF-8");
+            
 
             InternetAddress[] toAddresses = new InternetAddress[to.length];
 
@@ -51,7 +54,8 @@ public class EmailSender {
             mimeMessage.setRecipients(Message.RecipientType.TO, toAddresses);
 
             mimeMessage.setSubject(subject);
-            mimeMessage.setText(message);
+            mimeMessage.setText(message, "utf-8");
+            mimeMessage.setContent(message, "text/html; charset=utf-8");
 
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, password);

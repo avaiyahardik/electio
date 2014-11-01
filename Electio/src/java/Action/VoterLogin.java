@@ -58,8 +58,11 @@ public class VoterLogin implements Controller.Action {
                             if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Password", password, to)) {
                                 msg = "Your password has been sent to your email id";
                             }
+                            else{
+                                msg="Server Error, try again after sometime";
+                                view="login.jsp?election_id="+election_id;
+                            }
                         }
-
                     } else {
                         err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
