@@ -613,7 +613,8 @@ public class DBDAOImplementation {
         return result;
     }
 
-    public boolean rejectNominee(long election_id, String emai) throws SQLException {
+    public boolean rejectNominee(long election_id, String emai, String reason) throws SQLException {
+        int flag = 0;
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
         ps.setInt(1, 2);    // status 2 means disapproved
@@ -621,9 +622,32 @@ public class DBDAOImplementation {
         ps.setString(3, emai);
 
         if (ps.executeUpdate() > 0) {
+            flag++;
+        }
+        ps = con.prepareStatement("INSERT INTO tbl_rejected_nominee VALUES(?,?,?");
+        ps.setLong(1, election_id);
+        ps.setString(2, emai);
+        ps.setString(3, reason);
+
+        if (ps.executeUpdate() > 0) {
+            flag++;
+        }
+        if (flag == 2) {
             result = true;
         }
         return result;
+    }
+
+    public String getReason(long election_id, String email) throws SQLException {
+        PreparedStatement ps = con.prepareStatement("SELECT reason FROM tbl_rejected_nominee WHERE election_id=? and email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        String reason = null;
+        if (rs.next()) {
+            reason = rs.getString("reason");
+        }
+        return reason;
     }
 
     public int getNomineeStatus(long election_id, String email) throws SQLException {

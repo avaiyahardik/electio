@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,10 +8,8 @@ package Action;
 import DAO.DBDAOImplementation;
 import Util.EmailSender;
 import java.sql.SQLException;
-import javafx.concurrent.Task;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.HTML;
 
 /**
  *
@@ -43,24 +41,22 @@ public class NomineeAction implements Controller.Action {
                 String nominee_email = req.getParameter("email");
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    String[] to = {nominee_email};
+                    String[] to={nominee_email} ;
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");
-
                         if (obj.approveNominee(election_id, nominee_email, requirements_file)) {
-
                             String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>localhost:8084/Electio/candidate/index.jsp</a>";
-
                             req.getSession().setAttribute("election_id", election_id);
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Approval", ms, to);
+
                             msg = "Nominee approved successfully";
                         } else {
                             err = "Error occured while approving nominee, please try again";
                         }
 
                     } else if (cmd.equals("reject")) {
-
-                        if (obj.rejectNominee(election_id, nominee_email)) {
+                        String reason = req.getParameter("reason");
+                        if (obj.rejectNominee(election_id, nominee_email, reason)) {
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Rejection", "You nomination is rejected", to);
                             msg = "Nominee rejeced successfully";
                         } else {
