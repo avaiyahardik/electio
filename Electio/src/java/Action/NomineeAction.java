@@ -7,6 +7,7 @@ package Action;
 
 import DAO.DBDAOImplementation;
 import Util.EmailSender;
+import java.io.File;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,11 +42,12 @@ public class NomineeAction implements Controller.Action {
                 String nominee_email = req.getParameter("email");
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    String[] to={nominee_email} ;
+                    String[] to = {nominee_email};
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");
                         if (obj.approveNominee(election_id, nominee_email, requirements_file)) {
-                            String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>localhost:8084/Electio/candidate/index.jsp</a>";
+                            String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>" + req.getContextPath() + File.separator + "candidate" + File.separator + "index.jsp?election_id=" + election_id + "</a>";
+                            System.out.println("MS: " + ms);
                             req.getSession().setAttribute("election_id", election_id);
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Approval", ms, to);
 

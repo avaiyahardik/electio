@@ -62,8 +62,8 @@ public class VoterLogin implements Controller.Action {
                                 msg = "Server Error, try again after sometime";
                                 view = "login.jsp?election_id=" + election_id;
                             }
-                        }
-                    else {
+                    } else {
+
                         err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
                     } 

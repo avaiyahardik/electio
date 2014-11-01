@@ -30,7 +30,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
         if (email == null || email.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields"; // error message should be displayed on view page
         } else {
-           password = RandomString.encryptPassword(password);
+           //password = RandomString.encryptPassword(password);
             System.out.println("Encrypted password: " + password);
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
