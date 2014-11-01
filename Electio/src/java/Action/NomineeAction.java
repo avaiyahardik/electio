@@ -50,8 +50,8 @@ public class NomineeAction implements Controller.Action {
                         }
 
                     } else if (cmd.equals("reject")) {
-
-                        if (obj.rejectNominee(election_id, nominee_email)) {
+                        String reason = req.getParameter("reason");
+                        if (obj.rejectNominee(election_id, nominee_email, reason)) {
                             msg = "Nominee rejeced successfully";
                         } else {
                             err = "Error occured while rejecting nominee, please try again";
