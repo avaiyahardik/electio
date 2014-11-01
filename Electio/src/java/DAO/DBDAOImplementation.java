@@ -487,7 +487,7 @@ public class DBDAOImplementation {
 
     public boolean candidateLogin(long election_id, String email, String password) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=? AND email=? AND password=?");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info u tbl_election_candidate c ON u.email=c.email WHERE election_id=? AND u.email=? AND password=?");
         ps.setLong(1, election_id);
         ps.setString(2, email);
         ps.setString(3, password);
@@ -575,6 +575,20 @@ public class DBDAOImplementation {
         return result;
     }
 
+    public boolean nomineeLogin(long election_id, String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info u INNER JOIN tbl_election_nominee n ON u.email=n.email WHERE election_id=? AND u.email=? AND password=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+
+        return result;
+    }
+
     public boolean approveNominee(long election_id, String email, String requirements_file) throws SQLException {
         boolean result = false;
         // status = 1 means approved
@@ -610,6 +624,18 @@ public class DBDAOImplementation {
             result = true;
         }
         return result;
+    }
+
+    public int getNomineeStatus(long election_id, String email) throws SQLException {
+        PreparedStatement ps = con.prepareStatement("select status from tbl_election_nominee WHERE election_id=? and email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        int status = 0;
+        if (rs.next()) {
+            status = rs.getInt("status");
+        }
+        return status;
     }
 
     public boolean saveVote(long election_id, String email) throws SQLException {

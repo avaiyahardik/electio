@@ -4,6 +4,7 @@ import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
 import Model.ElectionType;
+import Model.Nominee;
 import Model.Voter;
 import Util.EmailSender;
 import Util.RandomString;
@@ -29,31 +30,38 @@ public class CandidateLogin implements Controller.Action {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String view = "index.jsp";  // default view should be login page itself
-        String title = "";
+        String title = "Login";
         String msg = null;
         String err = null;
-        System.out.println(elec_id + ", " + email);
+        System.out.println(elec_id + ", " + email + ", password: " + password);
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("") || password == null || password.equals("")) {
             err = "Insufficiant input"; // error message should be displayed on view page
         } else {
             long election_id = Long.parseLong(elec_id);
-            password = RandomString.encryptPassword(password);
+            //  password = RandomString.encryptPassword(password);
+//            System.out.println("Enctrypted Pwd: " + password);
+
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                if (obj.candidateLogin(election_id, email, password)) {
+                if (obj.nomineeLogin(election_id, email, password)) {
                     view = "home.jsp";
-                    title = "Candidate Home Page";
-                    req.getSession().setAttribute("election_id", election_id);
+                    title = "Nominee/Candidate Home Page";
+                    req.getSession().setAttribute("election_id", elec_id);
                     req.getSession().setAttribute("candidate_email", email);
-                    Candidate c = obj.getCandidate(election_id, email);
-                    req.setAttribute("candidate_name", c.getFirstname());
+                    Nominee n = obj.getNominee(election_id, email);
+                    req.setAttribute("candidate_name", n.getFirstname());
+                    System.out.println("Name: " + n.getFirstname());
+                    if (obj.getNomineeStatus(election_id, email) == 1) {
+                        Candidate c = obj.getCandidate(election_id, email);
+                        req.setAttribute("candidate", c);
+                    }
                 } else {
                     view = "index.jsp";
-                    err = "Fail to login, please retry"; // error message should be displayed on view page
+                    err = "Invalid login cradentials, please retry"; // error message should be displayed on view page
                 }
             } catch (SQLException ex) {
                 err = ex.getMessage(); // error message should be displayed on the view page
-                System.out.println("VoterLogin SQL Err: " + ex.getMessage());
+                System.out.println("CandidateLogin SQL Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg); // setting msg attribute
