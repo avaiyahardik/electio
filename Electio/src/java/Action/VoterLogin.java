@@ -24,12 +24,11 @@ public class VoterLogin implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-       
-        
+
         String elec_id = req.getParameter("election_id");
         String email = req.getParameter("email");
         String step = req.getParameter("step");
-        String password="";
+        String password = "";
         String view = "index.jsp";  // default view should be login page itself
         String title = "";
         String msg = null;
@@ -50,9 +49,9 @@ public class VoterLogin implements Controller.Action {
                         if (v.getStatus() == false) {
                             view = "login2.jsp"; // view changed if email exists and status is not voted successfull
                             title = "";
-                            password=RandomString.generateRandomPassword();
+                            password = RandomString.generateRandomPassword();
                             obj.insertVoterPassword(election_id, email, password);
-                            
+
                             req.setAttribute("election_id", elec_id);
                             req.setAttribute("email", email);
                             String[] to = {email};
@@ -63,30 +62,28 @@ public class VoterLogin implements Controller.Action {
                                 msg="Server Error, try again after sometime";
                                 view="login.jsp?election_id="+election_id;
                             }
- }
-
+                        }
                     } else {
                         err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
                 } else if (step.equals("2")) {
-                    password=req.getParameter("password");
-                    if(obj.loginVoter2(election_id, email,password)){
+                    password = req.getParameter("password");
+                    if (obj.loginVoter2(election_id, email, password)) {
                         Voter v = obj.loginVoter1(election_id, email);
                         msg = "Already voted. wait for result"; // message should be displayed on view page
-                        if(v.getStatus() == false){
+                        if (v.getStatus() == false) {
                             view = "electionDetails.jsp"; // view changed if login successfull
-                            title="Election Details";
-                            Election el=obj.getElection(election_id);
+                            title = "Election Details";
+                            Election el = obj.getElection(election_id);
                             ArrayList<Candidate> candidates = obj.getCandidates(election_id);
-                             ElectionType election_type = obj.getElectionType(election_id);
-                             req.setAttribute("candidates", candidates);
-                             req.getSession().setAttribute("election_type", election_type.getType_id());
-                             req.setAttribute("election", el);
+                            ElectionType election_type = obj.getElectionType(election_id);
+                            req.setAttribute("candidates", candidates);
+                            req.getSession().setAttribute("election_type", election_type.getType_id());
+                            req.setAttribute("election", el);
                             req.getSession().setAttribute("election_id", election_id);
                             req.getSession().setAttribute("voter_email", email);
                         }
-                    }
-                    else {
+                    } else {
                         err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
                 }
