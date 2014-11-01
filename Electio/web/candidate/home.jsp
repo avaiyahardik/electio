@@ -19,6 +19,7 @@
         <thead>
         <th colspan="3">Election Timeline</th>
         </thead>
+        
         <thead>
         <th></th>
         <th>Start Date</th>
