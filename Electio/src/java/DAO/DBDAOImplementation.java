@@ -694,4 +694,18 @@ public class DBDAOImplementation {
         }
         return result;
     }
+
+    public boolean updateCandidateVotes(ArrayList<Candidate> candidates, long election_id) throws SQLException {
+        boolean result = false;
+        for (Candidate c : candidates) {
+            PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_candidate SET votes =? WHERE election_id=? and email=?");
+            ps2.setLong(1,c.getVotes());
+            ps2.setLong(2, election_id);
+            ps2.setString(3, c.getEmail());
+            if (ps2.executeUpdate() > 0) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }
