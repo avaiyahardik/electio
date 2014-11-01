@@ -45,7 +45,7 @@ public class VoterLogin implements Controller.Action {
                 if (step.equals("1")) {
                     if (obj.loginVoter1(election_id, email) != null) {
                         Voter v = obj.loginVoter1(election_id, email);
-                        view="login.jsp?election_id=" + election_id;
+                        view = "login.jsp?election_id=" + election_id;
                         msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
                         if (v.getStatus() == false) {
                             view = "login2.jsp"; // view changed if email exists and status is not voted successfull
@@ -62,16 +62,13 @@ public class VoterLogin implements Controller.Action {
                                 msg = "Server Error, try again after sometime";
                                 view = "login.jsp?election_id=" + election_id;
                             }
-                    } else {
-
-                        err = "Fail to login, please retry"; // error message should be displayed on view page
+                        }
                     }
-                    } 
                 } else if (step.equals("2")) {
                     password = req.getParameter("password");
                     if (obj.loginVoter2(election_id, email, password)) {
                         Voter v = obj.loginVoter1(election_id, email);
-                        msg = "Already voted. wait for result"; // message should be displayed on view page
+                        msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
                         if (v.getStatus() == false) {
                             view = "electionDetails.jsp"; // view changed if login successfull
                             title = "Election Details";
@@ -84,9 +81,10 @@ public class VoterLogin implements Controller.Action {
                             req.getSession().setAttribute("election_id", election_id);
                             req.getSession().setAttribute("voter_email", email);
                         }
-                    } else {
-                        err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
+                } else {
+
+                    err = "Fail to login, please retry"; // error message should be displayed on view page
                 }
             } catch (SQLException ex) {
                 err = ex.getMessage(); // error message should be displayed on the view page

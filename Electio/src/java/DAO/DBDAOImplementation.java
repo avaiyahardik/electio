@@ -696,10 +696,21 @@ public class DBDAOImplementation {
     }
 
     public boolean updateCandidateVotes(ArrayList<Candidate> candidates, long election_id) throws SQLException {
-        boolean result = false;
+        boolean result = false;        
+        
         for (Candidate c : candidates) {
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=? and email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, c.getEmail());
+        ResultSet rs = ps.executeQuery();
+        long votes = 0;
+        if (rs.next()) {
+            votes = rs.getLong("votes");
+        }
+        votes += c.getVotes();
+        
             PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_candidate SET votes =? WHERE election_id=? and email=?");
-            ps2.setLong(1,c.getVotes());
+            ps2.setLong(1,votes);
             ps2.setLong(2, election_id);
             ps2.setString(3, c.getEmail());
             if (ps2.executeUpdate() > 0) {

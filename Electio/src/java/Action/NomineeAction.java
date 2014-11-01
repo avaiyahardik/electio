@@ -46,7 +46,8 @@ public class NomineeAction implements Controller.Action {
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");
                         if (obj.approveNominee(election_id, nominee_email, requirements_file)) {
-                            String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>" + req.getContextPath() + File.separator + "candidate" + File.separator + "index.jsp?election_id=" + election_id + "</a>";
+                            String ms="Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp?election_id=" + election_id + "'>localhost:8084/Electio/candidate/index.jsp?election_id=" + election_id + "</a>";
+                            //String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>" + req.getContextPath() + File.separator + "candidate" + File.separator + "index.jsp?election_id=" + election_id + "</a>";
                             System.out.println("MS: " + ms);
                             req.getSession().setAttribute("election_id", election_id);
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Approval", ms, to);
