@@ -52,12 +52,14 @@
                                 </div>
                             </div>
                         </div>
+                        <% if (status == 0) {%>
                         <div class="col-md-12">
                             <div class="align-center">
                                 <a href="Controller?action=nominee_action&cmd=approve&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>&requirements_file=<%= n.getRequirements_file()%>" class="btn btn-success"><i class="fa fa-check"></i> Approve</a>
                                 <a href="Controller?action=nominee_action&cmd=reject&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Reject</a>
                             </div>
                         </div>
+                        <%}%>
 
                     </form>
                 </div>
