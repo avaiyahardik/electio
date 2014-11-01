@@ -59,6 +59,9 @@ public class VoterLogin implements Controller.Action {
                             if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Password", password, to)) {
                                 msg = "Your password has been sent to your email id";
                             }
+                            else{
+                                msg="Server Error, try again after sometime";
+                            }
  }
 
                     } else {
