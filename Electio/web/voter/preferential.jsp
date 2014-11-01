@@ -1,33 +1,39 @@
+<%@page import="DAO.DBDAOImplementation"%>
 <jsp:include page="header.jsp"/>
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
-<title>Voting now</title>
+
 
 <div class="col-md-12">
     <div class="page-header">
         <h1 class="page-title">You are voting for <span class="label label-info">Hello</span> </h1>
     </div>
     <div class="col-lg-8 col-lg-offset-2"><h4>Give your preference to each candidate</h4></div>
+
+    <% ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
+        if (candidates == null) {
+    %>
+    <script> window.location = "index.jsp";</script>
+    <%
+        }
+        int no = candidates.size();
+    %>
     <form class="form-horizontal">
-        <input type="hidden" name="type" value="1">
+        <input type="hidden" name="type" value="2">
         <!-- Candidate List -->
-        <% ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
-            if (candidates == null) {
-        %>
-        <script> window.location = "index.jsp";</script>
-        <%
-            }
-            for (Candidate c : candidates) {
-        %>
 
-
+        <%for (Candidate c : candidates) {%>
         <div class="col-lg-8 col-lg-offset-2">
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon">
-                        <input type="radio" name="candidate_email" value="<%=c.getEmail()%>">
-                    </span>
                     <label class="form-control"><%= c.getFirstname()%> <%= c.getLastname()%></label>
+                    <span class="input-group-addon">
+                        <select name="<%=c.getEmail()%>">
+                            <%for (int i = 1; i <= no; i++) {%>
+                            <option value="<%=i%>"><%=i%></option>
+                            <%}%>
+                        </select>
+                    </span>
                 </div>
             </div>
         </div>

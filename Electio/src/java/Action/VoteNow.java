@@ -53,9 +53,9 @@ public class VoteNow implements Controller.Action {
                     err = ex.getMessage();
                     System.out.println("View Candidate Detail Err: " + ex.getMessage());
                 }
+                title = "Voting Now";
                 if (election_type == 1) {
                     view = "weighted.jsp";
-                    title = "";
                     System.out.println("Election ID: " + id);
 
                 } else if (election_type == 2) {
