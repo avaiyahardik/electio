@@ -61,6 +61,7 @@ public class VoterLogin implements Controller.Action {
                             }
                             else{
                                 msg="Server Error, try again after sometime";
+                                view="login.jsp?election_id="+election_id;
                             }
  }
 
