@@ -29,6 +29,10 @@
         <url-pattern>/voter/Controller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/candidate/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>NomineeRegistration</servlet-name>
         <url-pattern>/NomineeRegistration</url-pattern>
     </servlet-mapping>

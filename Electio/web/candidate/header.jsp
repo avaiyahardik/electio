@@ -39,10 +39,10 @@
 
                 <div class="navbar-collapse collapse" id="navbar-main">
                     <ul class="nav navbar-nav">
-                        <li><a href="home.jsp">Home</a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
+                        <li><a href="Controller?action=home">Home</a></li>
+                        <li><a href="Controller?action=profile"></a></li>
+                        <li><a href="Controller?action=file_petition"></a></li>
+                        <li><a href="Controller?action=logout"></a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

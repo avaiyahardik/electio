@@ -60,6 +60,8 @@
 
 
                                 <form class="form-horizontal" action="Controller" method="POST">
+
+                                    <input type="hidden" name="election_id" value="<%=election_id%>">
                                     <div class="form-group">
                                         <label for="email" class="control-label col-sm-4">Email ID</label>
                                         <div class="col-sm-7">
@@ -86,7 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-lg-offset-3">
+                    <div class="col-lg-6 col-lg-offset-3">
                         <!-- BEGIN ERROR BOX -->
                         <%
                             String msg = (String) request.getAttribute("msg");
