@@ -46,10 +46,10 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Welcome, <%
-                            String name = (String) request.getSession().getAttribute("candidate_name");
-                                %>
-                                <%=name %>
+                        <%
+                            String name = (String) request.getAttribute("candidate_name");
+                        %>
+                        <li><a href="#">Welcome, <%=name%>
                             </a></li>
                         <li><a href="#" class="btn btn-default">Logout</a></li>
                     </ul>
