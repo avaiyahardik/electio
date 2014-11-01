@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="../assets/css/icons/font-awesome/css/font-awesome.min.css">
         <script src="../assets/readable/jquery-1.10.2.min.js"></script>
         <script src="../assets/readable/bootstrap.min.js"></script>
+        <title><% String title = (String) request.getAttribute("title");%>
+            <%=title%></title>
     </head>
     <body>
 
@@ -39,23 +41,22 @@
 
                 <div class="navbar-collapse collapse" id="navbar-main">
                     <ul class="nav navbar-nav">
-                        <li><a href="Controller?action=home">Home</a></li>
-                        <li><a href="Controller?action=profile"></a></li>
-                        <li><a href="Controller?action=file_petition"></a></li>
-                        <li><a href="Controller?action=logout"></a></li>
+                        <li><a href="Controller?action=candidate_home">Home</a></li>
+                        <li><a href="Controller?action=candidate_profile">Profile</a></li>
+                        <li><a href="Controller?action=file_petition">File Petition</a></li>
+                        <li><a href="Controller?action=view_result">View Results</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         <%
-                            String name = (String) request.getAttribute("candidate_name");
+                            String name = (String) request.getSession().getAttribute("candidate_name");
                         %>
                         <li><a href="#">Welcome, <%=name%>
                             </a></li>
-                        <li><a href="#" class="btn btn-default">Logout</a></li>
+                        <li><a href="Controller?action=logout" class="btn btn-default">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-
-        <div class="container well">
+        <div class="container">
 
