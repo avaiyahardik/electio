@@ -30,7 +30,7 @@
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="panel panel-default">
                         <div class="panel-heading bg-blue">
-                            <h3 class="panel-title">Nominee Registration for 
+                            <h3 class="panel-title">Nominee Registration
                                 <strong>
                                     <!-- Election Name here -->
                                     <%
@@ -117,6 +117,22 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="gender" class="control-label col-lg-4"><strong>Gender</strong></label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon bg-blue">
+                                                    <span class="arrow"></span>
+                                                    <i class="fa fa-user"></i> 
+                                                </span>
+                                                <select name="gender" class="form-control">
+                                                    <option value="0">Male</option>
+                                                    <option value="1">Female</option>
+                                                    <option value="2">Other</option>
+                                                </select>
+                                            </div>
+                                        </div> 
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="mobile" class="col-lg-4 control-label"><strong>Mobile No</strong></label>
