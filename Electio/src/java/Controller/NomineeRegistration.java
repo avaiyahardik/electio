@@ -139,7 +139,7 @@ public class NomineeRegistration extends HttpServlet {
                 err = "Please fill all required fields";
             } else {
                 if (retype_password.equals(password)) {
-                    password = RandomString.encryptPassword(password);
+                    //password = RandomString.encryptPassword(password);
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     Organization org = new Organization(organization_name, organization_address, about_organization);
                     long organization_id = obj.addNewOrganization(org);

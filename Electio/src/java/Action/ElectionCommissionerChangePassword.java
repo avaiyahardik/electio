@@ -45,7 +45,7 @@ public class ElectionCommissionerChangePassword implements Controller.Action {
                 req.setAttribute("organization", org);
                 if (obj.isValidElectionCommissioner(email, old_password)) {
                     if (new_password.equals(retype_password)) {
-                        new_password=RandomString.encryptPassword(new_password);
+                       // new_password=RandomString.encryptPassword(new_password);
                         if (obj.changeElectionCommissionerPassword(email, new_password)) {
                             msg = "Your password changed successfully";
                         } else {
