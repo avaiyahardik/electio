@@ -43,9 +43,9 @@
 
                 <div class="navbar-collapse collapse" id="navbar-main">
                     <ul class="nav navbar-nav">
-                        <li><a href="electionDetails.jsp">Election Details</a></li>
-                        <li><a href="">Candidates</a></li>
-                        <li><a href="Controller?action=vote_now">Vote Now</a></li>
+                        <li><a href="Controller?action=voter_home">Home</a></li>
+                        <li><a href="Controller?action=list_candidates">Candidates</a></li>
+                        <li><a href="Controller?action=vote_now">Vote Now!</a></li>
                         <li><a href="#"></a></li>
                     </ul>
 
