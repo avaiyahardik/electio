@@ -26,7 +26,7 @@ public class ResetPassword implements Controller.Action {
                 String newPassword = RandomString.generateRandomPassword(); // it'll generate new password
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 String s[] = {email};
-                if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "New Password", newPassword, s)) {
+                if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "New Password", newPassword, s)) {
                     //newPassword = RandomString.encryptPassword(newPassword);
                     obj.changeElectionCommissionerPassword(email, newPassword); // it'll update password
                     msg = "Password Sent To your email successfully";
