@@ -43,7 +43,6 @@
                     <ul class="nav navbar-nav">
                         <li><a href="Controller?action=candidate_home">Home</a></li>
                         <li><a href="Controller?action=candidate_profile">Profile</a></li>
-                        <li><a href="Controller?action=file_petition">File Petition</a></li>
                         <li><a href="Controller?action=view_result">View Results</a></li>
                     </ul>
 

@@ -51,52 +51,17 @@
                     </a>
 
                 </div>
-                <div class="navbar-center"><a  href="#" style="color:#FFF; text-decoration:none;"><%=title%></a></div>
+                <div class="navbar-center"><a  href="#" style="text-decoration:none; font-weight: bold;"><%=title%></a></div>
                 <div class="navbar-collapse collapse">
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <ul class="nav navbar-nav pull-right header-menu">
-
-                        <!-- BEGIN NOTIFICATION DROPDOWN -->
-                        <li class="dropdown" id="notifications-header">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="glyph-icon flaticon-notifications"></i>
-                                <span class="badge badge-danger badge-header">3</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-header clearfix">
-                                    <p class="pull-left">Notifications</p>
-                                </li>
-                                <li>
-                                    <ul class="dropdown-menu-list withScroll" data-height="220">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-exclamation-triangle p-r-10 f-18 c-orange"></i>
-
-                                                <span class="dropdown-time">Just now</span>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <li class="dropdown-footer clearfix">
-                                    <a href="#" class="pull-left">See all notifications</a>
-                                    <a href="#" class="pull-right">
-                                        <i class="fa fa-cog"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- END NOTIFICATION DROPDOWN -->
-
+                        
                         <!-- BEGIN USER DROPDOWN -->
                         <li class="dropdown" id="user-header">
                             <a href="#" class="dropdown-toggle c-white" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <span class="username">
-                                    <%
-                                        String email = (String) session.getAttribute("email");
-                                    %>
-
-                                    <%=email%>
+                                    <% String email = (String) session.getAttribute("email");%>
+                                    Welcome, <strong><%=email%></strong>
                                 </span>
                                 <i class="fa fa-angle-down p-r-10"></i>
                             </a>

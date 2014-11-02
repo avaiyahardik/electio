@@ -109,8 +109,7 @@
                                                 <%} else {%>
                                                 <option value="2">Weighted</option>
                                                 <option value="1" selected="selected">Preferential</option>
-                                                <%}%>                                                    
-                                                }
+                                                <%}%>
                                             </select>
                                         </div>
                                     </div>
@@ -187,7 +186,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
-                                    <th>Image</th>
+                                    <th>Photo</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
