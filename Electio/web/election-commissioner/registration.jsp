@@ -4,6 +4,9 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="Model.Organization"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -109,6 +112,25 @@
                                                 <input type="text" class="form-control" name="mobile" required>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
+
+                                        <select name="organization_id">
+                                            <option value="">--Select--</option>
+                                            <%
+                                                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                                                ArrayList<Organization> orgs = obj.getAllOrganizations();
+                                                for (Organization org : orgs) {
+                                            %>
+                                            <option value="<%=org.getId()%>"><%= org.getName()%></option>
+                                            <%
+                                                }
+                                            %>
+                                            <option value="0">Other</option>
+                                        </select>
+
                                     </div>
 
                                     <div class="form-group">
