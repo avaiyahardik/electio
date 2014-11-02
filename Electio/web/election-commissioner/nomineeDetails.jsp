@@ -40,16 +40,57 @@
                                             }
                                         %>
                                     </h1>
-                                    <ul class="list-unstyled list-inline">
-                                        <li class="m-r-20"><i class="p-r-5 c-dark">@</i> <%= n.getEmail()%></li>
-                                        <li class="m-r-20"><i class="fa fa-mobile p-r-5 c-purple"></i> <%= n.getMobile()%></li>
-                                        <li class="m-r-20"><i class="fa fa-info p-r-5 c-brown"></i> <%= organization.getName()%></li>
-                                        <li class="m-r-20"><i class="fa fa-envelope p-r-5 c-blue"></i><%= organization.getAddress()%> </li>
-                                        <li><i class="fa fa-tag p-r-5 c-red"></i> <%= organization.getAbout()%></li>
-                                    </ul>
-                                    <div class="m-t-20">
+
+                                    <div class="form-group col-md-7">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-envelope p-r-5 c-blue"></i>
+                                            </span>
+                                            <label class="form-control"><%=n.getEmail()%></label>
+                                        </div>    
                                     </div>
-                                    <a href="..<%= File.separator%><%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements</a>
+
+                                    <div class="form-group col-md-7">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-mobile p-r-5 c-purple"></i>
+                                            </span>
+                                            <label class="form-control"><%=n.getMobile()%></label>
+                                        </div>    
+                                    </div>
+
+                                    <div class="form-group col-md-7">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-info p-r-5 c-brown"></i>
+                                            </span>
+                                            <label class="form-control"><%=organization.getName()%></label>
+                                        </div>    
+                                    </div>
+
+                                    <div class="form-group col-md-7">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-tag p-r-5 c-red"></i>
+                                            </span>
+                                            <label class="form-control"><%=organization.getAddress()%></label>
+                                        </div>    
+                                    </div>
+
+                                    <div class="form-group col-md-7">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-tag p-r-5 c-red"></i>
+                                            </span>
+                                            <label class="form-control"><%=organization.getAbout()%></label>
+                                        </div>    
+                                    </div>
+                                        
+                                        
+                                    <div class="form-group col-md-7">
+                                        <a href="..<%= File.separator%><%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements</a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

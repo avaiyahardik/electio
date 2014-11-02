@@ -22,25 +22,63 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-md-12 profile-info">
-                                <h1>
+                                <h1><%= c.getFirstname()%> <%= c.getLastname()%></h1>
 
-                                    <!-- Remove the Above name and put the name from DB -->
-                                    <%= c.getFirstname()%> <%= c.getLastname()%>
-                                </h1>
 
-                                <div class="m-t-10"></div>
-                                <ul class="list-unstyled list-inline">
-                                    <li class="m-r-20"><i class="p-r-5 c-dark">@</i><%= c.getEmail()%></li>
-                                    <li class="m-r-20"><i class="fa fa-mobile p-r-5 c-purple"></i> <%= c.getMobile()%></li>
-                                    <li class="m-r-20"><i class="fa fa-info p-r-5 c-brown"></i> <%= organization.getName()%></li>
-                                    <li class="m-r-20"><i class="fa fa-envelope p-r-5 c-blue"></i> <%= organization.getAddress()%></li>
-                                    <li><i class="fa fa-tag p-r-5 c-red"></i> <%= organization.getAddress()%></li>
-                                </ul>
-                                <div class="m-t-20"></div>
-                                <a href="..<%= File.separator%><%= c.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements file</a>
+                                <div class="form-group col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope p-r-5 c-blue"></i>
+                                        </span>
+                                        <label class="form-control"><%=c.getEmail()%></label>
+                                    </div>    
+                                </div>
+
+                                <div class="form-group col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-mobile p-r-5 c-purple"></i>
+                                        </span>
+                                        <label class="form-control"><%=c.getMobile()%></label>
+                                    </div>    
+                                </div>
+
+                                <div class="form-group col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-info p-r-5 c-brown"></i>
+                                        </span>
+                                        <label class="form-control"><%=organization.getName()%></label>
+                                    </div>    
+                                </div>
+
+                                <div class="form-group col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-tag p-r-5 c-red"></i>
+                                        </span>
+                                        <label class="form-control"><%=organization.getAddress()%></label>
+                                    </div>    
+                                </div>
+
+                                <div class="form-group col-md-7">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-tag p-r-5 c-red"></i>
+                                        </span>
+                                        <label class="form-control"><%=organization.getAbout()%></label>
+                                    </div>    
+                                </div>
+
+                                <div class="form-group col-md-7">
+                                    <a href="..<%= File.separator%><%= c.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements file</a>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-md-12">
                         <div class="align-center">
                             <a href="Controller?action=approve_nominee&election_id=&email=" class="btn btn-success"><i class="fa fa-check"></i> Approve</a>
