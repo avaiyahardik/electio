@@ -16,11 +16,11 @@
                             Nominee n = (Nominee) request.getAttribute("nominee");
                             Organization organization = (Organization) request.getAttribute("organization");
                         %>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <img src="../<%= n.getImage()%>" alt="Nominee Image"/>
                         </div>
 
-                        <div class="col-md-9">
+                        <div class="col-md-7">
                             <div class="row">
                                 <div class="col-md-12 profile-info">
                                     <h1>

@@ -14,12 +14,12 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         <img src="..<%= File.separator%><%= c.getImage()%>" alt="Candidate Image"/>
                         <!-- replace the Image source -->
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-7">
                         <div class="row">
                             <div class="col-md-12 profile-info">
                                 <h1><%= c.getFirstname()%> <%= c.getLastname()%></h1>
