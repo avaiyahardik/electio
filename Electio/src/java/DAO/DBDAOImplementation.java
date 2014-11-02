@@ -358,22 +358,7 @@ public class DBDAOImplementation {
         }
 
     }
-
-    public boolean loginCandidate(String email, long election_id, String password) throws SQLException {
-
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_candidate WHERE email=? and election_id=? and password=?");
-        ps.setString(1, email);
-        ps.setLong(2, election_id);
-        ps.setString(3, password);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
+    
     public long addNewOrganization(Organization org) throws SQLException {
         long id = -1;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_organization(name,address,about) VALUES(?,?,?)");
@@ -497,6 +482,17 @@ public class DBDAOImplementation {
         }
 
         return result;
+    }
+    public boolean changeNomineePassword(String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET password=? WHERE email=?");
+        ps.setString(1, password);
+        ps.setString(2, email);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+
     }
 
     public Candidate getCandidate(long election_id, String email) throws SQLException {
