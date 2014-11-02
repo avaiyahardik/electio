@@ -38,6 +38,7 @@ public class SaveVote implements Controller.Action {
                 System.out.println("Yes");
                 long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
                 view = "voted.jsp";
+                title="Voted";
                 if (election_type == 1) {                    
                     System.out.println("Election ID: " + id);
                     try {

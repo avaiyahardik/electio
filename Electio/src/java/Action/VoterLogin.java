@@ -29,8 +29,8 @@ public class VoterLogin implements Controller.Action {
         String email = req.getParameter("email");
         String step = req.getParameter("step");
         String password = "";
-        String view = "index.jsp";  // default view should be login page itself
-        String title = "";
+        String view = "index.jsp";  // default view should be login page itself        
+        String title="";
         String msg = null;
         String err = null;
         System.out.println(elec_id + ", " + email);
@@ -49,7 +49,7 @@ public class VoterLogin implements Controller.Action {
                         msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
                         if (v.getStatus() == false) {
                             view = "login2.jsp"; // view changed if email exists and status is not voted successfull
-                            title = "";
+                            title = "Voter Login";
                             password = RandomString.generateRandomPassword();
                             obj.insertVoterPassword(election_id, email, password);
 
