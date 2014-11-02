@@ -20,48 +20,51 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hardik
  */
-public class ElectionCommissionerChangePassword implements Controller.Action {
+public class NomineeChangePassword implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String email = (String) req.getSession().getAttribute("email");
+        String email = (String) req.getSession().getAttribute("candidate_email");
+        String elec_id = (String) req.getSession().getAttribute("election_id");
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
-        if (email == null || email.equals("")) {
+//        System.out.println("Email: " + email + ", Elec Id: " + elec_id);
+        if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
-            view = "profile.jsp";
-            title = "Profile";
+            view = "Controller?action=candidate_profile";
+            title = "Nominee/Candidate Profile";
+
             String old_password = req.getParameter("old_password");
             String new_password = req.getParameter("new_password");
-            String retype_password = req.getParameter("retype_password");
-            try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                ElectionCommissioner ec = obj.getElectionCommissioner(email);
-                Organization org = obj.getOrganization(ec.getOrganization_id());
-                req.setAttribute("election_commissioner", ec);
-                req.setAttribute("organization", org);
-                if (obj.isValidElectionCommissioner(email, old_password)) {
-                    if (new_password.equals(retype_password)) {
-                       // new_password=RandomString.encryptPassword(new_password);
-                        if (obj.changeElectionCommissionerPassword(email, new_password)) {
-                            msg = "Your password changed successfully";
+            String retype_password = req.getParameter("retype_new_password");
+            if (old_password == null || old_password.equals("") || new_password == null || new_password.equals("") || retype_password == null || retype_password.equals("")) {
+                err = "All fields are mendatory";
+            } else {
+                long election_id = Long.parseLong(elec_id);
+                try {
+                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    if (obj.nomineeLogin(election_id, email, old_password)) {
+                        if (new_password.equals(retype_password)) {
+                            // new_password=RandomString.encryptPassword(new_password);
+                            if (obj.changeNomineePassword(email, new_password)) {
+                                msg = "Your password changed successfully";
+                            } else {
+                                err = "Error occured while changing your password, please retry";
+                            }
                         } else {
-                            err = "Error occured while changing your password, please retry";
+                            err = "Confirm password does not match, please retry";
                         }
                     } else {
-                        err = "Confirm password does not match, please retry";
+                        err = "Old password doesn't match, please retry";
                     }
-                } else {
-                    err = "Old password doesn't match, please retry";
+                } catch (SQLException ex) {
+                    err = ex.getMessage();
+                    System.out.println("NomineeChangePassword Err: " + ex.getMessage());
                 }
-            } catch (SQLException ex) {
-                err = ex.getMessage();
-                System.out.println("ChangePassword Err: " + ex.getMessage());
             }
-
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
