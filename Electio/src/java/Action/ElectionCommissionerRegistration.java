@@ -26,6 +26,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String firstname = req.getParameter("firstname");
         String lastname = req.getParameter("lastname");
         String mobile = req.getParameter("mobile");
+        String org_id = req.getParameter("organization_id");
         String organization_name = req.getParameter("organization_name");
         String organization_address = req.getParameter("organization_address");
         String about_organization = req.getParameter("about_organization");
@@ -37,15 +38,18 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String msg = null;
         String err = null;
         System.out.println(email + ", " + firstname + ", " + lastname + ", " + mobile + ", " + organization_name + ", " + password);
-        if (email == null || email.equals("") || firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || password == null || password.equals("")) {
+        if (email == null || email.equals("") || firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile == null || mobile.equals("") || org_id == null || org_id.equals("") || organization_name == null || organization_name.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields";
         } else {
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                Organization org = new Organization(organization_name, organization_address, about_organization);
-                long id = obj.addNewOrganization(org);
-                System.out.println("Org ID; " + id);
-                ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, id, password);
+                long organization_id = Long.parseLong(org_id);
+                if (organization_id == 0) {
+                    Organization org = new Organization(organization_name, organization_address, about_organization);
+                    organization_id = obj.addNewOrganization(org);
+                }
+
+                ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
                 if (obj.registerElectionCommissioner(ec)) {
                     msg = "You're registered successfully";
                     view = "index.jsp";
@@ -56,7 +60,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                 }
             } catch (SQLException ex) {
                 err = ex.getMessage();
-                System.out.println("Register SQL Err: " + ex.getMessage());
+                System.out.println("Electon Commissioner Register SQL Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);
