@@ -50,6 +50,10 @@ public class CandidateLogin implements Controller.Action {
                     req.getSession().setAttribute("candidate_email", email);
                     Nominee n = obj.getNominee(election_id, email);
                     req.setAttribute("candidate_name", n.getFirstname());
+                    Election e = obj.getElection(election_id);
+                    req.setAttribute("election", e);
+                    int nominee_status = obj.getNomineeStatus(election_id, email);
+                    req.setAttribute("nominee_status", nominee_status);
                     System.out.println("Name: " + n.getFirstname());
                     if (obj.getNomineeStatus(election_id, email) == 1) {
                         Candidate c = obj.getCandidate(election_id, email);
