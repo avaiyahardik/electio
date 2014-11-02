@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2014 at 11:49 AM
+-- Generation Time: Nov 02, 2014 at 03:40 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -42,14 +42,15 @@ CREATE TABLE IF NOT EXISTS `tbl_election` (
   `voting_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `petition_duration` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `tbl_election`
 --
 
 INSERT INTO `tbl_election` (`id`, `election_commissioner_email`, `name`, `description`, `requirements`, `type_id`, `created_at`, `nomination_start`, `nomination_end`, `withdrawal_start`, `withdrawal_end`, `voting_start`, `voting_end`, `petition_duration`) VALUES
-(1, 'avaiyahm@yahoo.com', 'Moviee Chooser', 'Desc', '<p>Req</p>', 2, '2014-10-30 08:01:52', '2014-10-30 09:00:00', '2014-10-30 09:00:00', '2014-10-30 09:00:00', '2014-10-30 09:00:00', '2014-10-30 10:00:00', '2014-10-30 10:30:00', 2);
+(1, 'avaiyahm@yahoo.com', 'Best mobile', 'choose which mobile is best considering features and price.', '<p>Should be smart phone</p>\r\n<p>&nbsp;</p>', 2, '2014-11-01 17:01:35', '2014-10-19 18:40:00', '2014-10-19 18:50:00', '2014-10-23 11:53:00', '2014-10-19 18:50:00', '2014-10-20 10:50:00', '2014-10-20 06:20:00', 5),
+(2, 'avaiyahm@yahoo.com', 'Class Representative 2013', 'Choose CR for ur 2013 batch', '<p>No backlog</p>', 1, '2014-11-02 12:53:30', '2014-10-09 05:00:00', '2014-10-19 18:50:00', '2014-10-20 10:50:00', '2014-10-19 18:50:00', '2014-10-19 19:20:00', '2014-10-20 06:20:00', 2);
 
 -- --------------------------------------------------------
 
@@ -63,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `tbl_election_candidate` (
   `requirements_file` text NOT NULL,
   `votes` int(11) NOT NULL,
   `manifesto` text,
+  `petition_filed` tinyint(1) NOT NULL,
   PRIMARY KEY (`email`,`election_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -70,8 +72,9 @@ CREATE TABLE IF NOT EXISTS `tbl_election_candidate` (
 -- Dumping data for table `tbl_election_candidate`
 --
 
-INSERT INTO `tbl_election_candidate` (`email`, `election_id`, `requirements_file`, `votes`, `manifesto`) VALUES
-('nikita@birmi.com', 1, 'requirements_files\\1414660880004.pdf', 0, 'no manifesto');
+INSERT INTO `tbl_election_candidate` (`email`, `election_id`, `requirements_file`, `votes`, `manifesto`, `petition_filed`) VALUES
+('avaiyahardik@gmail.com', 1, 'requirements_files\\1414863678404.pdf', 0, 'no manifesto', 0),
+('sen.daiict@gmail.com', 1, 'requirements_files\\1414861505802.pdf', 0, 'no manifesto', 0);
 
 -- --------------------------------------------------------
 
@@ -94,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `tbl_election_commissioner` (
 --
 
 INSERT INTO `tbl_election_commissioner` (`email`, `firstname`, `lastname`, `mobile`, `organization_id`, `password`) VALUES
-('avaiyahm@yahoo.com', 'Hardik', 'Avaiya', '9737808095', 18, '68RwbksDp7kBJ6Nk7p3kunMKQG0=');
+('avaiyahm@yahoo.com', 'Hardik', 'Avaiya', '9737808095', 1, 'hardik');
 
 -- --------------------------------------------------------
 
@@ -115,8 +118,9 @@ CREATE TABLE IF NOT EXISTS `tbl_election_nominee` (
 --
 
 INSERT INTO `tbl_election_nominee` (`email`, `election_id`, `requirements_file`, `status`) VALUES
-('akashvirani174@gmail.com', 1, 'requirements_files\\1414657575359..pdf', 0),
-('nikita@birmi.com', 1, 'requirements_files\\1414660880004.pdf', 1);
+('201312011@daiict.ac.in', 1, 'requirements_files\\1414912290227.pdf', 0),
+('avaiyahardik@gmail.com', 1, 'requirements_files\\1414863678404.pdf', 1),
+('sen.daiict@gmail.com', 1, 'requirements_files\\1414861505802.pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -151,16 +155,20 @@ CREATE TABLE IF NOT EXISTS `tbl_organization` (
   `address` text NOT NULL,
   `about` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `tbl_organization`
 --
 
 INSERT INTO `tbl_organization` (`id`, `name`, `address`, `about`) VALUES
-(18, 'DA-IICT', 'Gandhinagar', 'Best College'),
-(19, 'DA-IICT', '464, Barpara street', 'Best'),
-(20, 'DA-IICT', 'Gandhinagar', 'Best');
+(1, 'DA-IICT', 'Gandhinagar', 'Best'),
+(2, 'DA-IICT', 'China', 'samsung organization'),
+(3, 'DA-IICT', 'China', 'samsung organization'),
+(4, 'DA-IICT', 'China', 'about'),
+(5, 'DA-IICT', 'China', 'about'),
+(6, 'DA-IICT', 'Gandhinagar', 'Best'),
+(7, 'DA-IICT', 'Gandhinagar', 'Best');
 
 -- --------------------------------------------------------
 
@@ -198,8 +206,9 @@ CREATE TABLE IF NOT EXISTS `tbl_user_info` (
 --
 
 INSERT INTO `tbl_user_info` (`email`, `firstname`, `lastname`, `gender`, `mobile`, `organization_id`, `image`, `password`) VALUES
-('akashvirani174@gmail.com', 'Hardik', 'Avaiya', 0, '9197378080', 19, 'user_images\\1414657575317..png', 'a'),
-('nikita@birmi.com', 'Niki', 'Birmi', 0, '9999999999', 20, 'user_images\\1414660880003.png', 'n');
+('201312011@daiict.ac.in', 'Moto G', '2nd Gen', 0, '9737808095', 6, 'user_images\\1414912290131.png', 'motog'),
+('avaiyahardik@gmail.com', 'Redmi', '1S', 0, '9737808095', 5, 'user_images\\1414863678401.png', 'redmi'),
+('sen.daiict@gmail.com', 'Samsung', 'Core 2 Dual', 0, '9737808095', 3, 'user_images\\1414861505801.png', 'samsung');
 
 -- --------------------------------------------------------
 
@@ -220,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `tbl_voter` (
 --
 
 INSERT INTO `tbl_voter` (`email`, `election_id`, `password`, `status`) VALUES
-('sen.daiict@gmail.com', 1, 'XS45M&cg', 0);
+('sen.daiict@gmail.com', 1, 'pwdpwdpwd', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
