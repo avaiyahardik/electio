@@ -18,6 +18,11 @@
         <link rel="stylesheet" href="../assets/css/icons/font-awesome/css/font-awesome.min.css">
         <script src="../assets/readable/jquery-1.10.2.min.js"></script>
         <script src="../assets/readable/bootstrap.min.js"></script>
+
+        <script type="text/JavaScript">
+            
+            var path;
+        </script>
     </head>
 
     <body>
@@ -51,8 +56,8 @@
                             <form action="NomineeRegistration" method="POST" class="form-horizontal" enctype="multipart/form-data">
                                 <input type="hidden" name="election_id" value="<%= election_id%>">
                                 <fieldset> 
-                                    <div class="form-group">
-                                        <!-- BEGIN ERROR BOX -->
+                                    <!-- BEGIN ERROR BOX -->
+                                    <div class="form-group col-lg-12">
                                         <% String msg = (String) request.getAttribute("msg");
                                             if (msg != null) {%>
 
@@ -68,9 +73,8 @@
                                             <%=err%>
                                         </div>
                                         <% }%>
-                                        <!-- END ERROR BOX -->  
                                     </div>
-
+                                    <!-- END ERROR BOX -->  
 
                                     <div class="form-group">
                                         <label class="control-label col-sm-4" for="firstname"><strong>First Name</strong></label>
@@ -123,7 +127,7 @@
                                         <label for="requirements" class="control-label col-lg-4"><strong>Requirements File</strong> (PDF only)</label>
                                         <div class="col-lg-7">
                                             <input type="file" class="form-control" name="requirements_file"  accept="application/pdf"  required/>
-                                            <a href="#" class="btn btn-effect" data-modal="requirements-modal"><i class="fa fa-search"></i> View Requirements</a>
+                                            <a href="#" class="btn btn-effect" data-toggle="modal" data-target="#requirements-modal"><i class="fa fa-search"></i> View Requirements</a>
                                         </div>
                                     </div>
 
@@ -177,21 +181,32 @@
         </div>
         <hr>
         <footer>
-            &copy; 2014 Electio
+            <div class="container">
+                <p>&copy; 2014 Electio</p>
+            </div>
         </footer>
+        <hr>
 
-        <div class="md-modal md-effect-1" id="requirements-modal">
-            <div class="md-content md-content-white">
-                <h3>Nominee Requirements</h3>
-                <div>
-                    <p>A person can file a nomination for the said election, if he/she has the following eligibilities</p>
-                    <p>
-                        <%
-                            String requirements = DBDAOImplementation.getInstance().getElectionRequirements(election_id);
-                        %>
-                        <%=requirements%>
-                    </p>
-                    <button class="btn btn-modal btn-default">Continue</button>
+
+        <div class="modal" id="requirements-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Nominee Requirements</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>A Nominee should have the following eligibilities -</strong></p>
+                        <p>
+                            <%
+                                String requirements = DBDAOImplementation.getInstance().getElectionRequirements(election_id);
+                            %>
+                            <%=requirements%>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
