@@ -53,7 +53,7 @@
                         %>
                         <li><a href="#">Welcome, <%=name%>
                             </a></li>
-                        <li><a href="Controller?action=logout" class="btn btn-default">Logout</a></li>
+                        <li><a href="Controller?action=candidate_logout" class="btn btn-default">Logout</a></li>
                     </ul>
                 </div>
             </div>
