@@ -358,7 +358,7 @@ public class DBDAOImplementation {
         }
 
     }
-    
+
     public long addNewOrganization(Organization org) throws SQLException {
         long id = -1;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_organization(name,address,about) VALUES(?,?,?)");
@@ -373,6 +373,22 @@ public class DBDAOImplementation {
             }
         }
         return id;
+    }
+
+    public ArrayList<Organization> getAllOrganizations() throws SQLException {
+        ArrayList<Organization> orgs = new ArrayList<>();
+        Organization org = null;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_organization");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            org = new Organization();
+            org.setId(rs.getLong("id"));
+            org.setName(rs.getString("name"));
+            org.setAddress(rs.getString("address"));
+            org.setAbout(rs.getString("about"));
+            orgs.add(org);
+        }
+        return orgs;
     }
 
     public long getLastOrganizationId() throws SQLException {
@@ -483,6 +499,7 @@ public class DBDAOImplementation {
 
         return result;
     }
+
     public boolean changeNomineePassword(String email, String password) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET password=? WHERE email=?");
@@ -692,21 +709,21 @@ public class DBDAOImplementation {
     }
 
     public boolean updateCandidateVotes(ArrayList<Candidate> candidates, long election_id) throws SQLException {
-        boolean result = false;        
-        
+        boolean result = false;
+
         for (Candidate c : candidates) {
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=? and email=?");
-        ps.setLong(1, election_id);
-        ps.setString(2, c.getEmail());
-        ResultSet rs = ps.executeQuery();
-        long votes = 0;
-        if (rs.next()) {
-            votes = rs.getLong("votes");
-        }
-        votes += c.getVotes();
-        
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=? and email=?");
+            ps.setLong(1, election_id);
+            ps.setString(2, c.getEmail());
+            ResultSet rs = ps.executeQuery();
+            long votes = 0;
+            if (rs.next()) {
+                votes = rs.getLong("votes");
+            }
+            votes += c.getVotes();
+
             PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_election_candidate SET votes =? WHERE election_id=? and email=?");
-            ps2.setLong(1,votes);
+            ps2.setLong(1, votes);
             ps2.setLong(2, election_id);
             ps2.setString(3, c.getEmail());
             if (ps2.executeUpdate() > 0) {
