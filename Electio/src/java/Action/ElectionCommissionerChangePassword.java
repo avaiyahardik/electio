@@ -8,7 +8,7 @@ package Action;
 import DAO.DBDAOImplementation;
 import Model.ElectionCommissioner;
 import Model.Organization;
-import Util.RandomString;
+import Utilities.RandomString;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;

@@ -6,8 +6,8 @@ import Model.Election;
 import Model.ElectionType;
 import Model.Nominee;
 import Model.Voter;
-import Util.EmailSender;
-import Util.RandomString;
+import Utilities.EmailSender;
+import Utilities.RandomString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -49,7 +49,7 @@ public class CandidateLogin implements Controller.Action {
                     req.getSession().setAttribute("election_id", elec_id);
                     req.getSession().setAttribute("candidate_email", email);
                     Nominee n = obj.getNominee(election_id, email);
-                    req.getSession().setAttribute("candidate_name", n.getFirstname());
+                    req.setAttribute("candidate_name", n.getFirstname());
                     System.out.println("Name: " + n.getFirstname());
                     if (obj.getNomineeStatus(election_id, email) == 1) {
                         Candidate c = obj.getCandidate(election_id, email);

@@ -6,7 +6,7 @@
 
 package Action;
 
-import Util.EmailSender;
+import Utilities.EmailSender;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

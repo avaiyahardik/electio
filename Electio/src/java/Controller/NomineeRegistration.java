@@ -8,7 +8,7 @@ package Controller;
 import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
-import Util.RandomString;
+import Utilities.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;

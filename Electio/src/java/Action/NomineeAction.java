@@ -6,7 +6,7 @@
 package Action;
 
 import DAO.DBDAOImplementation;
-import Util.EmailSender;
+import Utilities.EmailSender;
 import java.io.File;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;

@@ -48,7 +48,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <%
-                            String name = (String) request.getSession().getAttribute("candidate_name");
+                            String name = (String) request.getAttribute("candidate_name");
                         %>
                         <li><a href="#">Welcome, <%=name%>
                             </a></li>

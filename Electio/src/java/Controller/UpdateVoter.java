@@ -7,7 +7,7 @@ package Controller;
 
 import DAO.DBDAOImplementation;
 import Model.Voter;
-import Util.RandomString;
+import Utilities.RandomString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
