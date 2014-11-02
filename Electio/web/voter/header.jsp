@@ -52,7 +52,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Welcome, <%=email%>
                             </a></li>
-                        <li><a href="#" class="btn btn-default">Logout</a></li>
+                        <li><a href="Controller?action=voter_logout" class="btn btn-default">Logout</a></li>
                     </ul>
                 </div>
             </div>
