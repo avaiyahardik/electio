@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="Model.Organization"%>
 <%@page import="Model.Candidate"%>
 <jsp:include page="headerSidebar.jsp"/>
@@ -14,7 +15,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-3">
-                        <img src="../<%= c.getImage()%>" alt="Candidate Image"/>
+                        <img src="..<%= File.separator%><%= c.getImage()%>" alt="Candidate Image"/>
                         <!-- replace the Image source -->
                     </div>
 
@@ -36,7 +37,7 @@
                                     <li><i class="fa fa-tag p-r-5 c-red"></i> <%= organization.getAddress()%></li>
                                 </ul>
                                 <div class="m-t-20"></div>
-                                <a href="../<%= c.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements file</a>
+                                <a href="..<%= File.separator%><%= c.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements file</a>
                             </div>
                         </div>
                     </div>

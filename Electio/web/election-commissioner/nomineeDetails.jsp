@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="Model.Organization"%>
 <%@page import="Model.Nominee"%>
 <jsp:include page="headerSidebar.jsp"/>
@@ -48,7 +49,7 @@
                                     </ul>
                                     <div class="m-t-20">
                                     </div>
-                                    <a href="../<%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements</a>
+                                    <a href="..<%= File.separator%><%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements</a>
                                 </div>
                             </div>
                         </div>

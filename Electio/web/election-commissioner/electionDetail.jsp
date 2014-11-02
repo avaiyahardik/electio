@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.Candidate"%>
@@ -207,7 +208,7 @@
                                         <!--        
                                         <a href="#"> 
                                         -->
-                                        <img src="../<%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
+                                        <img src="..<%= File.separator%><%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
                                         <!--
                                         </a>
                                         --> 
@@ -271,7 +272,7 @@
                                     <td><%= c.getMobile()%></td>
                                     <td>
                                         <a href="#">
-                                            <img src="../<%= c.getImage()%>" height="75" width="60" alt="Candidate Photo"/>
+                                            <img src="..<%= File.separator%><%= c.getImage()%>" height="75" width="60" alt="Candidate Photo"/>
                                         </a>
                                     </td>   
                                     <td>
