@@ -271,7 +271,7 @@
                                     <td><%= c.getMobile()%></td>
                                     <td>
                                         <a href="#">
-                                            <img src="<%= c.getImage()%>" height="75" width="60" alt="Candidate Photo"/>
+                                            <img src="../<%= c.getImage()%>" height="75" width="60" alt="Candidate Photo"/>
                                         </a>
                                     </td>   
                                     <td>

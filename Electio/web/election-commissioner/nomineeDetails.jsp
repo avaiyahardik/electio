@@ -16,7 +16,7 @@
                             Organization organization = (Organization) request.getAttribute("organization");
                         %>
                         <div class="col-md-3">
-                            <img src="<%= n.getImage()%>" alt="Nominee Image"/>
+                            <img src="../<%= n.getImage()%>" alt="Nominee Image"/>
                         </div>
 
                         <div class="col-md-9">
@@ -48,7 +48,7 @@
                                     </ul>
                                     <div class="m-t-20">
                                     </div>
-                                    <a href="<%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements</a>
+                                    <a href="../<%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements</a>
                                 </div>
                             </div>
                         </div>
