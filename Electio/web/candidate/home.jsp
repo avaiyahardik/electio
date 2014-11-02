@@ -2,8 +2,8 @@
 <%@page import="Model.Election"%>
 <jsp:include page="header.jsp"/>
 <%
-    DBDAOImplementation obj=DBDAOImplementation.getInstance();
-    Election el = obj.getElection(Long.parseLong(request.getSession().getAttribute("election_id").toString()));
+    Election el = (Election) request.getAttribute("election");
+    int nominee_status = (Integer) request.getAttribute("nominee_status");
 %>
 
 <div class="page-header">
@@ -13,13 +13,13 @@
 <div class="well">
     <h4><%=el.getDescription()%></h4><br>
 
-    
+
     <table class="table table-striped table-hover ">
-        
+
         <thead>
         <th colspan="3">Election Timeline</th>
         </thead>
-        
+
         <thead>
         <th></th>
         <th>Start Date</th>
@@ -44,7 +44,7 @@
             <td><%=el.getVoting_end()%></td>
         </tr>
     </table>
-            <h1>You nomination status => </h1>
+    <h1>You nomination status => <%=nominee_status%></h1>
 </div>
 
 
