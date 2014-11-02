@@ -17,7 +17,7 @@
                             Organization organization = (Organization) request.getAttribute("organization");
                         %>
                         <div class="col-md-5">
-                            <img src="../<%= n.getImage()%>" alt="Nominee Image"/>
+                            <img src="../<%= n.getImage()%>" alt="Nominee Image" width="200" height="300"/>
                         </div>
 
                         <div class="col-md-7">

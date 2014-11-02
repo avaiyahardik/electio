@@ -15,7 +15,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-5">
-                        <img src="..<%= File.separator%><%= c.getImage()%>" alt="Candidate Image"/>
+                        <img src="..<%= File.separator%><%= c.getImage()%>" alt="Candidate Image" width="200" height="300"/>
                         <!-- replace the Image source -->
                     </div>
 
