@@ -18,11 +18,6 @@
         <link rel="stylesheet" href="../assets/css/icons/font-awesome/css/font-awesome.min.css">
         <script src="../assets/readable/jquery-1.10.2.min.js"></script>
         <script src="../assets/readable/bootstrap.min.js"></script>
-
-        <script type="text/JavaScript">
-            
-            var path;
-        </script>
     </head>
 
     <body>

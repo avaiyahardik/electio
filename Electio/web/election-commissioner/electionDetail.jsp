@@ -204,14 +204,10 @@
                                     </td>
                                     <td><%= n.getEmail()%></td>
                                     <td><%= n.getMobile()%></td>
-                                    <td>
-                                        <!--        
-                                        <a href="#"> 
-                                        -->
-                                        <img src="..<%= File.separator%><%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
-                                        <!--
+                                    <td>       
+                                        <a href="#" data-toggle="modal" data-target="#image-modal" class="img-link">
+                                            <img src="..<%= File.separator%><%= n.getImage()%>" height="75" width="60" alt="Nominee Photo"/>
                                         </a>
-                                        --> 
                                     </td>
 
                                     <td>
@@ -271,7 +267,7 @@
                                     <td><%= c.getEmail()%></td>
                                     <td><%= c.getMobile()%></td>
                                     <td>
-                                        <a href="#">
+                                        <a href="#" data-toggle="modal" data-target="#image-modal" class="img-link">
                                             <img src="..<%= File.separator%><%= c.getImage()%>" height="75" width="60" alt="Candidate Photo"/>
                                         </a>
                                     </td>   
@@ -411,6 +407,23 @@
 
 </script>
 
+
+<div class="modal" id="image-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Nominee Photo</h4>
+            </div>
+            <div class="modal-body align-center">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <jsp:include page="footer.jsp"/>

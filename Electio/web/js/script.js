@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     var editing = 0;
     var old_email, old_html, election_id;
     var input_id, cnt = 0;
 
     // Deleting a voter
-    $(':button.btn-del').live("click", function () {
+    $(':button.btn-del').live("click", function() {
         if (confirm("Do you really want to delete the voter")) {
             var to_remove = $(this).parent().parent();
             var data_array = $(this).val().split("-");
@@ -18,7 +18,7 @@ $(document).ready(function () {
                         election_id: election_id,
                         voter_email: voter_email
                     },
-            function (data, status) {
+            function(data, status) {
                 if (data == "Deleted") {
                     to_remove.addClass("danger");
                     to_remove.fadeOut(500);
@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
 // Editing a voter's data (Email only)
-    $(':button.btn-edit').live("click", function () {
+    $(':button.btn-edit').live("click", function() {
         to_edit = $(this).parent().parent();
         //alert('Edit button pressed');
         if (editing == 0) {
@@ -51,7 +51,7 @@ $(document).ready(function () {
     });
 
     // Saving edited voter's data
-    $(':button.btn-save').live("click", function () {
+    $(':button.btn-save').live("click", function() {
         var to_remove = $(this).parent().parent();
         input_id = "#" + input_id;
         var new_email = $(input_id).live().val();
@@ -67,7 +67,7 @@ $(document).ready(function () {
                     old_email: old_email,
                     new_email: new_email,
                     election_id: election_id
-                }, function (data, status) {
+                }, function(data, status) {
                     if (data == "Updated") {
                         var new_html = old_html.split(old_email).join(new_email);
                         to_remove.html(new_html);
@@ -85,14 +85,14 @@ $(document).ready(function () {
     });
 
 // Cancel editing
-    $(':button.btn-cancel').live("click", function () {
+    $(':button.btn-cancel').live("click", function() {
         var to_remove = $(this).parent().parent();
         to_remove.html(old_html);
         editing = 0;
     });
 
     //Adding new voter
-    $(':button.btn-add').click(function () {
+    $(':button.btn-add').click(function() {
         var email_id = prompt("Enter email for new voter");
 
         if (email_id) {
@@ -106,7 +106,7 @@ $(document).ready(function () {
                     cmd: "add",
                     email: email_id,
                     election_id: election_id
-                }, function (data, status) {
+                }, function(data, status) {
                     if (data == "Added") {
                         alert("New Voter added successfully.");
                         $(email_id).insertAfter('#blank_space');
@@ -117,15 +117,20 @@ $(document).ready(function () {
             } else {
                 alert("Invalid email address, try again.");
             }
-        }else{
+        } else {
             alert("Please enter an email address");
         }
 
     });
 
-    $('#link-upload').click(function () {
+    $('#link-upload').click(function() {
         $(this).hide();
         $('#upload-voters').fadeIn('fast');
+    });
+
+    $('.img-link').live("click",function() {
+        var img_src = $(this).html();
+        $('.modal-body').html(img_src.replace('height="75" width="60"','align="center"'));
     });
 
 });
@@ -139,4 +144,4 @@ function validateEmail(email)
     else {
         return false;
     }
-} 
+}
