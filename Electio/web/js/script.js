@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     var editing = 0;
     var old_email, old_html, election_id;
     var input_id, cnt = 0;
 
     // Deleting a voter
-    $(':button.btn-del').live("click", function () {
+    $(':button.btn-del').live("click", function() {
         if (confirm("Do you really want to delete?")) {
             var to_remove = $(this).parent().parent();
             var data_array = $(this).val().split("*");
@@ -13,14 +13,14 @@ $(document).ready(function () {
             var voter_email = data_array[1];
             var type = data_array[2];
 
-            if (type.equals("deleteVoter")) {
+            if (type == "deleteVoter") {
                 $.post("UpdateVoter",
                         {
                             cmd: "delete",
                             election_id: election_id,
                             voter_email: voter_email
                         },
-                function (data, status) {
+                function(data, status) {
                     if (data == "Deleted") {
                         to_remove.addClass("danger");
                         to_remove.fadeOut(500);
@@ -28,14 +28,14 @@ $(document).ready(function () {
                         alert("Could not remove voter, please try again..")
                     }
                 });
-            } else if (type.equals("deleteNominee")) {
+            } else if (type == "deleteNominee") {
                 $.post("UpdateProbableNominee",
                         {
                             cmd: "delete",
                             election_id: election_id,
                             voter_email: voter_email
                         },
-                function (data, status) {
+                function(data, status) {
                     if (data == "Deleted") {
                         to_remove.addClass("danger");
                         to_remove.fadeOut(500);
@@ -49,7 +49,7 @@ $(document).ready(function () {
     });
 
 // Editing a voter's data (Email only)
-    $(':button.btn-edit').live("click", function () {
+    $(':button.btn-edit').live("click", function() {
         to_edit = $(this).parent().parent();
         //alert('Edit button pressed');
         if (editing == 0) {
@@ -75,7 +75,7 @@ $(document).ready(function () {
     });
 
     // Saving edited voter's data
-    $(':button.btn-save').live("click", function () {
+    $(':button.btn-save').live("click", function() {
         var to_remove = $(this).parent().parent();
         input_id = "#" + input_id;
         var new_email = $(input_id).live().val();
@@ -91,7 +91,7 @@ $(document).ready(function () {
                     old_email: old_email,
                     new_email: new_email,
                     election_id: election_id
-                }, function (data, status) {
+                }, function(data, status) {
                     if (data == "Updated") {
                         var new_html = old_html.split(old_email).join(new_email);
                         to_remove.html(new_html);
@@ -109,15 +109,15 @@ $(document).ready(function () {
     });
 
 // Cancel editing
-    $(':button.btn-cancel').live("click", function () {
+    $(':button.btn-cancel').live("click", function() {
         var to_remove = $(this).parent().parent();
         to_remove.html(old_html);
         editing = 0;
     });
 
     //Adding new voter
-    $(':button.btn-add').click(function () {
-        var email_id = prompt("Enter email for new voter");
+    $(':button.btn-add').click(function() {
+        var email_id = prompt("Enter email address");
 
         if (email_id) {
             if (validateEmail(email_id)) {
@@ -125,13 +125,13 @@ $(document).ready(function () {
                 var election_id = data_array[0];
                 var type = data_array[1];
                 var new_row;
-                if (type.equals("addVoter")) {
+                  if (type == "addVoter") {
                     new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editVoter' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteVoter' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
                     $.post("UpdateVoter", {
                         cmd: "add",
                         email: email_id,
                         election_id: election_id
-                    }, function (data, status) {
+                    }, function(data, status) {
                         if (data == "Added") {
                             alert("New Voter added successfully.");
                             //$(email_id).insertAfter('#blank_space');
@@ -142,13 +142,16 @@ $(document).ready(function () {
                     });
                 }
 
-                else if (type.equals("addNominee")) {
+                else if (type == "addNominee") {
+
                     new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editNominee' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteNominee' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
-                    $.post("UpdateUpdateProbableNominee", {
+
+                    $.post("UpdateProbableNominee", {
                         cmd: "add",
                         email: email_id,
                         election_id: election_id
-                    }, function (data, status) {
+                    }, function(data, status) {
+                        alert(status);
                         if (data == "Added") {
                             alert("New Probable Nominee added successfully.");
                             //$(email_id).insertAfter('#blank_space');
@@ -157,8 +160,8 @@ $(document).ready(function () {
                             alert("Error adding new nominee, try again");
                         }
                     });
-                }
 
+                }
             } else {
                 alert("Invalid email address, try again.");
             }
@@ -168,12 +171,12 @@ $(document).ready(function () {
 
     });
 
-    $('#link-upload').click(function () {
+    $('#link-upload').click(function() {
         $(this).hide();
         $('#upload-voters').fadeIn('fast');
     });
 
-    $('.img-link').live("click", function () {
+    $('.img-link').live("click", function() {
         var img_src = $(this).html();
         $('.modal-body').html(img_src.replace('height="75" width="60"', 'height="450" width="300"'));
     });
