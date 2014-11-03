@@ -790,4 +790,26 @@ public class DBDAOImplementation {
         return emails.toArray(new String[]{});
     }
 
+    public boolean deleteProbableNominee(long election_id, String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_probable_nominee WHERE election_id=? AND email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean updateProbableNominee(long election_id, String old_email, String new_email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_probable_nominee SET email=? WHERE email=? AND election_id=?");
+        ps.setString(1, new_email);
+        ps.setString(2, old_email);
+        ps.setLong(3, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
 }
