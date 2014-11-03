@@ -1,3 +1,4 @@
+<%@page import="Model.ProbableNominee"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -32,6 +33,7 @@
                     <li><a href="#election_nominees" data-toggle="tab">Nominees</a></li>
                     <li><a href="#election_candidates" data-toggle="tab">Candidates</a></li>
                     <li><a href="#election_voters" data-toggle="tab">Voters</a>
+                    <li><a href="#election_list" data-toggle="tab">List</a>
                     </li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
@@ -178,6 +180,7 @@
                             </fieldset>
                         </form>
                     </div>
+
                     <div class="tab-pane fade active in" id="election_nominees">
                         <h4>Nominees' list for the election</h4>
                         <table class="table table-hover table-dynamic table-tools">
@@ -237,7 +240,6 @@
                                 <%}%>
                             </tbody>
                         </table>
-
                     </div>
 
                     <div class="tab-pane fade active in" id="election_candidates">
@@ -294,7 +296,7 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <button class="btn btn-primary btn-sm btn-add" value="<%=el.getId()%>"><i class="fa fa-plus"></i> Add Voter</button>
+                                <button class="btn btn-primary btn-sm btn-add" value="<%=el.getId()%>*addVoter"><i class="fa fa-plus"></i> Add Voter</button>
                                 <a href="#" id="link-upload">Upload CSV file</a>
                             </div>
 
@@ -348,8 +350,8 @@
                                             }
                                         %></td>
                                     <td>
-                                        <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
-                                        <button value="<%= v.getElection_id()%>-<%= v.getEmail()%>" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
+                                        <button value="<%= v.getElection_id()%>*<%= v.getEmail()%>*editVoter" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
+                                        <button value="<%= v.getElection_id()%>*<%= v.getEmail()%>*deleteVoter" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
                                     </td>
                                 </tr>
                                 <%}%>
@@ -363,6 +365,84 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="tab-pane fade active in" id="election_list">
+                        <h4>Probable Nominee List</h4>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-sm btn-add" value="<%=el.getId()%>*addNominee"><i class="fa fa-plus"></i> Add New </button>
+                                <a href="#" id="link-upload">Upload CSV file</a>
+                            </div>
+
+                            <div id="upload-voters" style="display: none" class="col-md-6">
+                                <form class="form-inline" action="UploadProbableNomineeFile" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="election_id" value="<%= el.getId()%>">
+                                    <div class="form-group">
+                                        <input class="form-control" type="file" name="nominee_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-default btn-sm" name="action" value="import_voter" type="submit"><i class="fa fa-upload"></i> Upload</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+
+                        <br><br>
+                        <div class="align-left well">
+                            Registration Link Status - 
+                            <i class="fa fa-check-circle" style="color:green"></i> Sent
+                            <i class="fa fa-circle" style="color:red"></i> Not Sent
+                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nominee Email</th>
+                                    <th class="align-center">Link Status</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr id="blank_row"></tr>
+                                <!-- Display Voter Data by Loop -->
+
+                                <% ArrayList<ProbableNominee> pn = (ArrayList<ProbableNominee>) request.getAttribute("probable_nominee");
+                                      for (ProbableNominee p : pn) {
+                                %>
+                                <tr>
+                                    <td><%= p.getEmail()%></td>
+                                    <td class="align-center"><%
+                                        if (p.getStatus()) {
+                                        %>
+                                        <i class="fa fa-check-circle" style="color:green"></i>
+                                        <%
+                                        } else {
+                                        %>
+                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <%
+                                            }
+                                        %></td>
+                                    <td>
+                                        <button value="<%= p.getElection_id()%>*<%= p.getEmail()%>*editNominee" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
+                                        <button value="<%= p.getElection_id()%>*<%= p.getEmail()%>*deleteNominee" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
+                                    </td>
+                                </tr>
+                                <%}%>
+                                <%
+                                    if (pn.size() == 0) {
+                                %>
+                                <tr>
+                                    <td colspan="3"><strong>Probable Nominees will be displayed here...</strong></td>
+                                </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
             </div>
