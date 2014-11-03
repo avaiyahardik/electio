@@ -3,7 +3,7 @@
 <jsp:include page="header.jsp"/>
 <%
     Election el = (Election) request.getAttribute("election");
-    int nominee_status = (Integer) request.getAttribute("nominee_status");
+    int status = (Integer) request.getAttribute("nominee_status");
 %>
 
 <div class="page-header">
@@ -44,7 +44,15 @@
             <td><%=el.getVoting_end()%></td>
         </tr>
     </table>
-    <h1>You nomination status => <%=nominee_status%></h1>
+    <h1>You nomination status 
+        <%if (status == 0) {%>
+        <label class="label label-warning control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+        <%} else if (status == 1) {%>
+        <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
+        <%} else {%>
+        <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
+        <%}%>
+    </h1>
 </div>
 
 
