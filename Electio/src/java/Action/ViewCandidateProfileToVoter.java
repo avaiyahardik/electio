@@ -22,12 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hardik Avaiya
  */
-public class CandidateProfile implements Controller.Action {
+public class ViewCandidateProfileToVoter implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
-        String email = (String) req.getSession().getAttribute("candidate_email");
+        String email = (String) req.getSession().getAttribute("email");
         String elec_id = (String) req.getSession().getAttribute("election_id");
         String view = "index.jsp";
         String msg = null;
@@ -36,19 +36,17 @@ public class CandidateProfile implements Controller.Action {
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
-            view = "profile.jsp";
-            title = "Nominee/Candidate Profile";
+            view = "candidateProfile.jsp";
+            title = "Candidate Profile";
             long id = Long.parseLong(elec_id);
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 Election e = obj.getElection(id);
-                Nominee n = obj.getNominee(id, email);
                 Candidate c = obj.getCandidate(id, email);
-                req.setAttribute("nominee", n);
                 req.setAttribute("candidate", c);
             } catch (SQLException ex) {
                 err = ex.getMessage();
-                System.out.println("Nominee/Candidate Profile Err: " + ex.getMessage());
+                System.out.println("View Candidate Profile to Voter Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);

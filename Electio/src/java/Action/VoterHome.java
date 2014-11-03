@@ -26,23 +26,24 @@ public class VoterHome implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getSession().getAttribute("voter_email");
-        Long elec_id = (Long) req.getSession().getAttribute("election_id");
+        String elec_id = (String) req.getSession().getAttribute("election_id");
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
-        
+
         if (email == null || email.equals("") || elec_id == null) {
             err = "Session expired please login again";
         } else {
-            
+
             view = "electionDetails.jsp";
             title = "Election Details";
-            
+
             try {
+                long election_id = Long.parseLong(elec_id);
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                Election el=obj.getElection(elec_id);
-                req.setAttribute("election",el);                
+                Election el = obj.getElection(election_id);
+                req.setAttribute("election", el);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("Voter Err: " + ex.getMessage());
