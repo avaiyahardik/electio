@@ -42,24 +42,24 @@ public class VoteNow implements Controller.Action {
                 err = "Fail to locate election id, please retry";
             } else {
                 System.out.println("Yes");
-                
+
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
                     boolean status = obj.getVoterStatus(id, email);
                     if (status == false) {
-                        
+
                         System.out.println("type->" + election_type);
 
                         ArrayList<Candidate> candidates = obj.getCandidates(id);
                         req.setAttribute("candidates", candidates);
-
+                        req.setAttribute("election_name", obj.getElectionName(id));
                         title = "Voting Now";
-                        if (election_type == 1) {
+                        if (election_type == 2) {
                             view = "weighted.jsp";
                             System.out.println("Election ID: " + id);
 
-                        } else if (election_type == 2) {
+                        } else if (election_type == 1) {
                             view = "preferential.jsp";
                         }
                     } else if (status == true) {
