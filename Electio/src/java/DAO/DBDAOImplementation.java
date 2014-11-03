@@ -750,10 +750,10 @@ public class DBDAOImplementation {
 
     public boolean changeProbableNomineeStatus(ProbableNominee pn) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_probable_nominee VALUES(?,?,?)");
-        ps.setLong(1, pn.getElection_id());
-        ps.setString(2, pn.getEmail());
-        ps.setBoolean(3, pn.getStatus());
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_probable_nominee SET status=? WHERE election_if=? AND email=?");
+        ps.setBoolean(1, pn.getStatus());
+        ps.setLong(2, pn.getElection_id());
+        ps.setString(3, pn.getEmail());
 
         if (ps.executeUpdate() > 0) {
             result = true;
