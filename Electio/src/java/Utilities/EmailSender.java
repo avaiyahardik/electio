@@ -28,7 +28,7 @@ public class EmailSender {
      * @param body
      */
     public static boolean sendMail(String from, String password, String subject, String message, String to[]) {
-        String host = "mail.jaintele.com";
+        String host = "smtp.gmail.com";
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);

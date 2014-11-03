@@ -505,7 +505,7 @@ public class DBDAOImplementation {
 
     public boolean changeCandidatePassword(String email, String password) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_candidate SET password=? WHERE email=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET password=? WHERE email=?");
         ps.setString(1, password);
         ps.setString(2, email);
         if (ps.executeUpdate() > 0) {
