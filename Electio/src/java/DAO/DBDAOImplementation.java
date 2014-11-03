@@ -755,4 +755,16 @@ public class DBDAOImplementation {
         return pns;
     }
 
+    public String[] getAllProbableNomineesEmail(long election_id) throws SQLException {
+        ArrayList<String> emails = new ArrayList<>();
+        String email = null;
+        PreparedStatement ps = con.prepareStatement("SELECT email FROM tbl_probable_nominee WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            emails.add(rs.getString("email"));
+        }
+        return emails.toArray(new String[]{});
+    }
+
 }
