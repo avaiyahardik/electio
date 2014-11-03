@@ -30,7 +30,7 @@ public class VoterLogin implements Controller.Action {
         String step = req.getParameter("step");
         String password = "";
         String view = "index.jsp";  // default view should be login page itself        
-        String title="";
+        String title = "";
         String msg = null;
         String err = null;
         System.out.println(elec_id + ", " + email);
@@ -47,41 +47,40 @@ public class VoterLogin implements Controller.Action {
                         Voter v = obj.loginVoter1(election_id, email);
                         view = "login.jsp?election_id=" + election_id;
                         msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
-                        if (v.getStatus() == false) {
-                            view = "login2.jsp"; // view changed if email exists and status is not voted successfull
-                            title = "Voter Login";
-                            password = RandomString.generateRandomPassword();
-                            obj.insertVoterPassword(election_id, email, password);
 
-                            req.setAttribute("election_id", elec_id);
-                            req.setAttribute("email", email);
-                            String[] to = {email};
-                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Password", password, to)) {
-                                msg = "Your password has been sent to your email id";
-                            } else {
-                                msg = "Server Error, try again after sometime";
-                                view = "login.jsp?election_id=" + election_id;
-                            }
+                        view = "login2.jsp"; // view changed if email exists and status is not voted successfull
+                        title = "Voter Login";
+                        password = RandomString.generateRandomPassword();
+                        obj.insertVoterPassword(election_id, email, password);
+
+                        req.setAttribute("election_id", elec_id);
+                        req.setAttribute("email", email);
+                        String[] to = {email};
+                        if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Password", password, to)) {
+                            msg = "Your password has been sent to your email id";
+                        } else {
+                            msg = "Server Error, try again after sometime";
+                            view = "login.jsp?election_id=" + election_id;
                         }
+
                     }
                 } else if (step.equals("2")) {
                     password = req.getParameter("password");
                     if (obj.loginVoter2(election_id, email, password)) {
                         Voter v = obj.loginVoter1(election_id, email);
-                        msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
-                        if (v.getStatus() == false) {
-                            view = "electionDetails.jsp"; // view changed if login successfull
-                            title = "Election Details";
-                            Election el = obj.getElection(election_id);
-                            ArrayList<Candidate> candidates = obj.getCandidates(election_id);
-                            Election election = obj.getElection(election_id);
-                            req.setAttribute("candidates", candidates);
-                            System.out.println("ttppyyee"+election.getType_id());
-                            req.getSession().setAttribute("election_type", election.getType_id());
-                            req.setAttribute("election", el);
-                            req.getSession().setAttribute("election_id", election_id);
-                            req.getSession().setAttribute("voter_email", email);
-                        }
+
+                        view = "electionDetails.jsp"; // view changed if login successfull
+                        title = "Election Details";
+                        Election el = obj.getElection(election_id);
+                        ArrayList<Candidate> candidates = obj.getCandidates(election_id);
+                        Election election = obj.getElection(election_id);
+                        req.setAttribute("candidates", candidates);
+                        System.out.println("ttppyyee" + election.getType_id());
+                        req.getSession().setAttribute("election_type", election.getType_id());
+                        req.setAttribute("election", el);
+                        req.getSession().setAttribute("election_id", election_id);
+                        req.getSession().setAttribute("voter_email", email);
+
                     }
                 } else {
 
