@@ -10,7 +10,9 @@ import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
 import Model.Organization;
+import Model.ProbableNominee;
 import Model.Voter;
+import Utilities.RandomString;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -79,6 +81,8 @@ public class UploadVoterFile extends HttpServlet {
                     request.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = obj.getVoters(election_id);
                     request.setAttribute("voters", voters);
+                    ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(election_id);
+                    request.setAttribute("probable_nominee", pns);
                 } else if (fileItem.getFieldName().equals("voter_file")) {
                     System.out.println("FileName=" + fileItem.getName());
                     System.out.println("ContentType=" + fileItem.getContentType());
@@ -100,7 +104,7 @@ public class UploadVoterFile extends HttpServlet {
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
                     while (s != null) {
-                        v = new Voter(s, election_id, "password", false);
+                        v = new Voter(s, election_id, RandomString.generateRandomPassword(), false);
                         obj.addVoter(v);
                         s = br.readLine();
                     }
