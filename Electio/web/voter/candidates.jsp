@@ -20,7 +20,7 @@
         for (Candidate c : candidates) {
     %>
     <tr>
-        <td><a href="#"><%=c.getFirstname()%> <%=c.getLastname()%></a></td>
+        <td><a href="Controller?action=view_candidate_to_voter&election_id=<%=c.getElection_id()%>&candidate_email=<%=c.getEmail()%>"><%=c.getFirstname()%> <%=c.getLastname()%></a></td>
         <td><%= obj.getOrganization(c.getOrganization_id()).getName()%></td>
         <td>
             <% String gender = "Other";

@@ -20,6 +20,7 @@ import sun.misc.BASE64Encoder;
  */
 public class RandomString {
 
+    public static final String DOMAIN_BASE = "http://localhost:8084/Electio/";
     private static final String CHAR_LIST
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&-_=+<>?";
     private static Random random;

@@ -10,6 +10,7 @@ import Model.Candidate;
 import Model.ProbableNominee;
 import Model.Voter;
 import Utilities.EmailSender;
+import Utilities.RandomString;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -43,7 +44,7 @@ public class SendMailToVoters implements Controller.Action {
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     String voters[] = obj.getVotersEmail(id);
-                    String link = "<a href='" + req.getServletContext().getInitParameter("domain_base") + "voter/login.jsp?election_id=" + election_id + "'>" + req.getServletContext().getInitParameter("domain_base") + "voter/login.jsp?election_id=" + election_id + "</a>";
+                    String link = "<a href='" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
                     if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, voters)) {
                         System.out.println("mail send to all voters ");
                         msg = "mail send to all voters";
