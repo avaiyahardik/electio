@@ -6,6 +6,7 @@ import Model.ElectionCommissioner;
 import Model.ElectionType;
 import Model.Nominee;
 import Model.Organization;
+import Model.ProbableNominee;
 import Model.Voter;
 import java.sql.Connection;
 import java.sql.Date;
@@ -732,4 +733,26 @@ public class DBDAOImplementation {
         }
         return result;
     }
+
+    public boolean addProbableNominee(ProbableNominee pn) throws SQLException {
+        boolean result = false;
+        return result;
+    }
+
+    public ArrayList<ProbableNominee> getAllProbableNominees(long election_id) throws SQLException {
+        ArrayList<ProbableNominee> pns = new ArrayList<>();
+        ProbableNominee pn = null;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_probable_nominee WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            pn = new ProbableNominee();
+            pn.setElection_id(election_id);;
+            pn.setEmail(rs.getString("email"));
+            pn.setStatus(rs.getBoolean("status"));
+            pns.add(pn);
+        }
+        return pns;
+    }
+
 }
