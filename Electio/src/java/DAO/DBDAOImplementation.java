@@ -299,6 +299,17 @@ public class DBDAOImplementation {
         return voters;
     }
 
+    public String[] getVotersEmail(long election_id) throws SQLException {
+        ArrayList<String> voters = new ArrayList<String>();
+        PreparedStatement ps = con.prepareStatement("SELECT email FROM tbl_voter WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            voters.add(rs.getString("email"));
+        }
+        return voters.toArray(new String[]{});
+    }
+
     public ArrayList<Election> getElections(String email) throws SQLException {
         ArrayList<Election> elections = new ArrayList<Election>();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=?");
