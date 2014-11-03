@@ -450,6 +450,17 @@ public class DBDAOImplementation {
         return result;
 
     }
+    public boolean changeCandidatePassword(String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_candidate SET password=? WHERE email=?");
+        ps.setString(1, password);
+        ps.setString(2, email);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+
+    }
 
     public ArrayList<Nominee> getNominees(long election_id) throws SQLException {
         ArrayList<Nominee> nominees = new ArrayList<Nominee>();
