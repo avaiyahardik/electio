@@ -45,9 +45,6 @@ public class VoterLogin implements Controller.Action {
                 if (step.equals("1")) {
                     if (obj.loginVoter1(election_id, email) != null) {
                         Voter v = obj.loginVoter1(election_id, email);
-                        view = "login.jsp?election_id=" + election_id;
-                        msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
-
                         view = "login2.jsp"; // view changed if email exists and status is not voted successfull
                         title = "Voter Login";
                         password = RandomString.generateRandomPassword();
@@ -56,7 +53,7 @@ public class VoterLogin implements Controller.Action {
                         req.setAttribute("election_id", elec_id);
                         req.setAttribute("email", email);
                         String[] to = {email};
-                        if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Password", password, to)) {
+                        if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "Password", password, to)) {
                             msg = "Your password has been sent to your email id";
                         } else {
                             msg = "Server Error, try again after sometime";
