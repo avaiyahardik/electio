@@ -25,7 +25,7 @@ public class SendMailToProbableNominee implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getSession().getAttribute("email");
-        String election_id = (String) req.getSession().getAttribute("election_id");
+        String election_id = req.getParameter("election_id");
 
         String view = "index.jsp";
         String msg = null;
@@ -37,7 +37,7 @@ public class SendMailToProbableNominee implements Controller.Action {
             if (election_id == null || election_id.equals("")) {
                 err = "invalid parameter";
             } else {
-                long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
+                long id = Long.parseLong(election_id);
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(id);
