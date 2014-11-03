@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2014 at 03:40 PM
+-- Generation Time: Nov 03, 2014 at 11:58 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -173,6 +173,19 @@ INSERT INTO `tbl_organization` (`id`, `name`, `address`, `about`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_probable_nominee`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_probable_nominee` (
+  `election_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`election_id`,`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_rejected_nominee`
 --
 
@@ -206,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user_info` (
 --
 
 INSERT INTO `tbl_user_info` (`email`, `firstname`, `lastname`, `gender`, `mobile`, `organization_id`, `image`, `password`) VALUES
-('201312011@daiict.ac.in', 'Moto G', '2nd Gen', 0, '9737808095', 6, 'user_images\\1414912290131.png', 'motog'),
+('201312011@daiict.ac.in', 'Moto G', '2nd Gen', 0, '9737808095', 6, 'user_images\\1414912290131.png', 'g'),
 ('avaiyahardik@gmail.com', 'Redmi', '1S', 0, '9737808095', 5, 'user_images\\1414863678401.png', 'redmi'),
 ('sen.daiict@gmail.com', 'Samsung', 'Core 2 Dual', 0, '9737808095', 3, 'user_images\\1414861505801.png', 'samsung');
 
@@ -229,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `tbl_voter` (
 --
 
 INSERT INTO `tbl_voter` (`email`, `election_id`, `password`, `status`) VALUES
+('avaiyahardik@gmail.com', 1, 'WD74TLu$', 0),
 ('sen.daiict@gmail.com', 1, 'pwdpwdpwd', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
