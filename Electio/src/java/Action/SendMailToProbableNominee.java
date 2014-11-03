@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,7 +42,7 @@ public class SendMailToProbableNominee implements Controller.Action {
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(id);
-                    String link = "<a href='localhost:8084/Electio/candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>localhost:8084/Electio/candidate/index.jsp?election_id=" + election_id + "</a>";
+                    String link = "<a href='" + req.getSession().getServletContext().getInitParameter("domain_base") + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + req.getSession().getServletContext().getInitParameter("domain_base") + "candidate/index.jsp?election_id=" + election_id + "</a>";
                     for (ProbableNominee itm : pns) {
                         if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {
                             itm.setStatus(true);
