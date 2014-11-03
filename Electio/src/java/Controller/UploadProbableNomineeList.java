@@ -10,7 +10,9 @@ import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
 import Model.Organization;
+import Model.ProbableNominee;
 import Model.Voter;
+import Utilities.RandomString;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -57,7 +59,7 @@ public class UploadProbableNomineeList extends HttpServlet {
 //      System.out.println("MSG: " + request.getParameter("election_id"));
 
         long election_id = 0;
-        String voter_file = "";
+        String nominee_file = "";
         try {
             DBDAOImplementation obj = DBDAOImplementation.getInstance();
             List<FileItem> fileItemsList = uploader.parseRequest(request);
@@ -79,7 +81,9 @@ public class UploadProbableNomineeList extends HttpServlet {
                     request.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = obj.getVoters(election_id);
                     request.setAttribute("voters", voters);
-                } else if (fileItem.getFieldName().equals("voter_file")) {
+                    ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(election_id);
+                    request.setAttribute("probable_nominee", pns);
+                } else if (fileItem.getFieldName().equals("nominee_file")) {
                     System.out.println("FileName=" + fileItem.getName());
                     System.out.println("ContentType=" + fileItem.getContentType());
                     System.out.println("Size in bytes=" + fileItem.getSize());
@@ -91,26 +95,26 @@ public class UploadProbableNomineeList extends HttpServlet {
 //                    System.out.println("Ext: " + ext);
                     File file = new File(request.getServletContext().getRealPath("/temp") + File.separator + date.getTime() + ext);
                     fileItem.write(file);
-                    voter_file = request.getServletContext().getRealPath("/temp") + File.separator + date.getTime() + ext;
-                    System.out.println("Absolute Path at server=" + voter_file);
+                    nominee_file = request.getServletContext().getRealPath("/temp") + File.separator + date.getTime() + ext;
+                    System.out.println("Absolute Path at server=" + nominee_file);
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                    Voter v;
-                    File f = new File(voter_file);
+                    ProbableNominee pn;
+                    File f = new File(nominee_file);
                     FileReader fr = new FileReader(f);
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
                     while (s != null) {
-                        v = new Voter(s, election_id, "password", false);
-                        obj.addVoter(v);
+                        pn=new ProbableNominee(election_id, s, false);
+                        obj.addProbableNominee(pn);
                         s = br.readLine();
                     }
                 }
             }
         } catch (FileUploadException e) {
-            System.out.println("File Not Found Exception in uploading voter file.");
+            System.out.println("File Not Found Exception in uploading probable nominee file.");
         } catch (Exception e) {
             err = e.getMessage();
-            System.out.println("Import Voter Error: " + e.toString());
+            System.out.println("Import Probable Nominee Error: " + e.toString());
         }
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
