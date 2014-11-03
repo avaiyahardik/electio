@@ -270,6 +270,18 @@ public class DBDAOImplementation {
         return voter;
     }
 
+    public boolean getVoterStatus(long election_id, String email) throws SQLException {
+        boolean status = false;
+        PreparedStatement ps = con.prepareStatement("SELECT status FROM tbl_voter WHERE email=? and election_id=?");
+        ps.setString(1, email);
+        ps.setLong(2, election_id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            status = rs.getBoolean("status");
+        }
+        return status;
+    }
+
     public ArrayList<Voter> getVoters(long election_id) throws SQLException {
         ArrayList<Voter> voters = new ArrayList<Voter>();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE election_id=?");
