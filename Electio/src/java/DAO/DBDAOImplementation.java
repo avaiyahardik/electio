@@ -736,6 +736,29 @@ public class DBDAOImplementation {
 
     public boolean addProbableNominee(ProbableNominee pn) throws SQLException {
         boolean result = false;
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_probable_nominee VALUES(?,?,?)");
+        ps.setLong(1, pn.getElection_id());
+        ps.setString(2, pn.getEmail());
+        ps.setBoolean(3, pn.getStatus());
+
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public boolean changeProbableNomineeStatus(ProbableNominee pn) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_probable_nominee VALUES(?,?,?)");
+        ps.setLong(1, pn.getElection_id());
+        ps.setString(2, pn.getEmail());
+        ps.setBoolean(3, pn.getStatus());
+
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+
         return result;
     }
 

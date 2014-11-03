@@ -31,7 +31,7 @@ public class ProbableNominee {
         this.email = email;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
