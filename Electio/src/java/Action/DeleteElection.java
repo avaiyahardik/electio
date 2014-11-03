@@ -36,14 +36,14 @@ public class DeleteElection implements Controller.Action {
                 long id = Integer.parseInt(req.getParameter("id"));
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    if (obj.deleteElection(email, id) && obj.deleteVoter(email, id) && obj.deleteNominee(email, id)) {
+                    if (obj.deleteElection(email, id) && obj.deleteVoterForElection(id) && obj.deleteNominee(email, id) && obj.deleteCandidateForElection(id) && obj.deleteProbableNomineeForElection(id) && obj.deleteRejectedNomineeForElection(id)) {
                         msg = "Election deleted successfully";
                     } else {
                         err = "Fail to delete election, please retry";
                     }
                 } catch (SQLException ex) {
                     err = ex.getMessage();
-                    System.out.println("Logout Error: " + ex.getMessage());
+                    System.out.println("Delete Election Error: " + ex.getMessage());
                 }
             }
         }

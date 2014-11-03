@@ -198,9 +198,30 @@ public class DBDAOImplementation {
 
     public boolean deleteNominee(String email, long id) throws SQLException {
         boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=? and email=?");
+        ps.setLong(1, id);
+        ps.setString(2, email);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean deleteNomineeForElection(long id) throws SQLException {
+        boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=?");
         ps.setLong(1, id);
-        if (ps.executeUpdate() > 0) {
+        if (ps.execute()) {
+            result = true;
+        }
+        return result;
+    }
+    
+    public boolean deleteRejectedNomineeForElection(long id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_rejected_nominee WHERE election_id=?");
+        ps.setLong(1, id);
+        if (ps.execute()) {
             result = true;
         }
         return result;
@@ -249,6 +270,26 @@ public class DBDAOImplementation {
         ps.setLong(1, election_id);
         ps.setString(2, email);
         if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean deleteVoterForElection(long election_id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_voter WHERE election_id=?");
+        ps.setLong(1, election_id);
+        if (ps.execute()) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean deleteCandidateForElection(long election_id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_candidate WHERE election_id=?");
+        ps.setLong(1, election_id);
+        if (ps.execute()) {
             result = true;
         }
         return result;
@@ -461,6 +502,7 @@ public class DBDAOImplementation {
         return result;
 
     }
+
     public boolean changeCandidatePassword(String email, String password) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET password=? WHERE email=?");
@@ -842,6 +884,16 @@ public class DBDAOImplementation {
         ps.setString(2, old_email);
         ps.setLong(3, election_id);
         if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean deleteProbableNomineeForElection(long election_id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_probable_nominee WHERE election_id=?");
+        ps.setLong(1, election_id);
+        if (ps.execute()) {
             result = true;
         }
         return result;
