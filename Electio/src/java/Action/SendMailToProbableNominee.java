@@ -9,6 +9,7 @@ import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.ProbableNominee;
 import Utilities.EmailSender;
+import Utilities.RandomString;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -42,7 +43,7 @@ public class SendMailToProbableNominee implements Controller.Action {
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(id);
-                    String link = "<a href='" + req.getServletContext().getInitParameter("domain_base") + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + req.getServletContext().getInitParameter("domain_base") + "candidate/index.jsp?election_id=" + election_id + "</a>";
+                    String link = "<a href='" + RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
                     for (ProbableNominee itm : pns) {
                         if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {
                             itm.setStatus(true);
