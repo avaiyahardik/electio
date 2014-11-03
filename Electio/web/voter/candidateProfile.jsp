@@ -105,6 +105,12 @@
                                 <input type="text"  disabled="disabled" class="form-control" name="about_organization" required value="<%=o.getAbout()%>">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="manifesto" class="control-label col-lg-4">Manifesto</label>
+                            <div class="col-lg-6">
+                                <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto</a>
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>
