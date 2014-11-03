@@ -15,6 +15,12 @@ public class ProbableNominee {
     private String email;
     private boolean status;
 
+    public ProbableNominee(long election_id, String email, boolean status) {
+        this.election_id = election_id;
+        this.email = email;
+        this.status = status;
+    }
+
     public long getElection_id() {
         return election_id;
     }
