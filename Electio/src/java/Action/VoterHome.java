@@ -31,7 +31,6 @@ public class VoterHome implements Controller.Action {
         String msg = null;
         String err = null;
         String title = "Login";
-
         if (email == null || email.equals("") || elec_id == null) {
             err = "Session expired please login again";
         } else {
@@ -46,7 +45,7 @@ public class VoterHome implements Controller.Action {
                 req.setAttribute("election", el);
             } catch (SQLException ex) {
                 err = ex.getMessage();
-                System.out.println("Voter Err: " + ex.getMessage());
+                System.out.println("Voter Home Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);

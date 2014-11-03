@@ -26,23 +26,24 @@ public class ListCandidates implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getSession().getAttribute("voter_email");
-        Long elec_id = (Long) req.getSession().getAttribute("election_id");
+        String elec_id = (String) req.getSession().getAttribute("election_id");
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
-        
+
         if (email == null || email.equals("") || elec_id == null) {
             err = "Session expired please login again";
         } else {
-            
+
             view = "candidates.jsp";
             title = "Candidates List";
-            
+
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                ArrayList<Candidate> candidates=obj.getCandidates(elec_id);
-                req.setAttribute("candidates",candidates);                
+                long election_id = Long.parseLong(elec_id);
+                ArrayList<Candidate> candidates = obj.getCandidates(election_id);
+                req.setAttribute("candidates", candidates);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("List Candidates Err: " + ex.getMessage());

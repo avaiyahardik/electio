@@ -10,25 +10,25 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-1">
-    <% Election el=(Election)request.getAttribute("election");%>
+                <% Election el = (Election) request.getAttribute("election");%>
                 <table class="responsiveExpander">
                     <tr>
                         <th>Election Name</th>
-                        <td><%= el.getName() %></td>
+                        <td><%= el.getName()%></td>
                     </tr>   
-                        <tr>
+                    <tr>
                         <th>Voting Start</th>
-                        <td><%= el.getVoting_start() %></td>
+                        <td><%= el.getVoting_start()%></td>
                     </tr>   
                     <tr>
                         <th>Voting End</th>
-                        <td><%= el.getVoting_end() %></td>
+                        <td><%= el.getVoting_end()%></td>
                     </tr>   
-                    
-                    
+
+
                 </table>
 
-    
+
             </div>
         </div>
     </div>

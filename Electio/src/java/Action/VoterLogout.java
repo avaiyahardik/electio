@@ -10,9 +10,9 @@ public class VoterLogout implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        Long elec_id = (Long) req.getSession().getAttribute("election_id");
+        String elec_id = (String) req.getSession().getAttribute("election_id");
         String email = (String) req.getSession().getAttribute("voter_email");
-        String view = "login.jsp?election_id="+elec_id;
+        String view = "login.jsp?election_id=" + elec_id;
         String msg = null;
         String err = null;
         String title = "Voter Login";
