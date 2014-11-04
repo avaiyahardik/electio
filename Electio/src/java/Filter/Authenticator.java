@@ -72,8 +72,8 @@ public class Authenticator implements Filter {
         map.load(this.getClass().getClassLoader().getResourceAsStream(ACTION_MAPPING));
 
         String action_class = null;
-        action_class = map.getProperty(action.toLowerCase());
-        if (action_class == null) {
+        //action_class = map.getProperty(action.toLowerCase());
+        if (action != null && action_class == null) {
             RequestDispatcher rd = req.getRequestDispatcher(view);
             rd.forward(request, response);
             return;
