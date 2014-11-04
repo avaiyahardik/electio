@@ -627,6 +627,7 @@ public class DBDAOImplementation {
             candidate.setElection_id(rs.getLong("election_id"));
             candidate.setRequirements_file(rs.getString("requirements_file"));
             candidate.setManifesto(rs.getString("manifesto"));
+            candidate.setPetition_filed(rs.getBoolean("petition_filed"));
 
         }
         return candidate;
@@ -652,6 +653,7 @@ public class DBDAOImplementation {
             candidate.setRequirements_file(rs.getString("requirements_file"));
             candidate.setVotes(rs.getLong("votes"));
             candidate.setManifesto(rs.getString("manifesto"));
+            candidate.setPetition_filed(rs.getBoolean("petition_filed"));
             candidates.add(candidate);
         }
         return candidates;
@@ -701,6 +703,7 @@ public class DBDAOImplementation {
 
     public boolean approveNominee(long election_id, String email, String requirements_file) throws SQLException {
         boolean result = false;
+        int flag = 0;
         // status = 1 means approved
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
         ps.setInt(1, 1);
@@ -708,16 +711,20 @@ public class DBDAOImplementation {
         ps.setString(3, email);
 
         if (ps.executeUpdate() > 0) {
-            result = true;
+            flag++;
         }
 
-        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_candidate VALUES(?,?,?,?,?)");
+        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_candidate VALUES(?,?,?,?,?,?)");
         ps2.setString(1, email);
         ps2.setLong(2, election_id);
         ps2.setString(3, requirements_file);
         ps2.setInt(4, 0);
         ps2.setString(5, "manifestos/electio.pdf");
+        ps2.setBoolean(6, false);
         if (ps2.executeUpdate() > 0) {
+            flag++;
+        }
+        if (flag == 2) {
             result = true;
         }
         return result;
