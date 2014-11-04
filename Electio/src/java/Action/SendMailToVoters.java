@@ -27,6 +27,7 @@ public class SendMailToVoters implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
+        System.out.println("hi");
         String email = (String) req.getSession().getAttribute("email");
         String election_id = req.getParameter("election_id");
 
@@ -34,12 +35,14 @@ public class SendMailToVoters implements Controller.Action {
         String msg = null;
         String err = null;
         String title = "Login";
+        
         if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
             if (election_id == null || election_id.equals("")) {
                 err = "invalid parameter";
             } else {
+                System.out.println("hi");
                 long id = Long.parseLong(election_id);
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
@@ -47,9 +50,11 @@ public class SendMailToVoters implements Controller.Action {
                     String link = "<a href='" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
                     for (Voter v : voters) {
                         if (v.getLinkStatus() == false) {
-                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, v.getEmail())) {
+                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Ballot Link", link, v.getEmail())) {
                                 System.out.println("mail send to all voters ");
                                 msg = "mail send to all voters";
+                                v.setLinkStatus(true);
+                                obj.changeVoterLinkStatus(v);
                             } else {
                                 err = "Fail to send mail to voters";
                                 System.out.println("Fail to send mail to voters");
