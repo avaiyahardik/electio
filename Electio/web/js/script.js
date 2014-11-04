@@ -10,7 +10,7 @@ $(document).ready(function () {
             var to_remove = $(this).parent().parent();
             var data_array = $(this).val().split("*");
             var election_id = data_array[0];
-            var voter_email = data_array[1];
+            var email = data_array[1];
             var type = data_array[2];
 
             if (type == "deleteVoter") {
@@ -18,7 +18,7 @@ $(document).ready(function () {
                         {
                             cmd: "delete",
                             election_id: election_id,
-                            voter_email: voter_email
+                            voter_email: email
                         },
                 function (data, status) {
                     if (data == "Deleted") {
@@ -29,12 +29,12 @@ $(document).ready(function () {
                     }
                 });
             } else if (type == "deleteNominee") {
-                alert("Nominee");
+                
                 $.post("UpdateProbableNominee",
                         {
                             cmd: "delete",
                             election_id: election_id,
-                            voter_email: voter_email
+                            probable_nominee_email: email
                         },
                 function (data, status) {
                     if (data == "Deleted") {
