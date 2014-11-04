@@ -103,9 +103,14 @@ public class UploadProbableNomineeFile extends HttpServlet {
                     FileReader fr = new FileReader(f);
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
+                    String reg = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     while (s != null) {
+                         if (s.matches(reg)) {
                         pn=new ProbableNominee(election_id, s, 0);
                         obj.addProbableNominee(pn);
+                         }else{
+                             System.out.println("invalid email address "+s);
+                         }
                         s = br.readLine();
                     }
                 }
