@@ -1,3 +1,4 @@
+<%@page import="Model.Candidate"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Organization"%>
 <%@page import="java.io.File"%>
@@ -7,6 +8,7 @@
 <%
     DBDAOImplementation obj = DBDAOImplementation.getInstance();
     Nominee n = (Nominee) request.getAttribute("nominee");
+    Candidate c=(Candidate) request.getAttribute("candidate");
     int status = n.getStatus();
     Organization o = obj.getOrganization(n.getElection_id());
 %>
@@ -106,7 +108,8 @@
                         <div class="form-group">
                             <label for="manifesto" class="control-label col-lg-4">Manifesto(PDF only)</label>
                             <div class="col-lg-6">
-                                <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf"  required/>
+                                <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf" />
+                                <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto file</a>
                             </div>
                         </div>
 
