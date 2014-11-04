@@ -103,7 +103,7 @@ public class UploadVoterFile extends HttpServlet {
                     FileReader fr = new FileReader(f);
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
-                    String reg = "/^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$/";
+                    String reg = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     while (s != null) {
                         if (s.matches(reg)) {
                             v = new Voter(s, election_id, RandomString.generateRandomPassword(), false, false);
