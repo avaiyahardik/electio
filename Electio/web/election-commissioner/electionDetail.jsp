@@ -34,6 +34,7 @@
                     <li><a href="#election_candidates" data-toggle="tab">Candidates</a></li>
                     <li><a href="#election_voters" data-toggle="tab">Voters</a>
                     <li><a href="#election_list" data-toggle="tab">List</a>
+                    <li><a href="#election_result" data-toggle="tab">Results</a></li>
                     </li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
@@ -472,17 +473,21 @@
                                     </td>
                                 </tr>
                                 <%}%>
-                                <%
-
-                                    if (pn.size()
-                                            == 0) {
-                                %>
+                                <%if (pn.size() == 0) {%>
                                 <tr>
                                     <td colspan="3"><strong>Probable Nominees will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="tab-pane fade active in" id="election_result">
+                        <div class="row">
+                            <div class="col-lg-10 well">
+                                <div id="result-chart"></div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -500,8 +505,12 @@
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
-
 <script type="text/javascript" src="../js/script.js"></script>
+
+
+<script type="text/javascript" src="../js/charts.js"></script>
+<script type="text/javascript" src="../js/jsapi"></script>
+
 <!-- END  PAGE LEVEL SCRIPTS -->
 
 
@@ -509,22 +518,44 @@
 
     $('#nomination_start').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#nomination_end').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#withdrawal_start').datetimepicker()
             .datetimepicker({step: 30});
     $('#withdrawal_end').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#voting_start').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#voting_end').datetimepicker()
             .datetimepicker({step: 30});
-
     tinymce.init({selector: '#requirements'});
+    google.load("visualization", "1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+
+
+
+        var years = ['2001', '2002', '2003', '2004', '2005'];
+        var sales = [1, 2, 3, 4, <%= el.getId()%>];
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Candidate');
+        data.addColumn('number', 'Votes');
+
+
+
+    <%
+    for (Candidate c:candidates) {
+    %>
+        data.addRow(['<%=c.getFirstname() %> <%=c.getLastname()%>', 1]);
+    <%}%>
+        var options = {
+            title: 'My Daily Activities',
+            is3D: true,
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('result-chart'));
+        chart.draw(data, options);
+    }
 
 </script>
 
