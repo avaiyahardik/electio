@@ -109,7 +109,7 @@
                             <label for="manifesto" class="control-label col-lg-4">Manifesto(PDF only)</label>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf" />
-                                <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto file</a>
+                                <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Current Manifesto file</a>
                             </div>
                         </div>
 
