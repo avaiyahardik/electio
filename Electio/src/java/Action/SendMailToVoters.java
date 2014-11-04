@@ -43,14 +43,18 @@ public class SendMailToVoters implements Controller.Action {
                 long id = Long.parseLong(election_id);
                 try {
                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    String voters[] = obj.getVotersEmail(id);
+                    ArrayList<Voter> voters = obj.getVotersEmail(id);
                     String link = "<a href='" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
-                    if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, voters)) {
-                        System.out.println("mail send to all voters ");
-                        msg = "mail send to all voters";
-                    } else {
-                        err = "Fail to send mail to voters";
-                        System.out.println("Fail to send mail to voters");
+                    for (Voter v : voters) {
+                        if (v.getLinkStatus() == false) {
+                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, v.getEmail())) {
+                                System.out.println("mail send to all voters ");
+                                msg = "mail send to all voters";
+                            } else {
+                                err = "Fail to send mail to voters";
+                                System.out.println("Fail to send mail to voters");
+                            }
+                        }
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(SendMailToVoters.class.getName()).log(Level.SEVERE, null, ex);
