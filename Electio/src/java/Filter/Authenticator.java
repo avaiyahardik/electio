@@ -65,18 +65,22 @@ public class Authenticator implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         String action = req.getParameter("action");
         String view = "index.jsp";
-        String title = "Home";
-        String msg = null;
-        String err = null;
         Properties map = new Properties();
         map.load(this.getClass().getClassLoader().getResourceAsStream(ACTION_MAPPING));
 
         String action_class = null;
-        //action_class = map.getProperty(action.toLowerCase());
-        if (action != null && action_class == null) {
-            RequestDispatcher rd = req.getRequestDispatcher(view);
-            rd.forward(request, response);
-            return;
+        if (action != null) {
+            action_class = map.getProperty(action.toLowerCase());
+            if (action_class == null) {
+                RequestDispatcher rd = req.getRequestDispatcher(view);
+                rd.forward(request, response);
+                return;
+            }
+        } else {
+            /*  err = "No action found";
+             RequestDispatcher rd = req.getRequestDispatcher(view);
+             rd.forward(request, response);
+             return;*/
         }
         chain.doFilter(request, response);
         doAfterProcessing(request, response);

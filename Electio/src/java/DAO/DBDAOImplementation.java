@@ -397,6 +397,33 @@ public class DBDAOImplementation {
         return elections;
     }
 
+    public ArrayList<Election> getCompletedElections(String email) throws SQLException {
+        ArrayList<Election> elections = new ArrayList<Election>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=? AND voting_end<NOW() ORDER BY voting_end DESC");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        Election el;
+        while (rs.next()) {
+            el = new Election();
+            el.setId(rs.getLong("id"));
+            el.setElection_commissioner_email(email);
+            el.setName(rs.getString("name"));
+            el.setDescription(rs.getString("description"));
+            el.setRequirements(rs.getString("requirements"));
+            el.setType_id(rs.getLong("type_id"));
+            el.setCreated_at(rs.getTimestamp("created_at"));
+            el.setNomination_start(rs.getTimestamp("nomination_start"));
+            el.setNomination_end(rs.getTimestamp("nomination_end"));
+            el.setWithdrawal_start(rs.getTimestamp("withdrawal_start"));
+            el.setWithdrawal_end(rs.getTimestamp("withdrawal_end"));
+            el.setVoting_start(rs.getTimestamp("voting_start"));
+            el.setVoting_end(rs.getTimestamp("voting_end"));
+            el.setPetition_duration(rs.getInt("petition_duration"));
+            elections.add(el);
+        }
+        return elections;
+    }
+
     public ElectionType getElectionType(long type_id) throws SQLException {
         ElectionType et = new ElectionType();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_type WHERE type_id=?");

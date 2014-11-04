@@ -6,8 +6,10 @@
 package Action;
 
 import DAO.DBDAOImplementation;
+import Model.Election;
 import Utilities.RandomString;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,18 +32,21 @@ public class ElectionCommissionerLogin implements Controller.Action {
         if (email == null || email.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields"; // error message should be displayed on view page
         } else {
-           //password = RandomString.encryptPassword(password);
+            //password = RandomString.encryptPassword(password);
             System.out.println("Encrypted password: " + password);
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                ArrayList<Election> elections = null;
                 if (obj.loginElectionCommissioner(email, password)) {
                     req.getSession().setAttribute("email", email);
                     view = "dashboard.jsp"; // view changed if login successfull
                     title = "Dashboard";
                     msg = "You're logged in successfully"; // message should be displayed on view page
+                    elections = obj.getCompletedElections(email);
                 } else {
                     err = "Fail to login, please retry"; // error message should be displayed on view page
                 }
+                req.setAttribute("elections", elections);
             } catch (SQLException ex) {
                 err = ex.getMessage(); // error message should be displayed on the view page
                 System.out.println("Login SQL Err: " + ex.getMessage());
