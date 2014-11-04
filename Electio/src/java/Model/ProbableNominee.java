@@ -13,12 +13,12 @@ public class ProbableNominee {
 
     private long election_id;
     private String email;
-    private boolean status;
+    private int status;
 
     public ProbableNominee() {
     }
 
-    public ProbableNominee(long election_id, String email, boolean status) {
+    public ProbableNominee(long election_id, String email, int status) {
         this.election_id = election_id;
         this.email = email;
         this.status = status;
@@ -40,12 +40,12 @@ public class ProbableNominee {
         this.email = email;
     }
 
-    public boolean getStatus() {
-        return status;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public int getStatus() {
+        return status;
     }
 
 }

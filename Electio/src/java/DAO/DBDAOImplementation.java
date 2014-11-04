@@ -820,7 +820,7 @@ public class DBDAOImplementation {
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_probable_nominee VALUES(?,?,?)");
         ps.setLong(1, pn.getElection_id());
         ps.setString(2, pn.getEmail());
-        ps.setBoolean(3, pn.getStatus());
+        ps.setInt(3, pn.getStatus());
 
         if (ps.executeUpdate() > 0) {
             result = true;
@@ -832,7 +832,7 @@ public class DBDAOImplementation {
     public boolean changeProbableNomineeStatus(ProbableNominee pn) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_probable_nominee SET status=? WHERE election_if=? AND email=?");
-        ps.setBoolean(1, pn.getStatus());
+        ps.setInt(1, pn.getStatus());
         ps.setLong(2, pn.getElection_id());
         ps.setString(3, pn.getEmail());
 
@@ -853,7 +853,7 @@ public class DBDAOImplementation {
             pn = new ProbableNominee();
             pn.setElection_id(election_id);;
             pn.setEmail(rs.getString("email"));
-            pn.setStatus(rs.getBoolean("status"));
+            pn.setStatus(rs.getInt("status"));
             pns.add(pn);
         }
         return pns;

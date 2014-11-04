@@ -104,7 +104,7 @@ public class UploadProbableNomineeFile extends HttpServlet {
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
                     while (s != null) {
-                        pn=new ProbableNominee(election_id, s, false);
+                        pn=new ProbableNominee(election_id, s, 0);
                         obj.addProbableNominee(pn);
                         s = br.readLine();
                     }
