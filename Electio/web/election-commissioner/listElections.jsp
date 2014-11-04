@@ -57,7 +57,6 @@
                                 <td><%=sdf.format(new Date(el.getCreated_at().getTime()))%> </td>
                                 <td><%= et.getType()%></td>
                                 <td>
-                                    <a href="Controller?action=election_result&id=<%= el.getId()%>" class="btn btn-success btn-sm"><i class="fa fa-list"></i> Result</a>
                                     <a href="Controller?action=download_election_data&id=<%= el.getId()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>
                                     <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
                                 </td>

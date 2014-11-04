@@ -22,17 +22,29 @@ public class Dashboard implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String email = req.getSession().getAttribute("email").toString();
-        String view = "dashboard.jsp";
-        req.setAttribute("title", "Dashboard");
-        ArrayList<Election> elections = null;
-        try {
-            DBDAOImplementation obj = DBDAOImplementation.getInstance();
-            elections = obj.getElections(email);
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewElections.class.getName()).log(Level.SEVERE, null, ex);
+        String email = (String) req.getSession().getAttribute("email");
+        String view = "index.jsp";
+        String msg = null;
+        String err = null;
+        String title = "Login";
+        if (email == null || email.equals("")) {
+            err = "Session expired please login again";
+        } else {
+            view = "dashboard.jsp";
+            title = "Dashboard";
+            ArrayList<Election> elections = null;
+            try {
+                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                elections = obj.getElections(email);
+            } catch (SQLException ex) {
+                err = ex.getMessage();
+                System.out.println("ViewElections Err: " + ex.getMessage());
+            }
+            req.setAttribute("elections", elections);
         }
-        req.setAttribute("elections", elections);
+        req.setAttribute("msg", msg);
+        req.setAttribute("err", err);
+        req.setAttribute("title", title);
         return view;
     }
 
