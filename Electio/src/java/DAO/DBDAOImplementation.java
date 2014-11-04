@@ -943,4 +943,39 @@ public class DBDAOImplementation {
         }
         return ui;
     }
+    public boolean updateUserInfo(UserInfo ui) throws SQLException{
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET firstname=?,lastname=?,gender=?,mobile=?,organization_id=? WHERE email=?");
+        ps.setString(1, ui.getFirstname());
+        ps.setString(2, ui.getLastname());
+        ps.setInt(3, ui.getGender());
+        ps.setString(4, ui.getMobile());
+        ps.setLong(5, ui.getOrganization_id());
+        ps.setString(6, ui.getEmail());
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }       
+        return result;
+    }
+    public boolean updateManifesto(long election_id,String email,String manifesto) throws SQLException{
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_candidate SET manifesto=? WHERE email=? AND election_id=?");
+        ps.setString(1, manifesto);
+        ps.setString(2, email);
+        ps.setLong(3, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }       
+        return result;
+    }
+    public boolean updateProfilePicture(String email,String image) throws SQLException{
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET image=? WHERE email=?");
+        ps.setString(1, image);
+        ps.setString(2, email);        
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }       
+        return result;
+    }
 }

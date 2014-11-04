@@ -9,6 +9,7 @@ import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
 import Model.ProbableNominee;
+import Model.UserInfo;
 import Utilities.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
@@ -55,8 +56,8 @@ public class UpdateCandidate extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("1");
-        String view = "nomineeRegistration.jsp";
-        String title = "Nominee Registration";
+        String view = "Controller?action=candidate_profile";
+        String title = "Profile";
         String msg = null;
         String err = null;
 //      System.out.println("MSG: " + request.getParameter("election_id"));
@@ -69,13 +70,12 @@ public class UpdateCandidate extends HttpServlet {
         String organization_name = null;
         String organization_address = null;
         String about_organization = null;
-        String password = null;
-        String retype_password = null;
         String image = null;
-        String requirements_file = null;
-        int status = 0;
+        String manifesto = null;
+        
 
         try {
+            DBDAOImplementation obj = DBDAOImplementation.getInstance();
             List<FileItem> fileItemsList = uploader.parseRequest(request);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
             Date date;
@@ -84,7 +84,7 @@ public class UpdateCandidate extends HttpServlet {
             while (fileItemsIterator.hasNext()) {
                 FileItem fileItem = fileItemsIterator.next();
                 String fieldName = fileItem.getFieldName();
-//                System.out.println("FieldName=" + fieldName + fileItem.getString());
+                //System.out.println("FieldName=" + fieldName + fileItem.getString());
                 if (fieldName.equals("election_id")) {
                     election_id = Long.parseLong(fileItem.getString());
                 } else if (fieldName.equals("firstname")) {
@@ -103,58 +103,73 @@ public class UpdateCandidate extends HttpServlet {
                     organization_address = fileItem.getString();
                 } else if (fieldName.equals("about_organization")) {
                     about_organization = fileItem.getString();
-                } else if (fieldName.equals("password")) {
-                    password = fileItem.getString();
-                } else if (fieldName.equals("retype_password")) {
-                    retype_password = fileItem.getString();
                 } else if (fileItem.getFieldName().equals("photo")) {
                     System.out.println("FileName=" + fileItem.getName());
                     System.out.println("ContentType=" + fileItem.getContentType());
                     System.out.println("Size in bytes=" + fileItem.getSize());
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
                     fileName = fileItem.getName();
-                    System.out.println("File Name: " + fileName);
-                    date = new Date();
-                    ext = fileName.substring(fileName.lastIndexOf('.'));
-                    File file = new File(request.getServletContext().getRealPath("/user_images") + File.separator + date.getTime() + ext);
-                    fileItem.write(file);
-                    image = "user_images" + File.separator + date.getTime() + ext;
-                    System.out.println("Absolute Path at server=" + image);
-                    System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                } else if (fileItem.getFieldName().equals("requirements_file")) {
+                    if (fileName != null) {
+                        System.out.println("File Name: " + fileName);
+                        date = new Date();
+                        ext = fileName.substring(fileName.lastIndexOf('.'));
+                        File file = new File(request.getServletContext().getRealPath("/user_images") + File.separator + date.getTime() + ext);
+                        fileItem.write(file);
+                        image = "user_images" + File.separator + date.getTime() + ext;
+                        System.out.println("Absolute Path at server=" + image);
+                        System.out.println("File " + fileItem.getName() + " uploaded successfully.");
+                        if (obj.updateProfilePicture(email, image)) {
+                            msg = "Nominee registered successfully";
+                        } else {
+                            err = "Fail to register nominee, please retry";
+                        }
+                    }
+                } else if (fileItem.getFieldName().equals("manifesto_file")) {
                     System.out.println("FileName=" + fileItem.getName());
                     System.out.println("ContentType=" + fileItem.getContentType());
                     System.out.println("Size in bytes=" + fileItem.getSize());
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
                     fileName = fileItem.getName();
-                    date = new Date();
-                    ext = fileName.substring(fileName.lastIndexOf('.'));
-                    File file = new File(request.getServletContext().getRealPath("/requirements_files") + File.separator + date.getTime() + ext);
-                    fileItem.write(file);
-                    requirements_file = "requirements_files" + File.separator + date.getTime() + ext;
-                    System.out.println("Absolute Path at server=" + requirements_file);
-                    System.out.println("File " + fileItem.getName() + " uploaded successfully.");
+                    if (fileName != null) {
+                        date = new Date();
+                        ext = fileName.substring(fileName.lastIndexOf('.'));
+                        File file = new File(request.getServletContext().getRealPath("/manifestos") + File.separator + date.getTime() + ext);
+                        fileItem.write(file);
+                        manifesto = "manifesto" + File.separator + date.getTime() + ext;
+                        System.out.println("Absolute Path at server=" + manifesto);
+                        System.out.println("File " + fileItem.getName() + " uploaded successfully.");
+                        if (obj.updateManifesto(election_id, email, manifesto)) {
+                            msg = "Nominee registered successfully";
+                        } else {
+                            err = "Fail to register nominee, please retry";
+                        }
+                    }
                 }
+                //System.out.println("lastname"+fileItem.getString());
             }
-            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
+            
+            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("")) {
                 err = "Please fill all required fields";
             } else {
-                if (retype_password.equals(password)) {
-                    //password = RandomString.encryptPassword(password);
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    Organization org = new Organization(organization_name, organization_address, about_organization);
-                    long organization_id = obj.addNewOrganization(org);
-                    int gen = Integer.parseInt(gender);
-                    Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
-                    ProbableNominee pn = new ProbableNominee(election_id, email, 2);
-                    if (obj.registerNominee(nominee) && obj.changeProbableNomineeStatus(pn)) {
-                        msg = "Nominee registered successfully";
-                    } else {
-                        err = "Fail to register nominee, please retry";
-                    }
+
+                //password = RandomString.encryptPassword(password);
+                Organization org = new Organization(organization_name, organization_address, about_organization);
+                long organization_id = obj.addNewOrganization(org);
+                int gen = Integer.parseInt(gender);
+                UserInfo ui = new UserInfo();
+                ui.setEmail(email);
+                ui.setFirstname(firstname);
+                ui.setGender(gen);
+                ui.setLastname(lastname);
+                ui.setMobile(mobile);
+                ui.setOrganization_id(organization_id);
+
+                if (obj.updateUserInfo(ui)) {
+                    msg = "Nominee registered successfully";
                 } else {
-                    err = "Retype password doesn't match";
+                    err = "Fail to register nominee, please retry";
                 }
+
             }
         } catch (FileUploadException e) {
             System.out.println("File Not Found Exception in uploading file.");
