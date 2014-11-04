@@ -23,7 +23,7 @@
                 <p>Candidate Profile</p>
             </div>
             <div class="panel-body">
-                <form action="Controller" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form action="UpdateCandidate" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <fieldset> 
                         <!-- BEGIN ERROR BOX -->
                         <div class="form-group col-lg-12">
@@ -135,7 +135,7 @@
 
                         <div class="form-group">
                             <div class="col-lg-7 col-lg-offset-4">
-                                <button type="submit" name="action" value="update_nominee_profile" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Update Profile</button>
+                                <button type="submit" name="action" value="UpdateCandidate" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Update Profile</button>
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
                             </div>
                         </div>
