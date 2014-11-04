@@ -1,7 +1,10 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Election"%>
 <jsp:include page="header.jsp"/>
 <%
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     Election el = (Election) request.getAttribute("election");
     int status = (Integer) request.getAttribute("nominee_status");
 %>
@@ -28,20 +31,20 @@
 
         <tr class="info">
             <td>Nomination</td>
-            <td><%=el.getNomination_start()%></td>
-            <td><%=el.getNomination_end()%></td>
+            <td><%=sdf.format(new Date(el.getNomination_start().getTime()))%></td>
+            <td><%=sdf.format(new Date(el.getNomination_end().getTime()))%></td>
         </tr>
 
         <tr class="danger">
             <td>Withdrawal</td>
-            <td><%=el.getWithdrawal_start()%></td>
-            <td><%=el.getWithdrawal_end()%></td>
+            <td><%=sdf.format(new Date(el.getWithdrawal_start().getTime()))%></td>
+            <td><%=sdf.format(new Date(el.getWithdrawal_end().getTime()))%></td>
         </tr>
 
         <tr class="success">
             <td>Voting</td>
-            <td><%=el.getVoting_start()%></td>
-            <td><%=el.getVoting_end()%></td>
+            <td><%=sdf.format(new Date(el.getVoting_start().getTime()))%></td>
+            <td><%=sdf.format(new Date(el.getVoting_end().getTime()))%></td>
         </tr>
     </table>
     <h1>You nomination status 
