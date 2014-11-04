@@ -5,12 +5,17 @@
  */
 package Controller;
 
+import DAO.DBDAOImplementation;
+import Model.Candidate;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -33,11 +38,25 @@ public class ViewResult extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String elec_id = request.getParameter("election_id");
+            System.out.println("1");
+            System.out.println("Elec_Id: " + elec_id);
+            long id = Long.parseLong(elec_id);
+            System.out.println("Election_ID: " + elec_id);
+            JSONArray array = new JSONArray();
+            DBDAOImplementation obj = DBDAOImplementation.getInstance();
+            ArrayList<Candidate> list = null;
+            list = obj.getElectionResult(id);
+            System.out.println("Msg1");
+            JSONObject jSONObject = null;
+            System.out.println("Msg2");
+            for (Candidate c : list) {
+                jSONObject = new JSONObject();
+                jSONObject.put(c.getFirstname() + " " + c.getLastname(), c.getVotes() + "");
+                array.add(jSONObject);
+            }
 
-            JSONObject jSONObject = new JSONObject();
-            jSONObject.put("name", "Hardik");
-            jSONObject.put("mobile", "9737808095");
-            out.print(jSONObject.toString());
+            out.print(array.toString());
             System.out.println(jSONObject.toString());
         } catch (Exception ex) {
             System.out.println("Err ViewResult: " + ex.getMessage());
