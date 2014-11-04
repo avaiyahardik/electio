@@ -22,7 +22,7 @@
     </servlet>
     <servlet>
         <servlet-name>UploadProbableNomineeList</servlet-name>
-        <servlet-class>Controller.UploadProbableNomineeList</servlet-class>
+        <servlet-class>Controller.UploadProbableNomineeFile</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
@@ -81,4 +81,3 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
-

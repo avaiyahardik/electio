@@ -36,7 +36,7 @@ import org.omg.CORBA.FieldNameHelper;
  *
  * @author Hardik
  */
-public class UploadProbableNomineeList extends HttpServlet {
+public class UploadProbableNomineeFile extends HttpServlet {
 
     private ServletFileUpload uploader = null;
 
