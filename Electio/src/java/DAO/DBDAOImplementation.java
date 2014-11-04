@@ -217,7 +217,7 @@ public class DBDAOImplementation {
         }
         return result;
     }
-    
+
     public boolean deleteRejectedNomineeForElection(long id) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_rejected_nominee WHERE election_id=?");
@@ -287,6 +287,17 @@ public class DBDAOImplementation {
         return result;
     }
 
+    public boolean deleteCandidate(long election_id, String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_candidate WHERE election_id=? AND email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        if (ps.execute()) {
+            result = true;
+        }
+        return result;
+    }
+
     public boolean deleteCandidateForElection(long election_id) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_candidate WHERE election_id=?");
@@ -348,9 +359,9 @@ public class DBDAOImplementation {
         ArrayList<Voter> voters = new ArrayList<Voter>();
         PreparedStatement ps = con.prepareStatement("SELECT email FROM tbl_voter WHERE election_id=?");
         ps.setLong(1, election_id);
-        ResultSet rs = ps.executeQuery();        
+        ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            Voter v=new Voter();
+            Voter v = new Voter();
             v.setEmail(rs.getString("email"));
             v.setLinkStatus(rs.getBoolean("link_status"));
             voters.add(v);
@@ -906,13 +917,13 @@ public class DBDAOImplementation {
         }
         return result;
     }
-    
-    public UserInfo getUserInfo(String email) throws SQLException{
+
+    public UserInfo getUserInfo(String email) throws SQLException {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info WHERE email=?");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
-        UserInfo ui=new UserInfo();
-        if(rs.next()){
+        UserInfo ui = new UserInfo();
+        if (rs.next()) {
             ui.setEmail(rs.getString("email"));
             ui.setFirstname(rs.getString("firstname"));
             ui.setGender(rs.getInt("gender"));
