@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplElectionCommissioner;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.ElectionCommissioner;
 import Model.Organization;
@@ -38,15 +40,17 @@ public class ElectionCommissionerChangePassword implements Controller.Action {
             String new_password = req.getParameter("new_password");
             String retype_password = req.getParameter("retype_password");
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                ElectionCommissioner ec = obj.getElectionCommissioner(email);
-                Organization org = obj.getOrganization(ec.getOrganization_id());
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                ElectionCommissioner ec = objEC.getElectionCommissioner(email);
+                Organization org = objO.getOrganization(ec.getOrganization_id());
                 req.setAttribute("election_commissioner", ec);
                 req.setAttribute("organization", org);
-                if (obj.isValidElectionCommissioner(email, old_password)) {
+                if (objEC.isValidElectionCommissioner(email, old_password)) {
                     if (new_password.equals(retype_password)) {
-                       // new_password=RandomString.encryptPassword(new_password);
-                        if (obj.changeElectionCommissionerPassword(email, new_password)) {
+                        // new_password=RandomString.encryptPassword(new_password);
+                        if (objEC.changeElectionCommissionerPassword(email, new_password)) {
                             msg = "Your password changed successfully";
                         } else {
                             err = "Error occured while changing your password, please retry";

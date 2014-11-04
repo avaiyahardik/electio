@@ -1,5 +1,6 @@
 package Action;
 
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -37,14 +38,15 @@ public class ElectionDetails implements Controller.Action {
             if (req.getSession().getAttribute("election_id") == null) {
                 err = "Fail to locate election id, please retry";
             } else {
-                view="electionDetails.jsp";
+                view = "electionDetails.jsp";
                 long election_id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
                 //   password = RandomString.encryptPassword(password);
                 //  System.out.println("Encrypted password: " + password);
                 try {
-                    DBDAOImplementation obj=DBDAOImplementation.getInstance();
-                    Election el=obj.getElection(election_id);
-                    req.setAttribute("election",el);
+//                    DBDAOImplementation obj=DBDAOImplementation.getInstance();
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    Election el = objE.getElection(election_id);
+                    req.setAttribute("election", el);
                 } catch (SQLException ex) {
                     err = ex.getMessage(); // error message should be displayed on the view page
                     System.out.println("VoterLogin SQL Err: " + ex.getMessage());

@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplElectionCommissioner;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.ElectionCommissioner;
 import Model.Organization;
@@ -42,15 +44,17 @@ public class ElectionCommissionerRegistration implements Controller.Action {
             err = "Please fill-up required fields";
         } else {
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 long organization_id = Long.parseLong(org_id);
                 if (organization_id == 0) {
                     Organization org = new Organization(organization_name, organization_address, about_organization);
-                    organization_id = obj.addNewOrganization(org);
+                    organization_id = objO.addNewOrganization(org);
                 }
 
                 ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
-                if (obj.registerElectionCommissioner(ec)) {
+                if (objEC.registerElectionCommissioner(ec)) {
                     msg = "You're registered successfully";
                     view = "index.jsp";
                     title = "Login";

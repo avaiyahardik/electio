@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Utilities.RandomString;
@@ -35,14 +37,16 @@ public class ElectionResult implements Controller.Action {
             long election_id = Long.parseLong(elec_id);
 
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                int election_type = (int) obj.getElectionType(election_id).getType_id();
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                int election_type = (int) objE.getElectionType(election_id).getType_id();
                 req.setAttribute("election_type", election_type);
                 ArrayList<Candidate> candidates = null;
                 if (election_type == 1) {
-                    candidates = obj.getCandidatesForPreferentialVoting(election_id);
+                    candidates = objC.getCandidatesForPreferentialVoting(election_id);
                 } else if (election_type == 2) {
-                    candidates = obj.getCandidatesForWeightedVoting(election_id);
+                    candidates = objC.getCandidatesForWeightedVoting(election_id);
                 }
                 req.setAttribute("candidates", candidates);
             } catch (SQLException ex) {

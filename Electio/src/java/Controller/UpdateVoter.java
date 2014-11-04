@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
 import Model.Voter;
 import Utilities.RandomString;
@@ -44,11 +45,12 @@ public class UpdateVoter extends HttpServlet {
                     if (cmd == null || cmd.equals("")) {
                         out.print("Command not found");
                     } else {
-                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                        DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                         long election_id = Long.parseLong(request.getParameter("election_id"));
                         if (cmd.equals("delete")) {
                             String voter_email = request.getParameter("voter_email");
-                            if (obj.deleteVoter(voter_email, election_id)) {
+                            if (objV.deleteVoter(voter_email, election_id)) {
                                 out.print("Deleted");
                             } else {
                                 out.print("Error");
@@ -56,7 +58,7 @@ public class UpdateVoter extends HttpServlet {
                         } else if (cmd.equals("update")) {
                             String old_email = request.getParameter("old_email");
                             String new_email = request.getParameter("new_email");
-                            if (obj.updateVoter(election_id, old_email, new_email)) {
+                            if (objV.updateVoter(election_id, old_email, new_email)) {
                                 out.print("Updated");
                             } else {
                                 out.print("Error");
@@ -64,8 +66,8 @@ public class UpdateVoter extends HttpServlet {
                         } else if (cmd.equals("add")) {
                             System.out.println("CMD: Add");
                             String voter_email = request.getParameter("email");
-                            Voter voter = new Voter(voter_email, election_id, RandomString.generateRandomPassword(), false,false);
-                            if (obj.addVoter(voter)) {
+                            Voter voter = new Voter(voter_email, election_id, RandomString.generateRandomPassword(), false, false);
+                            if (objV.addVoter(voter)) {
                                 out.print("Added");
                             } else {
                                 out.print("Error");

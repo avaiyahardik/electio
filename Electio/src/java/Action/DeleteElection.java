@@ -5,6 +5,11 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -35,8 +40,13 @@ public class DeleteElection implements Controller.Action {
             } else {
                 long id = Integer.parseInt(req.getParameter("id"));
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    if (obj.deleteElection(email, id) && obj.deleteVoterForElection(id) && obj.deleteNominee(email, id) && obj.deleteCandidateForElection(id) && obj.deleteProbableNomineeForElection(id) && obj.deleteRejectedNomineeForElection(id)) {
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                    DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                    if (objE.deleteElection(email, id) && objV.deleteVoterForElection(id) && objN.deleteNominee(email, id) && objC.deleteCandidateForElection(id) && objP.deleteProbableNomineeForElection(id) && objN.deleteRejectedNomineeForElection(id)) {
                         msg = "Election deleted successfully";
                     } else {
                         err = "Fail to delete election, please retry";

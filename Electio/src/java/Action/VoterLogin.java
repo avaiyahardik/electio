@@ -1,5 +1,8 @@
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -41,14 +44,17 @@ public class VoterLogin implements Controller.Action {
             //   password = RandomString.encryptPassword(password);
             //  System.out.println("Encrypted password: " + password);
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 if (step.equals("1")) {
-                    if (obj.loginVoter1(election_id, email) != null) {
-                        Voter v = obj.loginVoter1(election_id, email);
+                    if (objV.loginVoter1(election_id, email) != null) {
+                        Voter v = objV.loginVoter1(election_id, email);
                         view = "login2.jsp"; // view changed if email exists and status is not voted successfull
                         title = "Voter Login";
                         password = RandomString.generateRandomPassword();
-                        obj.insertVoterPassword(election_id, email, password);
+                        objV.insertVoterPassword(election_id, email, password);
 
                         req.setAttribute("election_id", elec_id);
                         req.setAttribute("email", email);
@@ -63,21 +69,21 @@ public class VoterLogin implements Controller.Action {
                     }
                 } else if (step.equals("2")) {
                     password = req.getParameter("password");
-                    if (obj.loginVoter2(election_id, email, password)) {
-                        Voter v = obj.loginVoter1(election_id, email);
+                    if (objV.loginVoter2(election_id, email, password)) {
+                        Voter v = objV.loginVoter1(election_id, email);
 
                         view = "electionDetails.jsp"; // view changed if login successfull
                         title = "Election Details";
-                        Election el = obj.getElection(election_id);
-                        ArrayList<Candidate> candidates = obj.getCandidates(election_id);
-                        Election election = obj.getElection(election_id);
+                        Election el = objE.getElection(election_id);
+                        ArrayList<Candidate> candidates = objC.getCandidates(election_id);
+                        Election election = objE.getElection(election_id);
                         req.setAttribute("candidates", candidates);
                         System.out.println("ttppyyee" + election.getType_id());
                         req.getSession().setAttribute("election_type", election.getType_id());
                         req.setAttribute("election", el);
                         req.getSession().setAttribute("election_id", elec_id);
                         req.getSession().setAttribute("voter_email", email);
-                    
+
                     }
                 } else {
 

@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplementation;
 import Utilities.EmailSender;
 import Utilities.RandomString;
@@ -42,11 +43,12 @@ public class NomineeAction implements Controller.Action {
                 title = "Election Detail";
                 String nominee_email = req.getParameter("email");
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     String[] to = {nominee_email};
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");
-                        if (obj.approveNominee(election_id, nominee_email, requirements_file)) {
+                        if (objN.approveNominee(election_id, nominee_email, requirements_file)) {
                             String ms = "Your Nomination is approved. To see your details goto Below link <a href='" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
                             //String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>" + req.getContextPath() + File.separator + "candidate" + File.separator + "index.jsp?election_id=" + election_id + "</a>";
                             System.out.println("MS: " + ms);
@@ -60,7 +62,7 @@ public class NomineeAction implements Controller.Action {
 
                     } else if (cmd.equals("reject")) {
                         String reason = req.getParameter("reason");
-                        if (obj.rejectNominee(election_id, nominee_email, reason)) {
+                        if (objN.rejectNominee(election_id, nominee_email, reason)) {
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Rejection", "You nomination is rejected", to);
                             msg = "Nominee rejeced successfully";
                         } else {

@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplElectionCommissioner;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import Model.ElectionCommissioner;
@@ -37,9 +39,11 @@ public class ElectionCommissionerUpdateProfile implements Controller.Action {
             title = "Profile";
 
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                ElectionCommissioner ec = obj.getElectionCommissioner(email);
-                Organization org = obj.getOrganization(ec.getOrganization_id());
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                ElectionCommissioner ec = objEC.getElectionCommissioner(email);
+                Organization org = objO.getOrganization(ec.getOrganization_id());
                 req.setAttribute("election_commissioner", ec);
                 req.setAttribute("organization", org);
             } catch (SQLException ex) {

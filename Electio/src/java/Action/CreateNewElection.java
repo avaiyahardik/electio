@@ -5,6 +5,10 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import java.sql.SQLException;
@@ -55,9 +59,11 @@ public class CreateNewElection implements Controller.Action {
                 if (name == null || name.equals("")) { // more validation will be performed later
                     err = "Please fill-up required fields";
                 } else {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                     Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
-                    if (obj.createElection(el)) {
+                    if (objE.createElection(el)) {
                         msg = "New election created successfully";
                     } else {
                         err = "Fail to create new election, please retry";

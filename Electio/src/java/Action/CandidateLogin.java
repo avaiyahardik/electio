@@ -1,5 +1,9 @@
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -42,21 +46,25 @@ public class CandidateLogin implements Controller.Action {
 //            System.out.println("Enctrypted Pwd: " + password);
 
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                if (obj.nomineeLogin(election_id, email, password)) {
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                if (objN.nomineeLogin(election_id, email, password)) {
                     view = "home.jsp";
                     title = "Nominee/Candidate Home Page";
                     req.getSession().setAttribute("election_id", elec_id);
                     req.getSession().setAttribute("candidate_email", email);
-                    Nominee n = obj.getNominee(election_id, email);
+                    Nominee n = objN.getNominee(election_id, email);
                     req.getSession().setAttribute("candidate_name", n.getFirstname());
-                    Election e = obj.getElection(election_id);
+                    Election e = objE.getElection(election_id);
                     req.setAttribute("election", e);
-                    int nominee_status = obj.getNomineeStatus(election_id, email);
+                    int nominee_status = objN.getNomineeStatus(election_id, email);
                     req.setAttribute("nominee_status", nominee_status);
                     System.out.println("Name: " + n.getFirstname());
-                    if (obj.getNomineeStatus(election_id, email) == 1) {
-                        Candidate c = obj.getCandidate(election_id, email);
+                    if (objN.getNomineeStatus(election_id, email) == 1) {
+                        Candidate c = objC.getCandidate(election_id, email);
                         req.setAttribute("candidate", c);
                     }
                 } else {

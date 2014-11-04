@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DAO;
 
 import Model.Nominee;
@@ -18,7 +17,8 @@ import java.util.ArrayList;
  * @author darshit
  */
 public class DBDAOImplNominee {
-        private Connection con;
+
+    private Connection con;
     private static DBDAOImplNominee obj = null;
 
     private DBDAOImplNominee() throws SQLException {
@@ -32,16 +32,39 @@ public class DBDAOImplNominee {
         }
         return obj;
     }
-      public boolean deleteNominee(String email, long id) throws SQLException {
+
+    public boolean deleteNominee(String email, long id) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=?");
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=? and email=?");
         ps.setLong(1, id);
+        ps.setString(2, email);
         if (ps.executeUpdate() > 0) {
             result = true;
         }
         return result;
     }
-        public ArrayList<Nominee> getNominees(long election_id) throws SQLException {
+
+    public boolean deleteNomineeForElection(long id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=?");
+        ps.setLong(1, id);
+        if (ps.execute()) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean deleteRejectedNomineeForElection(long id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_rejected_nominee WHERE election_id=?");
+        ps.setLong(1, id);
+        if (ps.execute()) {
+            result = true;
+        }
+        return result;
+    }
+
+    public ArrayList<Nominee> getNominees(long election_id) throws SQLException {
         ArrayList<Nominee> nominees = new ArrayList<Nominee>();
         PreparedStatement ps = con.prepareStatement("select * from tbl_user_info as u INNER JOIN tbl_election_nominee as n ON u.email=n.email WHERE election_id=?");
         ps.setLong(1, election_id);
@@ -88,7 +111,8 @@ public class DBDAOImplNominee {
         }
         return nominee;
     }
-     public boolean changeNomineePassword(String email, String password) throws SQLException {
+
+    public boolean changeNomineePassword(String email, String password) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET password=? WHERE email=?");
         ps.setString(1, password);
@@ -99,7 +123,8 @@ public class DBDAOImplNominee {
         return result;
 
     }
-       public boolean registerNominee(Nominee nominee) throws SQLException {
+
+    public boolean registerNominee(Nominee nominee) throws SQLException {
         boolean result = false;
         con.setAutoCommit(false);
         PreparedStatement ps1 = con.prepareStatement("INSERT INTO tbl_user_info(email, firstname,lastname,gender,mobile,organization_id, image, password) VALUES(?,?,?,?,?,?,?,?)");
@@ -143,6 +168,7 @@ public class DBDAOImplNominee {
 
     public boolean approveNominee(long election_id, String email, String requirements_file) throws SQLException {
         boolean result = false;
+        int flag = 0;
         // status = 1 means approved
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
         ps.setInt(1, 1);
@@ -150,16 +176,20 @@ public class DBDAOImplNominee {
         ps.setString(3, email);
 
         if (ps.executeUpdate() > 0) {
-            result = true;
+            flag++;
         }
 
-        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_candidate VALUES(?,?,?,?,?)");
+        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_candidate VALUES(?,?,?,?,?,?)");
         ps2.setString(1, email);
         ps2.setLong(2, election_id);
         ps2.setString(3, requirements_file);
         ps2.setInt(4, 0);
         ps2.setString(5, "manifestos/electio.pdf");
+        ps2.setBoolean(6, false);
         if (ps2.executeUpdate() > 0) {
+            flag++;
+        }
+        if (flag == 2) {
             result = true;
         }
         return result;
@@ -213,5 +243,4 @@ public class DBDAOImplNominee {
         }
         return status;
     }
-
 }

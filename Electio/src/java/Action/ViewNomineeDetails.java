@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -48,9 +50,11 @@ public class ViewNomineeDetails implements Controller.Action {
                 view = "nomineeDetails.jsp";
                 title = "Nominee Details";
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    Nominee n = obj.getNominee(id, nominee_email);
-                    Organization org = obj.getOrganization(n.getOrganization_id());
+                    //DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                    Nominee n = objN.getNominee(id, nominee_email);
+                    Organization org = objO.getOrganization(n.getOrganization_id());
                     req.setAttribute("nominee", n);
                     req.setAttribute("organization", org);
                 } catch (SQLException ex) {

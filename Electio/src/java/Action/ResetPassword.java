@@ -1,5 +1,6 @@
 package Action;
 
+import DAO.DBDAOImplElectionCommissioner;
 import DAO.DBDAOImplementation;
 import Utilities.EmailSender;
 import Utilities.RandomString;
@@ -24,11 +25,12 @@ public class ResetPassword implements Controller.Action {
         } else {
             try {
                 String newPassword = RandomString.generateRandomPassword(); // it'll generate new password
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 String s[] = {email};
                 if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "New Password", newPassword, s)) {
                     //newPassword = RandomString.encryptPassword(newPassword);
-                    obj.changeElectionCommissionerPassword(email, newPassword); // it'll update password
+                    objEC.changeElectionCommissionerPassword(email, newPassword); // it'll update password
                     msg = "Password Sent To your email successfully";
                 } else {
                     err = "Some error occur";

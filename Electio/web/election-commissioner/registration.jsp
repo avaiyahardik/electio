@@ -4,6 +4,8 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="DAO.DBDAOImplOrganization"%>
+<%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="Model.Organization"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DAO.DBDAOImplementation"%>
@@ -120,8 +122,9 @@
                                         <select name="organization_id">
                                             <option value="">--Select--</option>
                                             <%
-                                                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                                                ArrayList<Organization> orgs = obj.getAllOrganizations();
+//                                                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                                                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                                ArrayList<Organization> orgs = objO.getAllOrganizations();
                                                 for (Organization org : orgs) {
                                             %>
                                             <option value="<%=org.getId()%>"><%= org.getName()%></option>

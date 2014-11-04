@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplElectionCommissioner;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import Utilities.RandomString;
@@ -35,14 +37,16 @@ public class ElectionCommissionerLogin implements Controller.Action {
             //password = RandomString.encryptPassword(password);
             System.out.println("Encrypted password: " + password);
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 ArrayList<Election> elections = null;
-                if (obj.loginElectionCommissioner(email, password)) {
+                if (objEC.loginElectionCommissioner(email, password)) {
                     req.getSession().setAttribute("email", email);
                     view = "dashboard.jsp"; // view changed if login successfull
                     title = "Dashboard";
                     msg = "You're logged in successfully"; // message should be displayed on view page
-                    elections = obj.getCompletedElections(email);
+                    elections = objE.getCompletedElections(email);
                 } else {
                     err = "Fail to login, please retry"; // error message should be displayed on view page
                 }

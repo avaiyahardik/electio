@@ -1,3 +1,4 @@
+<%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="Model.Organization"%>
@@ -7,9 +8,11 @@
 <jsp:include page="header.jsp"/>
 
 <%
-    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
     Candidate c = (Candidate) request.getAttribute("candidate");
-    Organization o = obj.getOrganization(c.getElection_id());
+    Organization o = objO.getOrganization(c.getElection_id());
 %>
 <div class="page-header">
     <h1 class="page-title">Candidate Profile
@@ -108,7 +111,7 @@
                         <div class="form-group">
                             <label for="manifesto" class="control-label col-lg-4">Manifesto</label>
                             <div class="col-lg-6">
-                                <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto</a>
+                                <a href="..<%= File.separator%><%= c.getManifesto()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto</a>
                             </div>
                         </div>
                     </fieldset>

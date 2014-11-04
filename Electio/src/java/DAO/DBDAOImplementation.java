@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DBDAOImplementation {
-
+/*
     private Connection con;
     private static DBDAOImplementation obj = null;
 
@@ -1091,4 +1091,5 @@ public class DBDAOImplementation {
 
         return result;
     }
+    */
 }

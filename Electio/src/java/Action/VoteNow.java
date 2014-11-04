@@ -5,6 +5,9 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -44,16 +47,19 @@ public class VoteNow implements Controller.Action {
                 System.out.println("Yes");
 
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    //DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
                     long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
-                    boolean status = obj.getVoterStatus(id, email);
+                    boolean status = objV.getVoterStatus(id, email);
                     if (status == false) {
 
                         System.out.println("type->" + election_type);
 
-                        ArrayList<Candidate> candidates = obj.getCandidates(id);
+                        ArrayList<Candidate> candidates = objC.getCandidates(id);
                         req.setAttribute("candidates", candidates);
-                        req.setAttribute("election_name", obj.getElectionName(id));
+                        req.setAttribute("election_name", objE.getElectionName(id));
                         title = "Voting Now";
                         if (election_type == 2) {
                             view = "weighted.jsp";

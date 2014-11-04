@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplementation;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -37,8 +38,9 @@ public class DeleteCandidate implements Controller.Action {
             } else {
                 long id = Integer.parseInt(elec_id);
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    if (obj.deleteCandidate(id, email)) {
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                    if (objC.deleteCandidate(id, email)) {
                         msg = "Candidate deleted successfully";
                     } else {
                         err = "Fail to delete candidate, please retry";

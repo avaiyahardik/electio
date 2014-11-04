@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import java.sql.SQLException;
@@ -59,8 +60,9 @@ public class UpdateElection implements Controller.Action {
                     el.setVoting_start(voting_start);
                     el.setVoting_end(voting_end);
                     el.setPetition_duration(Integer.parseInt(req.getParameter("petition_duration")));
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    if (obj.updateElection(el)) {
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    if (objE.updateElection(el)) {
                         msg = "Election updated successfully";
                     } else {
                         err = "Fail to update election, please retry";

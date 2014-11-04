@@ -5,6 +5,11 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -48,16 +53,22 @@ public class ViewElectionDetail implements Controller.Action {
                 title = "Election Detail";
                 System.out.println("Election ID: " + id);
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    Election el = obj.getElection(id);
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                    DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                    DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                    Election el = objE.getElection(id);
                     req.setAttribute("election", el);
-                    ArrayList<Nominee> nominees = obj.getNominees(id);
+                    ArrayList<Nominee> nominees = objN.getNominees(id);
                     req.setAttribute("nominees", nominees);
-                    ArrayList<Candidate> candidates = obj.getCandidates(id);
+                    ArrayList<Candidate> candidates = objC.getCandidates(id);
                     req.setAttribute("candidates", candidates);
-                    ArrayList<Voter> voters = obj.getVoters(id);
+                    ArrayList<Voter> voters = objV.getVoters(id);
                     req.setAttribute("voters", voters);
-                    ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(id);
+                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(id);
                     req.setAttribute("probable_nominee", pns);
 
                 } catch (SQLException ex) {

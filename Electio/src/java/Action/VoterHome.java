@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -40,8 +41,9 @@ public class VoterHome implements Controller.Action {
 
             try {
                 long election_id = Long.parseLong(elec_id);
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                Election el = obj.getElection(election_id);
+                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                Election el = objE.getElection(election_id);
                 req.setAttribute("election", el);
             } catch (SQLException ex) {
                 err = ex.getMessage();

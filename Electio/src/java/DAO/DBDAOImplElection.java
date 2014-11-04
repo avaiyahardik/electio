@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DAO;
 
+import Model.Candidate;
 import Model.Election;
 import Model.ElectionType;
 import java.sql.Connection;
@@ -19,7 +19,8 @@ import java.util.ArrayList;
  * @author darshit
  */
 public class DBDAOImplElection {
-      private Connection con;
+
+    private Connection con;
     private static DBDAOImplElection obj = null;
 
     private DBDAOImplElection() throws SQLException {
@@ -33,7 +34,31 @@ public class DBDAOImplElection {
         }
         return obj;
     }
-      public boolean updateElection(Election el) throws SQLException {
+
+    public boolean createElection(Election el) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election(election_commissioner_email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+        ps.setString(1, el.getElection_commissioner_email());
+        ps.setString(2, el.getName());
+        ps.setString(3, el.getDescription());
+        ps.setString(4, el.getRequirements());
+        ps.setLong(5, el.getType_id());
+        // ps.setTimestamp(6, el.getCreated_at());
+        ps.setTimestamp(6, el.getNomination_start());
+        ps.setTimestamp(7, el.getNomination_end());
+        ps.setTimestamp(8, el.getWithdrawal_start());
+        ps.setTimestamp(9, el.getNomination_end());
+        ps.setTimestamp(10, el.getVoting_start());
+        ps.setTimestamp(11, el.getVoting_end());
+        ps.setInt(12, el.getPetition_duration());
+
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean updateElection(Election el) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election SET name=?, description=?, requirements=?, type_id=?, nomination_start=?, nomination_end=?, withdrawal_start=?, withdrawal_end=?, voting_start=?, voting_end=?, petition_duration=? WHERE id=?");
 
@@ -113,9 +138,37 @@ public class DBDAOImplElection {
         }
         return name;
     }
-     public ArrayList<Election> getElections(String email) throws SQLException {
+
+    public ArrayList<Election> getElections(String email) throws SQLException {
         ArrayList<Election> elections = new ArrayList<Election>();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=?");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        Election el;
+        while (rs.next()) {
+            el = new Election();
+            el.setId(rs.getLong("id"));
+            el.setElection_commissioner_email(email);
+            el.setName(rs.getString("name"));
+            el.setDescription(rs.getString("description"));
+            el.setRequirements(rs.getString("requirements"));
+            el.setType_id(rs.getLong("type_id"));
+            el.setCreated_at(rs.getTimestamp("created_at"));
+            el.setNomination_start(rs.getTimestamp("nomination_start"));
+            el.setNomination_end(rs.getTimestamp("nomination_end"));
+            el.setWithdrawal_start(rs.getTimestamp("withdrawal_start"));
+            el.setWithdrawal_end(rs.getTimestamp("withdrawal_end"));
+            el.setVoting_start(rs.getTimestamp("voting_start"));
+            el.setVoting_end(rs.getTimestamp("voting_end"));
+            el.setPetition_duration(rs.getInt("petition_duration"));
+            elections.add(el);
+        }
+        return elections;
+    }
+
+    public ArrayList<Election> getCompletedElections(String email) throws SQLException {
+        ArrayList<Election> elections = new ArrayList<Election>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=? AND voting_end<NOW() ORDER BY voting_end DESC");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
         Election el;
@@ -153,5 +206,20 @@ public class DBDAOImplElection {
 
         }
         return et;
+    }
+
+    public ArrayList<Candidate> getElectionResult(long election_id) throws SQLException {
+        ArrayList<Candidate> candidates = new ArrayList<Candidate>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info u INNER JOIN tbl_election_candidate c ON u.email=c.email WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Candidate c = new Candidate();
+            c.setEmail(rs.getString("email"));
+            c.setFirstname(rs.getString("firstname"));
+            c.setLastname(rs.getString("lastname"));
+            candidates.add(c);
+        }
+        return candidates;
     }
 }

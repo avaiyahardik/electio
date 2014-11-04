@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import Model.ElectionCommissioner;
@@ -38,9 +40,11 @@ public class CandidateHome implements Controller.Action {
             title = "Nominee/Candidate Home Page";
             long id = Long.parseLong(elec_id);
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                Election e = obj.getElection(id);
-                int status = obj.getNomineeStatus(id, email);
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                Election e = objE.getElection(id);
+                int status = objN.getNomineeStatus(id, email);
                 req.setAttribute("election", e);
                 req.setAttribute("nominee_status", status);
             } catch (SQLException ex) {

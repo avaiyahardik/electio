@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplementation;
 import Model.ProbableNominee;
 import Model.Voter;
@@ -45,11 +46,12 @@ public class UpdateProbableNominee extends HttpServlet {
                     if (cmd == null || cmd.equals("")) {
                         out.print("Command not found");
                     } else {
-                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                        DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
                         long election_id = Long.parseLong(request.getParameter("election_id"));
                         if (cmd.equals("delete")) {
                             String nominee_email = request.getParameter("probable_nominee_email");
-                            if (obj.deleteProbableNominee(election_id, nominee_email)) {
+                            if (objP.deleteProbableNominee(election_id, nominee_email)) {
                                 out.print("Deleted");
                             } else {
                                 out.print("Error");
@@ -57,7 +59,7 @@ public class UpdateProbableNominee extends HttpServlet {
                         } else if (cmd.equals("update")) {
                             String old_email = request.getParameter("old_email");
                             String new_email = request.getParameter("new_email");
-                            if (obj.updateProbableNominee(election_id, old_email, new_email)) {
+                            if (objP.updateProbableNominee(election_id, old_email, new_email)) {
                                 out.print("Updated");
                             } else {
                                 out.print("Error");
@@ -65,7 +67,7 @@ public class UpdateProbableNominee extends HttpServlet {
                         } else if (cmd.equals("add")) {
                             String nominee_email = request.getParameter("email");
                             ProbableNominee pn = new ProbableNominee(election_id, nominee_email, 0);
-                            if (obj.addProbableNominee(pn)) {
+                            if (objP.addProbableNominee(pn)) {
                                 out.print("Added");
                             } else {
                                 out.print("Error");

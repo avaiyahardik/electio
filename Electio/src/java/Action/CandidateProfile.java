@@ -5,6 +5,10 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -40,10 +44,15 @@ public class CandidateProfile implements Controller.Action {
             title = "Nominee/Candidate Profile";
             long id = Long.parseLong(elec_id);
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                Election e = obj.getElection(id);
-                Nominee n = obj.getNominee(id, email);
-                Candidate c = obj.getCandidate(id, email);
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+
+                Election e = objE.getElection(id);
+                Nominee n = objN.getNominee(id, email);
+                Candidate c = objC.getCandidate(id, email);
                 req.setAttribute("nominee", n);
                 req.setAttribute("candidate", c);
             } catch (SQLException ex) {

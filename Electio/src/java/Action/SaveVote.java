@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import java.sql.SQLException;
@@ -32,38 +34,46 @@ public class SaveVote implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
-            if (req.getSession().getAttribute("election_id") == null) {
-                err = "Fail to locate election id, please retry";
-            } else {
-                System.out.println("Yes");
-                long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
-                view = "voted.jsp";
-                title="Voted";
-                if (election_type == 1) {                    
-                    System.out.println("Election ID: " + id);
-                    try {
-                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                        if (obj.saveVote(id, candidate_email) && obj.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
-                            msg = "Your Vote has been counted, thank you!!";
+            try {
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                if (req.getSession().getAttribute("election_id") == null) {
+                    err = "Fail to locate election id, please retry";
+                } else {
+                    System.out.println("Yes");
+                    long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
+                    view = "voted.jsp";
+                    title = "Voted";
+                    if (election_type == 1) {
+                        System.out.println("Election ID: " + id);
+                        try {
+//                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+
+                            if (objC.saveVote(id, candidate_email) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
+                                msg = "Your Vote has been counted, thank you!!";
+                            }
+                        } catch (SQLException ex) {
+                            err = ex.getMessage();
+                            System.out.println("Save vote Err: " + ex.getMessage());
                         }
-                    } catch (SQLException ex) {
-                        err = ex.getMessage();
-                        System.out.println("Save vote Err: " + ex.getMessage());
-                    }
-                } else if (election_type == 2) {
-                    try {
-                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                        ArrayList<Candidate> candidates = obj.getCandidates(id);
-                        for (Candidate c : candidates) {
-                            c.setVotes(Long.parseLong(req.getParameter(c.getEmail())));
+                    } else if (election_type == 2) {
+                        try {
+//                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                            ArrayList<Candidate> candidates = objC.getCandidates(id);
+                            for (Candidate c : candidates) {
+                                c.setVotes(Long.parseLong(req.getParameter(c.getEmail())));
+                            }
+                            if (objC.updateCandidateVotes(candidates, id) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
+                                msg = "Your Vote has been counted, thank you!!";
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(SaveVote.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        if (obj.updateCandidateVotes(candidates, id) && obj.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
-                            msg = "Your Vote has been counted, thank you!!";
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(SaveVote.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+            } catch (Exception e) {
+                System.out.println("Error: SaveVote" + e.getMessage());
+                System.out.println("Errr: saveVote" + e.getMessage());
             }
 
         }

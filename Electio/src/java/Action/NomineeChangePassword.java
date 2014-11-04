@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplementation;
 import Model.ElectionCommissioner;
 import Model.Organization;
@@ -45,11 +46,12 @@ public class NomineeChangePassword implements Controller.Action {
             } else {
                 long election_id = Long.parseLong(elec_id);
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    if (obj.nomineeLogin(election_id, email, old_password)) {
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    if (objN.nomineeLogin(election_id, email, old_password)) {
                         if (new_password.equals(retype_password)) {
                             // new_password=RandomString.encryptPassword(new_password);
-                            if (obj.changeNomineePassword(email, new_password)) {
+                            if (objN.changeNomineePassword(email, new_password)) {
                                 msg = "Your password changed successfully";
                             } else {
                                 err = "Error occured while changing your password, please retry";

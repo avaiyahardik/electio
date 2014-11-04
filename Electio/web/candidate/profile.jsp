@@ -1,3 +1,4 @@
+<%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="Model.Candidate"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Organization"%>
@@ -6,11 +7,12 @@
 <jsp:include page="header.jsp"/>
 
 <%
-    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
     Nominee n = (Nominee) request.getAttribute("nominee");
     Candidate c = (Candidate) request.getAttribute("candidate");
     int status = n.getStatus();
-    Organization o = obj.getOrganization(n.getElection_id());
+    Organization o = objO.getOrganization(n.getElection_id());
 %>
 <div class="page-header">
     <h1 class="page-title">Candidate Profile

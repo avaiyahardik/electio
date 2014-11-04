@@ -5,6 +5,9 @@
  */
 package Controller;
 
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplOrganization;
+import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
@@ -141,13 +144,16 @@ public class NomineeRegistration extends HttpServlet {
             } else {
                 if (retype_password.equals(password)) {
                     //password = RandomString.encryptPassword(password);
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    //DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                    DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     Organization org = new Organization(organization_name, organization_address, about_organization);
-                    long organization_id = obj.addNewOrganization(org);
+                    long organization_id = objO.addNewOrganization(org);
                     int gen = Integer.parseInt(gender);
                     Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
                     ProbableNominee pn = new ProbableNominee(election_id, email, 2);
-                    if (obj.registerNominee(nominee) && obj.changeProbableNomineeStatus(pn)) {
+                    if (objN.registerNominee(nominee) && objP.changeProbableNomineeStatus(pn)) {
                         msg = "Nominee registered successfully";
                     } else {
                         err = "Fail to register nominee, please retry";

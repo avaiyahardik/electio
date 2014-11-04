@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplElectionCommissioner;
 import DAO.DBDAOImplementation;
 import Model.ElectionCommissioner;
 import java.sql.SQLException;
@@ -31,8 +32,9 @@ public class LockScreen implements Controller.Action {
         String name = null;
 
         try {
-            DBDAOImplementation obj = DBDAOImplementation.getInstance();
-            ElectionCommissioner ec = obj.getElectionCommissioner(email);
+//            DBDAOImplementation obj = DBDAOImplementation.getInstance();
+            DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+            ElectionCommissioner ec = objEC.getElectionCommissioner(email);
             name = ec.getFirstname() + " " + ec.getLastname();
 
         } catch (SQLException ex) {

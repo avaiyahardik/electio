@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.ProbableNominee;
@@ -41,14 +42,15 @@ public class SendMailToProbableNominee implements Controller.Action {
             } else {
                 long id = Long.parseLong(election_id);
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(id);
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplProbableNominee objP=DBDAOImplProbableNominee.getInstance();
+                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(id);
                     String link = "<a href='" + RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
                     for (ProbableNominee itm : pns) {
                         if (itm.getStatus() == 0) {
                             if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {
                                 itm.setStatus(1);
-                                obj.changeProbableNomineeStatus(itm);
+                                objP.changeProbableNomineeStatus(itm);
                             }
                         }
                     }

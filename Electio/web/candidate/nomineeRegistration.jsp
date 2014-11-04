@@ -4,6 +4,7 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="DAO.DBDAOImplElection"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -41,7 +42,7 @@
                                     long election_id = 0;
                                     if (request.getParameter("election_id") != null) {
                                         election_id = Long.parseLong(request.getParameter("election_id"));
-                                        name = DBDAOImplementation.getInstance().getElectionName(election_id);
+                                        name = DBDAOImplElection.getInstance().getElectionName(election_id);
                                     }%>
                                 <strong><%= name%></strong>
                             </span>
@@ -194,7 +195,7 @@
                         <p><strong>A Nominee should have the following eligibilities -</strong></p>
                         <p>
                             <%
-                                String requirements = DBDAOImplementation.getInstance().getElectionRequirements(election_id);
+                                String requirements = DBDAOImplElection.getInstance().getElectionRequirements(election_id);
                             %>
                             <%=requirements%>
                         </p>

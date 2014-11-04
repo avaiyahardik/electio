@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import Model.ElectionCommissioner;
@@ -36,8 +37,9 @@ public class ViewElections implements Controller.Action {
             title = "View Elections";
             ArrayList<Election> elections = null;
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                elections = obj.getElections(email);
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElection objE=DBDAOImplElection.getInstance();
+                elections = objE.getElections(email);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("ViewElections Err: " + ex.getMessage());

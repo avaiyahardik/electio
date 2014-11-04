@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Nominee;
@@ -18,12 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Vishal Jain
  */
-public class ViewCandidateDetails implements Controller.Action{
+public class ViewCandidateDetails implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        
-            String email = (String) req.getSession().getAttribute("email");
+
+        String email = (String) req.getSession().getAttribute("email");
         String view = "index.jsp";
         String msg = null;
         String err = null;
@@ -43,9 +44,11 @@ public class ViewCandidateDetails implements Controller.Action{
                 view = "candidateDetails.jsp";
                 title = "Candidate Details";
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    Candidate c = obj.getCandidate(id, candidate_email);
-                    Organization org = obj.getOrganization(c.getOrganization_id());
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                    Candidate c = objC.getCandidate(id, candidate_email);
+                    Organization org = objO.getOrganization(c.getOrganization_id());
                     req.setAttribute("candidate", c);
                     req.setAttribute("organization", org);
                 } catch (SQLException ex) {
@@ -59,5 +62,5 @@ public class ViewCandidateDetails implements Controller.Action{
         req.setAttribute("title", title);
         return view;
     }
-    
+
 }

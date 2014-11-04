@@ -5,6 +5,8 @@
  */
 package Action;
 
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplElectionCommissioner;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import Model.ElectionCommissioner;
@@ -37,11 +39,13 @@ public class Unlock implements Controller.Action {
         } else {
             try {
                 ArrayList<Election> elections = null;
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                if (obj.isValidElectionCommissioner(email, password)) {
+                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplElectionCommissioner objEC=DBDAOImplElectionCommissioner.getInstance();
+                DBDAOImplElection objE=DBDAOImplElection.getInstance();
+                if (objEC.isValidElectionCommissioner(email, password)) {
                     view = "dashboard.jsp";
                     title = "Dashboard";
-                    elections = obj.getCompletedElections(email);
+                    elections = objE.getCompletedElections(email);
                 } else {
                     err = "Invalid password";
                 }

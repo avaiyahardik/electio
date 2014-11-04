@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -40,9 +41,10 @@ public class ListCandidates implements Controller.Action {
             title = "Candidates List";
 
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 long election_id = Long.parseLong(elec_id);
-                ArrayList<Candidate> candidates = obj.getCandidates(election_id);
+                ArrayList<Candidate> candidates = objC.getCandidates(election_id);
                 req.setAttribute("candidates", candidates);
             } catch (SQLException ex) {
                 err = ex.getMessage();

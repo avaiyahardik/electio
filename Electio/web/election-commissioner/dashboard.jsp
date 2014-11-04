@@ -1,3 +1,4 @@
+<%@page import="DAO.DBDAOImplElection"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="DAO.DBDAOImplementation"%>
@@ -34,8 +35,9 @@
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                                 ArrayList<Election> elections = (ArrayList<Election>) request.getAttribute("elections");
                                 for (Election el : elections) {
-                                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                                    ElectionType et = obj.getElectionType(el.getType_id());
+//                                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                                    ElectionType et = objE.getElectionType(el.getType_id());
                             %>
 
                             <tr>

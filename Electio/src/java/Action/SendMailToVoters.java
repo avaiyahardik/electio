@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.ProbableNominee;
@@ -35,7 +36,7 @@ public class SendMailToVoters implements Controller.Action {
         String msg = null;
         String err = null;
         String title = "Login";
-        
+
         if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
@@ -45,8 +46,9 @@ public class SendMailToVoters implements Controller.Action {
                 System.out.println("hi");
                 long id = Long.parseLong(election_id);
                 try {
-                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    ArrayList<Voter> voters = obj.getVotersEmail(id);
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                    ArrayList<Voter> voters = objV.getVotersEmail(id);
                     String link = "<a href='" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
                     for (Voter v : voters) {
                         if (v.getLinkStatus() == false) {
@@ -54,7 +56,7 @@ public class SendMailToVoters implements Controller.Action {
                                 System.out.println("mail send to all voters ");
                                 msg = "mail send to all voters";
                                 v.setLinkStatus(true);
-                                obj.changeVoterLinkStatus(v);
+                                objV.changeVoterLinkStatus(v);
                             } else {
                                 err = "Fail to send mail to voters";
                                 System.out.println("Fail to send mail to voters");

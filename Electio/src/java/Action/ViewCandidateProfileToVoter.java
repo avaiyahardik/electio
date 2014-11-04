@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -41,8 +42,9 @@ public class ViewCandidateProfileToVoter implements Controller.Action {
             long id = Long.parseLong(elec_id);
             String candidate_email = req.getParameter("candidate_email");
             try {
-                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                Candidate c = obj.getCandidate(id, candidate_email);
+                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                Candidate c = objC.getCandidate(id, candidate_email);
                 req.setAttribute("candidate", c);
             } catch (SQLException ex) {
                 err = ex.getMessage();

@@ -5,6 +5,9 @@
  */
 package Controller;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplOrganization;
+import DAO.DBDAOImplUserInfo;
 import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
@@ -72,10 +75,12 @@ public class UpdateCandidate extends HttpServlet {
         String about_organization = null;
         String image = null;
         String manifesto = null;
-        
 
         try {
-            DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//            DBDAOImplementation obj = DBDAOImplementation.getInstance();
+            DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
+            DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+            DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
             List<FileItem> fileItemsList = uploader.parseRequest(request);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
             Date date;
@@ -118,7 +123,7 @@ public class UpdateCandidate extends HttpServlet {
                         image = "user_images" + File.separator + date.getTime() + ext;
                         System.out.println("Absolute Path at server=" + image);
                         System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                        if (obj.updateProfilePicture(email, image)) {
+                        if (objU.updateProfilePicture(email, image)) {
                             msg = "Profile updated successfully";
                         } else {
                             err = "Fail to update profile, please retry";
@@ -138,7 +143,7 @@ public class UpdateCandidate extends HttpServlet {
                         manifesto = "manifesto" + File.separator + date.getTime() + ext;
                         System.out.println("Absolute Path at server=" + manifesto);
                         System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                        if (obj.updateManifesto(election_id, email, manifesto)) {
+                        if (objC.updateManifesto(election_id, email, manifesto)) {
                             msg = "Profile updated successfully";
                         } else {
                             err = "Fail to update profile, please retry";
@@ -147,14 +152,14 @@ public class UpdateCandidate extends HttpServlet {
                 }
                 //System.out.println("lastname"+fileItem.getString());
             }
-            
+
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("")) {
                 err = "Please fill all required fields";
             } else {
 
                 //password = RandomString.encryptPassword(password);
                 Organization org = new Organization(organization_name, organization_address, about_organization);
-                long organization_id = obj.addNewOrganization(org);
+                long organization_id = objO.addNewOrganization(org);
                 int gen = Integer.parseInt(gender);
                 UserInfo ui = new UserInfo();
                 ui.setEmail(email);
@@ -164,7 +169,7 @@ public class UpdateCandidate extends HttpServlet {
                 ui.setMobile(mobile);
                 ui.setOrganization_id(organization_id);
 
-                if (obj.updateUserInfo(ui)) {
+                if (objU.updateUserInfo(ui)) {
                     msg = "Nominee updated successfully";
                 } else {
                     err = "Fail to update profile, please retry";

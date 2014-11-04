@@ -1,3 +1,5 @@
+<%@page import="DAO.DBDAOImplOrganization"%>
+<%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
@@ -15,13 +17,15 @@
     <!-- Candidate List here -->
 
     <%
-        DBDAOImplementation obj = DBDAOImplementation.getInstance();
+        //    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+        DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+        DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
         ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
         for (Candidate c : candidates) {
     %>
     <tr>
         <td><a href="Controller?action=view_candidate_to_voter&candidate_email=<%=c.getEmail()%>"><%=c.getFirstname()%> <%=c.getLastname()%></a></td>
-        <td><%= obj.getOrganization(c.getOrganization_id()).getName()%></td>
+        <td><%= objO.getOrganization(c.getOrganization_id()).getName()%></td>
         <td>
             <% String gender = "Other";
                 if (c.getGender() == 1) {

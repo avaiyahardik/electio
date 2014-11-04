@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import java.io.IOException;
@@ -44,9 +46,11 @@ public class ViewResult extends HttpServlet {
             long id = Long.parseLong(elec_id);
             System.out.println("Election_ID: " + elec_id);
             JSONArray array = new JSONArray();
-            DBDAOImplementation obj = DBDAOImplementation.getInstance();
+//            DBDAOImplementation obj = DBDAOImplementation.getInstance();
+            DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+            DBDAOImplElection objE = DBDAOImplElection.getInstance();
             ArrayList<Candidate> list = null;
-            list = obj.getElectionResult(id);
+            list = objE.getElectionResult(id);
             System.out.println("Msg1");
             JSONObject jSONObject = null;
             System.out.println("Msg2");

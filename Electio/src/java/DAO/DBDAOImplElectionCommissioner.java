@@ -32,7 +32,8 @@ public class DBDAOImplElectionCommissioner {
         }
         return obj;
     }
-     public boolean registerElectionCommissioner(ElectionCommissioner ec) throws SQLException {
+
+    public boolean registerElectionCommissioner(ElectionCommissioner ec) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election_commissioner VALUES(?,?,?,?,?,?)");
         ps.setString(1, ec.getEmail());
@@ -46,7 +47,8 @@ public class DBDAOImplElectionCommissioner {
         }
         return result;
     }
-      public boolean loginElectionCommissioner(String email, String password) throws SQLException {
+
+    public boolean loginElectionCommissioner(String email, String password) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_commissioner WHERE email=? AND password=?");
         ps.setString(1, email);
@@ -88,29 +90,7 @@ public class DBDAOImplElectionCommissioner {
         }
         return result;
     }
-
-    public boolean createElection(Election el) throws SQLException {
-        boolean result = false;
-        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election(election_commissioner_email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
-        ps.setString(1, el.getElection_commissioner_email());
-        ps.setString(2, el.getName());
-        ps.setString(3, el.getDescription());
-        ps.setString(4, el.getRequirements());
-        ps.setLong(5, el.getType_id());
-        // ps.setTimestamp(6, el.getCreated_at());
-        ps.setTimestamp(6, el.getNomination_start());
-        ps.setTimestamp(7, el.getNomination_end());
-        ps.setTimestamp(8, el.getWithdrawal_start());
-        ps.setTimestamp(9, el.getNomination_end());
-        ps.setTimestamp(10, el.getVoting_start());
-        ps.setTimestamp(11, el.getVoting_end());
-        ps.setInt(12, el.getPetition_duration());
-
-        if (ps.executeUpdate() > 0) {
-            result = true;
-        }
-        return result;
-    }
+    
      public boolean isValidElectionCommissioner(String email, String password) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_commissioner WHERE email=? AND password=?");
