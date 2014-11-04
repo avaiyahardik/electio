@@ -119,9 +119,9 @@ public class UpdateCandidate extends HttpServlet {
                         System.out.println("Absolute Path at server=" + image);
                         System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                         if (obj.updateProfilePicture(email, image)) {
-                            msg = "Nominee registered successfully";
+                            msg = "Profile updated successfully";
                         } else {
-                            err = "Fail to register nominee, please retry";
+                            err = "Fail to update profile, please retry";
                         }
                     }
                 } else if (fileItem.getFieldName().equals("manifesto_file")) {
@@ -139,9 +139,9 @@ public class UpdateCandidate extends HttpServlet {
                         System.out.println("Absolute Path at server=" + manifesto);
                         System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                         if (obj.updateManifesto(election_id, email, manifesto)) {
-                            msg = "Nominee registered successfully";
+                            msg = "Profile updated successfully";
                         } else {
-                            err = "Fail to register nominee, please retry";
+                            err = "Fail to update profile, please retry";
                         }
                     }
                 }
@@ -165,9 +165,9 @@ public class UpdateCandidate extends HttpServlet {
                 ui.setOrganization_id(organization_id);
 
                 if (obj.updateUserInfo(ui)) {
-                    msg = "Nominee registered successfully";
+                    msg = "Nominee updated successfully";
                 } else {
-                    err = "Fail to register nominee, please retry";
+                    err = "Fail to update profile, please retry";
                 }
 
             }
@@ -175,7 +175,7 @@ public class UpdateCandidate extends HttpServlet {
             System.out.println("File Not Found Exception in uploading file.");
         } catch (Exception e) {
             err = e.getMessage();
-            System.out.println("ERR NomineeRegistration: " + e.toString());
+            System.out.println("ERR UpdateCandidate: " + e.toString());
         }
 
         request.setAttribute("msg", msg);
