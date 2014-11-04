@@ -45,9 +45,11 @@ public class SendMailToProbableNominee implements Controller.Action {
                     ArrayList<ProbableNominee> pns = obj.getAllProbableNominees(id);
                     String link = "<a href='" + RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
                     for (ProbableNominee itm : pns) {
-                        if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {
-                            itm.setStatus(true);
-                            obj.changeProbableNomineeStatus(itm);
+                        if (itm.getStatus() == false) {
+                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {
+                                itm.setStatus(true);
+                                obj.changeProbableNomineeStatus(itm);
+                            }
                         }
                     }
                 } catch (SQLException ex) {
