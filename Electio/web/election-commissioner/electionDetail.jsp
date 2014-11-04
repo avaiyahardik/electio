@@ -316,15 +316,29 @@
 
 
                         <br><br>
-                        <div class="align-left well">
-                            Voter Status - 
-                            <i class="fa fa-check-circle" style="color:green"></i> Voted
-                            <i class="fa fa-circle" style="color:red"></i> Not Voted
+                        <div class="well">
+                            <div class="row">   
+                                <div class="align-left col-lg-6">
+                                    Voter Status - 
+                                    <i class="fa fa-check-circle" style="color:green"></i> Voted
+                                    <i class="fa fa-circle" style="color:red"></i> Not Voted
+                                    <br>
+                                    Link Status - 
+                                    <i class="fa fa-check-circle" style="color:green"></i> Sent
+                                    <i class="fa fa-circle" style="color:red"></i> Not Sent
+                                </div>
+
+                                <div class="align-right col-lg-6">
+                                    <a href="Controller?action=send_ballot_link" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Election URL</a>
+                                </div>
+                            </div>
                         </div>
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Voter Email</th>
+                                    <th class="align-center">Link Status</th>
                                     <th class="align-center">Vote Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -338,6 +352,20 @@
                                 %>
                                 <tr>
                                     <td><%= v.getEmail()%></td>
+                                    
+                                    <td><%
+                                        if (v.getLinkstatus() == 1) {
+                                        %>
+                                        <i class="fa fa-check-circle" style="color:green"></i>
+                                        <%
+                                        } else {
+                                        %>
+                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <%
+                                            }
+                                        %>
+                                    </td>
+                                    
                                     <td class="align-center"><%
                                         if (v.getStatus()) {
                                         %>
@@ -392,16 +420,25 @@
 
 
                         <br><br>
-                        <div class="align-left well">
-                            Registration Link Status - 
-                            <i class="fa fa-check-circle" style="color:green"></i> Sent
-                            <i class="fa fa-circle" style="color:red"></i> Not Sent
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    Status - 
+                                    <i class="fa fa-circle" style="color:red"></i> Link Not Sent
+                                    <i class="fa fa-circle" style="color:orange"></i> Link Sent
+                                    <i class="fa fa-check-circle" style="color:green"></i> Registered
+                                </div>
+                                <div class="col-lg-4 align-right">
+                                    <a href="Controller?action=send_registration_link" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Registration URL</a>
+                                </div>
+                            </div>
+
                         </div>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Nominee Email</th>
-                                    <th class="align-center">Link Status</th>
+                                    <th class="align-center">Status</th>
 
                                 </tr>
                             </thead>
@@ -411,7 +448,7 @@
                                 <!-- Display Voter Data by Loop -->
 
                                 <% ArrayList<ProbableNominee> pn = (ArrayList<ProbableNominee>) request.getAttribute("probable_nominee");
-                                      for (ProbableNominee p : pn) {
+                                    for (ProbableNominee p : pn) {
                                 %>
                                 <tr>
                                     <td><%= p.getEmail()%></td>
