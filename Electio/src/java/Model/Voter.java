@@ -61,7 +61,7 @@ public class Voter {
     }
 
     public boolean getLinkStatus() {
-        return status;
+        return link_status;
     }
 
     public void setLinkStatus(boolean link_status) {
