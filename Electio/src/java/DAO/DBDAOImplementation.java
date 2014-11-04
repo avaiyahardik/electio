@@ -230,11 +230,12 @@ public class DBDAOImplementation {
 
     public boolean addVoter(Voter voter) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_voter VALUES(?,?,?,?)");
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_voter VALUES(?,?,?,?,?)");
         ps.setString(1, voter.getEmail());
         ps.setLong(2, voter.getElection_id());
         ps.setString(3, voter.getPassword());
         ps.setBoolean(4, voter.getStatus());
+        ps.setBoolean(5, voter.getLinkStatus());
         if (ps.executeUpdate() > 0) {
             result = true;
         }
@@ -308,6 +309,7 @@ public class DBDAOImplementation {
             voter.setElection_id(election_id);
             voter.setPassword(rs.getString("password"));
             voter.setStatus(rs.getBoolean("status"));
+            voter.setLinkStatus(rs.getBoolean("link_status"));
         }
         return voter;
     }
@@ -336,6 +338,7 @@ public class DBDAOImplementation {
             voter.setElection_id(election_id);
             voter.setPassword(rs.getString("password"));
             voter.setStatus(rs.getBoolean("status"));
+            voter.setLinkStatus(rs.getBoolean("link_status"));
             voters.add(voter);
         }
         return voters;
@@ -404,6 +407,7 @@ public class DBDAOImplementation {
         if (rs.next()) {
             v.setPassword(rs.getString("password"));
             v.setStatus(rs.getBoolean("status"));
+            v.setLinkStatus(rs.getBoolean("link_status"));
             return v;
         } else {
             return null;
@@ -776,7 +780,7 @@ public class DBDAOImplementation {
 
     public boolean updateVoterStatus(long election_id, String email) throws SQLException {
         boolean result = false;
-        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_voter SET status =? WHERE election_id=? and email=?");
+        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_voter SET status=? WHERE election_id=? and email=?");
         ps2.setInt(1, 1);
         ps2.setLong(2, election_id);
         ps2.setString(3, email);

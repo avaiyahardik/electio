@@ -28,6 +28,10 @@ public class Voter {
         this.link_status = link_status;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -63,6 +67,5 @@ public class Voter {
     public void setLinkStatus(boolean link_status) {
         this.link_status = link_status;
     }
-    
-    
+
 }
