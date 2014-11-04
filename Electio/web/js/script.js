@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     var editing = 0;
     var old_email, old_html, election_id;
     var input_id, cnt = 0;
