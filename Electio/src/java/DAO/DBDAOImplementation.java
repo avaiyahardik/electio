@@ -358,11 +358,12 @@ public class DBDAOImplementation {
 
     public ArrayList<Voter> getVotersEmail(long election_id) throws SQLException {
         ArrayList<Voter> voters = new ArrayList<Voter>();
-        PreparedStatement ps = con.prepareStatement("SELECT email FROM tbl_voter WHERE election_id=?");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE election_id=?");
         ps.setLong(1, election_id);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             Voter v = new Voter();
+            v.setElection_id(election_id);
             v.setEmail(rs.getString("email"));
             v.setLinkStatus(rs.getBoolean("link_status"));
             voters.add(v);
@@ -996,5 +997,19 @@ public class DBDAOImplementation {
             candidates.add(c);
         }
         return candidates;
+    }
+    
+    public boolean changeVoterLinkStatus(Voter v) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET status=? WHERE election_id=? AND email=?");
+        ps.setBoolean(1, v.getLinkStatus());
+        ps.setLong(2, v.getElection_id());
+        ps.setString(3, v.getEmail());
+
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+
+        return result;
     }
 }
