@@ -626,6 +626,7 @@ public class DBDAOImplementation {
             candidate.setPassword(rs.getString("password"));
             candidate.setElection_id(rs.getLong("election_id"));
             candidate.setRequirements_file(rs.getString("requirements_file"));
+            candidate.setManifesto(rs.getString("manifesto"));
 
         }
         return candidate;
