@@ -15,6 +15,7 @@ public class Candidate extends UserInfo {
     private String requirements_file;
     private long votes;
     private String manifesto;
+    private boolean petition_filed;
 
     public long getElection_id() {
         return election_id;
@@ -48,4 +49,11 @@ public class Candidate extends UserInfo {
         this.manifesto = manifesto;
     }
 
+    public boolean isPetition_filed() {
+        return petition_filed;
+    }
+
+    public void setPetition_filed(boolean petition_filed) {
+        this.petition_filed = petition_filed;
+    }
 }

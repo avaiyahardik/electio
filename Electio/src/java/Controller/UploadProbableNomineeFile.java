@@ -36,7 +36,7 @@ import org.omg.CORBA.FieldNameHelper;
  *
  * @author Hardik
  */
-public class UploadProbableNomineeList extends HttpServlet {
+public class UploadProbableNomineeFile extends HttpServlet {
 
     private ServletFileUpload uploader = null;
 
@@ -103,9 +103,14 @@ public class UploadProbableNomineeList extends HttpServlet {
                     FileReader fr = new FileReader(f);
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
+                    String reg = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     while (s != null) {
-                        pn=new ProbableNominee(election_id, s, false);
+                         if (s.matches(reg)) {
+                        pn=new ProbableNominee(election_id, s, 0);
                         obj.addProbableNominee(pn);
+                         }else{
+                             System.out.println("invalid email address "+s);
+                         }
                         s = br.readLine();
                     }
                 }

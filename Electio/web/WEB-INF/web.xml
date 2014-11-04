@@ -16,6 +16,22 @@
         <servlet-name>UploadVoterFile</servlet-name>
         <servlet-class>Controller.UploadVoterFile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateProbableNominee</servlet-name>
+        <servlet-class>Controller.UpdateProbableNominee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadProbableNomineeList</servlet-name>
+        <servlet-class>Controller.UploadProbableNomineeFile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCandidate</servlet-name>
+        <servlet-class>Controller.UpdateCandidate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewResult</servlet-name>
+        <servlet-class>Controller.ViewResult</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -41,6 +57,10 @@
         <url-pattern>/candidate/NomineeRegistration</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UpdateCandidate</servlet-name>
+        <url-pattern>/candidate/UpdateCandidate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UpdateVoter</servlet-name>
         <url-pattern>/UpdateVoter</url-pattern>
     </servlet-mapping>
@@ -49,12 +69,36 @@
         <url-pattern>/election-commissioner/UpdateVoter</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UpdateProbableNominee</servlet-name>
+        <url-pattern>/election-commissioner/UpdateProbableNominee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadProbableNomineeList</servlet-name>
+        <url-pattern>/election-commissioner/UploadProbableNomineeList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UploadVoterFile</servlet-name>
         <url-pattern>/UploadVoterFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UploadVoterFile</servlet-name>
         <url-pattern>/election-commissioner/UploadVoterFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResult</servlet-name>
+        <url-pattern>/ViewResult</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResult</servlet-name>
+        <url-pattern>/election-commissioner/ViewResult</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResult</servlet-name>
+        <url-pattern>/candidate/ViewResult</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResult</servlet-name>
+        <url-pattern>/voter/ViewResult</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -65,4 +109,3 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
-

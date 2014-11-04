@@ -34,6 +34,7 @@
                     <li><a href="#election_candidates" data-toggle="tab">Candidates</a></li>
                     <li><a href="#election_voters" data-toggle="tab">Voters</a>
                     <li><a href="#election_list" data-toggle="tab">List</a>
+                    <li><a href="#election_result" data-toggle="tab">Results</a></li>
                     </li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
@@ -316,28 +317,56 @@
 
 
                         <br><br>
-                        <div class="align-left well">
-                            Voter Status - 
-                            <i class="fa fa-check-circle" style="color:green"></i> Voted
-                            <i class="fa fa-circle" style="color:red"></i> Not Voted
+                        <div class="well">
+                            <div class="row">   
+                                <div class="align-left col-lg-6">
+                                    Voter Status - 
+                                    <i class="fa fa-check-circle" style="color:green"></i> Voted
+                                    <i class="fa fa-circle" style="color:red"></i> Not Voted
+                                    <br>
+                                    Link Status - 
+                                    <i class="fa fa-check-circle" style="color:green"></i> Sent
+                                    <i class="fa fa-circle" style="color:red"></i> Not Sent
+                                </div>
+
+                                <div class="align-right col-lg-6">
+                                    <a href="Controller?action=send_ballot_link" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Election URL</a>
+                                </div>
+                            </div>
                         </div>
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Voter Email</th>
+                                    <th class="align-center">Link Status</th>
                                     <th class="align-center">Vote Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <tr id="blank_row"></tr>
+                                <tr id="blank_row_voter"></tr>
                                 <!-- Display Voter Data by Loop -->
                                 <% ArrayList<Voter> voters = (ArrayList<Voter>) request.getAttribute("voters");
                                     for (Voter v : voters) {
                                 %>
                                 <tr>
                                     <td><%= v.getEmail()%></td>
+
+                                    <td class="align-center"><%
+                                        if (v.getLinkStatus()) {
+                                        %>
+                                        <i class="fa fa-check-circle" style="color:green"></i>
+                                        <%
+                                        } else {
+                                        %>
+                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <%
+                                            }
+                                        %>
+                                    </td>
+
                                     <td class="align-center"><%
                                         if (v.getStatus()) {
                                         %>
@@ -392,37 +421,49 @@
 
 
                         <br><br>
-                        <div class="align-left well">
-                            Registration Link Status - 
-                            <i class="fa fa-check-circle" style="color:green"></i> Sent
-                            <i class="fa fa-circle" style="color:red"></i> Not Sent
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    Status - 
+                                    <i class="fa fa-circle" style="color:red"></i> Link Not Sent
+                                    <i class="fa fa-circle" style="color:orange"></i> Link Sent
+                                    <i class="fa fa-check-circle" style="color:green"></i> Registered
+                                </div>
+                                <div class="col-lg-4 align-right">
+                                    <a href="Controller?action=send_registration_link" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Registration URL</a>
+                                </div>
+                            </div>
+
                         </div>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Nominee Email</th>
-                                    <th class="align-center">Link Status</th>
+                                    <th class="align-center">Status</th>
 
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <tr id="blank_row"></tr>
+                                <tr id="blank_row_nominee"></tr>
                                 <!-- Display Voter Data by Loop -->
 
                                 <% ArrayList<ProbableNominee> pn = (ArrayList<ProbableNominee>) request.getAttribute("probable_nominee");
-                                      for (ProbableNominee p : pn) {
+                                    for (ProbableNominee p : pn) {
                                 %>
                                 <tr>
                                     <td><%= p.getEmail()%></td>
                                     <td class="align-center"><%
-                                        if (p.getStatus()) {
+                                        int p_status = p.getStatus();
+                                        if (p_status == 0) {
                                         %>
-                                        <i class="fa fa-check-circle" style="color:green"></i>
+                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <%} else if (p_status == 1) {%>
+                                        <i class="fa fa-circle" style="color:orange"></i>
                                         <%
                                         } else {
                                         %>
-                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <i class="fa fa-check-circle" style="color:green"></i>
                                         <%
                                             }
                                         %></td>
@@ -432,15 +473,21 @@
                                     </td>
                                 </tr>
                                 <%}%>
-                                <%
-                                    if (pn.size() == 0) {
-                                %>
+                                <%if (pn.size() == 0) {%>
                                 <tr>
                                     <td colspan="3"><strong>Probable Nominees will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="tab-pane fade active in" id="election_result">
+                        <div class="row">
+                            <div class="col-lg-10 well">
+                                <div id="result-chart"></div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -458,8 +505,12 @@
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
-
 <script type="text/javascript" src="../js/script.js"></script>
+
+
+<script type="text/javascript" src="../js/charts.js"></script>
+<script type="text/javascript" src="../js/jsapi"></script>
+
 <!-- END  PAGE LEVEL SCRIPTS -->
 
 
@@ -467,22 +518,44 @@
 
     $('#nomination_start').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#nomination_end').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#withdrawal_start').datetimepicker()
             .datetimepicker({step: 30});
     $('#withdrawal_end').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#voting_start').datetimepicker()
             .datetimepicker({step: 30});
-
     $('#voting_end').datetimepicker()
             .datetimepicker({step: 30});
-
     tinymce.init({selector: '#requirements'});
+    google.load("visualization", "1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+
+
+
+        var years = ['2001', '2002', '2003', '2004', '2005'];
+        var sales = [1, 2, 3, 4, <%= el.getId()%>];
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Candidate');
+        data.addColumn('number', 'Votes');
+
+
+
+    <%
+    for (Candidate c:candidates) {
+    %>
+        data.addRow(['<%=c.getFirstname() %> <%=c.getLastname()%>', 1]);
+    <%}%>
+        var options = {
+            title: 'My Daily Activities',
+            is3D: true,
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('result-chart'));
+        chart.draw(data, options);
+    }
 
 </script>
 

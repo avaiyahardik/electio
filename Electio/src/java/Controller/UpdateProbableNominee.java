@@ -64,7 +64,7 @@ public class UpdateProbableNominee extends HttpServlet {
                             }
                         } else if (cmd.equals("add")) {
                             String nominee_email = request.getParameter("email");
-                            ProbableNominee pn = new ProbableNominee(election_id, email, false);
+                            ProbableNominee pn = new ProbableNominee(election_id, nominee_email, 0);
                             if (obj.addProbableNominee(pn)) {
                                 out.print("Added");
                             } else {

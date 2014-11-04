@@ -158,7 +158,7 @@ public class DBDAOImplNominee {
         ps2.setLong(2, election_id);
         ps2.setString(3, requirements_file);
         ps2.setInt(4, 0);
-        ps2.setString(5, "no manifesto");
+        ps2.setString(5, "manifestos/electio.pdf");
         if (ps2.executeUpdate() > 0) {
             result = true;
         }

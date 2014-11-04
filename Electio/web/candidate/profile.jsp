@@ -1,10 +1,16 @@
+<%@page import="Model.Candidate"%>
+<%@page import="DAO.DBDAOImplementation"%>
+<%@page import="Model.Organization"%>
 <%@page import="java.io.File"%>
 <%@page import="Model.Nominee"%>
 <jsp:include page="header.jsp"/>
 
 <%
+    DBDAOImplementation obj = DBDAOImplementation.getInstance();
     Nominee n = (Nominee) request.getAttribute("nominee");
+    Candidate c = (Candidate) request.getAttribute("candidate");
     int status = n.getStatus();
+    Organization o = obj.getOrganization(n.getElection_id());
 %>
 <div class="page-header">
     <h1 class="page-title">Candidate Profile
@@ -17,7 +23,7 @@
                 <p>Candidate Profile</p>
             </div>
             <div class="panel-body">
-                <form action="Controller" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form action="UpdateCandidate" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <fieldset> 
                         <!-- BEGIN ERROR BOX -->
                         <div class="form-group col-lg-12">
@@ -43,12 +49,12 @@
                             <label class="control-label col-sm-4" for="status">Nomination Status</label>
                             <div class="col-sm-6">
                                 <%if (status == 0) {%>
-                            <label class="label label-warning control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
-                            <%} else if (status == 1) {%>
-                            <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
-                            <%} else {%>
-                            <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
-                            <%}%>
+                                <label class="label label-warning control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+                                <%} else if (status == 1) {%>
+                                <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
+                                <%} else {%>
+                                <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
+                                <%}%>
                             </div>
                         </div>
 
@@ -99,36 +105,38 @@
                             </div>
                         </div>
 
+                        <% if (n.getStatus() == 1) {%>
                         <div class="form-group">
                             <label for="manifesto" class="control-label col-lg-4">Manifesto(PDF only)</label>
                             <div class="col-lg-6">
-                                <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf"  required/>
+                                <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf" />
+                                <a href="..<%= File.separator%><%= c.getManifesto()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Current Manifesto file</a>
                             </div>
                         </div>
-
+                        <%}%>
                         <div class="form-group">
                             <label for="organization_name" class="control-label col-lg-4">Organization Name</label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="organization_name" required value="<%%>">
+                                <input type="text" class="form-control" name="organization_name" required value="<%=o.getName()%>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="organization_address" class="control-label col-lg-4">Organization Address</label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="organization_address" required>
+                                <input type="text" class="form-control" name="organization_address" required value="<%=o.getAddress()%>">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="about_organization" class="control-label col-lg-4">About Organization</label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="about_organization" required>
+                                <input type="text" class="form-control" name="about_organization" required value="<%=o.getAbout()%>">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-lg-7 col-lg-offset-4">
-                                <button type="submit" name="action" value="update_nominee_profile" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Update Profile</button>
+                                <button type="submit" name="action" value="UpdateCandidate" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Update Profile</button>
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
                             </div>
                         </div>

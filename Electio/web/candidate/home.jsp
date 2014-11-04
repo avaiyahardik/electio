@@ -1,9 +1,12 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Election"%>
 <jsp:include page="header.jsp"/>
 <%
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     Election el = (Election) request.getAttribute("election");
-    int nominee_status = (Integer) request.getAttribute("nominee_status");
+    int status = (Integer) request.getAttribute("nominee_status");
 %>
 
 <div class="page-header">
@@ -28,23 +31,31 @@
 
         <tr class="info">
             <td>Nomination</td>
-            <td><%=el.getNomination_start()%></td>
-            <td><%=el.getNomination_end()%></td>
+            <td><%=sdf.format(new Date(el.getNomination_start().getTime()))%></td>
+            <td><%=sdf.format(new Date(el.getNomination_end().getTime()))%></td>
         </tr>
 
         <tr class="danger">
             <td>Withdrawal</td>
-            <td><%=el.getWithdrawal_start()%></td>
-            <td><%=el.getWithdrawal_end()%></td>
+            <td><%=sdf.format(new Date(el.getWithdrawal_start().getTime()))%></td>
+            <td><%=sdf.format(new Date(el.getWithdrawal_end().getTime()))%></td>
         </tr>
 
         <tr class="success">
             <td>Voting</td>
-            <td><%=el.getVoting_start()%></td>
-            <td><%=el.getVoting_end()%></td>
+            <td><%=sdf.format(new Date(el.getVoting_start().getTime()))%></td>
+            <td><%=sdf.format(new Date(el.getVoting_end().getTime()))%></td>
         </tr>
     </table>
-    <h1>You nomination status => <%=nominee_status%></h1>
+    <h1>You nomination status 
+        <%if (status == 0) {%>
+        <label class="label label-warning control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+        <%} else if (status == 1) {%>
+        <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
+        <%} else {%>
+        <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
+        <%}%>
+    </h1>
 </div>
 
 

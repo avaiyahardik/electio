@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2014 at 11:58 AM
+-- Generation Time: Nov 04, 2014 at 11:37 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `tbl_election_candidate` (
 --
 
 INSERT INTO `tbl_election_candidate` (`email`, `election_id`, `requirements_file`, `votes`, `manifesto`, `petition_filed`) VALUES
-('avaiyahardik@gmail.com', 1, 'requirements_files\\1414863678404.pdf', 0, 'no manifesto', 0),
-('sen.daiict@gmail.com', 1, 'requirements_files\\1414861505802.pdf', 0, 'no manifesto', 0);
+('avaiyahardik@gmail.com', 1, 'requirements_files\\1414863678404.pdf', 0, 'manifestos/electio.pdf', 0),
+('sen.daiict@gmail.com', 1, 'requirements_files\\1414861505802.pdf', 0, 'manifestos/electio.pdf', 0);
 
 -- --------------------------------------------------------
 
@@ -234,6 +234,7 @@ CREATE TABLE IF NOT EXISTS `tbl_voter` (
   `election_id` int(11) NOT NULL,
   `password` varchar(20) NOT NULL,
   `status` tinyint(1) NOT NULL,
+  `link_status` tinyint(1) NOT NULL,
   PRIMARY KEY (`email`,`election_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -241,9 +242,9 @@ CREATE TABLE IF NOT EXISTS `tbl_voter` (
 -- Dumping data for table `tbl_voter`
 --
 
-INSERT INTO `tbl_voter` (`email`, `election_id`, `password`, `status`) VALUES
-('avaiyahardik@gmail.com', 1, 'WD74TLu$', 0),
-('sen.daiict@gmail.com', 1, 'pwdpwdpwd', 0);
+INSERT INTO `tbl_voter` (`email`, `election_id`, `password`, `status`, `link_status`) VALUES
+('avaiyahardik@gmail.com', 1, 'WD74TLu$', 0, 0),
+('sen.daiict@gmail.com', 1, '_>4qaMgA', 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -26,23 +26,23 @@ public class ViewCandidateProfileToVoter implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-
-        String email = (String) req.getSession().getAttribute("email");
-        String elec_id = (String) req.getSession().getAttribute("election_id");
-        String view = "index.jsp";
+        String view = "login.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
+        String email = (String) req.getSession().getAttribute("voter_email");
+        String elec_id = (String) req.getSession().getAttribute("election_id");
+        System.out.println(email + ", " + elec_id);
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
             view = "candidateProfile.jsp";
             title = "Candidate Profile";
             long id = Long.parseLong(elec_id);
+            String candidate_email = req.getParameter("candidate_email");
             try {
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                Election e = obj.getElection(id);
-                Candidate c = obj.getCandidate(id, email);
+                Candidate c = obj.getCandidate(id, candidate_email);
                 req.setAttribute("candidate", c);
             } catch (SQLException ex) {
                 err = ex.getMessage();

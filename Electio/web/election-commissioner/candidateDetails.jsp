@@ -14,8 +14,9 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="col-md-5">
-                        <img src="..<%= File.separator%><%= c.getImage()%>" alt="Candidate Image" width="200" height="300"/>
+                    <div class="col-md-4">
+                        <h1> </h1>
+                        <img src="..<%= File.separator%><%= c.getImage()%>" alt="Candidate Image" width="250" height="300" class="thumbnail"/>
                         <!-- replace the Image source -->
                     </div>
 
@@ -70,8 +71,9 @@
                                     </div>    
                                 </div>
 
-                                <div class="form-group col-md-7">
+                                <div class="form-group col-md-10">
                                     <a href="..<%= File.separator%><%= c.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements file</a>
+                                    <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto file</a>
                                 </div>
                                 
                             </div>
@@ -81,8 +83,7 @@
 
                     <div class="col-md-12">
                         <div class="align-center">
-                            <a href="Controller?action=approve_nominee&election_id=&email=" class="btn btn-success"><i class="fa fa-check"></i> Approve</a>
-                            <a href="Controller?action=reject_nominee&election_id=&email=" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Reject</a>
+                            <a href="Controller?action=delete_candidate&election_id=<%=c.getElection_id()%>&email=<%=c.getEmail()%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete Candidate</a>
                         </div>
                     </div>
                 </div>
