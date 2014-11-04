@@ -103,9 +103,15 @@ public class UploadVoterFile extends HttpServlet {
                     FileReader fr = new FileReader(f);
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
+                    String reg = "/^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$/";
                     while (s != null) {
-                        v = new Voter(s, election_id, RandomString.generateRandomPassword(), false,false);
-                        obj.addVoter(v);
+                        if (s.matches(reg)) {
+                            v = new Voter(s, election_id, RandomString.generateRandomPassword(), false, false);
+                            obj.addVoter(v);
+                        }
+                        else{
+                            System.out.println("invalid email address "+s);
+                        }
                         s = br.readLine();
                     }
                 }
