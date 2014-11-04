@@ -352,9 +352,9 @@
                                 %>
                                 <tr>
                                     <td><%= v.getEmail()%></td>
-                                    
-                                    <td><%
-                                        if (v.getLinkstatus() == 1) {
+
+                                    <td class="align-center"><%
+                                        if (v.getLinkStatus()) {
                                         %>
                                         <i class="fa fa-check-circle" style="color:green"></i>
                                         <%
@@ -365,7 +365,7 @@
                                             }
                                         %>
                                     </td>
-                                    
+
                                     <td class="align-center"><%
                                         if (v.getStatus()) {
                                         %>
@@ -453,13 +453,16 @@
                                 <tr>
                                     <td><%= p.getEmail()%></td>
                                     <td class="align-center"><%
-                                        if (p.getStatus()) {
+                                        int p_status = p.getStatus();
+                                        if (p_status == 0) {
                                         %>
-                                        <i class="fa fa-check-circle" style="color:green"></i>
+                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <%} else if (p_status == 1) {%>
+                                        <i class="fa fa-circle" style="color:orange"></i>
                                         <%
                                         } else {
                                         %>
-                                        <i class="fa fa-circle" style="color:red"></i>
+                                        <i class="fa fa-check-circle" style="color:green"></i>
                                         <%
                                             }
                                         %></td>
@@ -470,7 +473,9 @@
                                 </tr>
                                 <%}%>
                                 <%
-                                    if (pn.size() == 0) {
+
+                                    if (pn.size()
+                                            == 0) {
                                 %>
                                 <tr>
                                     <td colspan="3"><strong>Probable Nominees will be displayed here...</strong></td>
