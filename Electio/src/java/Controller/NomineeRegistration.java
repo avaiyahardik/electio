@@ -8,6 +8,7 @@ package Controller;
 import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
+import Model.ProbableNominee;
 import Utilities.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
@@ -145,7 +146,8 @@ public class NomineeRegistration extends HttpServlet {
                     long organization_id = obj.addNewOrganization(org);
                     int gen = Integer.parseInt(gender);
                     Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
-                    if (obj.registerNominee(nominee)) {
+                    ProbableNominee pn = new ProbableNominee(election_id, email, 2);
+                    if (obj.registerNominee(nominee) && obj.changeProbableNomineeStatus(pn)) {
                         msg = "Nominee registered successfully";
                     } else {
                         err = "Fail to register nominee, please retry";
