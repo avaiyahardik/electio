@@ -331,7 +331,7 @@
                             </thead>
 
                             <tbody>
-                                <tr id="blank_row"></tr>
+                                <tr id="blank_row_voter"></tr>
                                 <!-- Display Voter Data by Loop -->
                                 <% ArrayList<Voter> voters = (ArrayList<Voter>) request.getAttribute("voters");
                                     for (Voter v : voters) {
@@ -407,7 +407,7 @@
                             </thead>
 
                             <tbody>
-                                <tr id="blank_row"></tr>
+                                <tr id="blank_row_nominee"></tr>
                                 <!-- Display Voter Data by Loop -->
 
                                 <% ArrayList<ProbableNominee> pn = (ArrayList<ProbableNominee>) request.getAttribute("probable_nominee");

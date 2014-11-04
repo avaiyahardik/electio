@@ -13,7 +13,7 @@ $(document).ready(function () {
             var voter_email = data_array[1];
             var type = data_array[2];
 
-            if (type.equals("deleteVoter")) {
+            if (type == "deleteVoter") {
                 $.post("UpdateVoter",
                         {
                             cmd: "delete",
@@ -28,7 +28,8 @@ $(document).ready(function () {
                         alert("Could not remove voter, please try again..")
                     }
                 });
-            } else if (type.equals("deleteNominee")) {
+            } else if (type == "deleteNominee") {
+                alert("Nominee");
                 $.post("UpdateProbableNominee",
                         {
                             cmd: "delete",
@@ -60,11 +61,11 @@ $(document).ready(function () {
             election_id = data_array[0];
             old_email = data_array[1];
             var type = data_array[2];
-            if (type.equals("editVoter")) {
+            if (type == "editVoter") {
                 input_id = "email-" + cnt++;
                 var html_string = "<td><input type='text' id='" + input_id + "' value='" + old_email + "'></td><td></td><td><button class='btn-save btn btn-success btn-sm'><i class='fa fa-floppy-o'></i> Save</button><button class='btn-cancel btn btn-warning btn-sm'><i class='fa fa-mail-reply'></i> Cancel</button></td>";
                 to_edit.html(html_string);
-            } else if (type.equals("editNominee")) {
+            } else if (type == "editNominee") {
 
             }
 
@@ -125,34 +126,37 @@ $(document).ready(function () {
                 var election_id = data_array[0];
                 var type = data_array[1];
                 var new_row;
-                if (type.equals("addVoter")) {
+                if (type == "addVoter") {
                     new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editVoter' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteVoter' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
                     $.post("UpdateVoter", {
                         cmd: "add",
                         email: email_id,
                         election_id: election_id
                     }, function (data, status) {
+
                         if (data == "Added") {
                             alert("New Voter added successfully.");
                             //$(email_id).insertAfter('#blank_space');
-                            $(new_row).insertAfter('#blank_row');
+                            $(new_row).insertAfter('#blank_row_voter');
                         } else {
                             alert("Error adding new voter, try again");
                         }
                     });
                 }
 
-                else if (type.equals("addNominee")) {
+                else if (type == "addNominee") {
+                
                     new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editNominee' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteNominee' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
-                    $.post("UpdateUpdateProbableNominee", {
+                    $.post("UpdateProbableNominee", {
                         cmd: "add",
                         email: email_id,
                         election_id: election_id
                     }, function (data, status) {
+                        
                         if (data == "Added") {
                             alert("New Probable Nominee added successfully.");
                             //$(email_id).insertAfter('#blank_space');
-                            $(new_row).insertAfter('#blank_row');
+                            $(new_row).insertAfter('#blank_row_nominee');
                         } else {
                             alert("Error adding new nominee, try again");
                         }
