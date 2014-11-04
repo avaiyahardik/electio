@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DBDAOImplementation {
 
@@ -943,7 +944,8 @@ public class DBDAOImplementation {
         }
         return ui;
     }
-    public boolean updateUserInfo(UserInfo ui) throws SQLException{
+
+    public boolean updateUserInfo(UserInfo ui) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET firstname=?,lastname=?,gender=?,mobile=?,organization_id=? WHERE email=?");
         ps.setString(1, ui.getFirstname());
@@ -954,10 +956,11 @@ public class DBDAOImplementation {
         ps.setString(6, ui.getEmail());
         if (ps.executeUpdate() > 0) {
             result = true;
-        }       
+        }
         return result;
     }
-    public boolean updateManifesto(long election_id,String email,String manifesto) throws SQLException{
+
+    public boolean updateManifesto(long election_id, String email, String manifesto) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_candidate SET manifesto=? WHERE email=? AND election_id=?");
         ps.setString(1, manifesto);
@@ -965,17 +968,23 @@ public class DBDAOImplementation {
         ps.setLong(3, election_id);
         if (ps.executeUpdate() > 0) {
             result = true;
-        }       
+        }
         return result;
     }
-    public boolean updateProfilePicture(String email,String image) throws SQLException{
+
+    public boolean updateProfilePicture(String email, String image) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET image=? WHERE email=?");
         ps.setString(1, image);
-        ps.setString(2, email);        
+        ps.setString(2, email);
         if (ps.executeUpdate() > 0) {
             result = true;
-        }       
+        }
         return result;
+    }
+
+    public HashMap<String, Integer> getElectionResult(long election_id) {
+        HashMap<String, Integer> hm = new HashMap<>();
+        return hm;
     }
 }
