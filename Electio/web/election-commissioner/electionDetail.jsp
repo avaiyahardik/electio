@@ -29,13 +29,12 @@
         <div class="col-md-12">
             <div class="tabcordian">
                 <ul id="myTab" class="nav nav-tabs">
-                    <li class="active"><a href="#election_general" data-toggle="tab">General</a></li>
-                    <li><a href="#election_nominees" data-toggle="tab">Nominees</a></li>
-                    <li><a href="#election_candidates" data-toggle="tab">Candidates</a></li>
-                    <li><a href="#election_voters" data-toggle="tab">Voters</a>
-                    <li><a href="#election_list" data-toggle="tab">List</a>
-                    <li><a href="#election_result" data-toggle="tab">Results</a></li>
-                    </li>
+                    <li class="active"><a href="#election_general" data-toggle="tab"><i class="fa fa-info-circle"></i> General Details</a></li>
+                    <li><a href="#election_nominees" data-toggle="tab"><i class="fa fa-user"></i> Nominees</a></li>
+                    <li><a href="#election_candidates" data-toggle="tab"><i class="fa fa-user"></i> Candidates</a></li>
+                    <li><a href="#election_voters" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Voters</a>
+                    <li><a href="#election_list" data-toggle="tab"><i class="fa fa-list"></i> Probable Nominee List</a>
+                    <li><a href="#election_result" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Results</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
 
@@ -440,7 +439,7 @@
                                 <tr>
                                     <th>Nominee Email</th>
                                     <th class="align-center">Status</th>
-
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -484,8 +483,14 @@
 
                     <div class="tab-pane fade active in" id="election_result">
                         <div class="row">
-                            <div class="col-lg-10 well">
-                                <div id="result-chart"></div>
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <div id="result-chart-pie"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <div id="result-chart-bar"></div>
                             </div>
                         </div>
                     </div>
@@ -532,30 +537,27 @@
     google.load("visualization", "1", {packages: ["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
-
-
-
-        var years = ['2001', '2002', '2003', '2004', '2005'];
-        var sales = [1, 2, 3, 4, <%= el.getId()%>];
-
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Candidate');
         data.addColumn('number', 'Votes');
-
-
-
     <%
-    for (Candidate c:candidates) {
+        int total_votes = 0;
+        for (Candidate c : candidates) {
+            total_votes += (int) c.getVotes();
     %>
-        data.addRow(['<%=c.getFirstname() %> <%=c.getLastname()%>', 1]);
+        data.addRow(['<%=c.getFirstname()%> <%=c.getLastname()%>',<%=(int) c.getVotes()%>]);
     <%}%>
-        var options = {
-            title: 'My Daily Activities',
-            is3D: true,
-        };
-        var chart = new google.visualization.PieChart(document.getElementById('result-chart'));
-        chart.draw(data, options);
-    }
+                var options = {
+                    title: 'Election Results '+'\nTotal Votes : '+<%=total_votes%>,
+                    is3D: true,
+                    width: 800,
+                    height: 600
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('result-chart-pie'));
+                chart.draw(data, options);
+                var chart = new google.visualization.ColumnChart(document.getElementById('result-chart-bar'));
+                chart.draw(data, options);
+            }
 
 </script>
 

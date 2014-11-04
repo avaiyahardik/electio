@@ -1,16 +1,12 @@
-<<<<<<< HEAD
-$(document).ready(function() {
-
-=======
 $(document).ready(function () {
->>>>>>> 64bb8fbab366699f94de501b391d9d1b885d7e8f
+
     var editing = 0;
     var old_email, old_html, election_id;
     var input_id, cnt = 0;
     var edit_type;
 
     // Deleting a voter
-    $(':button.btn-del').live("click", function() {
+    $(':button.btn-del').live("click", function () {
         if (confirm("Do you really want to delete?")) {
             var to_remove = $(this).parent().parent();
             var data_array = $(this).val().split("*");
@@ -25,7 +21,7 @@ $(document).ready(function () {
                             election_id: election_id,
                             voter_email: email
                         },
-                function(data, status) {
+                function (data, status) {
                     if (data == "Deleted") {
                         to_remove.addClass("danger");
                         to_remove.fadeOut(500);
@@ -34,17 +30,14 @@ $(document).ready(function () {
                     }
                 });
             } else if (type == "deleteNominee") {
-<<<<<<< HEAD
-=======
 
->>>>>>> 64bb8fbab366699f94de501b391d9d1b885d7e8f
                 $.post("UpdateProbableNominee",
                         {
                             cmd: "delete",
                             election_id: election_id,
                             probable_nominee_email: email
                         },
-                function(data, status) {
+                function (data, status) {
                     if (data == "Deleted") {
                         to_remove.addClass("danger");
                         to_remove.fadeOut(500);
@@ -58,7 +51,7 @@ $(document).ready(function () {
     });
 
 // Editing a voter's data (Email only)
-    $(':button.btn-edit').live("click", function() {
+    $(':button.btn-edit').live("click", function () {
         to_edit = $(this).parent().parent();
         //alert('Edit button pressed');
         if (editing == 0) {
@@ -72,7 +65,7 @@ $(document).ready(function () {
             input_id = "email-" + cnt++;
             var html_string;
 
-            html_string = "<td><input type='text' id='" + input_id + "' value='" + old_email + "'></td><td></td><td><button class='btn-save btn btn-success btn-sm'><i class='fa fa-floppy-o'></i> Save</button><button class='btn-cancel btn btn-warning btn-sm'><i class='fa fa-mail-reply'></i> Cancel</button></td>";
+            html_string = "<td><input type='text' id='" + input_id + "' value='" + old_email + "'></td><td></td><td></td><td><button class='btn-save btn btn-success btn-sm'><i class='fa fa-floppy-o'></i> Save</button><button class='btn-cancel btn btn-warning btn-sm'><i class='fa fa-mail-reply'></i> Cancel</button></td>";
             to_edit.html(html_string);
         } else {
             alert("You can edit a single instance at a time..");
@@ -80,7 +73,7 @@ $(document).ready(function () {
     });
 
     // Saving edited voter's data
-    $(':button.btn-save').live("click", function() {
+    $(':button.btn-save').live("click", function () {
         var to_remove = $(this).parent().parent();
         input_id = "#" + input_id;
         var new_email = $(input_id).live().val();
@@ -91,21 +84,6 @@ $(document).ready(function () {
         }
         else {
             if (validateEmail(new_email)) {
-<<<<<<< HEAD
-                $.post("UpdateVoter", {
-                    cmd: "update",
-                    old_email: old_email,
-                    new_email: new_email,
-                    election_id: election_id
-                }, function(data, status) {
-                    if (data == "Updated") {
-                        var new_html = old_html.split(old_email).join(new_email);
-                        to_remove.html(new_html);
-                    } else {
-                        alert("Error Updating voter's data, try again.");
-                    }
-                });
-=======
                 var new_html = old_html.split(old_email).join(new_email);
                 if (edit_type == "editVoter") {
                     $.post("UpdateVoter", {
@@ -134,7 +112,6 @@ $(document).ready(function () {
                         }
                     });
                 }
->>>>>>> 64bb8fbab366699f94de501b391d9d1b885d7e8f
             } else {
                 alert("Invalid email address, try again.");
             }
@@ -145,15 +122,15 @@ $(document).ready(function () {
     });
 
 // Cancel editing
-    $(':button.btn-cancel').live("click", function() {
+    $(':button.btn-cancel').live("click", function () {
         var to_remove = $(this).parent().parent();
         to_remove.html(old_html);
         editing = 0;
     });
 
     //Adding new voter
-    $(':button.btn-add').click(function() {
-        var email_id = prompt("Enter email address");
+    $(':button.btn-add').click(function () {
+        var email_id = prompt("Enter email for new voter");
 
         if (email_id) {
             if (validateEmail(email_id)) {
@@ -161,22 +138,14 @@ $(document).ready(function () {
                 var election_id = data_array[0];
                 var type = data_array[1];
                 var new_row;
-<<<<<<< HEAD
-                  if (type == "addVoter") {
-=======
                 if (type == "addVoter") {
->>>>>>> 64bb8fbab366699f94de501b391d9d1b885d7e8f
                     new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editVoter' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteVoter' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
                     $.post("UpdateVoter", {
                         cmd: "add",
                         email: email_id,
                         election_id: election_id
-<<<<<<< HEAD
-                    }, function(data, status) {
-=======
                     }, function (data, status) {
 
->>>>>>> 64bb8fbab366699f94de501b391d9d1b885d7e8f
                         if (data == "Added") {
                             alert("New Voter added successfully.");
                             //$(email_id).insertAfter('#blank_space');
@@ -190,21 +159,12 @@ $(document).ready(function () {
                 else if (type == "addNominee") {
 
                     new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editNominee' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteNominee' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
-<<<<<<< HEAD
-
-=======
->>>>>>> 64bb8fbab366699f94de501b391d9d1b885d7e8f
                     $.post("UpdateProbableNominee", {
                         cmd: "add",
                         email: email_id,
                         election_id: election_id
-<<<<<<< HEAD
-                    }, function(data, status) {
-                        alert(status);
-=======
                     }, function (data, status) {
 
->>>>>>> 64bb8fbab366699f94de501b391d9d1b885d7e8f
                         if (data == "Added") {
                             alert("New Probable Nominee added successfully.");
                             //$(email_id).insertAfter('#blank_space');
@@ -213,8 +173,8 @@ $(document).ready(function () {
                             alert("Error adding new nominee, try again");
                         }
                     });
-
                 }
+
             } else {
                 alert("Invalid email address, try again.");
             }
@@ -224,12 +184,12 @@ $(document).ready(function () {
 
     });
 
-    $('#link-upload').click(function() {
+    $('#link-upload').click(function () {
         $(this).hide();
         $('#upload-voters').fadeIn('fast');
     });
 
-    $('.img-link').live("click", function() {
+    $('.img-link').live("click", function () {
         var img_src = $(this).html();
         $('.modal-body').html(img_src.replace('height="75" width="60"', 'height="450" width="300"'));
     });
