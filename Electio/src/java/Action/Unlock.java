@@ -6,8 +6,10 @@
 package Action;
 
 import DAO.DBDAOImplementation;
+import Model.Election;
 import Model.ElectionCommissioner;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -34,13 +36,16 @@ public class Unlock implements Controller.Action {
             err = "You are not logged in, or session already expired";
         } else {
             try {
+                ArrayList<Election> elections = null;
                 DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 if (obj.isValidElectionCommissioner(email, password)) {
                     view = "dashboard.jsp";
                     title = "Dashboard";
+                    elections = obj.getCompletedElections(email);
                 } else {
                     err = "Invalid password";
                 }
+                req.setAttribute("elections", elections);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("LockScreen Err: " + ex.getMessage());
