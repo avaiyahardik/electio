@@ -8,7 +8,7 @@
 <%
     DBDAOImplementation obj = DBDAOImplementation.getInstance();
     Nominee n = (Nominee) request.getAttribute("nominee");
-    Candidate c=(Candidate) request.getAttribute("candidate");
+    Candidate c = (Candidate) request.getAttribute("candidate");
     int status = n.getStatus();
     Organization o = obj.getOrganization(n.getElection_id());
 %>
@@ -105,14 +105,15 @@
                             </div>
                         </div>
 
+                        <% if (n.getStatus() == 1) {%>
                         <div class="form-group">
                             <label for="manifesto" class="control-label col-lg-4">Manifesto(PDF only)</label>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf" />
-                                <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Current Manifesto file</a>
+                                <a href="..<%= File.separator%><%= c.getManifesto()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Current Manifesto file</a>
                             </div>
                         </div>
-
+                        <%}%>
                         <div class="form-group">
                             <label for="organization_name" class="control-label col-lg-4">Organization Name</label>
                             <div class="col-lg-6">
