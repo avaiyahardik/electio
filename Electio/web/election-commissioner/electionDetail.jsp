@@ -84,9 +84,7 @@
                                     <div class="form-group">
                                         <label for="description" class="control-label col-lg-3"><strong>Description</strong></label>
                                         <div class="col-lg-7">
-                                            <textarea class="form-control" name="description">
-                                                <%= el.getDescription()%>
-                                            </textarea>
+                                            <textarea class="form-control" name="description"><%= el.getDescription()%></textarea>
                                         </div>
                                     </div>
 
