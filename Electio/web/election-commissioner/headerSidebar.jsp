@@ -55,7 +55,7 @@
                 <div class="navbar-collapse collapse">
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <ul class="nav navbar-nav pull-right header-menu">
-                        
+
                         <!-- BEGIN USER DROPDOWN -->
                         <li class="dropdown" id="user-header">
                             <a href="#" class="dropdown-toggle c-white" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -111,10 +111,8 @@
                         <li>
                             <a href="Controller?action=create_new_election"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New Election</span></a>
                         </li>
-
-                        </li>
                     </ul>
                 </div>
             </nav>
             <!-- END MAIN SIDEBAR -->
-<div id="main-content">
+            <div id="main-content">

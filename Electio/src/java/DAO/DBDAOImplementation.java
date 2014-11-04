@@ -661,6 +661,58 @@ public class DBDAOImplementation {
         return candidates;
     }
 
+    public ArrayList<Candidate> getCandidatesForPreferentialVoting(long election_id) throws SQLException {
+        ArrayList<Candidate> candidates = new ArrayList<Candidate>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info AS u INNER JOIN tbl_election_candidate AS c ON u.email=c.email WHERE election_id=? ORDER BY votes");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        Candidate candidate;
+        while (rs.next()) {
+            candidate = new Candidate();
+            candidate.setEmail(rs.getString("email"));
+            candidate.setFirstname(rs.getString("firstname"));
+            candidate.setLastname(rs.getString("lastname"));
+            candidate.setGender(rs.getInt("gender"));
+            candidate.setMobile(rs.getString("mobile"));
+            candidate.setOrganization_id(rs.getLong("organization_id"));
+            candidate.setImage(rs.getString("image"));
+            candidate.setPassword(rs.getString("password"));
+            candidate.setElection_id(rs.getLong("election_id"));
+            candidate.setRequirements_file(rs.getString("requirements_file"));
+            candidate.setVotes(rs.getLong("votes"));
+            candidate.setManifesto(rs.getString("manifesto"));
+            candidate.setPetition_filed(rs.getBoolean("petition_filed"));
+            candidates.add(candidate);
+        }
+        return candidates;
+    }
+
+    public ArrayList<Candidate> getCandidatesForWeightedVoting(long election_id) throws SQLException {
+        ArrayList<Candidate> candidates = new ArrayList<Candidate>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info AS u INNER JOIN tbl_election_candidate AS c ON u.email=c.email WHERE election_id=? ORDER BY votes DESC");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        Candidate candidate;
+        while (rs.next()) {
+            candidate = new Candidate();
+            candidate.setEmail(rs.getString("email"));
+            candidate.setFirstname(rs.getString("firstname"));
+            candidate.setLastname(rs.getString("lastname"));
+            candidate.setGender(rs.getInt("gender"));
+            candidate.setMobile(rs.getString("mobile"));
+            candidate.setOrganization_id(rs.getLong("organization_id"));
+            candidate.setImage(rs.getString("image"));
+            candidate.setPassword(rs.getString("password"));
+            candidate.setElection_id(rs.getLong("election_id"));
+            candidate.setRequirements_file(rs.getString("requirements_file"));
+            candidate.setVotes(rs.getLong("votes"));
+            candidate.setManifesto(rs.getString("manifesto"));
+            candidate.setPetition_filed(rs.getBoolean("petition_filed"));
+            candidates.add(candidate);
+        }
+        return candidates;
+    }
+
     public boolean registerNominee(Nominee nominee) throws SQLException {
         boolean result = false;
         con.setAutoCommit(false);
