@@ -7,6 +7,7 @@ import Model.ElectionType;
 import Model.Nominee;
 import Model.Organization;
 import Model.ProbableNominee;
+import Model.UserInfo;
 import Model.Voter;
 import java.sql.Connection;
 import java.sql.Date;
@@ -897,5 +898,23 @@ public class DBDAOImplementation {
             result = true;
         }
         return result;
+    }
+    
+    public UserInfo getUserInfo(String email) throws SQLException{
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info WHERE email=?");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        UserInfo ui=new UserInfo();
+        if(rs.next()){
+            ui.setEmail(rs.getString("email"));
+            ui.setFirstname(rs.getString("firstname"));
+            ui.setGender(rs.getInt("gender"));
+            ui.setImage(rs.getString("image"));
+            ui.setLastname(rs.getString("lastname"));
+            ui.setMobile(rs.getString("mobile"));
+            ui.setOrganization_id(rs.getLong("organization_id"));
+            ui.setPassword(rs.getString("password"));
+        }
+        return ui;
     }
 }
