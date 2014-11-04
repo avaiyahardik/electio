@@ -3,6 +3,7 @@ $(document).ready(function () {
     var editing = 0;
     var old_email, old_html, election_id;
     var input_id, cnt = 0;
+    var edit_type;
 
     // Deleting a voter
     $(':button.btn-del').live("click", function () {
@@ -29,7 +30,7 @@ $(document).ready(function () {
                     }
                 });
             } else if (type == "deleteNominee") {
-                
+
                 $.post("UpdateProbableNominee",
                         {
                             cmd: "delete",
@@ -60,16 +61,12 @@ $(document).ready(function () {
             old_html = to_edit.html();
             election_id = data_array[0];
             old_email = data_array[1];
-            var type = data_array[2];
-            if (type == "editVoter") {
-                input_id = "email-" + cnt++;
-                var html_string = "<td><input type='text' id='" + input_id + "' value='" + old_email + "'></td><td></td><td><button class='btn-save btn btn-success btn-sm'><i class='fa fa-floppy-o'></i> Save</button><button class='btn-cancel btn btn-warning btn-sm'><i class='fa fa-mail-reply'></i> Cancel</button></td>";
-                to_edit.html(html_string);
-            } else if (type == "editNominee") {
+            edit_type = data_array[2];
+            input_id = "email-" + cnt++;
+            var html_string;
 
-            }
-
-
+            html_string = "<td><input type='text' id='" + input_id + "' value='" + old_email + "'></td><td></td><td><button class='btn-save btn btn-success btn-sm'><i class='fa fa-floppy-o'></i> Save</button><button class='btn-cancel btn btn-warning btn-sm'><i class='fa fa-mail-reply'></i> Cancel</button></td>";
+            to_edit.html(html_string);
         } else {
             alert("You can edit a single instance at a time..");
         }
@@ -87,19 +84,34 @@ $(document).ready(function () {
         }
         else {
             if (validateEmail(new_email)) {
-                $.post("UpdateVoter", {
-                    cmd: "update",
-                    old_email: old_email,
-                    new_email: new_email,
-                    election_id: election_id
-                }, function (data, status) {
-                    if (data == "Updated") {
-                        var new_html = old_html.split(old_email).join(new_email);
-                        to_remove.html(new_html);
-                    } else {
-                        alert("Error Updating voter's data, try again.");
-                    }
-                });
+                var new_html = old_html.split(old_email).join(new_email);
+                if (edit_type == "editVoter") {
+                    $.post("UpdateVoter", {
+                        cmd: "update",
+                        old_email: old_email,
+                        new_email: new_email,
+                        election_id: election_id
+                    }, function (data, status) {
+                        if (data == "Updated") {
+                            to_remove.html(new_html);
+                        } else {
+                            alert("Error Updating voter's data, try again.");
+                        }
+                    });
+                } else if (edit_type == "editNominee") {
+                    $.post("UpdateProbableNominee", {
+                        cmd: "update",
+                        old_email: old_email,
+                        new_email: new_email,
+                        election_id: election_id
+                    }, function (data, status) {
+                        if (data == "Updated") {
+                            to_remove.html(new_html);
+                        } else {
+                            alert("Error Updating nominee data, try again.");
+                        }
+                    });
+                }
             } else {
                 alert("Invalid email address, try again.");
             }
@@ -145,14 +157,14 @@ $(document).ready(function () {
                 }
 
                 else if (type == "addNominee") {
-                
+
                     new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editNominee' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteNominee' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
                     $.post("UpdateProbableNominee", {
                         cmd: "add",
                         email: email_id,
                         election_id: election_id
                     }, function (data, status) {
-                        
+
                         if (data == "Added") {
                             alert("New Probable Nominee added successfully.");
                             //$(email_id).insertAfter('#blank_space');
