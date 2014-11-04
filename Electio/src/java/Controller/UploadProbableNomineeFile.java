@@ -36,7 +36,7 @@ import org.omg.CORBA.FieldNameHelper;
  *
  * @author Hardik
  */
-public class UploadProbableNomineeList extends HttpServlet {
+public class UploadProbableNomineeFile extends HttpServlet {
 
     private ServletFileUpload uploader = null;
 
@@ -104,7 +104,7 @@ public class UploadProbableNomineeList extends HttpServlet {
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
                     while (s != null) {
-                        pn=new ProbableNominee(election_id, s, false);
+                        pn=new ProbableNominee(election_id, s, 0);
                         obj.addProbableNominee(pn);
                         s = br.readLine();
                     }

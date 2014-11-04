@@ -7,6 +7,7 @@ import Model.ElectionType;
 import Model.Nominee;
 import Model.Organization;
 import Model.ProbableNominee;
+import Model.UserInfo;
 import Model.Voter;
 import java.sql.Connection;
 import java.sql.Date;
@@ -229,11 +230,12 @@ public class DBDAOImplementation {
 
     public boolean addVoter(Voter voter) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_voter VALUES(?,?,?,?)");
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_voter VALUES(?,?,?,?,?)");
         ps.setString(1, voter.getEmail());
         ps.setLong(2, voter.getElection_id());
         ps.setString(3, voter.getPassword());
         ps.setBoolean(4, voter.getStatus());
+        ps.setBoolean(5, voter.getLinkStatus());
         if (ps.executeUpdate() > 0) {
             result = true;
         }
@@ -307,6 +309,7 @@ public class DBDAOImplementation {
             voter.setElection_id(election_id);
             voter.setPassword(rs.getString("password"));
             voter.setStatus(rs.getBoolean("status"));
+            voter.setLinkStatus(rs.getBoolean("link_status"));
         }
         return voter;
     }
@@ -335,6 +338,7 @@ public class DBDAOImplementation {
             voter.setElection_id(election_id);
             voter.setPassword(rs.getString("password"));
             voter.setStatus(rs.getBoolean("status"));
+            voter.setLinkStatus(rs.getBoolean("link_status"));
             voters.add(voter);
         }
         return voters;
@@ -403,6 +407,7 @@ public class DBDAOImplementation {
         if (rs.next()) {
             v.setPassword(rs.getString("password"));
             v.setStatus(rs.getBoolean("status"));
+            v.setLinkStatus(rs.getBoolean("link_status"));
             return v;
         } else {
             return null;
@@ -775,7 +780,7 @@ public class DBDAOImplementation {
 
     public boolean updateVoterStatus(long election_id, String email) throws SQLException {
         boolean result = false;
-        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_voter SET status =? WHERE election_id=? and email=?");
+        PreparedStatement ps2 = con.prepareStatement("UPDATE tbl_voter SET status=? WHERE election_id=? and email=?");
         ps2.setInt(1, 1);
         ps2.setLong(2, election_id);
         ps2.setString(3, email);
@@ -815,7 +820,7 @@ public class DBDAOImplementation {
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_probable_nominee VALUES(?,?,?)");
         ps.setLong(1, pn.getElection_id());
         ps.setString(2, pn.getEmail());
-        ps.setBoolean(3, pn.getStatus());
+        ps.setInt(3, pn.getStatus());
 
         if (ps.executeUpdate() > 0) {
             result = true;
@@ -827,7 +832,7 @@ public class DBDAOImplementation {
     public boolean changeProbableNomineeStatus(ProbableNominee pn) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_probable_nominee SET status=? WHERE election_if=? AND email=?");
-        ps.setBoolean(1, pn.getStatus());
+        ps.setInt(1, pn.getStatus());
         ps.setLong(2, pn.getElection_id());
         ps.setString(3, pn.getEmail());
 
@@ -848,7 +853,7 @@ public class DBDAOImplementation {
             pn = new ProbableNominee();
             pn.setElection_id(election_id);;
             pn.setEmail(rs.getString("email"));
-            pn.setStatus(rs.getBoolean("status"));
+            pn.setStatus(rs.getInt("status"));
             pns.add(pn);
         }
         return pns;
@@ -897,5 +902,23 @@ public class DBDAOImplementation {
             result = true;
         }
         return result;
+    }
+    
+    public UserInfo getUserInfo(String email) throws SQLException{
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info WHERE email=?");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        UserInfo ui=new UserInfo();
+        if(rs.next()){
+            ui.setEmail(rs.getString("email"));
+            ui.setFirstname(rs.getString("firstname"));
+            ui.setGender(rs.getInt("gender"));
+            ui.setImage(rs.getString("image"));
+            ui.setLastname(rs.getString("lastname"));
+            ui.setMobile(rs.getString("mobile"));
+            ui.setOrganization_id(rs.getLong("organization_id"));
+            ui.setPassword(rs.getString("password"));
+        }
+        return ui;
     }
 }

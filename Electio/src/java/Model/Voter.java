@@ -15,15 +15,17 @@ public class Voter {
     private long election_id;
     private String password;
     private boolean status;
+    private boolean link_status;
 
     public Voter() {
     }
 
-    public Voter(String email, long election_id, String password, boolean status) {
+    public Voter(String email, long election_id, String password, boolean status, boolean link_status) {
         this.email = email;
         this.election_id = election_id;
         this.password = password;
         this.status = status;
+        this.link_status = link_status;
     }
 
     public String getEmail() {
@@ -57,4 +59,13 @@ public class Voter {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public boolean getLinkStatus() {
+        return status;
+    }
+
+    public void setLinkStatus(boolean link_status) {
+        this.link_status = link_status;
+    }
+
 }

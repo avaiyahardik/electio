@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.ElectionType"%>
 <%@page import="java.util.ArrayList"%>
@@ -42,7 +44,9 @@
                             Show the data using loop here
                             Example set is given here
                             -->
-                            <% ArrayList<Election> elections = (ArrayList<Election>) request.getAttribute("elections");
+                            <%
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                                ArrayList<Election> elections = (ArrayList<Election>) request.getAttribute("elections");
                                 for (Election el : elections) {
                                     DBDAOImplementation obj = DBDAOImplementation.getInstance();
                                     ElectionType et = obj.getElectionType(el.getType_id());
@@ -50,7 +54,7 @@
 
                             <tr>
                                 <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>"><%= el.getName()%></a></strong></td>
-                                <td><%= el.getCreated_at()%> </td>
+                                <td><%=sdf.format(new Date(el.getCreated_at().getTime()))%> </td>
                                 <td><%= et.getType()%></td>
                                 <td>
                                     <a href="Controller?action=election_result&id=<%= el.getId()%>" class="btn btn-success btn-sm"><i class="fa fa-list"></i> Result</a>

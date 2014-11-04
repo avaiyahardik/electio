@@ -32,6 +32,7 @@ public class DBDAOImplVoter {
         }
         return obj;
     }
+    /*
      public boolean addVoter(Voter voter) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_voter VALUES(?,?,?,?)");
@@ -174,5 +175,5 @@ public class DBDAOImplVoter {
         }
         return result;
     }
-
+*/
 }

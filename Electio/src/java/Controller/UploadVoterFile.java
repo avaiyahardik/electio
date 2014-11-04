@@ -104,7 +104,7 @@ public class UploadVoterFile extends HttpServlet {
                     BufferedReader br = new BufferedReader(fr);
                     String s = br.readLine();
                     while (s != null) {
-                        v = new Voter(s, election_id, RandomString.generateRandomPassword(), false);
+                        v = new Voter(s, election_id, RandomString.generateRandomPassword(), false,false);
                         obj.addVoter(v);
                         s = br.readLine();
                     }
