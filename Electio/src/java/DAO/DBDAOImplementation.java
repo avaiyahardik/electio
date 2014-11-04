@@ -983,8 +983,18 @@ public class DBDAOImplementation {
         return result;
     }
 
-    public HashMap<String, Integer> getElectionResult(long election_id) {
-        HashMap<String, Integer> hm = new HashMap<>();
-        return hm;
+    public ArrayList<Candidate> getElectionResult(long election_id) throws SQLException {
+        ArrayList<Candidate> candidates = new ArrayList<Candidate>();
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=?");
+        ps.setLong(1, election_id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Candidate c=new Candidate();
+            c.setEmail(rs.getString("email"));
+            c.setFirstname(rs.getString("firstname"));
+            c.setLastname(rs.getString("lastname"));
+            candidates.add(c);
+        }
+        return candidates;
     }
 }
