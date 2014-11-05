@@ -22,36 +22,29 @@ public class NomineeExists implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         //String elec_id = req.getParameter("election_id");
         String email = req.getParameter("email");
-        String view = "index.jsp";
-        String msg = null;
-        String err = null;
-        String title = "Login";
-        if (email == null || email.equals("")) {
-            err = "Email required";
-        } else {
-            try (PrintWriter out = res.getWriter()) {
+        JSONObject jSONObject;
+        jSONObject = new JSONObject();
+        try (PrintWriter out = res.getWriter()) {
+            if (email == null || email.equals("")) {
+                jSONObject.put("status", false);
+                jSONObject.put("name", null);
+            } else {
+
                 DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
                 UserInfo userInfo = objU.getUserInfo(email);
-                JSONObject jSONObject;
-                if (objU == null) {
-                    jSONObject = new JSONObject();
+                if (userInfo == null) {
                     jSONObject.put("status", false);
                     jSONObject.put("name", null);
                 } else {
-                    jSONObject = new JSONObject();
                     jSONObject.put("status", true);
                     jSONObject.put("name", userInfo.getFirstname() + " " + userInfo.getLastname());
                 }
-                out.write(jSONObject.toJSONString());
-            } catch (Exception ex) {
-                err = ex.getMessage();
-                System.out.println("NomineeExists Error: " + ex.getMessage());
-            }
-        }
-        req.setAttribute("msg", msg);
-        req.setAttribute("err", err);
-        req.setAttribute("title", title);
-        return view;
-    }
 
+            }
+            out.write(jSONObject.toJSONString());
+        } catch (Exception ex) {
+            System.out.println("NomineeExists Error: " + ex.getMessage());
+        }
+        return null;
+    }
 }
