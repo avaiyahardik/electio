@@ -14,6 +14,7 @@ import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
 import Model.ProbableNominee;
+import Model.UserInfo;
 import Utilities.EmailSender;
 import Utilities.RandomString;
 import java.io.File;
@@ -70,16 +71,18 @@ public class RegisterExistingNominee extends HttpServlet {
         String err = null;
 //      System.out.println("MSG: " + request.getParameter("election_id"));
 
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
         String password = null;
 
         String requirements_file = null;
 
-        request.setAttribute("email", email);
-        request.setAttribute("election_id", elec_id);
-        request.setAttribute("name", firstname + " " + lastname);
         try {
+            DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
+            UserInfo user = objU.getUserInfo(email);
+            String firstname = user.getFirstname();
+            String lastname = user.getLastname();
+            request.setAttribute("email", email);
+            request.setAttribute("election_id", elec_id);
+            request.setAttribute("name", firstname + " " + lastname);
             if (cmd.equals("register")) {
             } else if (cmd.equals("password")) {
                 String newPassword = RandomString.generateRandomPassword();
