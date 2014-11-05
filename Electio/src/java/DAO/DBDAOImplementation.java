@@ -1,26 +1,12 @@
 package DAO;
 
-import Model.Candidate;
-import Model.Election;
-import Model.ElectionCommissioner;
-import Model.ElectionType;
-import Model.Nominee;
-import Model.Organization;
-import Model.ProbableNominee;
-import Model.UserInfo;
-import Model.Voter;
+import Model.Feedback_info;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DBDAOImplementation {
-/*
+
     private Connection con;
     private static DBDAOImplementation obj = null;
 
@@ -35,7 +21,7 @@ public class DBDAOImplementation {
         }
         return obj;
     }
-
+/*
     public boolean registerElectionCommissioner(ElectionCommissioner ec) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election_commissioner VALUES(?,?,?,?,?,?)");
@@ -1092,4 +1078,17 @@ public class DBDAOImplementation {
         return result;
     }
     */
+    //feedback DAOImplementation
+    public boolean feedback(Feedback_info fd) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_feedback VALUES(?,?,?,?)");
+        ps.setString(1, fd.getEmail_id());
+        ps.setString(2, fd.getFirst_name());
+        ps.setString(3, fd.getMobile_no());
+        ps.setString(4, fd.getMessage());
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
 }
