@@ -429,7 +429,7 @@
                                     <i class="fa fa-check-circle" style="color:green"></i> Registered
                                 </div>
                                 <div class="col-lg-4 align-right">
-                                    <a href="Controller?action=send_registration_link?election_id=<%= el.getId()%>" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Registration URL</a>
+                                    <a href="Controller?action=send_registration_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Registration URL</a>
                                 </div>
                             </div>
 

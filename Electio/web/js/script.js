@@ -188,19 +188,25 @@ $(document).ready(function () {
         $(this).hide();
         $('#upload-voters').fadeIn('fast');
     });
-    
+
     $('#link-nominee-upload').click(function () {
         $(this).hide();
         $('#upload-nominees').fadeIn('fast');
     });
-    
+
 
     $('.img-link').live("click", function () {
         var img_src = $(this).html();
         $('.modal-body').html(img_src.replace('height="75" width="60"', 'height="450" width="300"'));
     });
 
+
+    $('#organization-id').change(function () {
+        alert("Hello");
+    });
+
 });
+
 
 function validateEmail(email)
 {

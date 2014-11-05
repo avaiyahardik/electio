@@ -6,6 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="header.jsp"/>
+<script src="js/script.js"></script>
 <title>Election Commissioner Registration</title>
     
 <div class="page-title">
