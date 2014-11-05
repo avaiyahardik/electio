@@ -41,17 +41,20 @@
                                 <!-- Election Name here -->
                                 <% String name = "";
                                     long election_id = 0;
-                                    if (request.getParameter("election_id") != null) {
-                                        election_id = Long.parseLong(request.getParameter("election_id"));
-                                        name = DBDAOImplElection.getInstance().getElectionName(election_id);
+                                    String email = "";
+                                    if (request.getAttribute("election_id") != null) {
+                                        election_id = Long.parseLong((String) request.getAttribute("election_id"));
+                                        name = (String) request.getAttribute("name");
+                                        email = (String) request.getAttribute("email");
                                     }%>
                                 <strong><%= name%></strong>
                             </span>
                         </div>
 
                         <div class="panel-body">
-                            <form action="NomineeRegistration" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                            <form action="RegisterExistingNominee" method="POST" class="form-horizontal" enctype="multipart/form-data">
                                 <input type="hidden" name="election_id" value="<%= election_id%>">
+                                <input type="hidden" name="email" value="<%=email%>">
                                 <fieldset> 
                                     <!-- BEGIN ERROR BOX -->
                                     <div class="form-group col-lg-12">
@@ -73,52 +76,14 @@
                                     </div>
                                     <!-- END ERROR BOX -->  
 
-                                    <div class="form-group">
-                                        <label for="email" class="control-label col-lg-4"><strong>Email ID</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" name="email" class="form-control" required id="email">
-                                        </div>
-                                    </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-4" for="firstname"><strong>First Name</strong></label>
+                                        <label class="control-label col-sm-4" for="firstname"><strong>Name</strong></label>
                                         <div class="col-sm-7">
-                                            <input type="text" name="firstname" class="form-control" required>
+                                            <label class="form-control">Vishal Jain</label>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-4" for="lastname"><strong>Last Name</strong></label>
-                                        <div class="col-sm-7">
-                                            <input type="text" name="lastname" class="form-control" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="gender" class="control-label col-lg-4"><strong>Gender</strong></label>
-                                        <div class="col-sm-7">
-                                            <select name="gender" class="form-control">
-                                                <option value="0">Male</option>
-                                                <option value="1">Female</option>
-                                                <option value="2">Other</option>
-                                            </select>
-                                        </div> 
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="mobile" class="col-lg-4 control-label"><strong>Mobile No</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="mobile" required>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="photo" class="control-label col-lg-4"><strong>Photo</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="file" class="form-control" name="photo" accept="image/gif, image/jpeg, image/png" required/>
-                                        </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <label for="requirements" class="control-label col-lg-4"><strong>Requirements File</strong> (PDF only)</label>
@@ -128,25 +93,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_name" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_address" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="about_organization" required>
-                                        </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
@@ -155,16 +101,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="password" class="form-control" name="retype_password" required>
-                                        </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <div class="col-lg-7 col-lg-offset-4">
-                                            <button type="submit" name="action" value="register_nominee" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
+                                            <button type="submit" name="cmd" value="save" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
                                             <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
                                         </div>
                                     </div>
@@ -203,29 +143,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal" id="nominee-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">User Data exists</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Hello, the data for this email address is already exists in our database with the following details<br><b>Name : <span id="nominee-status"></span></b>
-                            <br>
-                            Would you like to skip <i>registration</i> and proceed to <b>Login</b>?
-                        </p>
-
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-default" id="pass-link">Forgot Password?</a>
-                        <a href="#" class="btn btn-primary" id="continue_link">Log In</a>
                     </div>
                 </div>
             </div>

@@ -9,13 +9,17 @@ $(document).ready(function () {
             $(this).css("border-color","red").focus();
         }else{
             $(this).css("border-color","#c0c0c0");
-            var election_id = $("input[name='election_id']").val();
-            $.post("Controller?action=check_nominee",{
+            $.get("Controller",{
+                action:"check_nominee",
                 email:email,
-                election_id:election_id
             },function(data, status){
-               alert(data.status);
-            });
+               if(data.status ){
+                   $('#nominee-status').html(data.name);
+                   $('#pass-link').attr('href', 'RegisterExistingNominee?cmd=password');
+                   $('#continue_link').attr('href','RegisterExistingNominee?cmd=register');
+                   $('#nominee-modal').modal();
+               }
+            }, "json");
         }
 
     });
