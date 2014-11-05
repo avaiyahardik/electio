@@ -11,5 +11,4 @@
 <p>Besides these, Electio eases the work of <i>Voters</i> as they don?t have to go anywhere for casting their vote. A registered voter can vote from their home also, they just need to log in and cast their vote online. Hence a lot of time is saved.</p>
 
 <p>The result of the election can be viewed by voters, candidates and election commissioner and can be download from anywhere.</p>
-<hr>
 <jsp:include page="footer.jsp"/>

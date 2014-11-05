@@ -3,5 +3,4 @@
 <div class="page-title">
     <h1>Disclaimer</h1>
 </div>
-<hr>
 <jsp:include page="footer.jsp"/>
