@@ -60,104 +60,127 @@ public class RegisterExistingNominee extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("1");
-        String cmd = null;
-        String view = "nomineeRegistration.jsp";
+        System.out.println("One");
+        String cmd = request.getParameter("cmd");
+        String elec_id = request.getParameter("election_id");
+        String email = request.getParameter("email");
+        String view = "oldRegistration.jsp";
         String title = "Nominee Registration";
         String msg = null;
         String err = null;
 //      System.out.println("MSG: " + request.getParameter("election_id"));
-        long election_id = 0;
-        String firstname = null;
-        String lastname = null;
-        String email = null;
+
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
         String password = null;
 
         String requirements_file = null;
-        int status = 0;
 
+        request.setAttribute("email", email);
+        request.setAttribute("election_id", elec_id);
+        request.setAttribute("name", firstname + " " + lastname);
         try {
-            List<FileItem> fileItemsList = uploader.parseRequest(request);
-            Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
-            Date date;
-            String ext;
-            String fileName;
-            while (fileItemsIterator.hasNext()) {
-                FileItem fileItem = fileItemsIterator.next();
-                String fieldName = fileItem.getFieldName();
-//                System.out.println("FieldName=" + fieldName + fileItem.getString());
-                if (fieldName.equals("election_id")) {
-                    election_id = Long.parseLong(fileItem.getString());
-                } else if (fieldName.equals("firstname")) {
-                    firstname = fileItem.getString();
-                } else if (fieldName.equals("lastname")) {
-                    lastname = fileItem.getString();
-                } else if (fieldName.equals("email")) {
-                    email = fileItem.getString();
-                } else if (fieldName.equals("cmd")) {
-                    cmd = fileItem.getString();
-                }else if (fieldName.equals("password")) {
-                    password = fileItem.getString();
-                }
-                else if (fileItem.getFieldName().equals("requirements_file")) {
-                    if (cmd.equals("register")) {
-                        System.out.println("FileName=" + fileItem.getName());
-                        System.out.println("ContentType=" + fileItem.getContentType());
-                        System.out.println("Size in bytes=" + fileItem.getSize());
-                        // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
-                        fileName = fileItem.getName();
-                        date = new Date();
-                        ext = fileName.substring(fileName.lastIndexOf('.'));
-                        File file = new File(request.getServletContext().getRealPath("/requirements_files") + File.separator + date.getTime() + ext);
-                        fileItem.write(file);
-                        requirements_file = "requirements_files" + File.separator + date.getTime() + ext;
-                        System.out.println("Absolute Path at server=" + requirements_file);
-                        System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                    }
-                }
-            }
             if (cmd.equals("register")) {
-                if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("")) {
-                    err = "Please fill all required fields";
-                } else {
-                    view = "oldRegistration.jsp";
-                    request.setAttribute("election_id", election_id);
-                    request.setAttribute("email", email);
-                    request.setAttribute("name", firstname + " " + lastname);
-                }
             } else if (cmd.equals("password")) {
                 String newPassword = RandomString.generateRandomPassword();
                 EmailSender.sendMail("electio@jaintele.com", "electio_2014", "New Password", newPassword, email);
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 objC.changeCandidatePassword(email, newPassword); // it'll update password
-                view = "oldRegistration.jsp";
-                request.setAttribute("election_id", election_id);
-                request.setAttribute("email", email);
-                request.setAttribute("name", firstname + " " + lastname);
-            } else if (cmd.equals("save")) {
-                DBDAOImplNominee objN=DBDAOImplNominee.getInstance();
-                if(objN.nomineeLogin(election_id, email,password)){
-                    if(objN.updateNominee(election_id, email, requirements_file)){
-                        view="index.jsp?election_id="+election_id;
-                        msg="update nominee successful";
-                    }
-                    else{
-                        err="fail update nominee";
-                    }
-                }
             }
-        } catch (FileUploadException e) {
-            System.out.println("File Not Found Exception in uploading file.");
         } catch (Exception e) {
-            err = e.getMessage();
-            System.out.println("ERR NomineeRegistration: " + e.toString());
-
+            System.out.println("RegExistNominee: " + e);
         }
-        request.setAttribute("msg", msg);
-        request.setAttribute("err", err);
-        request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
+        /*  System.out.println("Two");
+         try {
+         List<FileItem> fileItemsList = uploader.parseRequest(request);
+         Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
+         Date date;
+         String ext;
+         String fileName;
+         System.out.println("Three");
+         while (fileItemsIterator.hasNext()) {
+         FileItem fileItem = fileItemsIterator.next();
+         String fieldName = fileItem.getFieldName();
+         //                System.out.println("FieldName=" + fieldName + fileItem.getString());
+         if (fieldName.equals("election_id")) {
+         election_id = Long.parseLong(fileItem.getString());
+         } else if (fieldName.equals("firstname")) {
+         firstname = fileItem.getString();
+         } else if (fieldName.equals("lastname")) {
+         lastname = fileItem.getString();
+         } else if (fieldName.equals("email")) {
+         email = fileItem.getString();
+         } else if (fieldName.equals("cmd")) {
+         cmd = fileItem.getString();
+         } else if (fieldName.equals("password")) {
+         password = fileItem.getString();
+         }
+         else if (fileItem.getFieldName().equals("requirements_file")) {
+         if (cmd!=null && cmd.equals("save")) {
+         System.out.println("FileName=" + fileItem.getName());
+         System.out.println("ContentType=" + fileItem.getContentType());
+         System.out.println("Size in bytes=" + fileItem.getSize());
+         // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
+         fileName = fileItem.getName();
+         date = new Date();
+         ext = fileName.substring(fileName.lastIndexOf('.'));
+         File file = new File(request.getServletContext().getRealPath("/requirements_files") + File.separator + date.getTime() + ext);
+         fileItem.write(file);
+         requirements_file = "requirements_files" + File.separator + date.getTime() + ext;
+         System.out.println("Absolute Path at server=" + requirements_file);
+         System.out.println("File " + fileItem.getName() + " uploaded successfully.");
+         }
+         }
+         }
+         if (cmd.equals("register")) {
+         System.out.println("resisterrrrrrr");
+         view = "oldRegistration.jsp";
+         System.out.println("election_ID: " + election_id + ", email: " + email + ", name: " + firstname + " " + lastname);
+         request.setAttribute("election_id", election_id);
+         request.setAttribute("email", email);
+         request.setAttribute("name", firstname + " " + lastname);
+
+         } else if (cmd.equals("password")) {
+         System.out.println("passworddddddd");
+         String newPassword = RandomString.generateRandomPassword();
+         EmailSender.sendMail("electio@jaintele.com", "electio_2014", "New Password", newPassword, email);
+         DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+         objC.changeCandidatePassword(email, newPassword); // it'll update password
+         view = "oldRegistration.jsp";
+         request.setAttribute("election_id", election_id);
+         request.setAttribute("email", email);
+         request.setAttribute("name", firstname + " " + lastname);
+         } else if (cmd.equals("save")) {
+         System.out.println("saveeeeeeee");
+         if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("")) {
+         err = "Please fill all required fields";
+         } else {
+         DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+         if (objN.nomineeLogin(election_id, email, password)) {
+         if (objN.updateNominee(election_id, email, requirements_file)) {
+         view = "index.jsp?election_id=" + election_id;
+         msg = "update nominee successful";
+         } else {
+         err = "fail update nominee";
+         }
+         }
+         }
+         }
+         } catch (FileUploadException e) {
+         System.out.println("ERr RegisterNimineeExisting: " + e.getMessage());
+         } catch (Exception e) {
+         err = e.getMessage();
+         System.out.println("ERR NomineeRegistration: " + e.toString());
+
+         }
+         request.setAttribute("msg", msg);
+         request.setAttribute("err", err);
+         request.setAttribute("title", title);
+         RequestDispatcher rd = request.getRequestDispatcher(view);
+         rd.forward(request, response);
+         */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
