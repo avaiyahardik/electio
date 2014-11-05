@@ -329,7 +329,7 @@
                                 </div>
 
                                 <div class="align-right col-lg-6">
-                                    <a href="Controller?action=send_ballot_link" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Election URL</a>
+                                    <a href="Controller?action=send_ballot_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Election URL</a>
                                 </div>
                             </div>
                         </div>

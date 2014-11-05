@@ -36,7 +36,7 @@ public class SendMailToVoters implements Controller.Action {
         String msg = null;
         String err = null;
         String title = "Login";
-
+        System.out.println("Elec ID: " + election_id + ", " + email);
         if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
@@ -56,15 +56,15 @@ public class SendMailToVoters implements Controller.Action {
                                 System.out.println("mail send to all voters ");
                                 msg = "mail send to all voters";
                                 v.setLinkStatus(true);
+                                System.out.println("Mail sent to: " + v.getEmail());
                                 objV.changeVoterLinkStatus(v);
                             } else {
                                 err = "Fail to send mail to voters";
-                                System.out.println("Fail to send mail to voters");
+                                System.out.println("Fail to send mail to voters: " + v.getEmail());
                             }
                         }
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(SendMailToVoters.class.getName()).log(Level.SEVERE, null, ex);
                     err = ex.getMessage();
                     System.out.println("SendMailToVoter Err: " + ex.getMessage());
                 }
