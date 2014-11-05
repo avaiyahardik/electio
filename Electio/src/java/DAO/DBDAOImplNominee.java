@@ -154,11 +154,14 @@ public class DBDAOImplNominee {
 
     public boolean registerNominee(long election_id, String email, String requirements_file, int status) throws SQLException {
         boolean result = false;
-        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_nominee(email, election_id,requirements_file, status) VALUES(?,?,?,?)");
-        ps2.setString(1, email);
-        ps2.setLong(2, election_id);
-        ps2.setString(3, requirements_file);
-        ps2.setInt(4, status);
+        PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_election_nominee(email, election_id,requirements_file, status) VALUES(?,?,?,?)");
+        ps.setString(1, email);
+        ps.setLong(2, election_id);
+        ps.setString(3, requirements_file);
+        ps.setInt(4, status);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
         return result;
     }
 

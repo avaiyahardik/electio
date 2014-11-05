@@ -72,22 +72,28 @@ public class RegisterExistingNominee extends HttpServlet {
 //      System.out.println("MSG: " + request.getParameter("election_id"));
         System.out.println("Two");
         String password = null;
-
+        String firstname = null;
+        String lastname = null;
         String requirements_file = "requirements_files" + File.separator + "electio.pdf";
 
         try {
             DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
-            UserInfo user = objU.getUserInfo(email);
-            String firstname = user.getFirstname();
-            String lastname = user.getLastname();
-            System.out.println("out: EMAIL " + email);
-            System.out.println("out: ElecID: " + elec_id);
-            request.setAttribute("email", email);
-            request.setAttribute("election_id", elec_id);
-            
-            System.out.println("SMD: " + cmd);
-            System.out.println("Email:" + email);
-            System.out.println("Election_ID: " + elec_id);
+            UserInfo user = null;
+            try {
+                user = objU.getUserInfo(email);
+                firstname = user.getFirstname();
+                lastname = user.getLastname();
+                System.out.println("out: EMAIL " + email);
+                System.out.println("out: ElecID: " + elec_id);
+                request.setAttribute("email", email);
+                request.setAttribute("election_id", elec_id);
+                request.setAttribute("name", firstname + " " + lastname);
+                System.out.println("SMD: " + cmd);
+                System.out.println("Email:" + email);
+                System.out.println("Election_ID: " + elec_id);
+            } catch (Exception e) {
+                System.out.println("RegExistingNom Err: " + e.getMessage());
+            }
             if (cmd == null) {
                 System.out.println("cmd: save");
                 List<FileItem> fileItemsList = uploader.parseRequest(request);
@@ -135,14 +141,22 @@ public class RegisterExistingNominee extends HttpServlet {
                     firstname = user.getFirstname();
                     lastname = user.getLastname();
                     System.out.println("SAVE: EMAIL " + email);
-                    System.out.println("SAVE: ElecID: " + elec_id);
+                    System.out.println("SAVE: ElecID: " + election_id + "");
                     request.setAttribute("email", email);
-                    request.setAttribute("election_id", elec_id);
+                    request.setAttribute("election_id", election_id + "");
                     request.setAttribute("name", firstname + " " + lastname);
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    System.out.println("Going to checkNominee Login");
                     if (objN.checkNomineeLogin(email, password)) {
-                        objN.registerNominee(election_id, email, requirements_file, 0);
+                        if (objN.registerNominee(election_id, email, requirements_file, 0)) {
+                            System.out.println("Existing Nominee in diff election registered");
+                            msg = "Registered Successfully";
+                        } else {
+                            err = "Error occurs while registering";
+                            System.out.println("Error while registering existing nominee");
+                        }
                     } else {
+                        System.out.println("Invalid pwd");
                         err = "Invalid password";
                     }
                     view = "index.jsp?election_id=" + election_id;
@@ -162,6 +176,10 @@ public class RegisterExistingNominee extends HttpServlet {
         } catch (Exception e) {
             System.out.println("RegExistNominee: " + e);
         }
+        request.setAttribute("msg", msg);
+        request.setAttribute("err", err);
+        request.setAttribute("view", view);
+        request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
     }
