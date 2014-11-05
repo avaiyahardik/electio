@@ -36,8 +36,9 @@ public class DBDAOImplUserInfo {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info WHERE email=?");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
-        UserInfo ui = new UserInfo();
+        UserInfo ui = null;
         if (rs.next()) {
+            ui = new UserInfo();
             ui.setEmail(rs.getString("email"));
             ui.setFirstname(rs.getString("firstname"));
             ui.setGender(rs.getInt("gender"));

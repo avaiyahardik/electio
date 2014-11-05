@@ -80,6 +80,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-7 col-sm-offset-4">
                                             <button type="submit" class="btn btn-info btn-sm" name="action" value="candidate_login"><i class="fa fa-lock"></i> Log In</button>
+                                            <a href="forgotPassword.jsp?election_id=<%=election_id%>">Forgot Password?</a>
                                         </div>
                                     </div>
                                 </form>
