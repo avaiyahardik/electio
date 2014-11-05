@@ -18,7 +18,8 @@ public class CandidateResetPassword implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getParameter("email");
-        String view = "forgotPassword.jsp";
+        String election_id=req.getParameter("election_id");
+        String view = "index.jsp?election_id"+election_id;
         String msg = null;
         String err = null;
         System.out.println("EMAIL: " + email);
