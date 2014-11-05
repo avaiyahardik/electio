@@ -4,7 +4,11 @@
         <filter-name>Authenticator</filter-name>
         <filter-class>Filter.Authenticator</filter-class>
     </filter>
+<<<<<<< HEAD
+ <!--   <filter-mapping>
+=======
 <!--    <filter-mapping>
+>>>>>>> 85ba9ce0efe2e163de53181e9b4c57c9811c7354
         <filter-name>Authenticator</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping> -->
