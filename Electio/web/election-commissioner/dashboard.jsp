@@ -44,7 +44,7 @@
                                 <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>"><%= el.getName()%></a></strong></strong></td>
                                 <td><%= et.getType()%></td>
                                 <td><%=sdf.format(new Date(el.getVoting_end().getTime()))%> </td>
-                                <td><a href="Controller?action=election_result&id=<%= el.getId()%>" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> View Results</a></td>
+                                <td><a href="Controller?action=election_result&election_id=<%= el.getId()%>" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> View Results</a></td>
                             </tr>
                             <%}%>
                             <%

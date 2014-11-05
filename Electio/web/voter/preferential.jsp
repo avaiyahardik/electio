@@ -52,7 +52,6 @@
         <div class="col-lg-8 col-lg-offset-2">
             <div class="form-group">
                 <button type="submit" name="action" value="save_vote" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i> Caste Your Vote !!</button>
-                <button type="reset" name="clear" class="btn btn-danger"><i class="fa fa-eraser"></i> Clear Selection</button>
             </div>
         </div>
 

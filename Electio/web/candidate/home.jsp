@@ -55,7 +55,12 @@
         <%} else {%>
         <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
         <%}%>
+
+        <%if (el.getWithdrawal_end().after(new Date())) {%>
+        <label class="label label-warning control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Withdraw Application</label>
+        <%}%>
     </h1>
+
 </div>
 
 

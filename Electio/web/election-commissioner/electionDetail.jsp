@@ -1,3 +1,5 @@
+<%@page import="Model.UserInfo"%>
+<%@page import="DAO.DBDAOImplUserInfo"%>
 <%@page import="Model.ProbableNominee"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Date"%>
@@ -546,7 +548,7 @@
         data.addRow(['<%=c.getFirstname()%> <%=c.getLastname()%>',<%=(int) c.getVotes()%>]);
     <%}%>
                 var options = {
-                    title: 'Election Results '+'\nTotal Votes : '+<%=total_votes%>,
+                    title: 'Election Results ' + '\nTotal Votes : ' +<%=total_votes%>,
                     is3D: true,
                     width: 800,
                     height: 600
