@@ -139,7 +139,7 @@ $(document).ready(function () {
                 var type = data_array[1];
                 var new_row;
                 if (type == "addVoter") {
-                    new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editVoter' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteVoter' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
+                    new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'><td class='align-center'><i class='fa fa-circle' style='color:red'></i></td></td><td><button value='" + election_id + "*" + email_id + "*editVoter' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteVoter' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
                     $.post("UpdateVoter", {
                         cmd: "add",
                         email: email_id,
@@ -158,7 +158,7 @@ $(document).ready(function () {
 
                 else if (type == "addNominee") {
 
-                    new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><button value='" + election_id + "*" + email_id + "*editNominee' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteNominee' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
+                    new_row = "<tr><td>" + email_id + "</td><td class='align-center'><i class='fa fa-circle' style='color:red'></td><td><i class='fa fa-circle' style='color:red'></i></td><td><button value='" + election_id + "*" + email_id + "*editNominee' class='btn-edit btn-default btn-sm'><i class='fa fa-edit'></i> Edit</button><button value='" + election_id + "*" + email_id + "*deleteNominee' class='btn-del btn btn-sm btn-danger'><i class='glyphicon glyphicon-remove'></i> Delete</button></td></tr>";
                     $.post("UpdateProbableNominee", {
                         cmd: "add",
                         email: email_id,
