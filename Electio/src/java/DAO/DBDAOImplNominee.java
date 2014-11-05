@@ -152,12 +152,35 @@ public class DBDAOImplNominee {
         return result;
     }
 
+    public boolean registerNominee(long election_id, String email, String requirements_file, int status) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_nominee(email, election_id,requirements_file, status) VALUES(?,?,?,?)");
+        ps2.setString(1, email);
+        ps2.setLong(2, election_id);
+        ps2.setString(3, requirements_file);
+        ps2.setInt(4, status);
+        return result;
+    }
+
     public boolean nomineeLogin(long election_id, String email, String password) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info u INNER JOIN tbl_election_nominee n ON u.email=n.email WHERE election_id=? AND u.email=? AND password=?");
         ps.setLong(1, election_id);
         ps.setString(2, email);
         ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public boolean checkNomineeLogin(String email, String password) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info WHERE email=? AND password=?");
+        ps.setString(1, email);
+        ps.setString(2, password);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             result = true;
@@ -243,28 +266,29 @@ public class DBDAOImplNominee {
         }
         return status;
     }
-    public boolean withdrawMyApplication(long election_id,String email) throws SQLException{
-        boolean result=false;
-        PreparedStatement ps=con.prepareStatement("UPDATE tbl_election_nominee SET status=? WHERE email=? AND election_id=?");
-        ps.setInt(1,3);
+
+    public boolean withdrawMyApplication(long election_id, String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status=? WHERE email=? AND election_id=?");
+        ps.setInt(1, 3);
         ps.setString(2, email);
-        ps.setLong(3,election_id);
-        if(ps.executeUpdate()>0){
-            result=true;
+        ps.setLong(3, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
         }
         return result;
     }
-    public boolean updateNominee(long election_id,String email,String req_file) throws SQLException{
-        boolean result=false;
-        PreparedStatement ps=con.prepareStatement("UPDATE tbl_election_nominee SET requirements_file=?,status=? WHERE email=? AND election_id=?");
-        ps.setString(1,req_file);
+
+    public boolean updateNominee(long election_id, String email, String req_file) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET requirements_file=?,status=? WHERE email=? AND election_id=?");
+        ps.setString(1, req_file);
         ps.setInt(2, 1);
-        ps.setString(3,email);
-        ps.setLong(4,election_id);
-        if(ps.executeUpdate()>0){
-            result=true;
+        ps.setString(3, email);
+        ps.setLong(4, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
         }
         return result;
     }
 }
-
