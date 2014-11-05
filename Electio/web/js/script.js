@@ -184,10 +184,16 @@ $(document).ready(function () {
 
     });
 
-    $('#link-upload').click(function () {
+    $('#link-voter-upload').click(function () {
         $(this).hide();
         $('#upload-voters').fadeIn('fast');
     });
+    
+    $('#link-nominee-upload').click(function () {
+        $(this).hide();
+        $('#upload-nominees').fadeIn('fast');
+    });
+    
 
     $('.img-link').live("click", function () {
         var img_src = $(this).html();

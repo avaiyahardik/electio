@@ -297,7 +297,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <button class="btn btn-primary btn-sm btn-add" value="<%=el.getId()%>*addVoter"><i class="fa fa-plus"></i> Add Voter</button>
-                                <a href="#" id="link-upload">Upload CSV file</a>
+                                <a href="#" id="link-voter-upload">Upload CSV file</a>
                             </div>
 
                             <div id="upload-voters" style="display: none" class="col-md-6">
@@ -401,10 +401,10 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <button class="btn btn-primary btn-sm btn-add" value="<%=el.getId()%>*addNominee"><i class="fa fa-plus"></i> Add New </button>
-                                <a href="#" id="link-upload">Upload CSV file</a>
+                                <a href="#" id="link-nominee-upload">Upload CSV file</a>
                             </div>
 
-                            <div id="upload-voters" style="display: none" class="col-md-6">
+                            <div id="upload-nominees" style="display: none" class="col-md-6">
                                 <form class="form-inline" action="UploadProbableNomineeFile" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="election_id" value="<%= el.getId()%>">
                                     <div class="form-group">
