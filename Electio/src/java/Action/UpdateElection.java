@@ -50,26 +50,37 @@ public class UpdateElection implements Controller.Action {
                     if (nomination_start.compareTo(nomination_end) < 1) {
                         if (withdrawal_start.compareTo(withdrawal_end) < 1) {
                             if (voting_start.compareTo(voting_end) < 1) {
-                                Election el = new Election();
-                                el.setId(id);
-                                el.setName(req.getParameter("name"));
-                                el.setDescription(req.getParameter("description"));
-                                el.setRequirements(req.getParameter("requirements"));
-                                el.setType_id(Integer.parseInt(req.getParameter("type")));
-                                el.setNomination_start(nomination_start);
-                                el.setNomination_end(nomination_end);
-                                el.setWithdrawal_start(withdrawal_start);
-                                el.setWithdrawal_end(withdrawal_end);
-                                el.setVoting_start(voting_start);
-                                el.setVoting_end(voting_end);
-                                el.setPetition_duration(Integer.parseInt(req.getParameter("petition_duration")));
+                                if (nomination_end.compareTo(withdrawal_start) < 1) {
+                                    if (withdrawal_end.compareTo(voting_start) < 1) {
+                                        Election el = new Election();
+                                        el.setId(id);
+                                        el.setName(req.getParameter("name"));
+                                        el.setDescription(req.getParameter("description"));
+                                        el.setRequirements(req.getParameter("requirements"));
+                                        el.setType_id(Integer.parseInt(req.getParameter("type")));
+                                        el.setNomination_start(nomination_start);
+                                        el.setNomination_end(nomination_end);
+                                        el.setWithdrawal_start(withdrawal_start);
+                                        el.setWithdrawal_end(withdrawal_end);
+                                        el.setVoting_start(voting_start);
+                                        el.setVoting_end(voting_end);
+                                        el.setPetition_duration(Integer.parseInt(req.getParameter("petition_duration")));
 //                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                                DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                                if (objE.updateElection(el)) {
-                                    msg = "Election updated successfully";
+                                        DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                                        if (objE.updateElection(el)) {
+                                            msg = "Election updated successfully";
+                                        } else {
+                                            err = "Fail to update election, please retry";
+                                        }
+                                    } else {
+                                        System.out.println("voting start date must be less than voting end date");
+                                        err = "withdraw end date must be less than voting start date";
+                                    }
                                 } else {
-                                    err = "Fail to update election, please retry";
+                                    System.out.println("voting start date must be less than voting end date");
+                                    err = "nomination date must be less than withdraw start date";
                                 }
+
                             } else {
                                 System.out.println("voting start date must be less than voting end date");
                                 err = "voting start date must be less than voting end date";
