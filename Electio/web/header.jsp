@@ -21,7 +21,7 @@
         <div class="navbar navbar-default ">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand">Electio</a>
+                    <a href="index.jsp" class="navbar-brand">Electio</a>
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -53,8 +53,8 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="election-commissioner/registration.jsp">Register</a></li>
-                                <li><a href="election-commissioner/forgotPassword.jsp">Forgot Password?</a></li>
+                                <li><a href="registration.jsp">Register</a></li>
+                                <li><a href="forgotPassword.jsp">Forgot Password?</a></li>
                             </ul>
                         </div>
 

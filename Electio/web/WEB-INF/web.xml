@@ -37,6 +37,10 @@
         <servlet-class>Controller.UpdateCandidate</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RegisterExistingNominee</servlet-name>
+        <servlet-class>Controller.RegisterExistingNominee</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewResult</servlet-name>
         <servlet-class>Controller.ViewResult</servlet-class>
     </servlet>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/election-commissioner/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterExistingNominee</servlet-name>
+        <url-pattern>/candidate/RegisterExistingNominee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>

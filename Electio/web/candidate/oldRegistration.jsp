@@ -80,7 +80,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-4" for="firstname"><strong>Name</strong></label>
                                         <div class="col-sm-7">
-                                            <label class="form-control">Vishal Jain</label>
+                                            <label class="form-control"><%=name%></label>
                                         </div>
                                     </div>
 
