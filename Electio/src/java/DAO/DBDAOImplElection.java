@@ -69,9 +69,10 @@ public class DBDAOImplElection {
         ps.setTimestamp(5, el.getNomination_start());
         ps.setTimestamp(6, el.getNomination_end());
         ps.setTimestamp(7, el.getWithdrawal_start());
-        ps.setTimestamp(8, el.getNomination_end());
-        ps.setTimestamp(9, el.getVoting_start());
-        ps.setTimestamp(10, el.getVoting_end());
+        ps.setTimestamp(8, el.getWithdrawal_end());
+        ps.setTimestamp(9, el.getNomination_end());
+        ps.setTimestamp(10, el.getVoting_start());
+        ps.setTimestamp(11, el.getVoting_end());
         ps.setInt(11, el.getPetition_duration());
         ps.setLong(12, el.getId());
 
