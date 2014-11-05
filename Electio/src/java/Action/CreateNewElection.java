@@ -60,14 +60,27 @@ public class CreateNewElection implements Controller.Action {
                     err = "Please fill-up required fields";
                 } else {
 //                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
-                    Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
-                    if (objE.createElection(el)) {
-                        msg = "New election created successfully";
+                    if (nomination_start.compareTo(nomination_end) < 1) {
+                        if (withdrawal_start.compareTo(withdrawal_end) < 1) {
+                            if (voting_start.compareTo(voting_end) < 1) {
+                                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
+                                if (objE.createElection(el)) {
+                                    msg = "New election created successfully";
+                                } else {
+                                    err = "Fail to create new election, please retry";
+                                }
+                            } else {
+                                err = "voting start date must be less than voting end date";
+                            }
+                        } else {
+                            err = "withdrawal start date must be less than withdrawal end date";
+                        }
                     } else {
-                        err = "Fail to create new election, please retry";
+                        err = "nomination start date must be less than nomination end date";
                     }
+
                 }
             } catch (Exception ex) {
                 err = ex.getMessage();
