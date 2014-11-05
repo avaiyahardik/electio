@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="../assets/css/icons/font-awesome/css/font-awesome.min.css">
         <script src="../assets/readable/jquery-1.10.2.min.js"></script>
         <script src="../assets/readable/bootstrap.min.js"></script>
+        <script src="script.js"></script>
     </head>
 
     <body>
@@ -73,6 +74,13 @@
                                     <!-- END ERROR BOX -->  
 
                                     <div class="form-group">
+                                        <label for="email" class="control-label col-lg-4"><strong>Email ID</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" name="email" class="form-control" required id="email">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="control-label col-sm-4" for="firstname"><strong>First Name</strong></label>
                                         <div class="col-sm-7">
                                             <input type="text" name="firstname" class="form-control" required>
@@ -83,13 +91,6 @@
                                         <label class="control-label col-sm-4" for="lastname"><strong>Last Name</strong></label>
                                         <div class="col-sm-7">
                                             <input type="text" name="lastname" class="form-control" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email" class="control-label col-lg-4"><strong>Email ID</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" name="email" class="form-control" required>
                                         </div>
                                     </div>
 
@@ -206,5 +207,25 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="modal" id="nominee-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Nominee Requirements</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>User Data exists -</strong></p>
+                        <p>
+                            Hello, the data for this email address is already exists in our database with the following details<br>
+                            
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
