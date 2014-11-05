@@ -63,14 +63,25 @@ public class CreateNewElection implements Controller.Action {
                     if (nomination_start.compareTo(nomination_end) < 1) {
                         if (withdrawal_start.compareTo(withdrawal_end) < 1) {
                             if (voting_start.compareTo(voting_end) < 1) {
-                                DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
-                                Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
-                                if (objE.createElection(el)) {
-                                    msg = "New election created successfully";
+                                if (nomination_end.compareTo(withdrawal_start) < 1) {
+                                    if (withdrawal_end.compareTo(voting_start) < 1) {
+                                        DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                                        DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                        Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
+                                        if (objE.createElection(el)) {
+                                            msg = "New election created successfully";
+                                        } else {
+                                            err = "Fail to create new election, please retry";
+                                        }
+                                    } else {
+                                        System.out.println("voting start date must be less than voting end date");
+                                        err = "withdraw end date must be less than voting start date";
+                                    }
                                 } else {
-                                    err = "Fail to create new election, please retry";
+                                    System.out.println("voting start date must be less than voting end date");
+                                    err = "nomination date must be less than withdraw start date";
                                 }
+
                             } else {
                                 err = "voting start date must be less than voting end date";
                             }
