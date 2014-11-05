@@ -254,4 +254,17 @@ public class DBDAOImplNominee {
         }
         return result;
     }
+    public boolean updateNominee(long election_id,String email,String req_file) throws SQLException{
+        boolean result=false;
+        PreparedStatement ps=con.prepareStatement("UPDATE tbl_election_nominee SET requirements_file=?,status=? WHERE email=? AND election_id=?");
+        ps.setString(1,req_file);
+        ps.setInt(2, 1);
+        ps.setString(3,email);
+        ps.setLong(4,election_id);
+        if(ps.executeUpdate()>0){
+            result=true;
+        }
+        return result;
+    }
 }
+
