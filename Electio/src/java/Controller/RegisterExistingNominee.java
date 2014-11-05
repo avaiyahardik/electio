@@ -76,6 +76,15 @@ public class RegisterExistingNominee extends HttpServlet {
         String requirements_file = "requirements_files" + File.separator + "electio.pdf";
 
         try {
+            DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
+            UserInfo user = objU.getUserInfo(email);
+            String firstname = user.getFirstname();
+            String lastname = user.getLastname();
+            System.out.println("out: EMAIL " + email);
+            System.out.println("out: ElecID: " + elec_id);
+            request.setAttribute("email", email);
+            request.setAttribute("election_id", elec_id);
+            
             System.out.println("SMD: " + cmd);
             System.out.println("Email:" + email);
             System.out.println("Election_ID: " + elec_id);
@@ -119,12 +128,14 @@ public class RegisterExistingNominee extends HttpServlet {
                         System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                     }
                 }
-
+                System.out.println("Msg1");
                 if (cmd.equals("save")) {
-                    DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
-                    UserInfo user = objU.getUserInfo(email);
-                    String firstname = user.getFirstname();
-                    String lastname = user.getLastname();
+                    objU = DBDAOImplUserInfo.getInstance();
+                    user = objU.getUserInfo(email);
+                    firstname = user.getFirstname();
+                    lastname = user.getLastname();
+                    System.out.println("SAVE: EMAIL " + email);
+                    System.out.println("SAVE: ElecID: " + elec_id);
                     request.setAttribute("email", email);
                     request.setAttribute("election_id", elec_id);
                     request.setAttribute("name", firstname + " " + lastname);
@@ -147,6 +158,7 @@ public class RegisterExistingNominee extends HttpServlet {
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 objC.changeCandidatePassword(email, newPassword); // it'll update password
             }
+            // else it'll be register
         } catch (Exception e) {
             System.out.println("RegExistNominee: " + e);
         }
