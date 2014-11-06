@@ -48,19 +48,23 @@ public class ElectionCommissionerRegistration implements Controller.Action {
 //                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
-                long organization_id = Long.parseLong(org_id);
-                if ((organization_id == 0) && (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals(""))) {
-                    err = "Please fill-up required fields";
+                if (objEC.isEmailExists(email)) {
+                    err = "Email already registered, register with different one or try forgot password";
                 } else {
-                    Organization org = new Organization(organization_name, organization_address, about_organization);
-                    organization_id = objO.addNewOrganization(org);
-                    ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
-                    if (objEC.registerElectionCommissioner(ec)) {
-                        msg = "You're registered successfully";
-                        view = "index.jsp";
-                        title = "Login";
+                    long organization_id = Long.parseLong(org_id);
+                    if ((organization_id == 0) && (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals(""))) {
+                        err = "Please fill-up required fields";
                     } else {
-                        err = "Fail to register, please try again later";
+                        Organization org = new Organization(organization_name, organization_address, about_organization);
+                        organization_id = objO.addNewOrganization(org);
+                        ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
+                        if (objEC.registerElectionCommissioner(ec)) {
+                            msg = "You're registered successfully";
+                            view = "index.jsp";
+                            title = "Login";
+                        } else {
+                            err = "Fail to register, please try again later";
+                        }
                     }
                 }
             } catch (SQLException ex) {

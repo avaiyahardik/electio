@@ -42,7 +42,7 @@ public class Unlock implements Controller.Action {
                 //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElectionCommissioner objEC=DBDAOImplElectionCommissioner.getInstance();
                 DBDAOImplElection objE=DBDAOImplElection.getInstance();
-                if (objEC.isValidElectionCommissioner(email, password)) {
+                if (objEC.loginElectionCommissioner(email, password)) {
                     view = "dashboard.jsp";
                     title = "Dashboard";
                     elections = objE.getCompletedElections(email);
