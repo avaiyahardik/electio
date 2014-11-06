@@ -37,7 +37,7 @@ public class Dashboard implements Controller.Action {
             try {
                 //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                elections = objE.getElections(email);
+                elections = objE.getCompletedElections(email);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("ViewElections Err: " + ex.getMessage());

@@ -77,7 +77,7 @@
                             <% }%>
                             <!-- END ERROR BOX -->
                             <div class="login-links">
-                                <a href="Controller?action=logout">Sign in using another account</a> 
+                                <a href="Controller?action=logout_election_commissioner">Sign in using another account</a> 
                             </div>
                         </div>
                     </div>
