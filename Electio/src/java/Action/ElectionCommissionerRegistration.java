@@ -33,7 +33,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String organization_address = req.getParameter("organization_address");
         String about_organization = req.getParameter("about_organization");
         String password = req.getParameter("password");
-        String retype_password = req.getParameter("retypr_password");
+        String retype_password = req.getParameter("retype_password");
         //password = RandomString.encryptPassword(password);  // encrypt password for security reason
         System.out.println("Encrypted Pwd: " + password);
         String view = "registration.jsp";
