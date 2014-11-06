@@ -1,3 +1,4 @@
+<%@page import="java.sql.Timestamp"%>
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -7,7 +8,21 @@
 <%@page import="Model.Election"%>
 <jsp:include page="headerSidebar.jsp"/>
 <link href="../assets/plugins/modal/css/component.css" rel="stylesheet">
-
+<%
+    ArrayList<Election> els = (ArrayList<Election>) request.getAttribute("elections");
+    Date date = new Date();
+    for (Election e : els) {
+        if (new Timestamp(date.getTime()).compareTo(e.getNomination_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getNomination_start()) <= 0) {
+            e.setStatus(1);
+        } else if (new Timestamp(date.getTime()).compareTo(e.getWithdrawal_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getWithdrawal_end()) <= 0) {
+            e.setStatus(2);
+        } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getVoting_end()) <= 0) {
+            e.setStatus(3);
+        } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_end()) >= 0) {
+            e.setStatus(4);
+        }
+    }
+%>
 <div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading bg-blue">
@@ -50,7 +65,8 @@
                                 ArrayList<Election> elections = (ArrayList<Election>) request.getAttribute("elections");
                                 for (Election el : elections) {
 //                                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                                    DBDAOImplElection  objE=DBDAOImplElection.getInstance();
+
+                                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
                                     ElectionType et = objE.getElectionType(el.getType_id());
                             %>
 
