@@ -56,42 +56,28 @@ public class CreateNewElection implements Controller.Action {
                 int petition_duration = Integer.parseInt(req.getParameter("petition_duration"));
                 System.out.println(email + ", " + name + ", " + description + ", " + requirements + ", " + type_id + ", " + nomination_start + ", " + nomination_end + ", " + voting_start + ", " + voting_end + ", " + withdrawal_start + ", " + withdrawal_end + ", " + petition_duration);
 
-                if (name == null || name.equals("")) { // more validation will be performed later
+                if (name == null || name.equals("") || description == null || description.equals("") || type_id == 0) { // more validation will be performed later
                     err = "Please fill-up required fields";
                 } else {
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    if (nomination_start.compareTo(nomination_end) < 1) {
-                        if (withdrawal_start.compareTo(withdrawal_end) < 1) {
-                            if (voting_start.compareTo(voting_end) < 1) {
-                                if (nomination_end.compareTo(withdrawal_start) < 1) {
-                                    if (withdrawal_end.compareTo(voting_start) < 1) {
-                                        DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                                        DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
-                                        Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
-                                        if (objE.createElection(el)) {
-                                            msg = "New election created successfully";
-                                        } else {
-                                            err = "Fail to create new election, please retry";
-                                        }
-                                    } else {
-                                        System.out.println("voting start date must be less than voting end date");
-                                        err = "withdraw end date must be less than voting start date";
-                                    }
-                                } else {
-                                    System.out.println("voting start date must be less than voting end date");
-                                    err = "nomination date must be less than withdraw start date";
-                                }
-
-                            } else {
-                                err = "voting start date must be less than voting end date";
-                            }
-                        } else {
-                            err = "withdrawal start date must be less than withdrawal end date";
-                        }
+                    if (nomination_end.before(nomination_start)) {
+                        err = "Nomination end time should be after nomination start time";
+                    } else if (withdrawal_start.before(nomination_end)) {
+                        err = "Withdrawal start time should be after nomination end time";
+                    } else if (withdrawal_end.before(withdrawal_start)) {
+                        err = "Withdrawal end time should be after withdrawal start time";
+                    } else if (voting_start.before(withdrawal_end)) {
+                        err = "Voting start time should be after withdrawal end time";
+                    } else if (voting_end.before(voting_start)) {
+                        err = "Voting end time should be after voting start time";
                     } else {
-                        err = "nomination start date must be less than nomination end date";
+                        DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                        Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
+                        if (objE.createElection(el)) {
+                            msg = "New election created successfully";
+                        } else {
+                            err = "Fail to create new election, please retry";
+                        }
                     }
-
                 }
             } catch (Exception ex) {
                 err = ex.getMessage();

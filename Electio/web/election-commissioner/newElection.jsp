@@ -72,6 +72,7 @@
                             <label for="type" class="control-label col-lg-3"><strong>Election Type</strong></label>
                             <div class="col-lg-7">
                                 <select class="form-control" name="type">
+                                    <option value="0">--select--</option>
                                     <option value="2">Weighted</option>
                                     <option value="1">Preferential</option>
                                 </select>
@@ -81,7 +82,7 @@
                         <div class="form-group">
                             <label for="nomination_start" class="control-label col-lg-3"><strong>Nomination Starts on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="nomination_start" id="nomination_start" placeholder="Click to choose date"/>
+                                <input type="text" required="required" class="form-control" name="nomination_start" id="nomination_start" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
@@ -89,14 +90,14 @@
                         <div class="form-group">
                             <label for="nomination_end" class="control-label col-lg-3"><strong>Nomination Ends on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="nomination_end" id="nomination_end" placeholder="Click to choose date"/>
+                                <input type="text" required="required" class="form-control" name="nomination_end" id="nomination_end" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="withdrawal_start" class="control-label col-lg-3"><strong>Withdrawal Starts on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="withdrawal_start" id="withdrawal_start" placeholder="Click to choose date"/>
+                                <input type="text" required="required" class="form-control" name="withdrawal_start" id="withdrawal_start" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
@@ -104,14 +105,14 @@
                         <div class="form-group">
                             <label for="withdrawal_end" class="control-label col-lg-3"><strong>Withdrawal Ends on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="withdrawal_end" id="withdrawal_end" placeholder="Click to choose date"/>
+                                <input type="text" required="required" class="form-control" name="withdrawal_end" id="withdrawal_end" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="voting_start" class="control-label col-lg-3"><strong>Voting Starts on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="voting_start" id="voting_start" placeholder="Click to choose date"/>
+                                <input type="text" required="required" class="form-control" name="voting_start" id="voting_start" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
@@ -119,7 +120,7 @@
                         <div class="form-group">
                             <label for="voting_end" class="control-label col-lg-3"><strong>Voting Ends on</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="voting_end" id="voting_end" placeholder="Click to choose date"/>
+                                <input type="text" required="required" class="form-control" name="voting_end" id="voting_end" placeholder="Click to choose date"/>
                             </div>
                         </div>
 
@@ -127,7 +128,7 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3"><strong>Petition Period (In Days)</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" class="form-control" name="petition_duration">
+                                <input type="text"  required="required" class="form-control" name="petition_duration">
                             </div>
                         </div>
                         <br>

@@ -21,9 +21,10 @@
                         <thead>
                             <tr>
                                 <th>Election Name</th>
+                                <th>Created At</th>
                                 <th>Election Type</th>
                                 <th>Voting Ended</th>
-                                <th></th>
+                                <th>View Result</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,6 +43,7 @@
 
                             <tr>
                                 <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>"><%= el.getName()%></a></strong></strong></td>
+                                <td><%= sdf.format(new Date(el.getCreated_at().getTime()))%></td>
                                 <td><%= et.getType()%></td>
                                 <td><%=sdf.format(new Date(el.getVoting_end().getTime()))%> </td>
                                 <td><a href="Controller?action=election_result&election_id=<%= el.getId()%>" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> View Results</a></td>
