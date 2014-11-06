@@ -5,7 +5,6 @@
  */
 package Utilities;
 
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -21,6 +20,8 @@ public class RandomString {
     private static final String CHAR_LIST
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&-_=+<>?";
     private static Random random;
+    public static final String ELECTIO_JAINTELE_EMAIL = "electio@jaintele.com";
+    public static final String ELECTIO_JAINTELE_PASSWORD = "electio_2014";
 
     public static String generateRandomPassword() {
         random = new Random();

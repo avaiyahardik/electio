@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ResetPassword implements Controller.Action {
+public class ResetElectionCommissionerPassword implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
@@ -27,19 +27,13 @@ public class ResetPassword implements Controller.Action {
                 String newPassword = RandomString.generateRandomPassword(); // it'll generate new password
 //                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
-                String s[] = {email};
-                if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "New Password", newPassword, s)) {
+                if (EmailSender.sendMail(RandomString.ELECTIO_JAINTELE_EMAIL, RandomString.ELECTIO_JAINTELE_PASSWORD, "New Password", newPassword, email)) {
                     //newPassword = RandomString.encryptPassword(newPassword);
                     objEC.changeElectionCommissionerPassword(email, newPassword); // it'll update password
-                    msg = "Password Sent To your email successfully";
+                    msg = "Password sent to your email successfully, login now";
                 } else {
-                    err = "Some error occur";
+                    err = "Fail to send password, please retry";
                 }
-                // write a code to send email containing password
-                // stored in "newPassword" variable to election commissioner
-                // at email id stored in "email" variable.
-                // On successful sent of email set msg="Password sent successfully to <email id>"
-                // on failure set err="Fail to send email at <email>"
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("Forgot Password Error: " + ex.getMessage());

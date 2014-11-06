@@ -90,18 +90,6 @@ public class DBDAOImplElectionCommissioner {
         }
         return result;
     }
-    
-     public boolean isValidElectionCommissioner(String email, String password) throws SQLException {
-        boolean result = false;
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_commissioner WHERE email=? AND password=?");
-        ps.setString(1, email);
-        ps.setString(2, password);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            result = true;
-        }
-        return result;
-    }
 
     public boolean changeElectionCommissionerPassword(String email, String password) throws SQLException {
         boolean result = false;
@@ -113,5 +101,16 @@ public class DBDAOImplElectionCommissioner {
         }
         return result;
 
+    }
+
+    public boolean isEmailExists(String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_commissioner WHERE email=?");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+        return result;
     }
 }

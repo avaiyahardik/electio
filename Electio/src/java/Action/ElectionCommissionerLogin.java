@@ -48,7 +48,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
                     msg = "You're logged in successfully"; // message should be displayed on view page
                     elections = objE.getCompletedElections(email);
                 } else {
-                    err = "Fail to login, please retry"; // error message should be displayed on view page
+                    err = "Invalid email or password, please retry"; // error message should be displayed on view page
                 }
                 req.setAttribute("elections", elections);
             } catch (SQLException ex) {

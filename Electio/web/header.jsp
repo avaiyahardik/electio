@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="assets/readable/bootstrap.css" media="screen">  
-        
+
         <link rel="stylesheet" href="assets/css/icons/font-awesome/css/font-awesome.min.css">
         <script src="assets/readable/jquery-1.10.2.min.js"></script>
         <script src="assets/readable/bootstrap.min.js"></script>
@@ -39,10 +39,10 @@
 
                     <form class="navbar-form navbar-right"  action="election-commissioner/Controller" method="post">
                         <div class="form-group">
-                            <input type="text" name="email" class="form-control" placeholder="Email ID"/><br/>
+                            <input type="text" name="email" class="form-control" required="required" placeholder="Email ID"/><br/>
                         </div>
                         <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password"/><br/>
+                            <input type="password" name="password" required="required" class="form-control" placeholder="Password"/><br/>
                         </div>
 
                         <div class="btn-group">
@@ -62,5 +62,5 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container">

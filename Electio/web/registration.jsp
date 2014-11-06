@@ -86,7 +86,7 @@
                                         <span class="arrow"></span>
                                         <i>@</i> 
                                     </span>
-                                    <input type="text" name="email" class="form-control" required>
+                                    <input type="email" name="email" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -211,8 +211,8 @@
         alert(id);
     }
 
-    $(document).ready(function () {
-        $('org-id').on("change", function () {
+    $(document).ready(function() {
+        $('org-id').on("change", function() {
             alert("changed");
         });
     });
