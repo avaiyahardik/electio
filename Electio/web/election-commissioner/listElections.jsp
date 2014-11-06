@@ -9,17 +9,18 @@
 <jsp:include page="headerSidebar.jsp"/>
 <link href="../assets/plugins/modal/css/component.css" rel="stylesheet">
 <%
+    int status=0;
     ArrayList<Election> els = (ArrayList<Election>) request.getAttribute("elections");
     Date date = new Date();
     for (Election e : els) {
         if (new Timestamp(date.getTime()).compareTo(e.getNomination_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getNomination_start()) <= 0) {
-            e.setStatus(1);
+            status=1;
         } else if (new Timestamp(date.getTime()).compareTo(e.getWithdrawal_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getWithdrawal_end()) <= 0) {
-            e.setStatus(2);
+            status=2;
         } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getVoting_end()) <= 0) {
-            e.setStatus(3);
+            status=3;
         } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_end()) >= 0) {
-            e.setStatus(4);
+            status=4;
         }
     }
 %>

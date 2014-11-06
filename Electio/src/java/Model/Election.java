@@ -27,16 +27,7 @@ public class Election {
     private Timestamp voting_start;
     private Timestamp voting_end;
     private int petition_duration;
-    private int status;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
+   
     public Election() {
     }
 
