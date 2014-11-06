@@ -200,7 +200,7 @@ public class DBDAOImplVoter {
 
     public boolean changeVoterLinkStatus(Voter v) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET status=? WHERE election_id=? AND email=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET link_status=? WHERE election_id=? AND email=?");
         ps.setBoolean(1, v.getLinkStatus());
         ps.setLong(2, v.getElection_id());
         ps.setString(3, v.getEmail());
