@@ -9,21 +9,19 @@
 <jsp:include page="headerSidebar.jsp"/>
 <link href="../assets/plugins/modal/css/component.css" rel="stylesheet">
 <%
-    int status=0;
-    ArrayList<Election> els = (ArrayList<Election>) request.getAttribute("elections");
-    Date date = new Date();
-    for (Election e : els) {
-        if (new Timestamp(date.getTime()).compareTo(e.getNomination_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getNomination_start()) <= 0) {
-            status=1;
-        } else if (new Timestamp(date.getTime()).compareTo(e.getWithdrawal_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getWithdrawal_end()) <= 0) {
-            status=2;
-        } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getVoting_end()) <= 0) {
-            status=3;
-        } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_end()) >= 0) {
-            status=4;
-        }
-    }
-%>
+
+    /*
+     if (new Timestamp(date.getTime()).compareTo(e.getNomination_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getNomination_start()) <= 0) {
+     status=1;
+     } else if (new Timestamp(date.getTime()).compareTo(e.getWithdrawal_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getWithdrawal_end()) <= 0) {
+     status=2;
+     } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getVoting_end()) <= 0) {
+     status=3;
+     } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_end()) >= 0) {
+     status=4;
+     }
+     }
+     */%>
 <div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading bg-blue">
@@ -64,11 +62,26 @@
                             <%
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                                 ArrayList<Election> elections = (ArrayList<Election>) request.getAttribute("elections");
+                                int election_status = 0;
+                                Date date = new Date();
+                                Timestamp temp = new Timestamp(date.getTime());
                                 for (Election el : elections) {
 //                                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
 
+                                    if (temp.after(el.getNomination_start()) && temp.before(el.getNomination_end())) {
+                                        election_status = 1;
+                                    } else if (temp.after(el.getWithdrawal_start()) && temp.before(el.getWithdrawal_end())) {
+                                        election_status = 2;
+                                    } else if (temp.after(el.getVoting_start()) && temp.before(el.getVoting_end())) {
+                                        election_status = 3;
+                                    } else if (temp.after(el.getVoting_end())) {
+                                        election_status = 4;
+                                    } else {
+                                        election_status = 0; // awaiting
+                                    }
                                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
                                     ElectionType et = objE.getElectionType(el.getType_id());
+
                             %>
 
                             <tr>
@@ -78,6 +91,10 @@
                                 <td>
                                     <a href="Controller?action=download_election_data&id=<%= el.getId()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>
                                     <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+
+                                </td>
+                                <td>
+                                    <%=election_status%>
                                 </td>
                             </tr>
                             <%}%>
