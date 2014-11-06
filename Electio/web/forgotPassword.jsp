@@ -32,7 +32,7 @@
                             <input type="text" name="email" placeholder="Email" class="form-control user" required/>                        
                         </div>
                         <div class="form-group">
-                            <button type="submit"  name="action" value="reset_password" class="btn btn-primary">Reset</button>
+                            <button type="submit"  name="action" value="reset_election_commissioner_password" class="btn btn-primary">Reset</button>
                         </div>
                     </form>
                 </div>
