@@ -13,7 +13,6 @@
             <div class="col-lg-6">
                 <form action="Controller" method="POST" class="form-horizontal">
                     <fieldset>
-
                         <%
                             ElectionCommissioner ec = (ElectionCommissioner) request.getAttribute("election_commissioner");
                             Organization organization = (Organization) request.getAttribute("organization");
