@@ -114,7 +114,7 @@ public class UpdateCandidate extends HttpServlet {
                     System.out.println("Size in bytes=" + fileItem.getSize());
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
                     fileName = fileItem.getName();
-                    if (fileName != null) {
+                    if (fileName != null && !fileName.equals("")) {
                         System.out.println("File Name: " + fileName);
                         date = new Date();
                         ext = fileName.substring(fileName.lastIndexOf('.'));
@@ -135,7 +135,8 @@ public class UpdateCandidate extends HttpServlet {
                     System.out.println("Size in bytes=" + fileItem.getSize());
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
                     fileName = fileItem.getName();
-                    if (fileName != null) {
+                    if (fileName != null && !fileName.equals("")) {
+                        System.out.println("file name: "+ fileName);
                         date = new Date();
                         ext = fileName.substring(fileName.lastIndexOf('.'));
                         File file = new File(request.getServletContext().getRealPath("/manifestos") + File.separator + date.getTime() + ext);
@@ -150,13 +151,14 @@ public class UpdateCandidate extends HttpServlet {
                         }
                     }
                 }
+                System.out.println("hello: "+fileItem.getString());
                 //System.out.println("lastname"+fileItem.getString());
             }
 
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("")) {
                 err = "Please fill all required fields";
             } else {
-
+                System.out.println("hello");
                 //password = RandomString.encryptPassword(password);
                 Organization org = new Organization(organization_name, organization_address, about_organization);
                 long organization_id = objO.addNewOrganization(org);
