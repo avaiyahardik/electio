@@ -386,8 +386,8 @@
                                 <%
                                     if (voters.size() == 0) {
                                 %>
-                                <tr>
-                                    <td colspan="3"><strong>Voters will be displayed here...</strong></td>
+                                <tr id="no-voter-row">
+                                    <td colspan="4"><strong>Voters will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -473,7 +473,7 @@
                                 </tr>
                                 <%}%>
                                 <%if (pn.size() == 0) {%>
-                                <tr>
+                                <tr id="no-nominee-row">
                                     <td colspan="3"><strong>Probable Nominees will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
