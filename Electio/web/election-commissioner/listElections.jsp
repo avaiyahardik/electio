@@ -29,19 +29,6 @@
         </div>
 
         <div class="panel-body">
-            <!-- BEGIN ERROR BOX --> 
-            <%
-                String err0 = (String) request.getAttribute("err");
-                if (err0 != null) {
-            %>
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <%=err0%>
-
-            </div>
-            <% }%>
-            <!-- END ERROR BOX --> 
-
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12 table-responsive table-red">
                     <table class="table table-hover table-dynamic table-tools">
@@ -89,15 +76,19 @@
                                 <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>"><%= el.getName()%></a></strong></td>
                                 <td><%=sdf.format(new Date(el.getCreated_at().getTime()))%> </td>
                                 <td><%= et.getType()%></td>
-                                
-                                <td><% switch(election_status){
-                                    case 0: %> <label class="label label-primary">Due</label>
-                                    <%break; case 1:%><label class="label label-warning">Nomination Period</label>
-                                    <%break;case 2:%><label class="label label-danger">Withdrawal Period</label>
-                                    <%break;case 3:%><label class="label label-info">Voting</label>
-                                    <%break;case 4:%><label class="label label-success">Finished</label>
-                                <%}%>
-                                    
+
+                                    <td><% switch (election_status) {
+                                        case 0: %> <label class="label label-primary">Due</label>
+                                    <%break;
+                                        case 1:%><label class="label label-warning">Nomination Period</label>
+                                    <%break;
+                                        case 2:%><label class="label label-danger">Withdrawal Period</label>
+                                    <%break;
+                                        case 3:%><label class="label label-info">Voting</label>
+                                    <%break;
+                                        case 4:%><label class="label label-success">Finished</label>
+                                    <%}%>
+
                                 </td>
                                 <td>
                                     <a href="Controller?action=download_election_data&id=<%= el.getId()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>

@@ -13,37 +13,7 @@
         <div class="panel-body">
             <form action="Controller" method="POST" class="form-horizontal">
                 <fieldset>
-
                     <div class="col-lg-10">
-                        <div class="form-group">
-                            <div class="col-lg-8 col-lg-offset-2">
-                                <!-- BEGIN ERROR BOX -->
-
-                                <%
-                                    String msg = (String) request.getAttribute("msg");
-                                    if (msg != null) {
-                                %>
-
-                                <div class="alert alert-info">
-                                    <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <%=msg%>
-                                </div>
-                                <% }%>
-
-                                <%
-                                    String err = (String) request.getAttribute("err");
-                                    if (err != null && !err.equals("") && !err.equals("null")) {
-                                %>
-                                <div class="alert alert-danger">
-                                    <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <%=err%>
-
-                                </div>
-                                <% }%>
-                                <!-- END ERROR BOX -->
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <label for="name" class="control-label col-lg-3"><strong>Election Name</strong></label>
                             <div class="col-lg-7">

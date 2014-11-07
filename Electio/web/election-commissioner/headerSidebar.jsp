@@ -116,3 +116,14 @@
             </nav>
             <!-- END MAIN SIDEBAR -->
             <div id="main-content">
+                <div class="col-lg-12">
+                    <!-- BEGIN ERROR BOX --> 
+                    <% String err0 = (String) request.getAttribute("err");
+                        if (err0 != null) {%>
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <%=err0%>
+                    </div>
+                    <% }%>
+                    <!-- END ERROR BOX --> 
+                </div>

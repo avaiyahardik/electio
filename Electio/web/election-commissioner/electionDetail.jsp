@@ -1,3 +1,4 @@
+<%@page import="Utilities.RandomString"%>
 <%@page import="Model.UserInfo"%>
 <%@page import="DAO.DBDAOImplUserInfo"%>
 <%@page import="Model.ProbableNominee"%>
@@ -46,35 +47,6 @@
                             <fieldset>
 
                                 <div class="col-lg-10">
-                                    <div class="form-group">
-                                        <div class="col-lg-8 col-lg-offset-2">
-                                            <!-- BEGIN ERROR BOX -->
-
-                                            <%
-                                                String msg = (String) request.getAttribute("msg");
-                                                if (msg != null) {
-                                            %>
-
-                                            <div class="alert alert-info">
-                                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                                <%=msg%>
-                                            </div>
-                                            <% }%>
-
-                                            <%
-                                                String err = (String) request.getAttribute("err");
-                                                if (err != null) {
-                                            %>
-                                            <div class="alert alert-danger">
-                                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                                <%=err%>
-
-                                            </div>
-                                            <% }%>
-                                            <!-- END ERROR BOX -->
-                                        </div>
-                                    </div>
-
                                     <input type="hidden" name="id" value="<%= el.getId()%>">
                                     <div class="form-group">
                                         <label for="name" class="control-label col-lg-3"><strong>Election Name</strong></label>
@@ -308,6 +280,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-default btn-sm" name="action" value="import_voter" type="submit"><i class="fa fa-upload"></i> Upload</button>
+                                        <a href="#" data-toggle="modal" data-target="#demo-file">File Format?</a>
                                     </div>
                                 </form>
 
@@ -329,7 +302,9 @@
                                 </div>
 
                                 <div class="align-right col-lg-6">
-                                    <a href="Controller?action=send_ballot_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Election URL</a>
+                                    <% String ballot_link = RandomString.DOMAIN_BASE + "voter/login.jsp?election_id="+el.getId(); %>
+                                    <p> Ballot URL : <i><%=ballot_link%></i></p>
+                                    <a href="Controller?action=send_ballot_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Ballot URL</a>
                                 </div>
                             </div>
                         </div>
@@ -412,6 +387,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-default btn-sm" name="action" value="import_voter" type="submit"><i class="fa fa-upload"></i> Upload</button>
+                                        <a href="#" data-toggle="modal" data-target="#demo-file">File Format?</a>
                                     </div>
                                 </form>
 
@@ -422,14 +398,17 @@
                         <br><br>
                         <div class="well">
                             <div class="row">
-                                <div class="col-lg-8">
+                                <div class="col-lg-4">
                                     Status - 
                                     <i class="fa fa-circle" style="color:red"></i> Link Not Sent
                                     <i class="fa fa-circle" style="color:orange"></i> Link Sent
                                     <i class="fa fa-check-circle" style="color:green"></i> Registered
                                 </div>
-                                <div class="col-lg-4 align-right">
-                                    <a href="Controller?action=send_registration_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right"><i class="fa fa-envelope"></i> Send Registration URL</a>
+                                
+                                <div class="col-lg-8 align-right">
+                                    <% String reg_link = RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id="+el.getId(); %>
+                                    <p> Nominee Registration URL : <i><%=reg_link%></i></p>
+                                    <a href="Controller?action=send_registration_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Registration URL</a>
                                 </div>
                             </div>
 
@@ -574,6 +553,28 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="demo-file">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">The file should have data in the below format</h4>
+            </div>
+            <div class="modal-body">
+
+                <p class="well align-left">
+                    email1@domain.tld<br/>
+                    email2@domain.tld<br/>
+                    email3@domain.tld<br/>
+                    email4@domain.tld<br/>
+                    email5@domain.tld<br/>
+                </p>
+
             </div>
         </div>
     </div>
