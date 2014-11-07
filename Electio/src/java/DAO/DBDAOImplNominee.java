@@ -294,4 +294,16 @@ public class DBDAOImplNominee {
         }
         return result;
     }
+
+    public boolean checkEmailExistsForElection(long election_id, String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_nominee WHERE election_id=? AND email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+        return result;
+    }
 }

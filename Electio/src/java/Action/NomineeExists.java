@@ -20,28 +20,36 @@ public class NomineeExists implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        //String elec_id = req.getParameter("election_id");
+        String elec_id = req.getParameter("election_id");
         String email = req.getParameter("email");
+        System.out.println("ElecId: " + elec_id + ", email: " + email);
         JSONObject jSONObject;
-        jSONObject = new JSONObject();
+        String view = "nomineeRegistration.jsp?elction_id=" + elec_id;
         try (PrintWriter out = res.getWriter()) {
-            if (email == null || email.equals("")) {
-                jSONObject.put("status", false);
-                jSONObject.put("name", null);
+            if (elec_id == null || email == null || elec_id.equals("") || email.equals("")) {
+                res.sendRedirect(view);
             } else {
+                jSONObject = new JSONObject();
 
-                DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
-                UserInfo userInfo = objU.getUserInfo(email);
-                if (userInfo == null) {
+                if (email == null || email.equals("")) {
                     jSONObject.put("status", false);
                     jSONObject.put("name", null);
                 } else {
-                    jSONObject.put("status", true);
-                    jSONObject.put("name", userInfo.getFirstname() + " " + userInfo.getLastname());
+
+                    DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
+                    UserInfo userInfo = objU.getUserInfo(email);
+                    if (userInfo == null) {
+                        jSONObject.put("status", false);
+                        jSONObject.put("name", null);
+                    } else {
+                        jSONObject.put("status", true);
+                        jSONObject.put("name", userInfo.getFirstname() + " " + userInfo.getLastname());
+                    }
+
                 }
+                out.write(jSONObject.toJSONString());
 
             }
-            out.write(jSONObject.toJSONString());
         } catch (Exception ex) {
             System.out.println("NomineeExists Error: " + ex.getMessage());
         }

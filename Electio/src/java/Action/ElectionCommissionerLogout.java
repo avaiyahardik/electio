@@ -23,7 +23,6 @@ public class ElectionCommissionerLogout implements Controller.Action {
                 req.getSession().invalidate();
                 msg = "You're logged out successfully";
                 res.sendRedirect("../index.jsp");
-
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("Logout Error: " + ex.getMessage());

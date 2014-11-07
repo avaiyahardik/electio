@@ -42,6 +42,7 @@
                                 <% String name = "";
                                     long election_id = 0;
                                     if (request.getParameter("election_id") != null) {
+
                                         election_id = Long.parseLong(request.getParameter("election_id"));
                                         name = DBDAOImplElection.getInstance().getElectionName(election_id);
                                     }%>

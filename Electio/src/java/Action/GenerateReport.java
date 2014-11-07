@@ -37,10 +37,13 @@ public class GenerateReport implements Controller.Action {
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("")) {
             err = "You are not logged in, or session already expired";
         } else {
+            view = "dashboard.jsp"; // view changed if login successfull
+            title = "Dashboard";
             long id = Long.parseLong(elec_id);
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                File file = new File(date.getTime() + ".txt");
+                File file = new File(req.getServletContext().getRealPath("/temp") + File.separator + date.getTime() + ".txt");
+                String filePath = File.separator + date.getTime() + ".txt";
                 FileOutputStream fos = new FileOutputStream(file);
                 PrintWriter out = new PrintWriter(fos);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
@@ -48,23 +51,25 @@ public class GenerateReport implements Controller.Action {
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 Election election = objE.getElection(id);
-                out.println("Election Name: " + election.getName());
-                out.println("Election Description: " + election.getDescription());
-                out.println("Eligibility Criteria: " + election.getRequirements());
-                out.println("Electio Type: " + objE.getElectionType(election.getType_id()));
-                out.println("Election created at: " + sdf.format(new Date(election.getCreated_at().getTime())));
-                out.println("Nomination Started at: " + sdf.format(new Date(election.getNomination_start().getTime())));
-                out.println("Nomination ended at: " + sdf.format(new Date(election.getNomination_end().getTime())));
-                out.println("Withdrawal started at: " + sdf.format(new Date(election.getWithdrawal_start().getTime())));
-                out.println("Withdrawal ended at: " + sdf.format(new Date(election.getWithdrawal_end().getTime())));
-                out.println("Voting started at: " + sdf.format(new Date(election.getVoting_start().getTime())));
-                out.println("Voting ended at: " + sdf.format(new Date(election.getVoting_end().getTime())));
-                out.println("Petition duration(in days): " + election.getPetition_duration());
+                out.print("<table>");
+                out.printf("Election Name: %30s", election.getName());
+                out.printf("Election Description: %30s", election.getDescription());
+                out.printf("Eligibility Criteria: %30s", election.getRequirements());
+                out.printf("Electio Type: " + objE.getElectionType(election.getType_id()));
+                out.printf("Election created at: %30s", sdf.format(new Date(election.getCreated_at().getTime())));
+                out.printf("Nomination Started at: " + sdf.format(new Date(election.getNomination_start().getTime())));
+                out.printf("Nomination ended at: " + sdf.format(new Date(election.getNomination_end().getTime())));
+                out.printf("Withdrawal started at: " + sdf.format(new Date(election.getWithdrawal_start().getTime())));
+                out.printf("Withdrawal ended at: " + sdf.format(new Date(election.getWithdrawal_end().getTime())));
+                out.printf("Voting started at: " + sdf.format(new Date(election.getVoting_start().getTime())));
+                out.printf("Voting ended at: " + sdf.format(new Date(election.getVoting_end().getTime())));
+                out.printf("Petition duration(in days): " + election.getPetition_duration());
 
                 out.println();
 
                 out.flush();
                 out.close();
+                req.setAttribute("file_path", filePath);
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("Generate Report Error: " + ex.getMessage());
