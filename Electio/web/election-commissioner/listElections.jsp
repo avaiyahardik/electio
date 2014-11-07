@@ -50,6 +50,7 @@
                                 <th>Election Name</th>
                                 <th>Created on</th>
                                 <th>Election Type</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -88,13 +89,19 @@
                                 <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>"><%= el.getName()%></a></strong></td>
                                 <td><%=sdf.format(new Date(el.getCreated_at().getTime()))%> </td>
                                 <td><%= et.getType()%></td>
+                                
+                                <td><% switch(election_status){
+                                    case 0: %> <label class="label label-primary">Due</label>
+                                    <%break; case 1:%><label class="label label-warning">Nomination Period</label>
+                                    <%break;case 2:%><label class="label label-danger">Withdrawal Period</label>
+                                    <%break;case 3:%><label class="label label-info">Voting</label>
+                                    <%break;case 4:%><label class="label label-success">Finished</label>
+                                <%}%>
+                                    
+                                </td>
                                 <td>
                                     <a href="Controller?action=download_election_data&id=<%= el.getId()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>
                                     <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
-
-                                </td>
-                                <td>
-                                    <%=election_status%>
                                 </td>
                             </tr>
                             <%}%>
