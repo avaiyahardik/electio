@@ -152,8 +152,11 @@ public class NomineeRegistration extends HttpServlet {
                     long organization_id = objO.addNewOrganization(org);
                     int gen = Integer.parseInt(gender);
                     Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
-                    ProbableNominee pn = new ProbableNominee(election_id, email, 2);
-                    if (objN.registerNominee(nominee) && objP.changeProbableNomineeStatus(pn)) {
+                    if (objN.registerNominee(nominee)) {
+                        if (objP.checkEmailExists(email)) {
+                            ProbableNominee pn = new ProbableNominee(election_id, email, 2);
+                            objP.changeProbableNomineeStatus(pn);
+                        }
                         msg = "Nominee registered successfully";
                     } else {
                         err = "Fail to register nominee, please retry";
