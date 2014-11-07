@@ -27,7 +27,7 @@ public class Election {
     private Timestamp voting_start;
     private Timestamp voting_end;
     private int petition_duration;
-   
+
     public Election() {
     }
 

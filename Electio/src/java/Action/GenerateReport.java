@@ -9,11 +9,32 @@ import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplVoter;
+import Model.Candidate;
 import Model.Election;
+import Model.Nominee;
+import Model.ProbableNominee;
+import Model.Voter;
+import com.lowagie.text.Chapter;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Header;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfCell;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfTable;
+import com.lowagie.text.pdf.PdfWriter;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,38 +58,494 @@ public class GenerateReport implements Controller.Action {
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("")) {
             err = "You are not logged in, or session already expired";
         } else {
-            view = "dashboard.jsp"; // view changed if login successfull
-            title = "Dashboard";
+            view = "Controller?action=view_elections"; // view changed if login successfull
+            title = "Elections";
             long id = Long.parseLong(elec_id);
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                File file = new File(req.getServletContext().getRealPath("/temp") + File.separator + date.getTime() + ".txt");
-                String filePath = File.separator + date.getTime() + ".txt";
-                FileOutputStream fos = new FileOutputStream(file);
-                PrintWriter out = new PrintWriter(fos);
+                String filePath = File.separator + date.getTime() + ".pdf";
+                String absoluteFilePath = req.getServletContext().getRealPath("/temp") + filePath;
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(absoluteFilePath));
+                document.open();
+
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+
+                Paragraph paragraph;
+                Phrase phrase;
+                Chunk chunk;
+                Chapter chapter;
+                Font fontChapterName = new Font(Font.HELVETICA, 25, Font.BOLD);
+                Font fontTitle = new Font(Font.BOLD, 20);
+                Font fontContent = new Font(Font.NORMAL, 12);
+                PdfPTable table;
+                PdfPCell cell;
+
+                paragraph = new Paragraph();
+                paragraph.setSpacingBefore(20f);
+                phrase = new Phrase("Election Detail", fontChapterName);
+                paragraph.add(phrase);
+                chapter = new Chapter(paragraph, 1);
+                document.add(chapter);
+
                 Election election = objE.getElection(id);
-                out.print("<table>");
-                out.printf("Election Name: %30s", election.getName());
-                out.printf("Election Description: %30s", election.getDescription());
-                out.printf("Eligibility Criteria: %30s", election.getRequirements());
-                out.printf("Electio Type: " + objE.getElectionType(election.getType_id()));
-                out.printf("Election created at: %30s", sdf.format(new Date(election.getCreated_at().getTime())));
-                out.printf("Nomination Started at: " + sdf.format(new Date(election.getNomination_start().getTime())));
-                out.printf("Nomination ended at: " + sdf.format(new Date(election.getNomination_end().getTime())));
-                out.printf("Withdrawal started at: " + sdf.format(new Date(election.getWithdrawal_start().getTime())));
-                out.printf("Withdrawal ended at: " + sdf.format(new Date(election.getWithdrawal_end().getTime())));
-                out.printf("Voting started at: " + sdf.format(new Date(election.getVoting_start().getTime())));
-                out.printf("Voting ended at: " + sdf.format(new Date(election.getVoting_end().getTime())));
-                out.printf("Petition duration(in days): " + election.getPetition_duration());
+                table = new PdfPTable(2);
+                table.setWidthPercentage(100);
+                table.setSpacingBefore(20f);
+                table.setSpacingAfter(10f);
 
-                out.println();
+                cell = new PdfPCell(new Paragraph("Election Commissioner Email"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
 
-                out.flush();
-                out.close();
+                cell = new PdfPCell(new Paragraph(election.getElection_commissioner_email()));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Election Name"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getName()));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Description"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getDescription()));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Eligibility Requirements"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getRequirements()));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Election Type"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(objE.getElectionType(election.getType_id()).getType()));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Created on"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getCreated_at() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Nomination started on:"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getNomination_start() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Nomination ended on:"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getNomination_end() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Withdrawal started on:"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getWithdrawal_start() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Withdrawal ended on:"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getWithdrawal_end() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Voting started on:"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getVoting_start() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Voting ended on:"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getVoting_end() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Petition duration:"));
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(election.getPetition_duration() + ""));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                document.add(table);
+
+                paragraph = new Paragraph();
+                phrase = new Phrase("Probable Nominee Detail", fontChapterName);
+                paragraph.add(phrase);
+                chapter = new Chapter(paragraph, 2);
+                document.add(chapter);
+
+                ArrayList<ProbableNominee> pNominees = objP.getAllProbableNominees(id);
+                table = new PdfPTable(2);
+                table.setWidthPercentage(100);
+                table.setSpacingBefore(20f);
+                table.setSpacingAfter(10f);
+
+                cell = new PdfPCell(new Paragraph("Email ID"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Status"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+                cell.setPadding(10f);
+                table.addCell(cell);
+                String status = null;
+                for (ProbableNominee pn : pNominees) {
+                    cell = new PdfPCell(new Paragraph(pn.getEmail()));
+                    cell.setBorder(PdfPCell.NO_BORDER);
+                    cell.setPadding(10f);
+//                    cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    table.addCell(cell);
+                    switch (pn.getStatus()) {
+                        case 0:
+                            status = "Link not sent";
+                            break;
+                        case 1:
+                            status = "Link sent";
+                            break;
+                        case 2:
+                            status = "Registered as Nominee";
+                            break;
+                    }
+                    cell = new PdfPCell(new Paragraph(status));
+                    cell.setBorder(PdfPCell.NO_BORDER);
+                    cell.setPadding(10f);
+//                    cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    table.addCell(cell);
+                }
+                document.add(table);
+
+                paragraph = new Paragraph();
+                phrase = new Phrase("Nominee Detail", fontChapterName);
+                paragraph.add(phrase);
+                chapter = new Chapter(paragraph, 3);
+                document.add(chapter);
+
+                ArrayList<Nominee> nominees = objN.getNominees(id);
+//              table = new PdfPTable(4);
+                table = new PdfPTable(4);
+                table.setWidthPercentage(100);
+                table.setSpacingBefore(20f);
+                table.setSpacingAfter(10f);
+
+                cell = new PdfPCell(new Paragraph("Name"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Email ID"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Mobile No"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Status"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+                /*
+                 cell = new PdfPCell(new Paragraph("Photo"));
+                 //                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                 cell.setBorder(PdfPCell.NO_BORDER);
+                 //                cell.setPadding(10f);
+                 table.addCell(cell);
+                 */
+                for (Nominee nominee : nominees) {
+                    cell = new PdfPCell(new Paragraph(nominee.getFirstname() + " " + nominee.getLastname()));
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                    cell.setPadding(10f);
+//                    cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    table.addCell(cell);
+
+                    cell = new PdfPCell(new Paragraph(nominee.getEmail()));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                    cell = new PdfPCell(new Paragraph(nominee.getMobile()));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                    status = null;
+                    switch (nominee.getStatus()) {
+                        case 0:
+                            status = "Waiting";
+                            break;
+                        case 1:
+                            status = "Approved";
+                            break;
+                        case 2:
+                            status = "Rejected";
+                            break;
+                        case 3:
+                            status = "Withdrawn";
+                            break;
+                    }
+                    cell = new PdfPCell(new Paragraph(status));
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                    cell.setPadding(10f);
+//                    cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    table.addCell(cell);
+                    /*
+                     cell = new PdfPCell(Image.getInstance("../user_images/anonymous.png"), false);
+                     cell.setBorder(PdfPCell.NO_BORDER);
+                     //                    cell.setPadding(10f);
+                     //                    cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                     table.addCell(cell);
+                     */
+
+                }
+                document.add(table);
+
+                paragraph = new Paragraph();
+                phrase = new Phrase("Candidate Detail", fontChapterName);
+                paragraph.add(phrase);
+                chapter = new Chapter(paragraph, 4);
+                document.add(chapter);
+                ArrayList<Candidate> candidates = objC.getCandidates(id);
+//              table = new PdfPTable(4);
+                table = new PdfPTable(4);
+                table.setWidthPercentage(100);
+                table.setSpacingBefore(20f);
+                table.setSpacingAfter(10f);
+
+                cell = new PdfPCell(new Paragraph("Name"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Email ID"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Mobile No"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Votes"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+                /*
+                 cell = new PdfPCell(new Paragraph("Photo"));
+                 //                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                 cell.setBorder(PdfPCell.NO_BORDER);
+                 //                cell.setPadding(10f);
+                 table.addCell(cell);
+                 */
+                for (Candidate candidate : candidates) {
+                    cell = new PdfPCell(new Paragraph(candidate.getFirstname() + " " + candidate.getLastname()));
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                    cell.setPadding(10f);
+//                    cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    table.addCell(cell);
+
+                    cell = new PdfPCell(new Paragraph(candidate.getEmail()));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                    cell = new PdfPCell(new Paragraph(candidate.getMobile()));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                    cell = new PdfPCell(new Paragraph(candidate.getVotes() + ""));
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                    cell.setPadding(10f);
+//                    cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    table.addCell(cell);
+                    /*
+                     cell = new PdfPCell(Image.getInstance("../user_images/anonymous.png"), false);
+                     cell.setBorder(PdfPCell.NO_BORDER);
+                     //                    cell.setPadding(10f);
+                     //                    cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                     table.addCell(cell);
+                     */
+                }
+                document.add(table);
+
+                paragraph = new Paragraph();
+                phrase = new Phrase("Voter Detail", fontChapterName);
+                paragraph.add(phrase);
+                chapter = new Chapter(paragraph, 5);
+                document.add(chapter);
+
+                ArrayList<Voter> voters = objV.getVoters(id);
+//              table = new PdfPTable(4);
+                table = new PdfPTable(3);
+                table.setWidthPercentage(100);
+                table.setSpacingBefore(20f);
+                table.setSpacingAfter(10f);
+
+                cell = new PdfPCell(new Paragraph("Email ID"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Voter Link Status"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Voter Status"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                table.addCell(cell);
+
+                for (Voter voter : voters) {
+                    cell = new PdfPCell(new Paragraph(voter.getEmail()));
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                    cell.setPadding(10f);
+//                    cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    table.addCell(cell);
+
+                    if (voter.getLinkStatus()) {
+                        status = "Link sent";
+                    } else {
+                        status = "Link not sent";
+                    }
+
+                    cell = new PdfPCell(new Paragraph(status));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                    if (voter.getStatus()) {
+                        status = "Voted";
+                    } else {
+                        status = "Not Voted";
+                    }
+
+                    cell = new PdfPCell(new Paragraph(status));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                }
+                document.add(table);
+
+                paragraph = new Paragraph();
+                phrase = new Phrase("Election Result", fontChapterName);
+                paragraph.add(phrase);
+                chapter = new Chapter(paragraph, 6);
+                document.add(chapter);
+
+                document.close();
                 req.setAttribute("file_path", filePath);
             } catch (Exception ex) {
                 err = ex.getMessage();
