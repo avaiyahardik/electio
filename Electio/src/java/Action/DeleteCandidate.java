@@ -29,18 +29,20 @@ public class DeleteCandidate implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "Session expired, please login again";
         } else {
-            view = "Controller?action=view_elections";
-            title = "View Elections";
             String elec_id = req.getParameter("election_id");
             String candidate_email = req.getParameter("email");
-            if (elec_id == null || candidate_email == null) {
-                err = "Unable to locate election id or candidate email";
+            if (elec_id == null || elec_id.equals("") || candidate_email == null || candidate_email.equals("")) {
+                view = "Controller?action=view_elections";
+                title = "Elections";
+                err = "Fail to locate election id or candidate email, please retry";
             } else {
+                view = "Controller?action=view_election_detail&id=" + elec_id;
+                title = "Election Detail";
                 long id = Integer.parseInt(elec_id);
                 try {
 //                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                    if (objC.deleteCandidate(id, email)) {
+                    if (objC.deleteCandidate(id, candidate_email)) {
                         msg = "Candidate deleted successfully";
                     } else {
                         err = "Fail to delete candidate, please retry";
@@ -51,6 +53,7 @@ public class DeleteCandidate implements Controller.Action {
                 }
             }
         }
+
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);

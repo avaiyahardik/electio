@@ -38,7 +38,7 @@ public class DBDAOImplCandidate {
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_candidate WHERE election_id=? AND email=?");
         ps.setLong(1, election_id);
         ps.setString(2, email);
-        if (ps.execute()) {
+        if (ps.executeUpdate() > 0) {
             result = true;
         }
         return result;
