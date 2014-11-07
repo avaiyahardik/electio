@@ -124,4 +124,14 @@ public class DBDAOImplProbableNominee {
         return result;
     }
 
+    public boolean checkEmailExists(String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_probable_nominee WHERE email=?");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+        return result;
+    }
 }
