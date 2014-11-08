@@ -79,7 +79,7 @@
                             <div class="login-links">
                                 <a href="forgotPassword.jsp">Forgot password?</a>
                                 <br>
-                                <a href="registration.jsp">Don't have an account? <strong>Sign Up</strong></a>
+                                <a href="../registration.jsp">Don't have an account? <strong>Sign Up</strong></a>
 
                             </div>
                             <hr>
