@@ -78,13 +78,12 @@ public class DBDAOImplElectionCommissioner {
 
     public boolean updateElectionCommissioner(ElectionCommissioner ec) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_commissioner SET firstname=?, lastname=?, mobile=?, organization=?, password=? WHERE email=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_commissioner SET firstname=?, lastname=?, mobile=?, organization_id=? WHERE email=?");
         ps.setString(1, ec.getFirstname());
         ps.setString(2, ec.getLastname());
         ps.setString(3, ec.getMobile());
         ps.setLong(4, ec.getOrganization_id());
-        ps.setString(5, ec.getPassword());
-        ps.setString(6, ec.getEmail());
+        ps.setString(5, ec.getEmail());
         if (ps.executeUpdate() > 0) {
             result = true;
         }

@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label for="email" class="control-label col-lg-5"><strong>Email ID</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" name="email" class="form-control" required value="<%=ec.getEmail()%>">
+                                <input type="text" name="email" disabled="disabled" class="form-control" required value="<%=ec.getEmail()%>">
                             </div>
                         </div>
 
