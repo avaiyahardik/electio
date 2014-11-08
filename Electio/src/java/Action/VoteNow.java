@@ -45,6 +45,7 @@ public class VoteNow implements Controller.Action {
             if (req.getSession().getAttribute("election_id") == null) {
                 err = "Fail to locate election id, please retry";
             } else {
+                view = "voted.jsp";
                 try {
                     DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
@@ -55,10 +56,8 @@ public class VoteNow implements Controller.Action {
                     boolean status = objV.getVoterStatus(id, email);
                     Date date = new Date();
                     if (date.before(election.getVoting_start())) {
-                        view = "voted.jsp";
                         err = "Voting period has not been started";
                     } else if (date.after(election.getVoting_end())) {
-                        view = "voted.jsp";
                         err = "Voting period gets over";
                     } else {
                         if (status == false) {
@@ -72,7 +71,6 @@ public class VoteNow implements Controller.Action {
                                 view = "preferential.jsp";
                             }
                         } else if (status == true) {
-                            view = "voted.jsp";
                             msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
                         }
                     }
