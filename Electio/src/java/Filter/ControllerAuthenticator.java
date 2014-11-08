@@ -80,23 +80,24 @@ public class ControllerAuthenticator implements Filter {
                 rd.forward(request, response);
                 return;
             } else {
+
                 // here u'll have valid action, now check for required parameters
-                map = new Properties();
-                map.load(this.getClass().getClassLoader().getResourceAsStream(ACTION_PARAMETER_MAPPING));
-                String str = map.getProperty(action);
-                System.out.println("Total param: " + str);
-                String params[] = str.split(",");
-                for (String param : params) {
-                    System.out.println("Checking param: " + param);
-                    if (req.getParameter(param) == null) {
-                        view += "?err=Insufficient parameters";
-                        System.out.println("ControllerAuthenticator Insufficient parameters");
-                        RequestDispatcher rd = req.getRequestDispatcher(view);
-                        rd.forward(request, response);
-                        return;
-                    }
-                }
-            }
+          /*      map = new Properties();
+                 map.load(this.getClass().getClassLoader().getResourceAsStream(ACTION_PARAMETER_MAPPING));
+                 String str = map.getProperty(action);
+                 System.out.println("Total param: " + str);
+                 String params[] = str.split(",");
+                 for (String param : params) {
+                 System.out.println("Checking param: " + param);
+                 if (req.getParameter(param) == null) {
+                 view += "?err=Insufficient parameters";
+                 System.out.println("ControllerAuthenticator Insufficient parameters");
+                 RequestDispatcher rd = req.getRequestDispatcher(view);
+                 rd.forward(request, response);
+                 return;
+                 }
+                 }
+                 */            }
         } else {
             view += "?err=No action found";
             System.out.println("ControllerAuthenticator No action found");

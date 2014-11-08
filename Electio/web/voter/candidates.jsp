@@ -17,7 +17,6 @@
     <!-- Candidate List here -->
 
     <%
-        //    DBDAOImplementation obj = DBDAOImplementation.getInstance();
         DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
         DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
         ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");

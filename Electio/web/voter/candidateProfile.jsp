@@ -8,7 +8,6 @@
 <jsp:include page="header.jsp"/>
 
 <%
-//    DBDAOImplementation obj = DBDAOImplementation.getInstance();
     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
     Candidate c = (Candidate) request.getAttribute("candidate");

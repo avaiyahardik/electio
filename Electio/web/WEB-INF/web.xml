@@ -7,6 +7,9 @@
     <filter-mapping>
         <filter-name>ControllerAuthenticator</filter-name>
         <url-pattern>/Controller</url-pattern>
+        <url-pattern>/candidate/Controller</url-pattern>
+        <url-pattern>/election-commissioner/Controller</url-pattern>
+        <url-pattern>/voter/Controller</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>Controller</servlet-name>

@@ -33,23 +33,22 @@ public class ListCandidates implements Controller.Action {
         String err = null;
         String title = "Login";
 
-        if (email == null || email.equals("") || elec_id == null) {
+        if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
 
             view = "candidates.jsp";
             title = "Candidates List";
-
+            ArrayList<Candidate> candidates = null;
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 long election_id = Long.parseLong(elec_id);
-                ArrayList<Candidate> candidates = objC.getCandidates(election_id);
-                req.setAttribute("candidates", candidates);
+                candidates = objC.getCandidates(election_id);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("List Candidates Err: " + ex.getMessage());
             }
+            req.setAttribute("candidates", candidates);
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);

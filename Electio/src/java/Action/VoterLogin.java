@@ -37,7 +37,7 @@ public class VoterLogin implements Controller.Action {
         String msg = null;
         String err = null;
         System.out.println(elec_id + ", " + email);
-        if (elec_id == null || elec_id.equals("") || email == null || email.equals("")) {
+        if (elec_id == null || elec_id.equals("") || email == null || email.equals("") || step == null || step.equals("")) {
             err = "Insufficiant input"; // error message should be displayed on view page
         } else {
             long election_id = Long.parseLong(elec_id);

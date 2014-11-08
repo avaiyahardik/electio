@@ -17,6 +17,7 @@ import java.util.Random;
 public class RandomString {
 
     public static final String DOMAIN_BASE = "http://localhost:8084/Electio/";
+    //String url=request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8);
     private static final String CHAR_LIST
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&-_=+<>?";
     private static Random random;

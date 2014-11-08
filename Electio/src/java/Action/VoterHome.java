@@ -35,13 +35,10 @@ public class VoterHome implements Controller.Action {
         if (email == null || email.equals("") || elec_id == null) {
             err = "Session expired please login again";
         } else {
-
             view = "electionDetails.jsp";
             title = "Election Details";
-
             try {
                 long election_id = Long.parseLong(elec_id);
-                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 Election el = objE.getElection(election_id);
                 req.setAttribute("election", el);

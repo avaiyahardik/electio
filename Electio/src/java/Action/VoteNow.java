@@ -17,6 +17,7 @@ import Model.Organization;
 import Model.Voter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -44,33 +45,36 @@ public class VoteNow implements Controller.Action {
             if (req.getSession().getAttribute("election_id") == null) {
                 err = "Fail to locate election id, please retry";
             } else {
-                System.out.println("Yes");
-
                 try {
-                    //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
                     long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
+                    Election election = objE.getElection(id);
+
                     boolean status = objV.getVoterStatus(id, email);
-                    if (status == false) {
-
-                        System.out.println("type->" + election_type);
-
-                        ArrayList<Candidate> candidates = objC.getCandidates(id);
-                        req.setAttribute("candidates", candidates);
-                        req.setAttribute("election_name", objE.getElectionName(id));
-                        title = "Voting Now";
-                        if (election_type == 2) {
-                            view = "weighted.jsp";
-                            System.out.println("Election ID: " + id);
-
-                        } else if (election_type == 1) {
-                            view = "preferential.jsp";
-                        }
-                    } else if (status == true) {
+                    Date date = new Date();
+                    if (date.before(election.getVoting_start())) {
                         view = "voted.jsp";
-                        msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
+                        err = "Voting period has not been started";
+                    } else if (date.after(election.getVoting_end())) {
+                        view = "voted.jsp";
+                        err = "Voting period gets over";
+                    } else {
+                        if (status == false) {
+                            ArrayList<Candidate> candidates = objC.getCandidates(id);
+                            req.setAttribute("candidates", candidates);
+                            req.setAttribute("election_name", election.getName());
+                            title = "Voting Now";
+                            if (election_type == 2) {
+                                view = "weighted.jsp";
+                            } else if (election_type == 1) {
+                                view = "preferential.jsp";
+                            }
+                        } else if (status == true) {
+                            view = "voted.jsp";
+                            msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
+                        }
                     }
                 } catch (SQLException ex) {
                     err = ex.getMessage();

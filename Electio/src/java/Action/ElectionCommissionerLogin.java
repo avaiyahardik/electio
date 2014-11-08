@@ -26,38 +26,37 @@ public class ElectionCommissionerLogin implements Controller.Action {
 
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String view = "index.jsp";  // default view should be login page itself
+        String view = "index.jsp";
         String title = "Login";
         String msg = null;
         String err = null;
         System.out.println(email + ", " + password);
         if (email == null || email.equals("") || password == null || password.equals("")) {
-            err = "Please fill-up required fields"; // error message should be displayed on view page
+            err = "Please fill-up required fields";
         } else {
             //password = RandomString.encryptPassword(password);
             System.out.println("Encrypted password: " + password);
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 ArrayList<Election> elections = null;
                 if (objEC.loginElectionCommissioner(email, password)) {
                     req.getSession().setAttribute("email", email);
-                    view = "dashboard.jsp"; // view changed if login successfull
+                    view = "dashboard.jsp";
                     title = "Dashboard";
-                    msg = "You're logged in successfully"; // message should be displayed on view page
+                    msg = "You're logged in successfully";
                     elections = objE.getCompletedElections(email);
                 } else {
-                    err = "Invalid email or password, please retry"; // error message should be displayed on view page
+                    err = "Invalid email or password, please retry";
                 }
                 req.setAttribute("elections", elections);
             } catch (SQLException ex) {
-                err = ex.getMessage(); // error message should be displayed on the view page
+                err = ex.getMessage();
                 System.out.println("Login SQL Err: " + ex.getMessage());
             }
         }
-        req.setAttribute("msg", msg); // setting msg attribute
-        req.setAttribute("err", err); // setting err attribute
+        req.setAttribute("msg", msg);
+        req.setAttribute("err", err);
         req.setAttribute("title", title);
         return view;
     }
