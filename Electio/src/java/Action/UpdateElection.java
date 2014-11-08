@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,51 +48,42 @@ public class UpdateElection implements Controller.Action {
                     Timestamp withdrawal_end = new Timestamp(dateFormat.parse(req.getParameter("withdrawal_end")).getTime());
                     Timestamp voting_start = new Timestamp(dateFormat.parse(req.getParameter("voting_start")).getTime());
                     Timestamp voting_end = new Timestamp(dateFormat.parse(req.getParameter("voting_end")).getTime());
-                    if (nomination_start.compareTo(nomination_end) < 1) {
-                        if (withdrawal_start.compareTo(withdrawal_end) < 1) {
-                            if (voting_start.compareTo(voting_end) < 1) {
-                                if (nomination_end.compareTo(withdrawal_start) < 1) {
-                                    if (withdrawal_end.compareTo(voting_start) < 1) {
-                                        Election el = new Election();
-                                        el.setId(id);
-                                        el.setName(req.getParameter("name"));
-                                        el.setDescription(req.getParameter("description"));
-                                        el.setRequirements(req.getParameter("requirements"));
-                                        el.setType_id(Integer.parseInt(req.getParameter("type")));
-                                        el.setNomination_start(nomination_start);
-                                        el.setNomination_end(nomination_end);
-                                        el.setWithdrawal_start(withdrawal_start);
-                                        el.setWithdrawal_end(withdrawal_end);
-                                        el.setVoting_start(voting_start);
-                                        el.setVoting_end(voting_end);
-                                        el.setPetition_duration(Integer.parseInt(req.getParameter("petition_duration")));
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                                        DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                                        if (objE.updateElection(el)) {
-                                            msg = "Election updated successfully";
-                                        } else {
-                                            err = "Fail to update election, please retry";
-                                        }
-                                    } else {
-                                        System.out.println("voting start date must be less than voting end date");
-                                        err = "withdraw end date must be less than voting start date";
-                                    }
-                                } else {
-                                    System.out.println("voting start date must be less than voting end date");
-                                    err = "nomination date must be less than withdraw start date";
-                                }
-
-                            } else {
-                                System.out.println("voting start date must be less than voting end date");
-                                err = "voting start date must be less than voting end date";
-                            }
-                        } else {
-                            System.out.println("withdrawal start date must be less than withdrawal end date");
-                            err = "withdrawal start date must be less than withdrawal end date";
-                        }
+                    Date date = new Date();
+                    Timestamp temp = new Timestamp(date.getTime());
+                    if(temp.compareTo(nomination_start)<=0){
+                        err = "Nomination end time should be after today";
+                    }
+                    else if (nomination_end.before(nomination_start)) {
+                        err = "Nomination end time should be after nomination start time";
+                    } else if (withdrawal_start.before(nomination_end)) {
+                        err = "Withdrawal start time should be after nomination end time";
+                    } else if (withdrawal_end.before(withdrawal_start)) {
+                        err = "Withdrawal end time should be after withdrawal start time";
+                    } else if (voting_start.before(withdrawal_end)) {
+                        err = "Voting start time should be after withdrawal end time";
+                    } else if (voting_end.before(voting_start)) {
+                        err = "Voting end time should be after voting start time";
                     } else {
-                        System.out.println("nomination start date must be less than nomination end date");
-                        err = "nomination start date must be less than nomination end date";
+                        Election el = new Election();
+                        el.setId(id);
+                        el.setName(req.getParameter("name"));
+                        el.setDescription(req.getParameter("description"));
+                        el.setRequirements(req.getParameter("requirements"));
+                        el.setType_id(Integer.parseInt(req.getParameter("type")));
+                        el.setNomination_start(nomination_start);
+                        el.setNomination_end(nomination_end);
+                        el.setWithdrawal_start(withdrawal_start);
+                        el.setWithdrawal_end(withdrawal_end);
+                        el.setVoting_start(voting_start);
+                        el.setVoting_end(voting_end);
+                        el.setPetition_duration(Integer.parseInt(req.getParameter("petition_duration")));
+//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                        DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                        if (objE.updateElection(el)) {
+                            msg = "Election updated successfully";
+                        } else {
+                            err = "Fail to update election, please retry";
+                        }
                     }
 
                 } catch (Exception ex) {
