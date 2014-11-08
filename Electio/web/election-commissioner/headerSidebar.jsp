@@ -118,7 +118,7 @@
                 <div class="col-lg-12">
                     <!-- BEGIN ERROR BOX --> 
                     <% String err0 = (String) request.getAttribute("err");
-                        if (err0 != null) {%>
+                        if (err0 != null && !err0.equals("") && !err0.equals("null")) {%>
                     <div class="alert alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <%=err0%>
