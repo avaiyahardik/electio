@@ -43,51 +43,54 @@ public class VoterLogin implements Controller.Action {
             long election_id = Long.parseLong(elec_id);
             //   password = RandomString.encryptPassword(password);
             //  System.out.println("Encrypted password: " + password);
+
             try {
-                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                if (step.equals("1")) {
-                    if (objV.loginVoter1(election_id, email) != null) {
-                        Voter v = objV.loginVoter1(election_id, email);
-                        view = "login2.jsp"; // view changed if email exists and status is not voted successfull
-                        title = "Voter Login";
-                        password = RandomString.generateRandomPassword();
-                        objV.insertVoterPassword(election_id, email, password);
+                if (objE.isValidElectionId(election_id)) {
+                    if (step.equals("1")) {
+                        if (objV.loginVoter1(election_id, email) != null) {
+                            Voter v = objV.loginVoter1(election_id, email);
+                            view = "login2.jsp"; // view changed if email exists and status is not voted successfull
+                            title = "Voter Login";
+                            password = RandomString.generateRandomPassword();
+                            objV.insertVoterPassword(election_id, email, password);
 
-                        req.setAttribute("election_id", elec_id);
-                        req.setAttribute("email", email);
-                        String[] to = {email};
-                        if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "Password", password, to)) {
-                            msg = "Your password has been sent to your email id";
-                        } else {
-                            msg = "Server Error, try again after sometime";
-                            view = "login.jsp?election_id=" + election_id;
+                            req.setAttribute("election_id", elec_id);
+                            req.setAttribute("email", email);
+                            String[] to = {email};
+                            if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "Password", password, to)) {
+                                msg = "Your password has been sent to your email id";
+                            } else {
+                                msg = "Server Error, try again after sometime";
+                                view = "login.jsp?election_id=" + election_id;
+                            }
                         }
+                    } else if (step.equals("2")) {
+                        password = req.getParameter("password");
+                        if (objV.loginVoter2(election_id, email, password)) {
+                            Voter v = objV.loginVoter1(election_id, email);
 
-                    }
-                } else if (step.equals("2")) {
-                    password = req.getParameter("password");
-                    if (objV.loginVoter2(election_id, email, password)) {
-                        Voter v = objV.loginVoter1(election_id, email);
+                            view = "electionDetails.jsp"; // view changed if login successfull
+                            title = "Election Details";
+                            Election el = objE.getElection(election_id);
+                            ArrayList<Candidate> candidates = objC.getCandidates(election_id);
+                            Election election = objE.getElection(election_id);
+                            req.setAttribute("candidates", candidates);
+                            System.out.println("ttppyyee" + election.getType_id());
+                            req.getSession().setAttribute("election_type", election.getType_id());
+                            req.setAttribute("election", el);
+                            req.getSession().setAttribute("election_id", elec_id);
+                            req.getSession().setAttribute("voter_email", email);
 
-                        view = "electionDetails.jsp"; // view changed if login successfull
-                        title = "Election Details";
-                        Election el = objE.getElection(election_id);
-                        ArrayList<Candidate> candidates = objC.getCandidates(election_id);
-                        Election election = objE.getElection(election_id);
-                        req.setAttribute("candidates", candidates);
-                        System.out.println("ttppyyee" + election.getType_id());
-                        req.getSession().setAttribute("election_type", election.getType_id());
-                        req.setAttribute("election", el);
-                        req.getSession().setAttribute("election_id", elec_id);
-                        req.getSession().setAttribute("voter_email", email);
+                        }
+                    } else {
 
+                        err = "Fail to login, please retry"; // error message should be displayed on view page
                     }
                 } else {
-
-                    err = "Fail to login, please retry"; // error message should be displayed on view page
+                    err = "Invalid election link";
                 }
             } catch (SQLException ex) {
                 err = ex.getMessage(); // error message should be displayed on the view page
