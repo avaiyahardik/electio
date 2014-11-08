@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -23,17 +25,17 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Hardik
  */
-public class Authenticator implements Filter {
+public class ControllerAuthenticator implements Filter {
 
     private final String ACTION_MAPPING = "/Controller/ActionMaping.properties";
     private static final boolean debug = true;
-
+    private final String ACTION_PARAMETER_MAPPING = "/Filter/ActionParameterMapping.properties";
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public Authenticator() {
+    public ControllerAuthenticator() {
 
     }
 
@@ -72,16 +74,37 @@ public class Authenticator implements Filter {
         if (action != null) {
             action_class = map.getProperty(action.toLowerCase());
             if (action_class == null) {
+                view += "?err=Invalid action";
+                System.out.println("ControllerAuthenticator Invalid action");
                 RequestDispatcher rd = req.getRequestDispatcher(view);
                 rd.forward(request, response);
                 return;
+            } else {
+                // here u'll have valid action, now check for required parameters
+                map = new Properties();
+                map.load(this.getClass().getClassLoader().getResourceAsStream(ACTION_PARAMETER_MAPPING));
+                String str = map.getProperty(action);
+                System.out.println("Total param: " + str);
+                String params[] = str.split(",");
+                for (String param : params) {
+                    System.out.println("Checking param: " + param);
+                    if (req.getParameter(param) == null) {
+                        view += "?err=Insufficient parameters";
+                        System.out.println("ControllerAuthenticator Insufficient parameters");
+                        RequestDispatcher rd = req.getRequestDispatcher(view);
+                        rd.forward(request, response);
+                        return;
+                    }
+                }
             }
         } else {
-            /*  err = "No action found";
-             RequestDispatcher rd = req.getRequestDispatcher(view);
-             rd.forward(request, response);
-             return;*/
+            view += "?err=No action found";
+            System.out.println("ControllerAuthenticator No action found");
+            RequestDispatcher rd = req.getRequestDispatcher(view);
+            rd.forward(request, response);
+            return;
         }
+        System.out.println("ControllerAuthenticator passed");
         chain.doFilter(request, response);
         doAfterProcessing(request, response);
     }
