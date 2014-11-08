@@ -30,6 +30,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -547,10 +548,18 @@ public class GenerateReport implements Controller.Action {
 
                 document.close();
                 req.setAttribute("file_path", filePath);
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    System.out.println("Absolute File Path: " + absoluteFilePath);
+                    desktop.open(new File(absoluteFilePath));
+                } else {
+                    err = "Open is not supported";
+                }
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("Generate Report Error: " + ex.getMessage());
             }
+
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
