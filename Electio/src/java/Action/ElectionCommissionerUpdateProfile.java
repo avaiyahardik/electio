@@ -39,7 +39,6 @@ public class ElectionCommissionerUpdateProfile implements Controller.Action {
             title = "Profile";
 
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 ElectionCommissioner ec = objEC.getElectionCommissioner(email);

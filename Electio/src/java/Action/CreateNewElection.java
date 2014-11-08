@@ -37,7 +37,7 @@ public class CreateNewElection implements Controller.Action {
             err = "Session expired, please login again";
         } else {
             view = "newElection.jsp";
-            title = "Create New Election";
+            title = "New Election";
             try {
                 String name = req.getParameter("name");
                 String description = req.getParameter("description");
@@ -45,8 +45,6 @@ public class CreateNewElection implements Controller.Action {
                 long type_id = Integer.parseInt(req.getParameter("type"));
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                 Date date = new Date();
-//                date = dateFormat.parse(dateFormat.format(date));
-//                Timestamp created_at = new Timestamp(date.getTime());
                 Timestamp nomination_start = new Timestamp(dateFormat.parse(req.getParameter("nomination_start")).getTime());
                 Timestamp nomination_end = new Timestamp(dateFormat.parse(req.getParameter("nomination_end")).getTime());
                 Timestamp withdrawal_start = new Timestamp(dateFormat.parse(req.getParameter("withdrawal_start")).getTime());

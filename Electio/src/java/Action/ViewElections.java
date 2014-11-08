@@ -34,11 +34,11 @@ public class ViewElections implements Controller.Action {
             err = "Session expired please login again";
         } else {
             view = "listElections.jsp";
-            title = "View Elections";
+            title = "Elections";
             ArrayList<Election> elections = null;
             try {
 //                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                DBDAOImplElection objE=DBDAOImplElection.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 elections = objE.getElections(email);
             } catch (SQLException ex) {
                 err = ex.getMessage();
