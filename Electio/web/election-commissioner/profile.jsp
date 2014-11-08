@@ -6,7 +6,7 @@
 <div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading bg-blue">
-            <h3 class="panel-title">Election Commissioner Registration</h3>
+            <h3 class="panel-title">Election Commissioner Profile</h3>
         </div>
 
         <div class="panel-body">

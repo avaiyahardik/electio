@@ -8,7 +8,7 @@
         <h1 class="page-title">You are voting for <span class="label label-info"><%=request.getAttribute("election_name")%></span> </h1>
     </div>
     <div class="col-lg-8 col-lg-offset-2"><h4>Give your preference to each candidate</h4></div>
-    <form class="form-horizontal" action="Controller"  method="POST">
+    <form class="form-horizontal" action="Controller"  method="GET">
         <input type="hidden" name="type" value="1">
         <!-- Candidate List -->
         <% ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");

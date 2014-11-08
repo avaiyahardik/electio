@@ -42,34 +42,37 @@ public class SaveVote implements Controller.Action {
                 if (req.getSession().getAttribute("election_id") == null) {
                     err = "Fail to locate election id, please retry";
                 } else {
-
-                    long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
                     view = "voted.jsp";
                     title = "Voted";
-                    if (election_type == 2) {
-                        System.out.println("Election ID: " + id);
-                        try {
-                            if (objC.saveVote(id, candidate_email) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
-                                msg = "Your Vote has been casted, thank you!!";
+                    long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
+                    if (objV.getVoterStatus(id, email)) {
+                        if (election_type == 2) {
+                            System.out.println("Election ID: " + id);
+                            try {
+                                if (objC.saveVote(id, candidate_email) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
+                                    msg = "Your Vote has been casted, thank you!!";
+                                }
+                            } catch (SQLException ex) {
+                                err = ex.getMessage();
+                                System.out.println("Save vote Err: " + ex.getMessage());
                             }
-                        } catch (SQLException ex) {
-                            err = ex.getMessage();
-                            System.out.println("Save vote Err: " + ex.getMessage());
+                        } else if (election_type == 1) {
+                            try {
+                                ArrayList<Candidate> candidates = objC.getCandidates(id);
+                                int tot = candidates.size();
+                                for (Candidate c : candidates) {
+                                    System.out.println("email:" + c.getEmail() + "votes: " + req.getParameter(c.getEmail()));
+                                    c.setVotes(tot - Long.parseLong(req.getParameter(c.getEmail())) + 1);
+                                }
+                                if (objC.updateCandidateVotes(candidates, id) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
+                                    msg = "Your Vote has been casted, thank you!!";
+                                }
+                            } catch (SQLException ex) {
+                                System.out.println("Err: " + ex.getMessage());
+                            }
                         }
-                    } else if (election_type == 1) {
-                        try {
-                            ArrayList<Candidate> candidates = objC.getCandidates(id);
-                            int tot = candidates.size();
-                            for (Candidate c : candidates) {
-                                System.out.println("email:" + c.getEmail() + "votes: " + req.getParameter(c.getEmail()));
-                                c.setVotes(tot - Long.parseLong(req.getParameter(c.getEmail())) + 1);
-                            }
-                            if (objC.updateCandidateVotes(candidates, id) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
-                                msg = "Your Vote has been casted, thank you!!";
-                            }
-                        } catch (SQLException ex) {
-                            System.out.println("Err: " + ex.getMessage());
-                        }
+                    } else {
+                        msg = "You already voted bitch";
                     }
                 }
             } catch (Exception e) {

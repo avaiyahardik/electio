@@ -58,12 +58,12 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                         } else {
                             Organization org = new Organization(organization_name, organization_address, about_organization);
                             organization_id = objO.addNewOrganization(org);
-                            password = RandomString.encryptPassword(password);  // encrypt password for security reason
+                            password = RandomString.encryptPassword(password);
                             ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
                             if (objEC.registerElectionCommissioner(ec)) {
                                 msg = "You're registered successfully";
                                 view = "index.jsp";
-                                title = "Login";
+                                title = "Electio";
                             } else {
                                 err = "Fail to register, please try again later";
                             }
