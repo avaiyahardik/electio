@@ -112,7 +112,6 @@
                                 <select name="organization_id" class="form-control" onchange="checkOrg()" id="org-id">
                                     <option value="">-- Select --</option>
                                     <%
-                                        //                                                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                                         DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                                         ArrayList<Organization> orgs = objO.getAllOrganizations();
                                         for (Organization org : orgs) {
@@ -127,7 +126,7 @@
 
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="organization_name">
                             <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
                             <div class="col-lg-7">
                                 <div class="input-group">
@@ -139,7 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="organization_address">
                             <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
                             <div class="col-lg-7">
                                 <div class="input-group">
@@ -151,7 +150,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="about_organization">
                             <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
                             <div class="col-lg-7">
                                 <div class="input-group">
