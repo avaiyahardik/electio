@@ -40,12 +40,27 @@
                             <span class="panel-title">Nominee Registration for
                                 <!-- Election Name here -->
                                 <% String name = "";
+                                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
                                     long election_id = 0;
                                     if (request.getParameter("election_id") != null) {
-
                                         election_id = Long.parseLong(request.getParameter("election_id"));
-                                        name = DBDAOImplElection.getInstance().getElectionName(election_id);
-                                    }%>
+                                        name = objE.getElectionName(election_id);
+                                    } else {%>
+                                <script>
+                                    window.location = "../index.jsp";
+
+                                </script>
+                                <%
+                                    }
+                                %>
+                                <%if (name == null) {%>
+                                <script>
+                                    window.location = "../index.jsp";
+
+                                </script>
+                                <%
+                                    }
+                                %>
                                 <strong><%= name%></strong>
                             </span>
                         </div>

@@ -49,11 +49,9 @@ public class UpdateElection implements Controller.Action {
                     Timestamp voting_start = new Timestamp(dateFormat.parse(req.getParameter("voting_start")).getTime());
                     Timestamp voting_end = new Timestamp(dateFormat.parse(req.getParameter("voting_end")).getTime());
                     Date date = new Date();
-                    Timestamp temp = new Timestamp(date.getTime());
-                    if(temp.compareTo(nomination_start)<=0){
-                        err = "Nomination end time should be after today";
-                    }
-                    else if (nomination_end.before(nomination_start)) {
+                    if (nomination_start.before(date)) {
+                        err = "Nomination start time should be after today";
+                    } else if (nomination_end.before(nomination_start)) {
                         err = "Nomination end time should be after nomination start time";
                     } else if (withdrawal_start.before(nomination_end)) {
                         err = "Withdrawal start time should be after nomination end time";
@@ -77,7 +75,6 @@ public class UpdateElection implements Controller.Action {
                         el.setVoting_start(voting_start);
                         el.setVoting_end(voting_end);
                         el.setPetition_duration(Integer.parseInt(req.getParameter("petition_duration")));
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
                         DBDAOImplElection objE = DBDAOImplElection.getInstance();
                         if (objE.updateElection(el)) {
                             msg = "Election updated successfully";

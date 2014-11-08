@@ -18,8 +18,8 @@ public class CandidateResetPassword implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getParameter("email");
-        String election_id=req.getParameter("election_id");
-        String view = "index.jsp?election_id"+election_id;
+        String election_id = req.getParameter("election_id");
+        String view = "index.jsp?election_id" + election_id;
         String msg = null;
         String err = null;
         System.out.println("EMAIL: " + email);
@@ -28,26 +28,19 @@ public class CandidateResetPassword implements Controller.Action {
             err = "Email Id required";
         } else {
             try {
-                String newPassword = RandomString.generateRandomPassword(); // it'll generate new password
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-
+                String newPassword = RandomString.generateRandomPassword();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 String s[] = {email};
                 if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "New Password", newPassword, s)) {
                     //newPassword = RandomString.encryptPassword(newPassword);
-                    objC.changeCandidatePassword(email, newPassword); // it'll update password
+                    objC.changeCandidatePassword(email, newPassword);
                     msg = "Password Sent To your email successfully";
                 } else {
-                    err = "Some error occur";
+                    err = "Fail to send password, retry";
                 }
-                // write a code to send email containing password
-                // stored in "newPassword" variable to election commissioner
-                // at email id stored in "email" variable.
-                // On successful sent of email set msg="Password sent successfully to <email id>"
-                // on failure set err="Fail to send email at <email>"
             } catch (Exception ex) {
                 err = ex.getMessage();
-                System.out.println("Forgot Password Error: " + ex.getMessage());
+                System.out.println("Candidate Forgot Password Error: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);

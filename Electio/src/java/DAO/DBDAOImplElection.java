@@ -62,7 +62,7 @@ public class DBDAOImplElection {
     public boolean updateElection(Election el) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election SET name=?, description=?, requirements=?, type_id=?, nomination_start=?, nomination_end=?, withdrawal_start=?, withdrawal_end=?, voting_start=?, voting_end=?, petition_duration=? WHERE id=?");
-
+        System.out.println(el.getNomination_start() + ", " + el.getNomination_end() + ", " + el.getWithdrawal_start() + ", " + el.getWithdrawal_end() + ", " + el.getVoting_start() + ", " + el.getVoting_end());
         ps.setString(1, el.getName());
         ps.setString(2, el.getDescription());
         ps.setString(3, el.getRequirements());
@@ -71,9 +71,8 @@ public class DBDAOImplElection {
         ps.setTimestamp(6, el.getNomination_end());
         ps.setTimestamp(7, el.getWithdrawal_start());
         ps.setTimestamp(8, el.getWithdrawal_end());
-        ps.setTimestamp(9, el.getNomination_end());
-        ps.setTimestamp(10, el.getVoting_start());
-        ps.setTimestamp(11, el.getVoting_end());
+        ps.setTimestamp(9, el.getVoting_start());
+        ps.setTimestamp(10, el.getVoting_end());
         ps.setInt(11, el.getPetition_duration());
         ps.setLong(12, el.getId());
 

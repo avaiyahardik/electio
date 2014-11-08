@@ -120,6 +120,7 @@ public class NomineeRegistration extends HttpServlet {
                     date = new Date();
                     ext = fileName.substring(fileName.lastIndexOf('.'));
                     File file = new File(request.getServletContext().getRealPath("/user_images") + File.separator + date.getTime() + ext);
+//                    File file = new File(request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8).toString() + File.separator + "user_images" + File.separator + date.getTime() + ext);
                     fileItem.write(file);
                     image = "user_images" + File.separator + date.getTime() + ext;
                     System.out.println("Absolute Path at server=" + image);
