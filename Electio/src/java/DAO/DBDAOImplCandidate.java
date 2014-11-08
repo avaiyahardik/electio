@@ -240,4 +240,15 @@ public class DBDAOImplCandidate {
         }
         return result;
     }
+
+    public boolean setVoteZero(long election_id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_candidate SET votes=? WHERE election_id=?");
+        ps.setLong(1, 0);
+        ps.setLong(2, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
 }
