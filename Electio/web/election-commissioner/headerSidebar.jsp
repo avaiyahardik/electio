@@ -32,7 +32,6 @@
         <link href="../assets/css/style.min.css" rel="stylesheet">
         <link href="../assets/css/colors/color-light.css" rel="stylesheet">
         <!-- END  MANDATORY STYLE -->
-        <script src="../assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
 
     <body data-page="blank_page">

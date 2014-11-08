@@ -16,7 +16,6 @@
 <link rel="stylesheet" href="../assets/plugins/datatables/dataTables.css">
 <link rel="stylesheet" href="../assets/plugins/datatables/dataTables.tableTools.css">
 <link rel="stylesheet" type="text/css" href="../assets/dtp/jquery.datetimepicker.css"/>
-
 <!-- END PAGE LEVEL STYLE -->
 <% Election el = (Election) request.getAttribute("election");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -78,11 +77,11 @@
                                         <div class="col-lg-7">
                                             <select class="form-control" name="type">
                                                 <% if (el.getType_id() == 2) {%>
-                                                <option value="2" selected="selected">Weighted</option>
+                                                <option value="2" selected>Weighted</option>
                                                 <option value="1">Preferential</option>
                                                 <%} else {%>
                                                 <option value="2">Weighted</option>
-                                                <option value="1" selected="selected">Preferential</option>
+                                                <option value="1" selected>Preferential</option>
                                                 <%}%>
                                             </select>
                                         </div>
@@ -302,7 +301,7 @@
                                 </div>
 
                                 <div class="align-right col-lg-6">
-                                    <% String ballot_link = RandomString.DOMAIN_BASE + "voter/login.jsp?election_id="+el.getId(); %>
+                                    <% String ballot_link = RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + el.getId();%>
                                     <p> Ballot URL : <i><%=ballot_link%></i></p>
                                     <a href="Controller?action=send_ballot_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Ballot URL</a>
                                 </div>
@@ -404,9 +403,9 @@
                                     <i class="fa fa-circle" style="color:orange"></i> Link Sent
                                     <i class="fa fa-check-circle" style="color:green"></i> Registered
                                 </div>
-                                
+
                                 <div class="col-lg-8 align-right">
-                                    <% String reg_link = RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id="+el.getId(); %>
+                                    <% String reg_link = RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + el.getId();%>
                                     <p> Nominee Registration URL : <i><%=reg_link%></i></p>
                                     <a href="Controller?action=send_registration_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Registration URL</a>
                                 </div>
@@ -490,11 +489,8 @@
 <script type="text/javascript" src="../assets/dtp/jquery.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
 <script type="text/javascript" src="../js/script.js"></script>
-
-
 <script type="text/javascript" src="../js/charts.js"></script>
 <script type="text/javascript" src="../js/jsapi"></script>
-
 <!-- END  PAGE LEVEL SCRIPTS -->
 
 
