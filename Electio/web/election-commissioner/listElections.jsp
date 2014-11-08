@@ -35,7 +35,7 @@
                         <thead>
                             <tr>
                                 <th>Election Name</th>
-                                <th>Created on</th>
+                                <th>Created At</th>
                                 <th>Election Type</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -78,7 +78,7 @@
                                 <td><%= et.getType()%></td>
 
                                     <td><% switch (election_status) {
-                                        case 0: %> <label class="label label-primary">Due</label>
+                                            case 0: %> <label class="label label-primary">Due</label>
                                     <%break;
                                         case 1:%><label class="label label-warning">Nomination Period</label>
                                     <%break;
@@ -100,7 +100,7 @@
                                 if (elections.size() == 0) {
                             %>
                             <tr>
-                                <td colspan="4"><strong>Your elections will be displayed here...</strong></td>
+                                <td colspan="5"><br><strong>Your elections will be displayed here...</strong></td>
                             </tr>
                             <%}%>
                         </tbody>

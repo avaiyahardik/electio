@@ -206,7 +206,7 @@
                                     if (nominees.size() == 0) {
                                 %>
                                 <tr>
-                                    <td colspan="4"><strong>Nominees will be displayed here...</strong></td>
+                                    <td colspan="5"><br><strong>Nominees will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -253,7 +253,7 @@
                                     if (candidates.size() == 0) {
                                 %>
                                 <tr>
-                                    <td colspan="5"><strong>Candidates will be displayed here...</strong></td>
+                                    <td colspan="5"><br><strong>Candidates will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -361,7 +361,7 @@
                                     if (voters.size() == 0) {
                                 %>
                                 <tr id="no-voter-row">
-                                    <td colspan="4"><strong>Voters will be displayed here...</strong></td>
+                                    <td colspan="4"><br><strong>Your voters will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -369,7 +369,7 @@
                     </div>
 
                     <div class="tab-pane fade active in" id="election_list">
-                        <h4>Probable Nominee List</h4>
+                        <h4>Eligible Nominee List</h4>
                         <br>
 
                         <div class="row">
@@ -452,7 +452,7 @@
                                 <%}%>
                                 <%if (pn.size() == 0) {%>
                                 <tr id="no-nominee-row">
-                                    <td colspan="3"><strong>Probable Nominees will be displayed here...</strong></td>
+                                    <td colspan="3"><br><strong>Your eligible nominees will be displayed here...</strong></td>
                                 </tr>
                                 <%}%>
                             </tbody>
