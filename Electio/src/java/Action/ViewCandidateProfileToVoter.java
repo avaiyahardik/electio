@@ -41,15 +41,15 @@ public class ViewCandidateProfileToVoter implements Controller.Action {
             title = "Candidate Profile";
             long id = Long.parseLong(elec_id);
             String candidate_email = req.getParameter("candidate_email");
+            Candidate c = null;
             try {
-                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                Candidate c = objC.getCandidate(id, candidate_email);
-                req.setAttribute("candidate", c);
+                c = objC.getCandidate(id, candidate_email);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("View Candidate Profile to Voter Err: " + ex.getMessage());
             }
+            req.setAttribute("candidate", c);
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);

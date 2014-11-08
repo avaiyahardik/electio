@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <filter>
-        <filter-name>Authenticator</filter-name>
-        <filter-class>Filter.Authenticator</filter-class>
+        <filter-name>ControllerAuthenticator</filter-name>
+        <filter-class>Filter.ControllerAuthenticator</filter-class>
     </filter>
-    <!-- <filter-mapping>
-        <filter-name>Authenticator</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping> -->
+    <filter-mapping>
+        <filter-name>ControllerAuthenticator</filter-name>
+        <url-pattern>/Controller</url-pattern>
+        <url-pattern>/candidate/Controller</url-pattern>
+        <url-pattern>/election-commissioner/Controller</url-pattern>
+        <url-pattern>/voter/Controller</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>Controller.Controller</servlet-class>

@@ -238,4 +238,15 @@ public class DBDAOImplElection {
 
         return result;
     }
+
+    public boolean isValidElectionId(long id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE id=?");
+        ps.setLong(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+        return result;
+    }
 }
