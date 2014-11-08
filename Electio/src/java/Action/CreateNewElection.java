@@ -59,7 +59,9 @@ public class CreateNewElection implements Controller.Action {
                 if (name == null || name.equals("") || description == null || description.equals("") || type_id == 0) { // more validation will be performed later
                     err = "Please fill-up required fields";
                 } else {
-                    if (nomination_end.before(nomination_start)) {
+                    if (nomination_start.before(date)) {
+                        err = "Nominatoin start time should be of future time";
+                    } else if (nomination_end.before(nomination_start)) {
                         err = "Nomination end time should be after nomination start time";
                     } else if (withdrawal_start.before(nomination_end)) {
                         err = "Withdrawal start time should be after nomination end time";
