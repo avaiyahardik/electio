@@ -40,7 +40,6 @@ public class ElectionCommissionerChangePassword implements Controller.Action {
             String new_password = req.getParameter("new_password");
             String retype_password = req.getParameter("retype_password");
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 ElectionCommissioner ec = objEC.getElectionCommissioner(email);
@@ -49,7 +48,7 @@ public class ElectionCommissionerChangePassword implements Controller.Action {
                 req.setAttribute("organization", org);
                 if (objEC.loginElectionCommissioner(email, old_password)) {
                     if (new_password.equals(retype_password)) {
-                        // new_password=RandomString.encryptPassword(new_password);
+                        new_password = RandomString.encryptPassword(new_password);
                         if (objEC.changeElectionCommissionerPassword(email, new_password)) {
                             msg = "Your password changed successfully";
                         } else {
@@ -71,7 +70,5 @@ public class ElectionCommissionerChangePassword implements Controller.Action {
         req.setAttribute("err", err);
         req.setAttribute("title", title);
         return view;
-
     }
-
 }

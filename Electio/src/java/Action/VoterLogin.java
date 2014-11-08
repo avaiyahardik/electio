@@ -41,8 +41,7 @@ public class VoterLogin implements Controller.Action {
             err = "Insufficiant input"; // error message should be displayed on view page
         } else {
             long election_id = Long.parseLong(elec_id);
-            //   password = RandomString.encryptPassword(password);
-            //  System.out.println("Encrypted password: " + password);
+            password = RandomString.encryptPassword(password);
 
             try {
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();

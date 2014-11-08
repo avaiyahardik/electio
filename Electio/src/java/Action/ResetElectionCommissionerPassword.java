@@ -28,7 +28,7 @@ public class ResetElectionCommissionerPassword implements Controller.Action {
 //                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 if (EmailSender.sendMail(RandomString.ELECTIO_JAINTELE_EMAIL, RandomString.ELECTIO_JAINTELE_PASSWORD, "New Password", newPassword, email)) {
-                    //newPassword = RandomString.encryptPassword(newPassword);
+                    newPassword = RandomString.encryptPassword(newPassword);
                     objEC.changeElectionCommissionerPassword(email, newPassword); // it'll update password
                     msg = "Password sent to your email successfully, login now";
                 } else {

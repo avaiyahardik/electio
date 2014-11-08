@@ -144,8 +144,7 @@ public class NomineeRegistration extends HttpServlet {
                 err = "Please fill all required fields";
             } else {
                 if (retype_password.equals(password)) {
-                    //password = RandomString.encryptPassword(password);
-                    //DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                    password = RandomString.encryptPassword(password);
                     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                     DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();

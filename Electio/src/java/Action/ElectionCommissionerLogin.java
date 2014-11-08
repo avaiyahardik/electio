@@ -34,8 +34,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
         if (email == null || email.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields";
         } else {
-            //password = RandomString.encryptPassword(password);
-            System.out.println("Encrypted password: " + password);
+            password = RandomString.encryptPassword(password);
             try {
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();

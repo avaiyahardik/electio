@@ -34,7 +34,6 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String about_organization = req.getParameter("about_organization");
         String password = req.getParameter("password");
         String retype_password = req.getParameter("retype_password");
-        //password = RandomString.encryptPassword(password);  // encrypt password for security reason
         System.out.println("Encrypted Pwd: " + password);
         String view = "registration.jsp";
         String title = "Registration";
@@ -44,32 +43,36 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         if (email == null || email.equals("") || firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile == null || mobile.equals("") || org_id == null || org_id.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
             err = "Please fill-up required fields";
         } else {
-            try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
-                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
-                if (objEC.isEmailExists(email)) {
-                    err = "Email already registered, register with different one or try forgot password";
-                } else {
-                    long organization_id = Long.parseLong(org_id);
-                    if ((organization_id == 0) && (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals(""))) {
-                        err = "Please fill-up required fields";
+            if (!password.equals(retype_password)) {
+                err = "Retype password doesn't match";
+            } else {
+                try {
+                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                    DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+                    if (objEC.isEmailExists(email)) {
+                        err = "Email already registered, register with different one or try forgot password";
                     } else {
-                        Organization org = new Organization(organization_name, organization_address, about_organization);
-                        organization_id = objO.addNewOrganization(org);
-                        ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
-                        if (objEC.registerElectionCommissioner(ec)) {
-                            msg = "You're registered successfully";
-                            view = "index.jsp";
-                            title = "Login";
+                        long organization_id = Long.parseLong(org_id);
+                        if ((organization_id == 0) && (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals(""))) {
+                            err = "Please fill-up required fields";
                         } else {
-                            err = "Fail to register, please try again later";
+                            Organization org = new Organization(organization_name, organization_address, about_organization);
+                            organization_id = objO.addNewOrganization(org);
+                            password = RandomString.encryptPassword(password);  // encrypt password for security reason
+                            ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
+                            if (objEC.registerElectionCommissioner(ec)) {
+                                msg = "You're registered successfully";
+                                view = "index.jsp";
+                                title = "Login";
+                            } else {
+                                err = "Fail to register, please try again later";
+                            }
                         }
                     }
+                } catch (SQLException ex) {
+                    err = ex.getMessage();
+                    System.out.println("Election Commissioner Register SQL Err: " + ex.getMessage());
                 }
-            } catch (SQLException ex) {
-                err = ex.getMessage();
-                System.out.println("Election Commissioner Register SQL Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);

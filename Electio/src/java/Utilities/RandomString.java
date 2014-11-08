@@ -67,7 +67,7 @@ public class RandomString {
      }
      */
 
-    public String encryptPassword2(String password) {
+    public static String encryptPassword(String password) {
         String encrypted_password = password;
         try {
             // Create MessageDigest instance for MD5

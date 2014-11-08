@@ -32,7 +32,7 @@ public class CandidateResetPassword implements Controller.Action {
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 String s[] = {email};
                 if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "New Password", newPassword, s)) {
-                    //newPassword = RandomString.encryptPassword(newPassword);
+                    newPassword = RandomString.encryptPassword(newPassword);
                     objC.changeCandidatePassword(email, newPassword);
                     msg = "Password Sent To your email successfully";
                 } else {

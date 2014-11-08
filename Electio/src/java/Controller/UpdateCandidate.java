@@ -152,14 +152,12 @@ public class UpdateCandidate extends HttpServlet {
                     }
                 }
                 System.out.println("hello: "+fileItem.getString());
-                //System.out.println("lastname"+fileItem.getString());
             }
 
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("")) {
                 err = "Please fill all required fields";
             } else {
                 System.out.println("hello");
-                //password = RandomString.encryptPassword(password);
                 Organization org = new Organization(organization_name, organization_address, about_organization);
                 long organization_id = objO.addNewOrganization(org);
                 int gen = Integer.parseInt(gender);

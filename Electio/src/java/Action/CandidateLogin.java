@@ -42,11 +42,9 @@ public class CandidateLogin implements Controller.Action {
             err = "Insufficiant input"; // error message should be displayed on view page
         } else {
             long election_id = Long.parseLong(elec_id);
-            //  password = RandomString.encryptPassword(password);
-//            System.out.println("Enctrypted Pwd: " + password);
+            password = RandomString.encryptPassword(password);
 
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();

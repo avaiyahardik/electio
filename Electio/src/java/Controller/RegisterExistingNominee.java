@@ -147,6 +147,8 @@ public class RegisterExistingNominee extends HttpServlet {
                     request.setAttribute("name", firstname + " " + lastname);
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     System.out.println("Going to checkNominee Login");
+                    password = RandomString.encryptPassword(password);  // encrypt password for security reason
+
                     if (objN.checkNomineeLogin(email, password)) {
                         if (objN.registerNominee(election_id, email, requirements_file, 0)) {
                             System.out.println("Existing Nominee in diff election registered");
@@ -168,6 +170,7 @@ public class RegisterExistingNominee extends HttpServlet {
                 }
             } else if (cmd.equals("password")) {
                 String newPassword = RandomString.generateRandomPassword();
+                newPassword = RandomString.encryptPassword(newPassword);
                 EmailSender.sendMail("electio@jaintele.com", "electio_2014", "New Password", newPassword, email);
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 objC.changeCandidatePassword(email, newPassword); // it'll update password

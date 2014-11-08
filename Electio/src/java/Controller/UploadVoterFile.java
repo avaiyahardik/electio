@@ -116,7 +116,9 @@ public class UploadVoterFile extends HttpServlet {
                     String reg = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     while (s != null) {
                         if (s.matches(reg)) {
-                            v = new Voter(s, election_id, RandomString.generateRandomPassword(), false, false);
+                            String password = RandomString.generateRandomPassword();
+                            password = RandomString.encryptPassword(password);
+                            v = new Voter(s, election_id, password, false, false);
                             objV.addVoter(v);
                         } else {
                             System.out.println("invalid email address " + s);

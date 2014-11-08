@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2014 at 09:05 AM
+-- Generation Time: Nov 08, 2014 at 09:26 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `tbl_election` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `election_commissioner_email` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` text NOT NULL,
   `description` text,
   `requirements` text,
-  `type_id` int(11) NOT NULL,
+  `type_id` int(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nomination_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nomination_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -44,14 +44,6 @@ CREATE TABLE IF NOT EXISTS `tbl_election` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `tbl_election`
---
-
-INSERT INTO `tbl_election` (`id`, `election_commissioner_email`, `name`, `description`, `requirements`, `type_id`, `created_at`, `nomination_start`, `nomination_end`, `withdrawal_start`, `withdrawal_end`, `voting_start`, `voting_end`, `petition_duration`) VALUES
-(1, 'avaiyahm@yahoo.com', 'Best mobile', 'desc choose which mobile is best considering features and price.', '<p>Should be smart phone</p>\r\n<p>&nbsp;</p>', 2, '2014-11-05 08:26:24', '2015-03-19 20:00:00', '2013-10-05 00:30:00', '2016-04-15 13:30:00', '2013-10-05 00:30:00', '2018-11-20 12:30:00', '2019-10-19 20:00:00', 10),
-(2, 'avaiyahm@yahoo.com', 'Class Representative 2013', 'Choose CR for ur 2013 batch', '<p>No backlog</p>', 1, '2014-11-02 12:53:30', '2014-10-09 05:00:00', '2014-10-19 18:50:00', '2014-10-20 10:50:00', '2014-10-19 18:50:00', '2014-10-19 19:20:00', '2014-10-20 06:20:00', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -61,19 +53,12 @@ INSERT INTO `tbl_election` (`id`, `election_commissioner_email`, `name`, `descri
 CREATE TABLE IF NOT EXISTS `tbl_election_candidate` (
   `email` varchar(255) NOT NULL,
   `election_id` int(11) NOT NULL,
-  `requirements_file` text NOT NULL,
+  `requirements_file` varchar(255) NOT NULL,
   `votes` int(11) NOT NULL,
-  `manifesto` text,
+  `manifesto` varchar(255) DEFAULT NULL,
   `petition_filed` tinyint(1) NOT NULL,
   PRIMARY KEY (`email`,`election_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_election_candidate`
---
-
-INSERT INTO `tbl_election_candidate` (`email`, `election_id`, `requirements_file`, `votes`, `manifesto`, `petition_filed`) VALUES
-('avaiyahardik@gmail.com', 1, 'requirements_files\\1414863678404.pdf', 50, 'manifestos/electio.pdf', 0);
 
 -- --------------------------------------------------------
 
@@ -91,15 +76,6 @@ CREATE TABLE IF NOT EXISTS `tbl_election_commissioner` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tbl_election_commissioner`
---
-
-INSERT INTO `tbl_election_commissioner` (`email`, `firstname`, `lastname`, `mobile`, `organization_id`, `password`) VALUES
-('201312011@daiict.ac.in', 'Kishan', 'Vegda', '9875468795', 10, 'kishan'),
-('avaiyahm@yahoo.com', 'Hardik', 'Avaiya', '9737808095', 1, 'hardik'),
-('j', 'j', 'j', 'j', 9, 'a');
-
 -- --------------------------------------------------------
 
 --
@@ -109,21 +85,10 @@ INSERT INTO `tbl_election_commissioner` (`email`, `firstname`, `lastname`, `mobi
 CREATE TABLE IF NOT EXISTS `tbl_election_nominee` (
   `email` varchar(255) NOT NULL,
   `election_id` int(11) NOT NULL,
-  `requirements_file` text NOT NULL,
+  `requirements_file` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`email`,`election_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_election_nominee`
---
-
-INSERT INTO `tbl_election_nominee` (`email`, `election_id`, `requirements_file`, `status`) VALUES
-('201312011@daiict.ac.in', 1, 'requirements_files\\1414912290227.pdf', 1),
-('201312028@daiict.ac.in', 1, 'requirements_files\\1415101765459.pdf', 0),
-('avaiyahardik@gmail.com', 1, 'requirements_files\\1414863678404.pdf', 1),
-('avaiyahardik@gmail.com', 2, 'requirements_files\\1415193776574.pdf', 0),
-('sen.daiict@gmail.com', 1, 'requirements_files\\1414861505802.pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -132,7 +97,7 @@ INSERT INTO `tbl_election_nominee` (`email`, `election_id`, `requirements_file`,
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_election_type` (
-  `type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_id` int(1) NOT NULL AUTO_INCREMENT,
   `type` varchar(30) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`type_id`)
@@ -160,22 +125,6 @@ CREATE TABLE IF NOT EXISTS `tbl_organization` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
---
--- Dumping data for table `tbl_organization`
---
-
-INSERT INTO `tbl_organization` (`id`, `name`, `address`, `about`) VALUES
-(1, 'DA-IICT', 'Gandhinagar', 'Best'),
-(2, 'DA-IICT', 'China', 'samsung organization'),
-(3, 'DA-IICT', 'China', 'samsung organization'),
-(4, 'DA-IICT', 'China', 'about'),
-(5, 'DA-IICT', 'China', 'about'),
-(6, 'DA-IICT', 'Gandhinagar', 'Best'),
-(7, 'DA-IICT', 'Gandhinagar', 'Best'),
-(8, 'DA-IICT', 'Gandhinagar', 'Best'),
-(9, 'a', '76, Krishnapark Society', 'Best'),
-(10, 'DAIICT', 'addr', 'about');
-
 -- --------------------------------------------------------
 
 --
@@ -188,13 +137,6 @@ CREATE TABLE IF NOT EXISTS `tbl_probable_nominee` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`election_id`,`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_probable_nominee`
---
-
-INSERT INTO `tbl_probable_nominee` (`election_id`, `email`, `status`) VALUES
-(1, 'avaiyahardik@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -222,20 +164,10 @@ CREATE TABLE IF NOT EXISTS `tbl_user_info` (
   `gender` tinyint(1) NOT NULL,
   `mobile` char(10) NOT NULL,
   `organization_id` int(11) NOT NULL,
-  `image` text NOT NULL,
+  `image` varchar(255) NOT NULL,
   `password` text NOT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_user_info`
---
-
-INSERT INTO `tbl_user_info` (`email`, `firstname`, `lastname`, `gender`, `mobile`, `organization_id`, `image`, `password`) VALUES
-('201312011@daiict.ac.in', 'Moto G', '2nd Gen', 0, '9737808095', 6, 'user_images\\1414912290131.png', 'g'),
-('201312028@daiict.ac.in', 'Pooja', 'Singh', 1, '9875468989', 8, 'user_images\\1415101765423.jpeg', 'p'),
-('avaiyahardik@gmail.com', 'Redmi', '1S', 0, '9737808095', 5, 'user_images\\1414863678401.png', 'redmi'),
-('sen.daiict@gmail.com', 'Samsung', 'Core 2 Dual', 0, '9737808095', 3, 'user_images\\1414861505801.png', 'samsung');
 
 -- --------------------------------------------------------
 
@@ -246,24 +178,11 @@ INSERT INTO `tbl_user_info` (`email`, `firstname`, `lastname`, `gender`, `mobile
 CREATE TABLE IF NOT EXISTS `tbl_voter` (
   `email` varchar(255) NOT NULL,
   `election_id` int(11) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `link_status` tinyint(1) NOT NULL,
   PRIMARY KEY (`email`,`election_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_voter`
---
-
-INSERT INTO `tbl_voter` (`email`, `election_id`, `password`, `status`, `link_status`) VALUES
-('absdasb@gmail.com', 1, 'password', 1, 1),
-('asb@gmail.com', 1, 'password', 1, 1),
-('avaiyahardik@gmail.com', 1, 'DWg<MCis', 1, 0),
-('email1@domain.com', 2, 'U!lqxq3U', 0, 0),
-('email2@domain.com', 2, 'H~eR-!Di', 0, 0),
-('sen.daiict@gmail.com', 1, 'Mg0-NIDl', 1, 1),
-('vishal@gmail.com', 1, '>%nT70fk', 0, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

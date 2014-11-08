@@ -10,6 +10,7 @@ import DAO.DBDAOImplElectionCommissioner;
 import DAO.DBDAOImplementation;
 import Model.Election;
 import Model.ElectionCommissioner;
+import Utilities.RandomString;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -39,9 +40,9 @@ public class Unlock implements Controller.Action {
         } else {
             try {
                 ArrayList<Election> elections = null;
-                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                DBDAOImplElectionCommissioner objEC=DBDAOImplElectionCommissioner.getInstance();
-                DBDAOImplElection objE=DBDAOImplElection.getInstance();
+                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+                password = RandomString.encryptPassword(password);
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 if (objEC.loginElectionCommissioner(email, password)) {
                     view = "dashboard.jsp";
                     title = "Dashboard";
