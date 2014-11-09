@@ -19,7 +19,7 @@ public class RandomString {
     public static final String DOMAIN_BASE = "http://localhost:8084/Electio/";
     //String url=request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8);
     private static final String CHAR_LIST
-            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&-_=+<>?";
+            = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&-_=+?";
     private static Random random;
     public static final String ELECTIO_JAINTELE_EMAIL = "electio@jaintele.com";
     public static final String ELECTIO_JAINTELE_PASSWORD = "electio_2014";
