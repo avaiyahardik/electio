@@ -63,14 +63,20 @@
             </div>
         </div>
         <div class="container">
+            <!-- BEGIN ERROR BOX --> 
             <div class="col-lg-12">
-                <!-- BEGIN ERROR BOX --> 
-                <% String err0 = (String) request.getAttribute("err");
-                    if (err0 != null) {%>
+                <% String err = (String) request.getAttribute("err");
+                    if (err != null) {%>
                 <div class="alert alert-danger">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <%=err0%>
+                    <%=err%>
                 </div>
-                <% }%>
-                <!-- END ERROR BOX --> 
+                <% }
+                    String msg = (String) request.getAttribute("msg");
+                    if (msg != null) {%>
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <%=msg%>
+                </div>
             </div>
+            <!-- END ERROR BOX --> 
