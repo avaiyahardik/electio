@@ -187,6 +187,9 @@ public class NomineeRegistration extends HttpServlet {
             System.out.println("ERR NomineeRegistration: " + e.toString());
         }
 
+        System.out.println("Nom Reg MSG: " + msg);
+        System.out.println("Nom Reg Err: " + err);
+
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
         request.setAttribute("title", title);
