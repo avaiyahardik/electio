@@ -53,8 +53,6 @@ public class ViewElectionDetail implements Controller.Action {
                 title = "Election Detail";
                 System.out.println("Election ID: " + id);
                 try {
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-
                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();

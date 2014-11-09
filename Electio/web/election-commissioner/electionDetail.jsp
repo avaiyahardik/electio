@@ -244,7 +244,7 @@
                                         </a>
                                     </td>   
                                     <td>
-                                        <a href="Controller?action=delete_candidate&election_id=<%= c.getElection_id()%>&email=<%= c.getEmail()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+                                        <a href="Controller?action=delete_candidate&election_id=<%= c.getElection_id()%>&email=<%= c.getEmail()%>&reason=no reason" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
                                     </td>
 
                                 </tr>

@@ -50,7 +50,6 @@ public class ViewNomineeDetails implements Controller.Action {
                 view = "nomineeDetails.jsp";
                 title = "Nominee Details";
                 try {
-                    //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                     Nominee n = objN.getNominee(id, nominee_email);

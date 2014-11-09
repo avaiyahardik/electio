@@ -6,8 +6,18 @@
 package Action;
 
 import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
+import Model.Candidate;
+import Model.Election;
+import Model.Nominee;
+import Model.ProbableNominee;
+import Model.Voter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -38,18 +48,45 @@ public class DeleteCandidate implements Controller.Action {
             } else {
                 view = "Controller?action=view_election_detail&id=" + elec_id;
                 title = "Election Detail";
-                long id = Integer.parseInt(elec_id);
+                long election_id = Integer.parseInt(elec_id);
+                DBDAOImplElection objE = null;
+                DBDAOImplNominee objN = null;
+                DBDAOImplCandidate objC = null;
+                DBDAOImplVoter objV = null;
+                DBDAOImplProbableNominee objP = null;
                 try {
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                    if (objC.deleteCandidate(id, candidate_email)) {
+                    objE = DBDAOImplElection.getInstance();
+                    objN = DBDAOImplNominee.getInstance();
+                    objC = DBDAOImplCandidate.getInstance();
+                    objV = DBDAOImplVoter.getInstance();
+                    objP = DBDAOImplProbableNominee.getInstance();
+
+                    if (objC.deleteCandidate(election_id, candidate_email)) {
                         msg = "Candidate deleted successfully";
+                        String reason = req.getParameter("reason");
+                        objN.rejectNominee(election_id, candidate_email, reason);
                     } else {
                         err = "Fail to delete candidate, please retry";
                     }
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("Delete candidate Error: " + ex.getMessage());
+                }
+                try {
+                    Election el = objE.getElection(election_id);
+                    req.setAttribute("election", el);
+                    ArrayList<Nominee> nominees = objN.getNominees(election_id);
+                    req.setAttribute("nominees", nominees);
+                    ArrayList<Candidate> candidates = objC.getCandidates(election_id);
+                    req.setAttribute("candidates", candidates);
+                    ArrayList<Voter> voters = objV.getVoters(election_id);
+                    req.setAttribute("voters", voters);
+                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(election_id);
+                    req.setAttribute("probable_nominee", pns);
+
+                } catch (Exception ex) {
+                    err = ex.getMessage();
+                    System.out.println("DeleteCandidate setting election data: " + ex.getMessage());
                 }
             }
         }

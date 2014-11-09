@@ -217,24 +217,35 @@ public class DBDAOImplNominee {
         }
         if (flag == 2) {
             result = true;
+        } else {
+            ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
+            ps.setInt(1, 0);
+            ps.setLong(2, election_id);
+            ps.setString(3, email);
+            ps.execute();
+
+            ps2 = con.prepareStatement("DELETE FROM tbl_election_candidate WHERE electio_id=? and email=?");
+            ps2.setLong(1, election_id);
+            ps2.setString(2, email);
+            ps2.execute();
         }
         return result;
     }
 
-    public boolean rejectNominee(long election_id, String emai, String reason) throws SQLException {
+    public boolean rejectNominee(long election_id, String email, String reason) throws SQLException {
         int flag = 0;
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? AND email=?");
         ps.setInt(1, 2);    // status 2 means disapproved
         ps.setLong(2, election_id);
-        ps.setString(3, emai);
+        ps.setString(3, email);
 
         if (ps.executeUpdate() > 0) {
             flag++;
         }
-        ps = con.prepareStatement("INSERT INTO tbl_rejected_nominee VALUES(?,?,?");
+        ps = con.prepareStatement("INSERT INTO tbl_rejected_nominee VALUES(?,?,?)");
         ps.setLong(1, election_id);
-        ps.setString(2, emai);
+        ps.setString(2, email);
         ps.setString(3, reason);
 
         if (ps.executeUpdate() > 0) {
@@ -242,6 +253,17 @@ public class DBDAOImplNominee {
         }
         if (flag == 2) {
             result = true;
+        } else {
+            ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? AND email=?");
+            ps.setInt(1, 0);
+            ps.setLong(2, election_id);
+            ps.setString(3, email);
+            ps.execute();
+            
+            ps = con.prepareStatement("DELETE FROM INTO tbl_rejected_nominee WHERE election_id=? AND email=?");
+            ps.setLong(1, election_id);
+            ps.setString(2, email);
+            ps.execute();
         }
         return result;
     }

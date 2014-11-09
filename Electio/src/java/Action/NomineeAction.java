@@ -5,12 +5,22 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
+import Model.Candidate;
+import Model.Election;
+import Model.Nominee;
+import Model.ProbableNominee;
+import Model.Voter;
 import Utilities.EmailSender;
 import Utilities.RandomString;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,26 +49,30 @@ public class NomineeAction implements Controller.Action {
                 err = "Insufficient parameters";
             } else {
                 long election_id = Long.parseLong(req.getParameter("election_id"));
-                view = "Controller?action=view_election_detail&id=" + election_id;
+                view = "electionDetail.jsp";
                 title = "Election Detail";
                 String nominee_email = req.getParameter("email");
+                DBDAOImplElection objE = null;
+                DBDAOImplNominee objN = null;
+                DBDAOImplCandidate objC = null;
+                DBDAOImplVoter objV = null;
+                DBDAOImplProbableNominee objP = null;
                 try {
-                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                    
+                    objE = DBDAOImplElection.getInstance();
+                    objN = DBDAOImplNominee.getInstance();
+                    objC = DBDAOImplCandidate.getInstance();
+                    objV = DBDAOImplVoter.getInstance();
+                    objP = DBDAOImplProbableNominee.getInstance();
+
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");
                         if (objN.approveNominee(election_id, nominee_email, requirements_file)) {
                             String ms = "Your Nomination is approved. To see your details goto Below link <a href='" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
-                            //String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>" + req.getContextPath() + File.separator + "candidate" + File.separator + "index.jsp?election_id=" + election_id + "</a>";
-                            System.out.println("MS: " + ms);
-                            req.getSession().setAttribute("election_id", election_id);
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Approval", ms, nominee_email);
-
                             msg = "Nominee approved successfully";
                         } else {
                             err = "Error occured while approving nominee, please try again";
                         }
-
                     } else if (cmd.equals("reject")) {
                         String reason = req.getParameter("reason");
                         if (objN.rejectNominee(election_id, nominee_email, reason)) {
@@ -71,9 +85,23 @@ public class NomineeAction implements Controller.Action {
                 } catch (Exception ex) {
                     err = ex.getMessage();
                     System.out.println("NomineeAction Err: " + ex.getMessage());
-
                 }
+                try {
+                    Election el = objE.getElection(election_id);
+                    req.setAttribute("election", el);
+                    ArrayList<Nominee> nominees = objN.getNominees(election_id);
+                    req.setAttribute("nominees", nominees);
+                    ArrayList<Candidate> candidates = objC.getCandidates(election_id);
+                    req.setAttribute("candidates", candidates);
+                    ArrayList<Voter> voters = objV.getVoters(election_id);
+                    req.setAttribute("voters", voters);
+                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(election_id);
+                    req.setAttribute("probable_nominee", pns);
 
+                } catch (Exception ex) {
+                    err = ex.getMessage();
+                    System.out.println("NomineeAction setting election data: " + ex.getMessage());
+                }
             }
         }
         req.setAttribute("msg", msg);
