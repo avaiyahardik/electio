@@ -43,7 +43,6 @@ public class ElectionCommissionerLogin implements Controller.Action {
                     req.getSession().setAttribute("email", email);
                     view = "dashboard.jsp";
                     title = "Dashboard";
-                    msg = "You're logged in successfully";
                     elections = objE.getCompletedElections(email);
                 } else {
                     err = "Invalid email or password, please retry";
