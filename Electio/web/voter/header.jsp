@@ -62,13 +62,35 @@
             <div class="container">
                 <div class="col-lg-12">
                     <!-- BEGIN ERROR BOX --> 
-                    <% String err0 = (String) request.getAttribute("err");
-                    if (err0 != null) {%>
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <%=err0%>
+                    <div class="col-lg-12">
+                        <% String err = (String) request.getAttribute("err");
+                            String err1 = (String) request.getParameter("err");
+                            if (err != null && !err.equals("") && !err.equals("null")) {%>
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <%=err%>
+                        </div>
+                        <% } else if (err1 != null && !err1.equals("") && !err1.equals("null")) {%>
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <%=err1%>
+                        </div>
+                        <%}
+                            String msg = (String) request.getAttribute("msg");
+                            String msg1 = (String) request.getParameter("msg");
+                            if (msg != null && !msg.equals("") && !msg.equals("null")) {%>
+                        <div class="alert alert-info">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <%=msg%>
+                        </div>
+                        <%} else if (msg1 != null && !msg1.equals("") && !msg1.equals("null")) {
+                        %>
+                        <div class="alert alert-info">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <%=msg1%>
+                        </div>
+                        <%}%>
                     </div>
-                    <% }%>
                     <!-- END ERROR BOX --> 
                 </div>
 

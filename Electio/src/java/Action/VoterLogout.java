@@ -18,20 +18,20 @@ public class VoterLogout implements Controller.Action {
         String err = null;
         String title = "Voter Login";
         if (elec_id == null || email == null || email.equals("")) {
-            view = "../index.jsp";
+            view = "../index.jsp?project=electio";
             err = "You are not logged in, or session already expired";
         } else {
             long election_id = Long.parseLong(elec_id);
             try {
                 req.getSession().invalidate();
-                view += "?election_id=" + election_id;
+                view += "&election_id=" + election_id;
                 msg = "You're logged out successfully";
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("Voter Logout Error: " + ex.getMessage());
             }
         }
-        view += "&msg=" + msg + "&err=" + err + "title=" + title;
+        view += "&msg=" + msg + "&err=" + err + "&title=" + title;
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);

@@ -50,15 +50,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    
+
                     <div class="col-lg-6 col-lg-offset-3">
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h1 class="panel-title">Voter Login</h1>
                             </div>
                             <div class="panel-body">
-                                
-                    
+
+
                                 <form class="form-horizontal" action="Controller" method="POST">
                                     <input type="hidden" name="election_id" value="<%=election_id%>">
                                     <input type="hidden" name="step" value="1">
@@ -74,33 +74,43 @@
                                             <button type="submit" class="btn btn-info" name="action" value="voter_login">Continue <i class="fa fa-arrow-circle-o-right"></i></button>
                                         </div></div>
                                 </form>
-                                    
+
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-4 col-lg-offset-3">
-                        <!-- BEGIN ERROR BOX -->
-                        <%
-                            String msg = (String) request.getAttribute("msg");
-                            if (msg != null) {
-                        %>
-                        <div class="alert alert-info">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <%=msg%>
+                        <!-- BEGIN ERROR BOX --> 
+                        <div class="col-lg-12">
+                            <% String err = (String) request.getAttribute("err");
+                                String err1 = (String) request.getParameter("err");
+                                if (err != null && !err.equals("") && !err.equals("null")) {%>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=err%>
+                            </div>
+                            <% } else if (err1 != null && !err1.equals("") && !err1.equals("null")) {%>
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=err1%>
+                            </div>
+                            <%}
+                                String msg = (String) request.getAttribute("msg");
+                                String msg1 = (String) request.getParameter("msg");
+                                if (msg != null && !msg.equals("") && !msg.equals("null")) {%>
+                            <div class="alert alert-info">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=msg%>
+                            </div>
+                            <%} else if (msg1 != null && !msg1.equals("") && !msg1.equals("null")) {
+                            %>
+                            <div class="alert alert-info">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <%=msg1%>
+                            </div>
+                            <%}%>
                         </div>
-                        <% }%>
-
-                        <%
-                            String err = (String) request.getAttribute("err");
-                            if (err != null) {
-                        %>
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <%=err%>
-                        </div>
-                        <% }%>
-                        <!-- END ERROR BOX -->
+                        <!-- END ERROR BOX --> 
                     </div>
 
                 </div>

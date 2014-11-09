@@ -31,7 +31,7 @@ public class CandidateLogout implements Controller.Action {
                 System.out.println("Candidate Logout Error: " + ex.getMessage());
             }
         }
-        view += "&msg=" + msg + "&err=" + err + "title=" + title;
+        view += "&msg=" + msg + "&err=" + err + "&title=" + title;
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);
