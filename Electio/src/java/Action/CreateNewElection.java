@@ -74,6 +74,7 @@ public class CreateNewElection implements Controller.Action {
                         Election el = new Election(email, name, description, requirements, type_id, nomination_start, nomination_end, withdrawal_start, withdrawal_end, voting_start, voting_end, petition_duration);
                         if (objE.createElection(el)) {
                             msg = "New election created successfully";
+                            res.sendRedirect("Controller?action=view_elections&msg=Election Created Successfully!");
                         } else {
                             err = "Fail to create new election, please retry";
                         }

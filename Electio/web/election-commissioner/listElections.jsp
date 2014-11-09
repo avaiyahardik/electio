@@ -78,7 +78,7 @@
                                 <td><%= et.getType()%></td>
 
                                     <td><% switch (election_status) {
-                                            case 0: %> <label class="label label-primary">Due</label>
+                                        case 0: %> <label class="label label-primary">Due</label>
                                     <%break;
                                         case 1:%><label class="label label-warning">Nomination Period</label>
                                     <%break;
@@ -92,7 +92,7 @@
                                 </td>
                                 <td>
                                     <a href="Controller?action=download_election_data&id=<%= el.getId()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>
-                                    <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+                                    <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm" onClick="confirmDelete()"><i class="glyphicon glyphicon-remove"></i> Delete</a>
                                 </td>
                             </tr>
                             <%}%>
@@ -116,4 +116,9 @@
 <script src="../assets/plugins/modal/js/classie.js"></script>
 <script src="../assets/plugins/modal/js/modalEffects.js"></script>
 
+<script type="text/javascript">
+function confirmDelete(){
+    alert("Hello");
+}
+</script>
 <jsp:include page="footer.jsp"/>
