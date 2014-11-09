@@ -4,6 +4,7 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="java.util.Date"%>
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -56,6 +57,22 @@
                                 <%if (name == null) {%>
                                 <script>
                                     window.location = "../index.jsp";
+
+                                </script>
+                                <%
+                                    }
+                                %>
+                                <%if (objE.getElection(election_id).getNomination_start().after(new Date())) {%>
+                                <script>
+                                    window.location = "../index.jsp?err=Nomination has not been started for this election";
+
+                                </script>
+                                <%
+                                    }
+                                %>
+                                <%if (objE.getElection(election_id).getNomination_end().before(new Date())) {%>
+                                <script>
+                                    window.location = "../index.jsp?err=Nomination period got over for this election";
 
                                 </script>
                                 <%
