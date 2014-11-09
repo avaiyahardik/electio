@@ -62,6 +62,7 @@ public class UpdateElection implements Controller.Action {
                     } else if (voting_end.before(voting_start)) {
                         err = "Voting end time should be after voting start time";
                     } else {
+                        System.out.println("Election_type:" +req.getParameter("type"));
                         Election el = new Election();
                         el.setId(id);
                         el.setName(req.getParameter("name"));

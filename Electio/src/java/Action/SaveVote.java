@@ -72,7 +72,7 @@ public class SaveVote implements Controller.Action {
                             }
                         }
                     } else {
-                        msg = "You already voted bitch";
+                        msg = "You already voted";
                     }
                 }
             } catch (Exception e) {
