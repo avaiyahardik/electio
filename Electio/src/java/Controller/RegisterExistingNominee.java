@@ -184,13 +184,14 @@ public class RegisterExistingNominee extends HttpServlet {
         request.setAttribute("err", err);
         request.setAttribute("view", view);
         request.setAttribute("title", title);
-
-        try (PrintWriter out = response.getWriter()) {
-            out.println("RegExistingNomineeMsg: " + request.getAttribute("msg"));
-            out.println("RegExistingNomineeErr: " + request.getAttribute("err"));
-        } catch (Exception ex) {
-            System.out.println("ERR: " + ex.getMessage());
-        }
+        /*
+         try (PrintWriter out = response.getWriter()) {
+         out.println("RegExistingNomineeMsg: " + request.getAttribute("msg"));
+         out.println("RegExistingNomineeErr: " + request.getAttribute("err"));
+         } catch (Exception ex) {
+         System.out.println("ERR: " + ex.getMessage());
+         }
+         */
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
     }
