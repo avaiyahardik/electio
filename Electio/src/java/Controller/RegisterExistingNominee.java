@@ -20,6 +20,7 @@ import Utilities.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -183,6 +184,13 @@ public class RegisterExistingNominee extends HttpServlet {
         request.setAttribute("err", err);
         request.setAttribute("view", view);
         request.setAttribute("title", title);
+
+        try (PrintWriter out = response.getWriter()) {
+            out.println("RegExistingNomineeMsg: " + request.getAttribute("msg"));
+            out.println("RegExistingNomineeErr: " + request.getAttribute("err"));
+        } catch (Exception ex) {
+            System.out.println("ERR: " + ex.getMessage());
+        }
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
     }
