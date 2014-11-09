@@ -45,7 +45,7 @@ public class NomineeAction implements Controller.Action {
                 try {
 //                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                    String[] to = {nominee_email};
+                    
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");
                         if (objN.approveNominee(election_id, nominee_email, requirements_file)) {
@@ -53,7 +53,7 @@ public class NomineeAction implements Controller.Action {
                             //String ms = "Your Nomination is approved. To see your details goto Below link <a href='localhost:8084/Electio/candidate/index.jsp'>" + req.getContextPath() + File.separator + "candidate" + File.separator + "index.jsp?election_id=" + election_id + "</a>";
                             System.out.println("MS: " + ms);
                             req.getSession().setAttribute("election_id", election_id);
-                            EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Approval", ms, to);
+                            EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Approval", ms, nominee_email);
 
                             msg = "Nominee approved successfully";
                         } else {
