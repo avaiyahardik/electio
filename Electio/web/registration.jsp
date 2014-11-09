@@ -109,7 +109,7 @@
                             <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
 
                             <div class="col-lg-7">
-                                <select name="organization_id" class="form-control" onchange="checkOrg()" id="org-id">
+                                <select name="organization_id" class="form-control"  id="org-id">
                                     <option value="">-- Select --</option>
                                     <%
                                         DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
@@ -203,18 +203,5 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    function checkOrg1() {
-        var myselect = document.getElementById("org-id");
-        var id = myselect.options[myselect.selectedIndex].value;
-        alert(id);
-    }
-
-    $(document).ready(function() {
-        $('org-id').on("change", function() {
-            alert("changed");
-        });
-    });
-</script>
 <script src="assets/readable/jquery-1.10.2.min.js"></script>
 <jsp:include page="footer.jsp"/>
