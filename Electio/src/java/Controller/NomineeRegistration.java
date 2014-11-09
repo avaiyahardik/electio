@@ -190,7 +190,7 @@ public class NomineeRegistration extends HttpServlet {
 
         System.out.println("Nom Reg MSG: " + msg);
         System.out.println("Nom Reg Err: " + err);
-
+        view += "&msg=" + msg + "&err=" + err + "&title=" + title;
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
         request.setAttribute("title", title);
