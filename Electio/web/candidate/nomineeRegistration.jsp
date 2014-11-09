@@ -188,7 +188,7 @@
                                     <div class="form-group"  id="org-name" style="display:none">
                                         <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_name" required>
+                                            <input type="text" class="form-control" name="organization_name">
                                         </div>
                                     </div>
 
@@ -202,7 +202,7 @@
                                     <div class="form-group" id="org-about" style="display:none">
                                         <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="about_organization" required>
+                                            <input type="text" class="form-control" name="about_organization" >
                                         </div>
                                     </div>
 
