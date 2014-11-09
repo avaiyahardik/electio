@@ -5,6 +5,9 @@
 --%>
 
 <%@page import="Model.Election"%>
+<%@page import="Model.Organization"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="java.util.Date"%>
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="DAO.DBDAOImplementation"%>
@@ -162,47 +165,65 @@
                                             <a href="#" class="btn btn-effect" data-toggle="modal" data-target="#requirements-modal"><i class="fa fa-search"></i> View Requirements</a>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
 
-                                    <div class="form-group">
-                                        <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_name" required>
+                                            <select name="organization_id" class="form-control"  id="org-id">
+                                                <option value="">-- Select --</option>
+                                                <%
+                                                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                                    ArrayList<Organization> orgs = objO.getAllOrganizations();
+                                                    for (Organization org : orgs) {
+                                                %>
+                                                <option value="<%=org.getId()%>"><%= org.getName()%></option>
+                                                <%
+                                                    }
+                                                %>
+                                                <option value="0">Other</option>
+                                            </select>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_address" required>
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="about_organization" required>
+                                        <div class="form-group">
+                                            <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
+                                            <div class="col-lg-7">
+                                                <input type="text" class="form-control" name="organization_name" required>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
+                                            <div class="col-lg-7">
+                                                <input type="text" class="form-control" name="organization_address" required>
+                                            </div>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="password" class="form-control" name="password" required>
+                                        <div class="form-group">
+                                            <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
+                                            <div class="col-lg-7">
+                                                <input type="text" class="form-control" name="about_organization" required>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="password" class="form-control" name="retype_password" required>
+                                        <div class="form-group">
+                                            <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
+                                            <div class="col-lg-7">
+                                                <input type="password" class="form-control" name="password" required>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <div class="col-lg-7 col-lg-offset-4">
-                                            <button type="submit" name="action" value="register_nominee" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
-                                            <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
+                                        <div class="form-group">
+                                            <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
+                                            <div class="col-lg-7">
+                                                <input type="password" class="form-control" name="retype_password" required>
+                                            </div>
                                         </div>
-                                    </div>
+
+                                        <div class="form-group">
+                                            <div class="col-lg-7 col-lg-offset-4">
+                                                <button type="submit" name="action" value="register_nominee" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
+                                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
+                                            </div>
+                                        </div>
                                 </fieldset>
                             </form>
                         </div>
