@@ -4,6 +4,9 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="Model.Organization"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -143,6 +146,24 @@
                                             <a href="#" class="btn btn-effect" data-toggle="modal" data-target="#requirements-modal"><i class="fa fa-search"></i> View Requirements</a>
                                         </div>
                                     </div>
+                   <div class="form-group">
+                            <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
+
+                            <div class="col-lg-7">
+                                <select name="organization_id" class="form-control"  id="org-id">
+                                    <option value="">-- Select --</option>
+                                    <%
+                                        DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                        ArrayList<Organization> orgs = objO.getAllOrganizations();
+                                        for (Organization org : orgs) {
+                                    %>
+                                    <option value="<%=org.getId()%>"><%= org.getName()%></option>
+                                    <%
+                                        }
+                                    %>
+                                    <option value="0">Other</option>
+                                </select>
+                            </div>
 
                                     <div class="form-group">
                                         <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
