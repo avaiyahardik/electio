@@ -7,6 +7,7 @@
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     Election el = (Election) request.getAttribute("election");
     int status = (Integer) request.getAttribute("nominee_status");
+    String reason = (String) request.getAttribute("reason");
 %>
 
 <div class="page-header">
@@ -54,6 +55,7 @@
         <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
         <%} else if (status == 2) {%>
         <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
+        Reason: <%= reason%>
         <%} else if (status == 3) {%>
         <label class="label label-warning control-label" style="font-size:13px"><i class="glyphicon glyphicon-thumbs-down"></i> Withdrawn</label>
         <%}%>

@@ -9,6 +9,7 @@ import Model.Candidate;
 import Model.Election;
 import Model.ElectionType;
 import Model.Nominee;
+import Model.RejectedNominee;
 import Model.Voter;
 import Utilities.EmailSender;
 import Utilities.RandomString;
@@ -64,6 +65,9 @@ public class CandidateLogin implements Controller.Action {
                     if (nominee_status == 1) {
                         Candidate c = objC.getCandidate(election_id, email);
                         req.setAttribute("candidate", c);
+                    }else if(nominee_status==2) {
+                        String reason=objN.getReason(election_id, email);
+                        req.setAttribute("reason", reason);
                     }
                 } else {
                     view = "index.jsp";

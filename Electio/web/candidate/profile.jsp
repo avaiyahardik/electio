@@ -11,6 +11,7 @@
     Candidate c = (Candidate) request.getAttribute("candidate");
     int status = n.getStatus();
     Organization o = (Organization) request.getAttribute("organization");
+    String reason = (String) request.getAttribute("reason");
 %>
 <div class="page-header">
     <h1 class="page-title">Candidate Profile
@@ -61,11 +62,14 @@
                             <label class="control-label col-sm-4" for="status">Nomination Status</label>
                             <div class="col-sm-6">
                                 <%if (status == 0) {%>
-                                <label class="label label-warning control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+                                <label class="label label-info control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
                                 <%} else if (status == 1) {%>
                                 <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
-                                <%} else {%>
+                                <%} else if (status == 2) {%>
                                 <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
+                                Reason: <%= reason%>
+                                <%} else if (status == 3) {%>
+                                <label class="label label-warning control-label" style="font-size:13px"><i class="glyphicon glyphicon-thumbs-down"></i> Withdrawn</label>
                                 <%}%>
                             </div>
                         </div>
