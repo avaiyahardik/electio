@@ -62,7 +62,7 @@ public class VoterLogin implements Controller.Action {
                             if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "Password", password, to)) {
                                 msg = "Your password has been sent to your email id";
                             } else {
-                                msg = "Server Error, try again after sometime";
+                                msg = "Fail to send mail, try again after sometime";
                                 view = "login.jsp?election_id=" + election_id;
                             }
                         }

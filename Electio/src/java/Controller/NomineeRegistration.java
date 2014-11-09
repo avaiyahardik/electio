@@ -195,8 +195,11 @@ public class NomineeRegistration extends HttpServlet {
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
         request.setAttribute("title", title);
-        RequestDispatcher rd = request.getRequestDispatcher(view);
-        rd.forward(request, response);
+        response.sendRedirect(view);
+        /*
+         RequestDispatcher rd = request.getRequestDispatcher(view);
+         rd.forward(request, response);
+         */
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
