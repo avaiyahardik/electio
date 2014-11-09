@@ -70,6 +70,7 @@ public class NomineeRegistration extends HttpServlet {
         String email = null;
         String gender = null;
         String mobile = null;
+        String org_id = null;
         String organization_name = null;
         String organization_address = null;
         String about_organization = null;
@@ -103,6 +104,8 @@ public class NomineeRegistration extends HttpServlet {
                     gender = fileItem.getString();
                 } else if (fieldName.equals("mobile")) {
                     mobile = fileItem.getString();
+                } else if (fieldName.equals("organization_id")) {
+                    org_id = fileItem.getString();
                 } else if (fieldName.equals("organization_name")) {
                     organization_name = fileItem.getString();
                 } else if (fieldName.equals("organization_address")) {
@@ -164,8 +167,13 @@ public class NomineeRegistration extends HttpServlet {
                         DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                         DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
                         DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                        Organization org = new Organization(organization_name, organization_address, about_organization);
-                        long organization_id = objO.addNewOrganization(org);
+                        long organization_id = Long.parseLong(org_id);
+                        if ((organization_id == 0) && (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals(""))) {
+                            err = "Please fill-up required fields";
+                        } else {
+                            Organization org = new Organization(organization_name, organization_address, about_organization);
+                            organization_id = objO.addNewOrganization(org);
+                        }
                         int gen = Integer.parseInt(gender);
                         Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
                         if (objN.registerNominee(nominee)) {
@@ -178,6 +186,7 @@ public class NomineeRegistration extends HttpServlet {
                         } else {
                             err = "Fail to register nominee, please retry";
                         }
+
                     } else {
                         err = "Retype password doesn't match";
                     }
