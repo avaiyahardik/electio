@@ -72,7 +72,7 @@
                             <!-- END ERROR BOX --> 
 
 
-                            <form action="Controller" method="post">
+                            <form action="Controller" method="POST">
                                 <input type="text" name="email" placeholder="Email" class="input-field form-control user" required/>                        
                                 <button type="submit"  name="action" value="candidate_reset_password" class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">Reset</span></button>
                             </form>

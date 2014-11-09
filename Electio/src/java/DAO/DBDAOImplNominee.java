@@ -295,7 +295,7 @@ public class DBDAOImplNominee {
     public boolean withdrawMyApplication(long election_id, String email) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status=? WHERE email=? AND election_id=?");
-        ps.setInt(1, 3);
+        ps.setInt(1, 3); // status 3 means withdrawn
         ps.setString(2, email);
         ps.setLong(3, election_id);
         if (ps.executeUpdate() > 0) {

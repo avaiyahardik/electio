@@ -46,31 +46,23 @@ public class WithdrawApplication implements Controller.Action {
             } else {
                 long election_id = Long.parseLong(elec_id);
                 try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                     if (objN.withdrawMyApplication(election_id, email)) {
                         view = "home.jsp";
                         title = "Nominee/Candidate Home Page";
-                        req.getSession().setAttribute("election_id", elec_id);
-                        req.getSession().setAttribute("candidate_email", email);
-                        Nominee n = objN.getNominee(election_id, email);
-                        req.getSession().setAttribute("candidate_name", n.getFirstname());
                         Election e = objE.getElection(election_id);
                         req.setAttribute("election", e);
-                        int nominee_status = objN.getNomineeStatus(election_id, email);
-                        req.setAttribute("nominee_status", nominee_status);
-                        System.out.println("Name: " + n.getFirstname());
+                        req.setAttribute("nominee_status", 3 + "");
                     }
                 } catch (SQLException ex) {
-                    err = ex.getMessage(); // error message should be displayed on the view page
+                    err = ex.getMessage();
                     System.out.println("withdraw application Err: " + ex.getMessage());
                 }
             }
         }
-        req.setAttribute("msg", msg); // setting msg attribute
-        req.setAttribute("err", err); // setting err attribute
+        req.setAttribute("msg", msg);
+        req.setAttribute("err", err);
         req.setAttribute("title", title);
         return view;
     }
