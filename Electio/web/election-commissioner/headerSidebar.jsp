@@ -127,7 +127,7 @@
                     <% } else if (err1 != null && !err1.equals("null")) {%>
                     <div class="alert alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <%=err%>
+                        <%=err1%>
                     </div>
                     <%}
                         String msg = (String) request.getAttribute("msg");

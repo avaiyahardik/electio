@@ -169,7 +169,7 @@
                                         <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
 
                                         <div class="col-lg-7">
-                                            <select name="organization_id" class="form-control"  id="org-id">
+                                            <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
                                                 <option value="">-- Select --</option>
                                                 <%
                                                     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
@@ -183,47 +183,49 @@
                                                 <option value="0">Other</option>
                                             </select>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
-                                            <div class="col-lg-7">
-                                                <input type="text" class="form-control" name="organization_name">
-                                            </div>
+                                    <div class="form-group"  id="org-name" style="display:none">
+                                        <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="organization_name">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
-                                            <div class="col-lg-7">
-                                                <input type="text" class="form-control" name="organization_address">
-                                            </div>
-                                        </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
-                                            <div class="col-lg-7">
-                                                <input type="text" class="form-control" name="about_organization">
-                                            </div>
+                                    <div class="form-group"  id="org-address" style="display:none">
+                                        <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="organization_address">
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
-                                            <div class="col-lg-7">
-                                                <input type="password" class="form-control" name="password" required>
-                                            </div>
+                                    <div class="form-group" id="org-about" style="display:none">
+                                        <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="about_organization">
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
-                                            <div class="col-lg-7">
-                                                <input type="password" class="form-control" name="retype_password" required>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="password" class="form-control" name="password" required>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <div class="col-lg-7 col-lg-offset-4">
-                                                <button type="submit" name="action" value="register_nominee" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
-                                                <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="password" class="form-control" name="retype_password" required>
                                         </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-7 col-lg-offset-4">
+                                            <button type="submit" name="action" value="register_nominee" class="btn btn-primary"><i class="fa fa-floppy-o"></i> File Nomination</button>
+                                            <button type="reset" class="btn btn-danger"><i class="fa fa-eraser"></i> Reset</button>
+                                        </div>
+                                    </div>
                                 </fieldset>
                             </form>
                         </div>
@@ -235,7 +237,7 @@
         <hr>
         <footer>
             <div class="container">
-                <p>&copy; 2014 Electio</p>
+                <p>© 2014 Electio</p>
             </div>
         </footer>
         <hr>
@@ -287,5 +289,19 @@
             </div>
         </div>
 
+<script src="assets/readable/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+function checkOrg(val) {
+    if (val == 0) {
+          document.getElementById('org-name').style.display = "block";
+          document.getElementById('org-address').style.display = "block";
+          document.getElementById('org-about').style.display = "block";
+    } else {
+          document.getElementById('org-name').style.display = "none";
+          document.getElementById('org-address').style.display = "none";
+          document.getElementById('org-about').style.display = "none";
+    }
+}
+        </script>
     </body>
 </html>
