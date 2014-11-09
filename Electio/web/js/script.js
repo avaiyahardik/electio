@@ -198,7 +198,6 @@ $(document).ready(function() {
         var img_src = $(this).html();
         $('.modal-body').html(img_src.replace('height="75" width="60"', 'height="450" width="300"'));
     });
-
 });
 
 
