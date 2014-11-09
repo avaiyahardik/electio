@@ -63,34 +63,34 @@
             </div>
         </div>
         <div class="container">
-           <!-- BEGIN ERROR BOX --> 
-                <div class="col-lg-12">
-                    <% String err = (String) request.getAttribute("err");
-                        String err1 = (String) request.getParameter("err");
-                        if (err != null) {%>
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <%=err%>
-                    </div>
-                    <% } else if (err1 != null) {%>
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <%=err1%>
-                    </div>
-                    <%}
-                        String msg = (String) request.getAttribute("msg");
-                        String msg1 = (String) request.getParameter("msg");
-                        if (msg != null) {%>
-                    <div class="alert alert-info">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <%=msg%>
-                    </div>
-                    <%} else if (msg1 != null) {
-                    %>
-                    <div class="alert alert-info">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <%=msg1%>
-                    </div>
-                    <%}%>
+            <!-- BEGIN ERROR BOX --> 
+            <div class="col-lg-12">
+                <% String err = (String) request.getAttribute("err");
+                    String err1 = (String) request.getParameter("err");
+                    if (err != null) {%>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <%=err%>
                 </div>
-                <!-- END ERROR BOX --> 
+                <% } else if (err1 != null) {%>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <%=err1%>
+                </div>
+                <%}
+                    String msg = (String) request.getAttribute("msg");
+                    String msg1 = (String) request.getParameter("msg");
+                    if (msg != null) {%>
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <%=msg%>
+                </div>
+                <%} else if (msg1 != null) {
+                %>
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <%=msg1%>
+                </div>
+                <%}%>
+            </div>
+            <!-- END ERROR BOX --> 

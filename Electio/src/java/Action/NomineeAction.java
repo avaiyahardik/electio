@@ -43,7 +43,6 @@ public class NomineeAction implements Controller.Action {
                 title = "Election Detail";
                 String nominee_email = req.getParameter("email");
                 try {
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     
                     if (cmd.equals("approve")) {

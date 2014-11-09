@@ -109,13 +109,13 @@
                             <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization</strong></label>
                             <div class="col-lg-7">
                                 <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
-                                    <option value="">-- Select --</option>
+                                    <option value="-1">-- Select --</option>
                                     <%
                                         DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                                         ArrayList<Organization> orgs = objO.getAllOrganizations();
-                                        for (Organization org : orgs) {
+                                        for (Organization o : orgs) {
                                     %>
-                                    <option value="<%=org.getId()%>"><%= org.getName()%></option>
+                                    <option value="<%=o.getId()%>"><%= o.getName()%></option>
                                     <%
                                         }
                                     %>

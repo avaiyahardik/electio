@@ -154,7 +154,7 @@ public class NomineeRegistration extends HttpServlet {
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                 }
             }
-            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
+            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || org_id == null || org_id.equals("") || org_id.equals("-1") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
                 err = "Please fill all required fields";
             } else {
                 if (image_size > (50 * 1000)) {

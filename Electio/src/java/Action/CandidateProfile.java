@@ -37,6 +37,7 @@ public class CandidateProfile implements Controller.Action {
         String msg = null;
         String err = null;
         String title = "Login";
+        System.out.println("candidate emaiL: " + email + ", elecID: " + elec_id);
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
@@ -44,7 +45,6 @@ public class CandidateProfile implements Controller.Action {
             title = "Nominee/Candidate Profile";
             long id = Long.parseLong(elec_id);
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
@@ -53,8 +53,10 @@ public class CandidateProfile implements Controller.Action {
                 Election e = objE.getElection(id);
                 Nominee n = objN.getNominee(id, email);
                 Candidate c = objC.getCandidate(id, email);
+                Organization o = objO.getOrganization(id);
                 req.setAttribute("nominee", n);
                 req.setAttribute("candidate", c);
+                req.setAttribute("organization", o);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("Nominee/Candidate Profile Err: " + ex.getMessage());

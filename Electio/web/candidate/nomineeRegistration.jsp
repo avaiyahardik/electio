@@ -91,23 +91,35 @@
                             <form action="NomineeRegistration" method="POST" class="form-horizontal" enctype="multipart/form-data">
                                 <input type="hidden" name="election_id" value="<%= election_id%>">
                                 <fieldset> 
-                                    <!-- BEGIN ERROR BOX -->
-                                    <div class="form-group col-lg-12">
-                                        <% String msg = (String) request.getAttribute("msg");
-                                            if (msg != null) {%>
-
-                                        <div class="alert alert-info">
-                                            <button type="button" class="close" data-dismiss="alert">×</button>
-                                            <%=msg%>
-                                        </div>
-                                        <% }%>
+                                    <!-- BEGIN ERROR BOX --> 
+                                    <div class="col-lg-12">
                                         <% String err = (String) request.getAttribute("err");
+                                            String err1 = (String) request.getParameter("err");
                                             if (err != null) {%>
                                         <div class="alert alert-danger">
                                             <button type="button" class="close" data-dismiss="alert">×</button>
                                             <%=err%>
                                         </div>
-                                        <% }%>
+                                        <% } else if (err1 != null) {%>
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <%=err1%>
+                                        </div>
+                                        <%}
+                                            String msg = (String) request.getAttribute("msg");
+                                            String msg1 = (String) request.getParameter("msg");
+                                            if (msg != null) {%>
+                                        <div class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <%=msg%>
+                                        </div>
+                                        <%} else if (msg1 != null) {
+                                        %>
+                                        <div class="alert alert-info">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <%=msg1%>
+                                        </div>
+                                        <%}%>
                                     </div>
                                     <!-- END ERROR BOX -->  
 
@@ -169,14 +181,14 @@
                                         <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
 
                                         <div class="col-lg-7">
-                                            <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
-                                                <option value="">-- Select --</option>
+                                            <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)" required="">
+                                                <option value="-1">-- Select --</option>
                                                 <%
                                                     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                                                     ArrayList<Organization> orgs = objO.getAllOrganizations();
-                                                    for (Organization org : orgs) {
+                                                    for (Organization o : orgs) {
                                                 %>
-                                                <option value="<%=org.getId()%>"><%= org.getName()%></option>
+                                                <option value="<%=o.getId()%>"><%= o.getName()%></option>
                                                 <%
                                                     }
                                                 %>

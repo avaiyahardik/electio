@@ -40,7 +40,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
         String msg = null;
         String err = null;
         System.out.println(email + ", " + firstname + ", " + lastname + ", " + mobile + ", " + organization_name + ", " + password);
-        if (email == null || email.equals("") || firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile == null || mobile.equals("") || org_id == null || org_id.equals("") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
+        if (email == null || email.equals("") || firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile == null || mobile.equals("") || org_id == null || org_id.equals("") || org_id.equals("-1") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
             err = "Please fill-up required fields";
         } else {
             if (!password.equals(retype_password)) {
