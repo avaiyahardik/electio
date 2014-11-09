@@ -7,7 +7,6 @@
 <jsp:include page="header.jsp"/>
 
 <%
-    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
     Nominee n = (Nominee) request.getAttribute("nominee");
     Candidate c = (Candidate) request.getAttribute("candidate");
     int status = n.getStatus();
@@ -88,7 +87,7 @@
                         <div class="form-group">
                             <label for="email" class="control-label col-lg-4">Email ID</label>
                             <div class="col-lg-6">
-                                <input type="text" name="email" class="form-control" required value="<%=n.getEmail()%>">
+                                <input type="text" name="email" class="form-control" required disabled="" value="<%=n.getEmail()%>">
                             </div>
                         </div>
 
@@ -96,9 +95,19 @@
                             <label for="gender" class="control-label col-lg-4">Gender</label>
                             <div class="col-sm-6">
                                 <select name="gender" class="form-control">
-                                    <option value="0">Male</option>
+                                    <% if (n.getGender() == 0) {%>
+                                    <option value="0" selected="">Male</option>
                                     <option value="1">Female</option>
                                     <option value="2">Other</option>
+                                    <%} else if (n.getGender() == 1) {%>
+                                    <option value="0">Male</option>
+                                    <option value="1" selected="">Female</option>
+                                    <option value="2">Other</option>
+                                    <%} else {%>
+                                    <option value="0">Male</option>
+                                    <option value="1">Female</option>
+                                    <option value="2" selected="">Other</option>
+                                    <%}%>
                                 </select>
                             </div> 
                         </div>
@@ -115,6 +124,12 @@
                             <label for="photo" class="control-label col-lg-4">Photo</label>
                             <div class="col-lg-6">
                                 <input type="file" class="form-control" name="photo" accept="image/gif, image/jpeg, image/png"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="requirements_file" class="control-label col-lg-4"></label>
+                            <div class="col-lg-6">
+                                <a href="..<%= File.separator%><%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements file</a>
                             </div>
                         </div>
 

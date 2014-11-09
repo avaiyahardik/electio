@@ -168,25 +168,28 @@ public class NomineeRegistration extends HttpServlet {
                         DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
                         DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                         long organization_id = Long.parseLong(org_id);
-                        if ((organization_id == 0) && (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals(""))) {
-                            err = "Please fill-up required fields";
-                        } else {
-                            Organization org = new Organization(organization_name, organization_address, about_organization);
-                            organization_id = objO.addNewOrganization(org);
-                        }
-                        int gen = Integer.parseInt(gender);
-                        Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
-                        if (objN.registerNominee(nominee)) {
-                            if (objP.checkEmailExists(email)) {
-                                ProbableNominee pn = new ProbableNominee(election_id, email, 2);
-                                objP.changeProbableNomineeStatus(pn);
+                        if (organization_id == 0) {
+                            if (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals("")) {
+                                err = "Please fill-up required fields";
+                            } else {
+                                Organization org = new Organization(organization_name, organization_address, about_organization);
+                                organization_id = objO.addNewOrganization(org);
                             }
-                            view = "index.jsp?election_id=" + election_id;
-                            msg = "Nominee registered successfully";
-                        } else {
-                            err = "Fail to register nominee, please retry";
                         }
-
+                        if (organization_id != 0) {
+                            int gen = Integer.parseInt(gender);
+                            Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
+                            if (objN.registerNominee(nominee)) {
+                                if (objP.checkEmailExists(email)) {
+                                    ProbableNominee pn = new ProbableNominee(election_id, email, 2);
+                                    objP.changeProbableNomineeStatus(pn);
+                                }
+                                view = "index.jsp?election_id=" + election_id;
+                                msg = "Nominee registered successfully";
+                            } else {
+                                err = "Fail to register nominee, please retry";
+                            }
+                        }
                     } else {
                         err = "Retype password doesn't match";
                     }
@@ -199,9 +202,6 @@ public class NomineeRegistration extends HttpServlet {
             err = e.getMessage();
             System.out.println("ERR NomineeRegistration: " + e.toString());
         }
-
-        System.out.println("Nom Reg MSG: " + msg);
-        System.out.println("Nom Reg Err: " + err);
         view += "&msg=" + msg + "&err=" + err + "&title=" + title;
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);

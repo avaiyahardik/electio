@@ -53,13 +53,16 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                         err = "Email already registered, register with different one or try forgot password";
                     } else {
                         long organization_id = Long.parseLong(org_id);
-                        if ((organization_id == 0) && (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals(""))) {
-                            err = "Please fill-up required fields";
-                        } else {
-                            Organization org = new Organization(organization_name, organization_address, about_organization);
-                            organization_id = objO.addNewOrganization(org);
+                        if (organization_id == 0) {
+                            if (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals("")) {
+                                err = "Please fill-up required fields";
+                            } else {
+                                Organization org = new Organization(organization_name, organization_address, about_organization);
+                                organization_id = objO.addNewOrganization(org);
+                            }
                         }
-                         password = RandomString.encryptPassword(password);
+                        if (organization_id != 0) {
+                            password = RandomString.encryptPassword(password);
                             ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, password);
                             if (objEC.registerElectionCommissioner(ec)) {
                                 msg = "You're registered successfully";
@@ -68,6 +71,7 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                             } else {
                                 err = "Fail to register, please try again later";
                             }
+                        }
                     }
                 } catch (SQLException ex) {
                     err = ex.getMessage();

@@ -53,7 +53,7 @@ public class CandidateProfile implements Controller.Action {
                 Election e = objE.getElection(id);
                 Nominee n = objN.getNominee(id, email);
                 Candidate c = objC.getCandidate(id, email);
-                Organization o = objO.getOrganization(id);
+                Organization o = objO.getOrganization(n.getOrganization_id());
                 req.setAttribute("nominee", n);
                 req.setAttribute("candidate", c);
                 req.setAttribute("organization", o);

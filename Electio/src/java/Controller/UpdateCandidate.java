@@ -78,7 +78,6 @@ public class UpdateCandidate extends HttpServlet {
         String manifesto = null;
 
         try {
-//            DBDAOImplementation obj = DBDAOImplementation.getInstance();
             DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
             DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
             DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
@@ -90,7 +89,6 @@ public class UpdateCandidate extends HttpServlet {
             while (fileItemsIterator.hasNext()) {
                 FileItem fileItem = fileItemsIterator.next();
                 String fieldName = fileItem.getFieldName();
-                //System.out.println("FieldName=" + fieldName + fileItem.getString());
                 if (fieldName.equals("election_id")) {
                     election_id = Long.parseLong(fileItem.getString());
                 } else if (fieldName.equals("firstname")) {
