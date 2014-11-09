@@ -92,7 +92,7 @@
                                 </td>
                                 <td>
                                     <a href="Controller?action=download_election_data&id=<%= el.getId()%>" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Download Data</a>
-                                    <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm" onClick="confirmDelete()"><i class="glyphicon glyphicon-remove"></i> Delete</a>
+                                    <a href="Controller?action=delete_election&id=<%= el.getId()%>" class="btn btn-effect btn-danger btn-sm" onClick="javascript:return confirmDelete()"><i class="glyphicon glyphicon-remove"></i> Delete</a>
                                 </td>
                             </tr>
                             <%}%>
@@ -118,7 +118,11 @@
 
 <script type="text/javascript">
 function confirmDelete(){
-    alert("Hello");
+    if(confirm('Are you sure want to delete all the details of the election?')){
+        return true;
+    }else{
+        return false;
+    }
 }
 </script>
 <jsp:include page="footer.jsp"/>
