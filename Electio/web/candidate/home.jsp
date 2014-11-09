@@ -52,13 +52,13 @@
         <label class="label label-info control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
         <%} else if (status == 1) {%>
         <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
-        <%} else if(status == 2){%>
+        <%} else if (status == 2) {%>
         <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
-        <%}else if(status ==3)  {%>
+        <%} else if (status == 3) {%>
         <label class="label label-warning control-label" style="font-size:13px"><i class="glyphicon glyphicon-thumbs-down"></i> Withdrawn</label>
         <%}%>
 
-        <%if (el.getWithdrawal_end().after(new Date()) && status!=3 && status!= 2) {%>
+        <%if (el.getWithdrawal_start().before(new Date()) && el.getWithdrawal_end().after(new Date()) && status != 3 && status != 2) {%>
         <a href="Controller?action=withdraw_application" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-thumbs-down"></i> Withdraw Application</a>
         <%}%>
     </h1>
