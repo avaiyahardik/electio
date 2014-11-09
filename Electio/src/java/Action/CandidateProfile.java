@@ -54,9 +54,11 @@ public class CandidateProfile implements Controller.Action {
                 Nominee n = objN.getNominee(id, email);
                 Candidate c = objC.getCandidate(id, email);
                 Organization o = objO.getOrganization(n.getOrganization_id());
+                String reason = objN.getReason(id, email);
                 req.setAttribute("nominee", n);
                 req.setAttribute("candidate", c);
                 req.setAttribute("organization", o);
+                req.setAttribute("reason", reason);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("Nominee/Candidate Profile Err: " + ex.getMessage());
