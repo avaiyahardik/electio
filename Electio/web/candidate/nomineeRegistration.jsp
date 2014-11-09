@@ -188,21 +188,21 @@
                                     <div class="form-group"  id="org-name" style="display:none">
                                         <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_name">
+                                            <input type="text" class="form-control" name="organization_name" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group"  id="org-address" style="display:none">
                                         <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_address>
+                                            <input type="text" class="form-control" name="organization_address" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group" id="org-about" style="display:none">
                                         <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="about_organization">
+                                            <input type="text" class="form-control" name="about_organization" required>
                                         </div>
                                     </div>
 
@@ -289,19 +289,19 @@
             </div>
         </div>
 
-<script src="assets/readable/jquery-1.10.2.min.js"></script>
-<script type="text/javascript">
-function checkOrg(val) {
-    if (val == 0) {
-          document.getElementById('org-name').style.display = "block";
-          document.getElementById('org-address').style.display = "block";
-          document.getElementById('org-about').style.display = "block";
-    } else {
-          document.getElementById('org-name').style.display = "none";
-          document.getElementById('org-address').style.display = "none";
-          document.getElementById('org-about').style.display = "none";
-    }
-}
+        <script src="assets/readable/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript">
+                                                function checkOrg(val) {
+                                                    if (val == 0) {
+                                                        document.getElementById('org-name').style.display = "block";
+                                                        document.getElementById('org-address').style.display = "block";
+                                                        document.getElementById('org-about').style.display = "block";
+                                                    } else {
+                                                        document.getElementById('org-name').style.display = "none";
+                                                        document.getElementById('org-address').style.display = "none";
+                                                        document.getElementById('org-about').style.display = "none";
+                                                    }
+                                                }
         </script>
     </body>
 </html>
