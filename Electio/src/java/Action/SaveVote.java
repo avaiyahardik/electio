@@ -63,7 +63,7 @@ public class SaveVote implements Controller.Action {
                                 ArrayList<Candidate> candidates = objC.getCandidates(id);
                                 int tot = candidates.size();
                                 for (Candidate c : candidates) {
-                                    System.out.println("email:" + c.getEmail() + "votes: " + req.getParameter(c.getEmail()));
+                                    System.out.println("email:" + c.getEmail() + "votes: " + (tot - Long.parseLong(req.getParameter(c.getEmail())) + 1));
                                     c.setVotes(tot - Long.parseLong(req.getParameter(c.getEmail())) + 1);
                                 }
                                 if (objC.updateCandidateVotes(candidates, id) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
