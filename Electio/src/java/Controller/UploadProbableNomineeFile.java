@@ -136,13 +136,13 @@ public class UploadProbableNomineeFile extends HttpServlet {
         request.setAttribute("err", err);
         request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
-        try (PrintWriter out = response.getWriter()) {
+  /*      try (PrintWriter out = response.getWriter()) {
             out.println("UploadProbableNominee Msg: " + request.getAttribute("msg"));
             out.println("UploadProbableNominee Err: " + request.getAttribute("err"));
         } catch (Exception ex) {
             System.out.println("ERR: " + ex.getMessage());
         }
-        rd.forward(request, response);
+    */    rd.forward(request, response);
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

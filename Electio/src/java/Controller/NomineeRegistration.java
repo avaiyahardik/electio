@@ -197,12 +197,13 @@ public class NomineeRegistration extends HttpServlet {
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
         request.setAttribute("title", title);
-        try (PrintWriter out = response.getWriter()) {
-            out.println("Nominee Registratiopn Msg: " + request.getAttribute("msg"));
-            out.println("Nominee Registration Err: " + request.getAttribute("err"));
-        } catch (Exception ex) {
-            System.out.println("ERR: " + ex.getMessage());
-        }
+        /*  try (PrintWriter out = response.getWriter()) {
+         out.println("Nominee Registratiopn Msg: " + request.getAttribute("msg"));
+         out.println("Nominee Registration Err: " + request.getAttribute("err"));
+         } catch (Exception ex) {
+         System.out.println("ERR: " + ex.getMessage());
+         }
+         */
         response.sendRedirect(view);
         /*
          RequestDispatcher rd = request.getRequestDispatcher(view);
