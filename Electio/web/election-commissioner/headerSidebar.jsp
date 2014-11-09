@@ -118,7 +118,7 @@
                 <!-- BEGIN ERROR BOX --> 
                 <div class="col-lg-12">
                     <% String err = (String) request.getAttribute("err");
-                    if (err != null) {%>
+                        if (err != null) {%>
                     <div class="alert alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <%=err%>
@@ -130,5 +130,6 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <%=msg%>
                     </div>
+                    <%}%>
                 </div>
                 <!-- END ERROR BOX --> 

@@ -74,5 +74,6 @@
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <%=msg%>
                 </div>
+                <%}%>
             </div>
             <!-- END ERROR BOX --> 
