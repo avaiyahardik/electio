@@ -32,7 +32,7 @@
         <servlet-class>Controller.UpdateProbableNominee</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UploadProbableNomineeList</servlet-name>
+        <servlet-name>UploadProbableNomineeFile</servlet-name>
         <servlet-class>Controller.UploadProbableNomineeFile</servlet-class>
     </servlet>
     <servlet>
@@ -92,8 +92,8 @@
         <url-pattern>/election-commissioner/UpdateProbableNominee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UploadProbableNomineeList</servlet-name>
-        <url-pattern>/election-commissioner/UploadProbableNomineeList</url-pattern>
+        <servlet-name>UploadProbableNomineeFile</servlet-name>
+        <url-pattern>/election-commissioner/UploadProbableNomineeFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UploadVoterFile</servlet-name>
