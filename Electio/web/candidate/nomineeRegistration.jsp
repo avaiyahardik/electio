@@ -55,14 +55,13 @@
                                     } else {%>
                                 <script>
                                     window.location = "../index.jsp";
-
                                 </script>
                                 <%
                                     }
                                 %>
                                 <%if (name == null) {%>
                                 <script>
-                                    window.location = "../index.jsp?err=Invalid election link";
+                                    window.location = "../index.jsp?err=Invalid election login link";
 
                                 </script>
                                 <%

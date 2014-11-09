@@ -4,6 +4,9 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="Model.Election"%>
+<%@page import="DAO.DBDAOImplElection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,17 +26,30 @@
     </head>
     <body>
 
-        <%
-            String election_id = request.getParameter("election_id");
-            if (election_id == null || election_id.equals("")) {
-        %>
+        <% String name = "";
+            DBDAOImplElection objE = DBDAOImplElection.getInstance();
+            Election election = null;
+            String elec_id = request.getParameter("election_id");
+            long election_id = 0;
+            if (elec_id != null) {
+                election_id = Long.parseLong(elec_id);
+                name = objE.getElectionName(election_id);
+                election = objE.getElection(election_id);
+            } else {%>
         <script>
-            window.location = "index.jsp";
-
+            window.location = "../index.jsp";
         </script>
         <%
             }
         %>
+        <%if (name == null) {%>
+        <script>
+            window.location = "../index.jsp?err=Invalid election login link";
+        </script>
+        <%
+            }
+        %>
+
         <div class="navbar navbar-default ">
             <div class="container">
                 <div class="navbar-header">
@@ -54,13 +70,13 @@
                     <div class="col-lg-6 col-lg-offset-3">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <h1 class="panel-title">Voter Login</h1>
+                                <h1 class="panel-title">Voter Login for <strong>"<%= name%>"</strong></h1>
                             </div>
                             <div class="panel-body">
 
 
                                 <form class="form-horizontal" action="Controller" method="POST">
-                                    <input type="hidden" name="election_id" value="<%=election_id%>">
+                                    <input type="hidden" name="election_id" value="<%=elec_id%>">
                                     <input type="hidden" name="step" value="1">
                                     <div class="form-group">
                                         <label for="email" class="control-label col-sm-4">Email ID</label>
@@ -84,12 +100,16 @@
                         <div class="col-lg-12">
                             <% String err = (String) request.getAttribute("err");
                                 String err1 = (String) request.getParameter("err");
-                                if (err != null && !err.equals("") && !err.equals("null")) {%>
+                                if (err
+                                        != null && !err.equals(
+                                                "") && !err.equals("null")) {%>
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <%=err%>
                             </div>
-                            <% } else if (err1 != null && !err1.equals("") && !err1.equals("null")) {%>
+                            <% } else if (err1
+                                    != null && !err1.equals(
+                                            "") && !err1.equals("null")) {%>
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <%=err1%>
@@ -97,12 +117,16 @@
                             <%}
                                 String msg = (String) request.getAttribute("msg");
                                 String msg1 = (String) request.getParameter("msg");
-                                if (msg != null && !msg.equals("") && !msg.equals("null")) {%>
+                                if (msg
+                                        != null && !msg.equals(
+                                                "") && !msg.equals("null")) {%>
                             <div class="alert alert-info">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <%=msg%>
                             </div>
-                            <%} else if (msg1 != null && !msg1.equals("") && !msg1.equals("null")) {
+                            <%} else if (msg1
+                                    != null && !msg1.equals(
+                                            "") && !msg1.equals("null")) {
                             %>
                             <div class="alert alert-info">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
