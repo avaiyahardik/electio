@@ -6,6 +6,7 @@
 package Action;
 
 import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
@@ -42,15 +43,27 @@ public class ViewCandidateProfileToVoter implements Controller.Action {
             long id = Long.parseLong(elec_id);
             String candidate_email = req.getParameter("candidate_email");
             Candidate c = null;
+            Organization o = null;
             try {
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 c = objC.getCandidate(id, candidate_email);
+                if (c != null) {
+                    o = objO.getOrganization(c.getOrganization_id());
+                } else {
+                    view = "header.jsp";
+                    title = "Voter";
+                    err = "Candidate does not exists for this election";
+                }
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("View Candidate Profile to Voter Err: " + ex.getMessage());
             }
             req.setAttribute("candidate", c);
+            req.setAttribute("organization", o);
         }
+        System.out.println("Err: " + err);
+        System.out.println("MSG: " + msg);
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);

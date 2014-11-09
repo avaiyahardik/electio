@@ -100,7 +100,6 @@ public class DBDAOImplCandidate {
             candidate.setRequirements_file(rs.getString("requirements_file"));
             candidate.setManifesto(rs.getString("manifesto"));
             candidate.setPetition_filed(rs.getBoolean("petition_filed"));
-
         }
         return candidate;
     }

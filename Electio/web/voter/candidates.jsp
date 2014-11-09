@@ -27,9 +27,9 @@
         <td><%= objO.getOrganization(c.getOrganization_id()).getName()%></td>
         <td>
             <% String gender = "Other";
-                if (c.getGender() == 1) {
+                if (c.getGender() == 0) {
                     gender = "Male";
-                } else if (c.getGender() == 2) {
+                } else if (c.getGender() == 1) {
                     gender = "Female";
                 }
                 out.print(gender);

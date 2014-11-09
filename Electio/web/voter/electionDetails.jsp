@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Model.Election"%>
 <jsp:include page="header.jsp"/>
 <title>Election Details</title>
@@ -10,25 +12,22 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-1">
-                <% Election el = (Election) request.getAttribute("election");%>
+                <%    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                    Election el = (Election) request.getAttribute("election");%>
                 <table class="responsiveExpander">
                     <tr>
-                        <th>Election Name</th>
-                        <td><%= el.getName()%></td>
+                        <th>Election Name </th>
+                        <td>&nbsp;<%= el.getName()%></td>
                     </tr>   
                     <tr>
                         <th>Voting Start</th>
-                        <td><%= el.getVoting_start()%></td>
+                        <td><%= sdf.format(new Date(el.getVoting_start().getTime()))%></td>
                     </tr>   
                     <tr>
                         <th>Voting End</th>
-                        <td><%= el.getVoting_end()%></td>
-                    </tr>   
-
-
+                        <td><%= sdf.format(new Date(el.getVoting_end().getTime()))%></td>
+                    </tr>
                 </table>
-
-
             </div>
         </div>
     </div>

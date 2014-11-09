@@ -8,10 +8,8 @@
 <jsp:include page="header.jsp"/>
 
 <%
-    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
     Candidate c = (Candidate) request.getAttribute("candidate");
-    Organization o = objO.getOrganization(c.getElection_id());
+    Organization o = (Organization) request.getAttribute("organization");
 %>
 <div class="page-header">
     <h1 class="page-title">Candidate Profile
@@ -24,7 +22,7 @@
                 <p>Candidate Profile</p>
             </div>
             <div class="panel-body">
-                <form action="Controller" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form action="Controller" method="POST" class="form-horizontal">
                     <fieldset> 
                         <!-- BEGIN ERROR BOX --> 
                         <div class="col-lg-12">
@@ -48,8 +46,7 @@
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <%=msg%>
                             </div>
-                            <%} else if (msg1 != null && !msg1.equals("") && !msg1.equals("null")) {
-                            %>
+                            <%} else if (msg1 != null && !msg1.equals("") && !msg1.equals("null")) {%>
                             <div class="alert alert-info">
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 <%=msg1%>
@@ -83,9 +80,9 @@
                             <label for="gender" class="control-label col-lg-4">Gender</label>
                             <div class="col-sm-6">
                                 <% String gender = "Other";
-                                    if (c.getGender() == 1) {
+                                    if (c.getGender() == 0) {
                                         gender = "Male";
-                                    } else if (c.getGender() == 2) {
+                                    } else if (c.getGender() == 1) {
                                         gender = "Female";
                                     }
                                 %>
