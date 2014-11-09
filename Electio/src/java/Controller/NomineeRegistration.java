@@ -172,6 +172,7 @@ public class NomineeRegistration extends HttpServlet {
                                 ProbableNominee pn = new ProbableNominee(election_id, email, 2);
                                 objP.changeProbableNomineeStatus(pn);
                             }
+                            view = "index.jsp?election_id=" + election_id;
                             msg = "Nominee registered successfully";
                         } else {
                             err = "Fail to register nominee, please retry";
