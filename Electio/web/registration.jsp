@@ -106,10 +106,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
-
+                            <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization</strong></label>
                             <div class="col-lg-7">
-                                <select name="organization_id" class="form-control"  id="org-id">
+                                <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
                                     <option value="">-- Select --</option>
                                     <%
                                         DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
@@ -123,10 +122,9 @@
                                     <option value="0">Other</option>
                                 </select>
                             </div>
-
                         </div>
 
-                        <div class="form-group" id="organization_name">
+                        <div class="form-group" id="org-name" style="display:none">
                             <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
                             <div class="col-lg-7">
                                 <div class="input-group">
@@ -134,11 +132,11 @@
                                         <span class="arrow"></span>
                                         <i class="fa fa-info"></i> 
                                     </span>
-                                    <input type="text" class="form-control" name="organization_name" required>
+                                    <input type="text" class="form-control" name="organization_name">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" id="organization_address">
+                        <div class="form-group" id="org-address" style="display:none">
                             <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
                             <div class="col-lg-7">
                                 <div class="input-group">
@@ -146,11 +144,11 @@
                                         <span class="arrow"></span>
                                         <i class="fa fa-envelope-o"></i> 
                                     </span>
-                                    <input type="text" class="form-control" name="organization_address" required>
+                                    <input type="text" class="form-control" name="organization_address">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" id="about_organization">
+                        <div class="form-group" id="org-about" style="display:none">
                             <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
                             <div class="col-lg-7">
                                 <div class="input-group">
@@ -158,7 +156,7 @@
                                         <span class="arrow"></span>
                                         <i class="fa fa-tag"></i> 
                                     </span>
-                                    <input type="text" class="form-control" name="about_organization" required>
+                                    <input type="text" class="form-control" name="about_organization">
                                 </div>
                             </div>
                         </div>
@@ -204,4 +202,18 @@
 </div>
 
 <script src="assets/readable/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+                                    function checkOrg(val) {
+                                        if (val == 0) {
+                                            document.getElementById('org-name').style.display = "block";
+                                            document.getElementById('org-address').style.display = "block";
+                                            document.getElementById('org-about').style.display = "block";
+                                        } else {
+                                            document.getElementById('org-name').style.display = "none";
+                                            document.getElementById('org-address').style.display = "none";
+                                            document.getElementById('org-about').style.display = "none";
+                                        }
+
+                                    }
+</script>
 <jsp:include page="footer.jsp"/>

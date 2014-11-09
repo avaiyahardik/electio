@@ -4,6 +4,9 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="Model.Organization"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -55,7 +58,7 @@
                                 %>
                                 <%if (name == null) {%>
                                 <script>
-                                    window.location = "../index.jsp";
+                                    window.location = "../index.jsp?err=Invalid Registration Link";
 
                                 </script>
                                 <%
@@ -144,23 +147,46 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group">
-                                        <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
+                                        <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_name" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
-                                        <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_address" required>
+                                            <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
+                                                <option value="">-- Select --</option>
+                                                <%
+                                                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                                    ArrayList<Organization> orgs = objO.getAllOrganizations();
+                                                    for (Organization org : orgs) {
+                                                %>
+                                                <option value="<%=org.getId()%>"><%= org.getName()%></option>
+                                                <%
+                                                    }
+                                                %>
+                                                <option value="0">Other</option>
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+
+
+                                    <div class="form-group" id="org-name" style="display:none">
+                                        <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="organization_name">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="org-address" style="display:none">
+                                        <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
+                                        <div class="col-lg-7">
+                                            <input type="text" class="form-control" name="organization_address">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="org-about" style="display:none">
                                         <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="about_organization" required>
+                                            <input type="text" class="form-control" name="about_organization">
                                         </div>
                                     </div>
 
@@ -246,6 +272,19 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            function checkOrg(val) {
+                if (val == 0) {
+                    document.getElementById('org-name').style.display = "block";
+                    document.getElementById('org-address').style.display = "block";
+                    document.getElementById('org-about').style.display = "block";
+                } else {
+                    document.getElementById('org-name').style.display = "none";
+                    document.getElementById('org-address').style.display = "none";
+                    document.getElementById('org-about').style.display = "none";
+                }
 
+            }
+        </script>
     </body>
 </html>
