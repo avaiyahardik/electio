@@ -54,12 +54,12 @@ public class VoterLogin implements Controller.Action {
                             view = "login2.jsp"; // view changed if email exists and status is not voted successfull
                             title = "Voter Login";
                             password = RandomString.generateRandomPassword();
-                            objV.insertVoterPassword(election_id, email, password);
-
                             req.setAttribute("election_id", elec_id);
                             req.setAttribute("email", email);
-                           
+
                             if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Password", password, email)) {
+                                password = RandomString.encryptPassword(password);
+                                objV.insertVoterPassword(election_id, email, password);
                                 msg = "Your password has been sent to your email id";
                             } else {
                                 msg = "Fail to send mail, try again after sometime";
@@ -68,6 +68,7 @@ public class VoterLogin implements Controller.Action {
                         }
                     } else if (step.equals("2")) {
                         password = req.getParameter("password");
+                        password = RandomString.encryptPassword(password);
                         if (objV.loginVoter2(election_id, email, password)) {
                             Voter v = objV.loginVoter1(election_id, email);
 

@@ -46,7 +46,6 @@ public class SendMailToVoters implements Controller.Action {
                 System.out.println("hi");
                 long id = Long.parseLong(election_id);
                 try {
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
                     DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                     ArrayList<Voter> voters = objV.getVotersEmail(id);
                     String link = "<a href='" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
