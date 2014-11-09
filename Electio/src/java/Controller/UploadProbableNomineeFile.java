@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileReader;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -135,6 +136,12 @@ public class UploadProbableNomineeFile extends HttpServlet {
         request.setAttribute("err", err);
         request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
+        try (PrintWriter out = response.getWriter()) {
+            out.println("UploadProbableNominee Msg: " + request.getAttribute("msg"));
+            out.println("UploadProbableNominee Err: " + request.getAttribute("err"));
+        } catch (Exception ex) {
+            System.out.println("ERR: " + ex.getMessage());
+        }
         rd.forward(request, response);
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

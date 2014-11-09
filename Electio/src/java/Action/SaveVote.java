@@ -46,6 +46,8 @@ public class SaveVote implements Controller.Action {
                     title = "Voted";
                     long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
                     if (objV.getVoterStatus(id, email)) {
+                        msg = "You already voted";
+                    } else {
                         if (election_type == 2) {
                             System.out.println("Election ID: " + id);
                             try {
@@ -61,7 +63,7 @@ public class SaveVote implements Controller.Action {
                                 ArrayList<Candidate> candidates = objC.getCandidates(id);
                                 int tot = candidates.size();
                                 for (Candidate c : candidates) {
-                                    System.out.println("email:" + c.getEmail() + "votes: " + req.getParameter(c.getEmail()));
+                                    System.out.println("email:" + c.getEmail() + "votes: " + (tot - Long.parseLong(req.getParameter(c.getEmail())) + 1));
                                     c.setVotes(tot - Long.parseLong(req.getParameter(c.getEmail())) + 1);
                                 }
                                 if (objC.updateCandidateVotes(candidates, id) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
@@ -71,8 +73,6 @@ public class SaveVote implements Controller.Action {
                                 System.out.println("Err: " + ex.getMessage());
                             }
                         }
-                    } else {
-                        msg = "You already voted";
                     }
                 }
             } catch (Exception e) {

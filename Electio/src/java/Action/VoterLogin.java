@@ -58,8 +58,8 @@ public class VoterLogin implements Controller.Action {
 
                             req.setAttribute("election_id", elec_id);
                             req.setAttribute("email", email);
-                            String[] to = {email};
-                            if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", "Password", password, to)) {
+                           
+                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Password", password, email)) {
                                 msg = "Your password has been sent to your email id";
                             } else {
                                 msg = "Fail to send mail, try again after sometime";

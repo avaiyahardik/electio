@@ -4,9 +4,11 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="Model.Election"%>
 <%@page import="Model.Organization"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DAO.DBDAOImplOrganization"%>
+<%@page import="java.util.Date"%>
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,9 +22,9 @@
         <link rel="stylesheet" href="../assets/readable/bootstrap.css" media="screen">  
 
         <link rel="stylesheet" href="../assets/css/icons/font-awesome/css/font-awesome.min.css">
-        <script src="../assets/readable/jquery-1.10.2.min.js"></script>
-        <script src="../assets/readable/bootstrap.min.js"></script>
-        <script src="script.js"></script>
+        <script dfsrc="../assets/readable/jquery-1.10.2.min.js"></script>
+        <script dfsrc="../assets/readable/bootstrap.min.js"></script>
+        <script dfsrc="script.js"></script>
     </head>
 
     <body>
@@ -44,10 +46,12 @@
                                 <!-- Election Name here -->
                                 <% String name = "";
                                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                                    Election election = null;
                                     long election_id = 0;
                                     if (request.getParameter("election_id") != null) {
                                         election_id = Long.parseLong(request.getParameter("election_id"));
                                         name = objE.getElectionName(election_id);
+                                        election = objE.getElection(election_id);
                                     } else {%>
                                 <script>
                                     window.location = "../index.jsp";
@@ -58,7 +62,22 @@
                                 %>
                                 <%if (name == null) {%>
                                 <script>
-                                    window.location = "../index.jsp?err=Invalid Registration Link";
+                                    window.location = "../index.jsp?err=Invalid election link";
+
+                                </script>
+                                <%
+                                    }
+                                %>
+                                <%if (election != null && election.getNomination_start().after(new Date())) {%>
+                                <script>
+                                    window.location = "../index.jsp?err=Nomination has not been started for this election";
+                                </script>
+                                <%
+                                    }
+                                %>
+                                <%if (election != null && election.getNomination_end().before(new Date())) {%>
+                                <script>
+                                    window.location = "../index.jsp?err=Nomination period got over for this election";
 
                                 </script>
                                 <%
@@ -146,10 +165,9 @@
                                             <a href="#" class="btn btn-effect" data-toggle="modal" data-target="#requirements-modal"><i class="fa fa-search"></i> View Requirements</a>
                                         </div>
                                     </div>
-
-
                                     <div class="form-group">
-                                        <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization</strong></label>
+                                        <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization Name</strong></label>
+
                                         <div class="col-lg-7">
                                             <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
                                                 <option value="">-- Select --</option>
@@ -167,26 +185,24 @@
                                         </div>
                                     </div>
 
-
-
-                                    <div class="form-group" id="org-name" style="display:none">
+                                    <div class="form-group"  id="org-name" style="display:none">
                                         <label for="organization_name" class="control-label col-lg-4"><strong>Organization Name</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_name">
+                                            <input type="text" class="form-control" name="organization_name" required>
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="org-address" style="display:none">
+                                    <div class="form-group"  id="org-address" style="display:none">
                                         <label for="organization_address" class="control-label col-lg-4"><strong>Organization Address</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="organization_address">
+                                            <input type="text" class="form-control" name="organization_address" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group" id="org-about" style="display:none">
                                         <label for="about_organization" class="control-label col-lg-4"><strong>About Organization</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="about_organization">
+                                            <input type="text" class="form-control" name="about_organization" required>
                                         </div>
                                     </div>
 
@@ -221,7 +237,7 @@
         <hr>
         <footer>
             <div class="container">
-                <p>&copy; 2014 Electio</p>
+                <p>© 2014 Electio</p>
             </div>
         </footer>
         <hr>
@@ -272,19 +288,20 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            function checkOrg(val) {
-                if (val == 0) {
-                    document.getElementById('org-name').style.display = "block";
-                    document.getElementById('org-address').style.display = "block";
-                    document.getElementById('org-about').style.display = "block";
-                } else {
-                    document.getElementById('org-name').style.display = "none";
-                    document.getElementById('org-address').style.display = "none";
-                    document.getElementById('org-about').style.display = "none";
-                }
 
-            }
+<script src="assets/readable/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+function checkOrg(val) {
+    if (val == 0) {
+          document.getElementById('org-name').style.display = "block";
+          document.getElementById('org-address').style.display = "block";
+          document.getElementById('org-about').style.display = "block";
+    } else {
+          document.getElementById('org-name').style.display = "none";
+          document.getElementById('org-address').style.display = "none";
+          document.getElementById('org-about').style.display = "none";
+    }
+}
         </script>
     </body>
 </html>

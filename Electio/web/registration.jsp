@@ -213,7 +213,6 @@
                                             document.getElementById('org-address').style.display = "none";
                                             document.getElementById('org-about').style.display = "none";
                                         }
-
                                     }
 </script>
 <jsp:include page="footer.jsp"/>

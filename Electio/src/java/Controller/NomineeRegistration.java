@@ -16,6 +16,7 @@ import Utilities.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -182,6 +183,7 @@ public class NomineeRegistration extends HttpServlet {
                     }
                 }
             }
+
         } catch (FileUploadException e) {
             System.out.println("File Not Found Exception in uploading file.");
         } catch (Exception e) {
@@ -195,6 +197,12 @@ public class NomineeRegistration extends HttpServlet {
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
         request.setAttribute("title", title);
+        try (PrintWriter out = response.getWriter()) {
+            out.println("Nominee Registratiopn Msg: " + request.getAttribute("msg"));
+            out.println("Nominee Registration Err: " + request.getAttribute("err"));
+        } catch (Exception ex) {
+            System.out.println("ERR: " + ex.getMessage());
+        }
         response.sendRedirect(view);
         /*
          RequestDispatcher rd = request.getRequestDispatcher(view);

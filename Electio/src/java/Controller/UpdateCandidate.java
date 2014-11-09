@@ -17,6 +17,7 @@ import Utilities.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -136,7 +137,7 @@ public class UpdateCandidate extends HttpServlet {
                     // File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileItem.getName());
                     fileName = fileItem.getName();
                     if (fileName != null && !fileName.equals("")) {
-                        System.out.println("file name: "+ fileName);
+                        System.out.println("file name: " + fileName);
                         date = new Date();
                         ext = fileName.substring(fileName.lastIndexOf('.'));
                         File file = new File(request.getServletContext().getRealPath("/manifestos") + File.separator + date.getTime() + ext);
@@ -151,7 +152,7 @@ public class UpdateCandidate extends HttpServlet {
                         }
                     }
                 }
-                System.out.println("hello: "+fileItem.getString());
+                System.out.println("hello: " + fileItem.getString());
             }
 
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("")) {
@@ -187,6 +188,12 @@ public class UpdateCandidate extends HttpServlet {
         request.setAttribute("err", err);
         request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
+        try (PrintWriter out = response.getWriter()) {
+            out.println("UpdateCandidate Msg: " + request.getAttribute("msg"));
+            out.println("UpdateCandidate Err: " + request.getAttribute("err"));
+        } catch (Exception ex) {
+            System.out.println("ERR: " + ex.getMessage());
+        }
         rd.forward(request, response);
     }
 
