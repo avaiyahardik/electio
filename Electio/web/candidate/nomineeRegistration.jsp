@@ -4,6 +4,7 @@
     Author     : Vishal Jain
 --%>
 
+<%@page import="Model.Election"%>
 <%@page import="java.util.Date"%>
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="DAO.DBDAOImplementation"%>
@@ -42,10 +43,12 @@
                                 <!-- Election Name here -->
                                 <% String name = "";
                                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                                    Election election = null;
                                     long election_id = 0;
                                     if (request.getParameter("election_id") != null) {
                                         election_id = Long.parseLong(request.getParameter("election_id"));
                                         name = objE.getElectionName(election_id);
+                                        election = objE.getElection(election_id);
                                     } else {%>
                                 <script>
                                     window.location = "../index.jsp";
@@ -56,21 +59,20 @@
                                 %>
                                 <%if (name == null) {%>
                                 <script>
-                                    window.location = "../index.jsp";
+                                    window.location = "../index.jsp?err=Invalid election link";
 
                                 </script>
                                 <%
                                     }
                                 %>
-                                <%if (objE.getElection(election_id).getNomination_start().after(new Date())) {%>
+                                <%if (election != null && election.getNomination_start().after(new Date())) {%>
                                 <script>
                                     window.location = "../index.jsp?err=Nomination has not been started for this election";
-
                                 </script>
                                 <%
                                     }
                                 %>
-                                <%if (objE.getElection(election_id).getNomination_end().before(new Date())) {%>
+                                <%if (election != null && election.getNomination_end().before(new Date())) {%>
                                 <script>
                                     window.location = "../index.jsp?err=Nomination period got over for this election";
 
