@@ -91,6 +91,7 @@ public class NomineeRegistration extends HttpServlet {
 //                System.out.println("FieldName=" + fieldName + fileItem.getString());
                 if (fieldName.equals("election_id")) {
                     election_id = Long.parseLong(fileItem.getString());
+                    view += "?election_id=" + election_id;
                 } else if (fieldName.equals("firstname")) {
                     firstname = fileItem.getString();
                 } else if (fieldName.equals("lastname")) {
