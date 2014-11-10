@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization</strong></label>
+                            <label for="select_organization_name" class="col-lg-5 control-label"><strong>Organization</strong></label>
                             <div class="col-lg-7">
                                 <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
                                     <option value="-1">-- Select --</option>
@@ -78,19 +78,19 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="org-name">
                             <label for="organization_name" class="control-label col-lg-5"><strong>Organization Name</strong></label>
                             <div class="col-lg-7">
                                 <input type="text" class="form-control" required="required" name="organization_name"  value="<%= organization.getName()%>">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="org-address">
                             <label for="organization_address" class="control-label col-lg-5"><strong>Organization Address</strong></label>
                             <div class="col-lg-7">
                                 <input type="text" class="form-control" required="required" name="organization_address" value="<%= organization.getAddress()%>">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="org-about">
                             <label for="about_organization" class="control-label col-lg-5"><strong>About Organization</strong></label>
                             <div class="col-lg-7">
                                 <input type="text" class="form-control" required="required" name="about_organization" value="<%= organization.getAbout()%>">
@@ -176,6 +176,18 @@
 </div>
 </div>
 </div>
-
+<script type="text/javascript">
+    function checkOrg(val) {
+        if (val == 0) {
+            document.getElementById('org-name').style.display = "block";
+            document.getElementById('org-address').style.display = "block";
+            document.getElementById('org-about').style.display = "block";
+        } else {
+            document.getElementById('org-name').style.display = "none";
+            document.getElementById('org-address').style.display = "none";
+            document.getElementById('org-about').style.display = "none";
+        }
+    }
+</script>
 
 <jsp:include page="footer.jsp"/>

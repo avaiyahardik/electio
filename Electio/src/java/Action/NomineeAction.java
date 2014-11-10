@@ -74,7 +74,9 @@ public class NomineeAction implements Controller.Action {
                             err = "Error occured while approving nominee, please try again";
                         }
                     } else if (cmd.equals("reject")) {
+
                         String reason = req.getParameter("reason");
+                        System.out.println("Elec: " + election_id + ", nom_email: " + nominee_email + ", Reason: " + reason);
                         if (objN.rejectNominee(election_id, nominee_email, reason)) {
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Rejection", "You nomination is rejected", nominee_email);
                             msg = "Nominee rejeced successfully";

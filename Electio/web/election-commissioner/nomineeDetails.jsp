@@ -98,7 +98,8 @@
                         <div class="col-md-12">
                             <div class="align-center">
                                 <a href="Controller?action=nominee_action&cmd=approve&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>&requirements_file=<%= n.getRequirements_file()%>" class="btn btn-success"><i class="fa fa-check"></i> Approve</a>
-                                <a href="Controller?action=nominee_action&cmd=reject&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>&reason=no reason" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Reject</a>
+
+                                <a href="#" class="btn btn-effect btn-danger" data-toggle="modal" data-target="#reject-modal"><i class="glyphicon glyphicon-remove"></i> Reject</a>
                             </div>
                         </div>
                         <%}%>
@@ -110,19 +111,29 @@
     </div>
 </div>
 
-<div class="modal" id="rejection-modal">
+<div class="modal" id="reject-modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Nominee Requirements</h4>
+                <h4 class="modal-title">Please specify a reason for rejecting the candidate</h4>
             </div>
-            <div class="modal-body">
-               
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            <form class="form-horizontal" action="Controller" method="POST">
+                <div class="modal-body">
+
+                    <input type="hidden" name="election_id" value="<%= n.getElection_id()%>">
+                    <input type="hidden" name="email" value="<%= n.getEmail()%>">
+                    <input type="hidden" name="cmd" value="reject">
+                    <div class="form-group">
+                        <textarea name="reason" class="form-control" required></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" name="action" value="nominee_action">Reject Nominee</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

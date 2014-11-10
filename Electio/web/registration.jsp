@@ -119,7 +119,7 @@
                                     <%
                                         }
                                     %>
-                                    <option value="0">Other</option>
+                                    0                     <option value="0">Other</option>
                                 </select>
                             </div>
                         </div>

@@ -8,6 +8,7 @@ package Action;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplementation;
+import Model.Candidate;
 import Model.Election;
 import Model.ElectionCommissioner;
 import Model.Organization;
@@ -47,6 +48,10 @@ public class CandidateHome implements Controller.Action {
                 int status = objN.getNomineeStatus(id, email);
                 req.setAttribute("election", e);
                 req.setAttribute("nominee_status", status);
+                if (status == 2) {
+                    String reason = objN.getReason(id, email);
+                    req.setAttribute("reason", reason);
+                }
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("Nominee/Candidate Err: " + ex.getMessage());
