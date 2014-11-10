@@ -85,8 +85,8 @@
                                             <label class="form-control"><%=organization.getAbout()%></label>
                                         </div>    
                                     </div>
-                                        
-                                        
+
+
                                     <div class="form-group col-md-7">
                                         <a href="..<%= File.separator%><%= n.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements</a>
                                     </div>
@@ -105,6 +105,23 @@
 
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="rejection-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Nominee Requirements</h4>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
