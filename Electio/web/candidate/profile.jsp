@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="Model.Candidate"%>
 <%@page import="DAO.DBDAOImplementation"%>
@@ -147,22 +148,46 @@
                         </div>
                         <%}%>
                         <div class="form-group">
+                            <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization</strong></label>
+                            <div class="col-lg-7">
+                                <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
+                                    <option value="-1">-- Select --</option>
+                                    <%
+                                        DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                        ArrayList<Organization> orgs = objO.getAllOrganizations();
+                                        for (Organization or : orgs) {
+                                            if (or.getId() == n.getOrganization_id()) {
+                                    %>
+                                    <option selected="selected" value="<%=or.getId()%>"><%= or.getName()%></option>
+                                    <%
+                                    } else {
+                                    %>
+                                    <option value="<%=or.getId()%>"><%= or.getName()%></option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                    <option value="0">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="organization_name" class="control-label col-lg-4">Organization Name</label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="organization_name" required value="<%=o.getName()%>">
+                                <input type="text" class="form-control" name="organization_name" value="<%=o.getName()%>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="organization_address" class="control-label col-lg-4">Organization Address</label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="organization_address" required value="<%=o.getAddress()%>">
+                                <input type="text" class="form-control" name="organization_address" value="<%=o.getAddress()%>">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="about_organization" class="control-label col-lg-4">About Organization</label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="about_organization" required value="<%=o.getAbout()%>">
+                                <input type="text" class="form-control" name="about_organization" value="<%=o.getAbout()%>">
                             </div>
                         </div>
 

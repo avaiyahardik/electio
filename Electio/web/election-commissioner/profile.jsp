@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="Model.Organization"%>
 <%@page import="Model.ElectionCommissioner"%>
 <jsp:include page="headerSidebar.jsp"/>
@@ -49,6 +51,30 @@
                                     </span>
                                     <input type="text" class="form-control" required="required" name="mobile"  value="<%=ec.getMobile()%>">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="select_organization_name" class="col-lg-4 control-label"><strong>Organization</strong></label>
+                            <div class="col-lg-7">
+                                <select name="organization_id" class="form-control"  id="org-id" onChange="checkOrg(this.value)">
+                                    <option value="-1">-- Select --</option>
+                                    <%
+                                        DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                                        ArrayList<Organization> orgs = objO.getAllOrganizations();
+                                        for (Organization o : orgs) {
+                                            if (o.getId() == ec.getOrganization_id()) {
+                                    %>
+                                    <option selected="selected" value="<%=o.getId()%>"><%= o.getName()%></option>
+                                    <%
+                                    } else {
+                                    %>
+                                    <option value="<%=o.getId()%>"><%= o.getName()%></option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                    <option value="0">Other</option>
+                                </select>
                             </div>
                         </div>
 

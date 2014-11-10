@@ -41,22 +41,32 @@ public class ElectionCommissionerUpdateProfile implements Controller.Action {
                 String firstname = req.getParameter("firstname");
                 String lastname = req.getParameter("lastname");
                 String mobile = req.getParameter("mobile");
+                String org_id = req.getParameter("organization_id");
                 String organization_name = req.getParameter("organization_name");
                 String organization_address = req.getParameter("organization_address");
                 String about_organization = req.getParameter("about_organization");
                 System.out.println(firstname + ", " + lastname + ", " + mobile + ", " + organization_name + ", " + organization_address + ", " + about_organization);
-                if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile.equals(null) || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("")) {
+                if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || mobile.equals(null) || mobile.equals("") || org_id == null || org_id.equals("-1") || org_id.equals("")) {
                     err = "Please fill-up required fields";
                 } else {
+                    long organization_id = Long.parseLong(org_id);
                     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
-                    Organization org = new Organization(organization_name, organization_address, about_organization);
-                    long organization_id = objO.addNewOrganization(org);
-                    DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
-                    ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, "password");
-                    if (objEC.updateElectionCommissioner(ec)) {
-                        msg = "Your profile updated successfully";
-                    } else {
-                        err = "Fail to update profile, please retry";
+                    if (organization_id == 0) {
+                        if (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals("")) {
+                            err = "Please fill-up required fields";
+                        } else {
+                            Organization org = new Organization(organization_name, organization_address, about_organization);
+                            organization_id = objO.addNewOrganization(org);
+                        }
+                    }
+                    if (organization_id != 0) {
+                        DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+                        ElectionCommissioner ec = new ElectionCommissioner(email, firstname, lastname, mobile, organization_id, "doesn't matter");
+                        if (objEC.updateElectionCommissioner(ec)) {
+                            msg = "Your profile updated successfully";
+                        } else {
+                            err = "Fail to update profile, please retry";
+                        }
                     }
                 }
             } catch (Exception ex) {

@@ -42,7 +42,7 @@ public class CandidateProfile implements Controller.Action {
             err = "Session expired please login again";
         } else {
             view = "profile.jsp";
-            title = "Nominee/Candidate Profile";
+            title = "Profile";
             long id = Long.parseLong(elec_id);
             try {
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();

@@ -6,9 +6,15 @@
 package Controller;
 
 import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
+import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplOrganization;
+import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplUserInfo;
+import DAO.DBDAOImplVoter;
 import DAO.DBDAOImplementation;
+import Model.Candidate;
+import Model.Election;
 import Model.Nominee;
 import Model.Organization;
 import Model.ProbableNominee;
@@ -59,28 +65,38 @@ public class UpdateCandidate extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("1");
-        String view = "Controller?action=candidate_profile";
+        String view = "profile.jsp";
         String title = "Profile";
         String msg = null;
         String err = null;
-//      System.out.println("MSG: " + request.getParameter("election_id"));
         long election_id = 0;
         String firstname = null;
         String lastname = null;
         String email = null;
         String gender = null;
         String mobile = null;
+        String org_id = null;
         String organization_name = null;
         String organization_address = null;
         String about_organization = null;
         String image = null;
         String manifesto = null;
-
+        DBDAOImplElection objE = null;
+        DBDAOImplNominee objN = null;
+        DBDAOImplCandidate objC = null;
+        DBDAOImplVoter objV = null;
+        DBDAOImplProbableNominee objP = null;
+        DBDAOImplUserInfo objU = null;
+        DBDAOImplOrganization objO = null;
         try {
-            DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
-            DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-            DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+            objE = DBDAOImplElection.getInstance();
+            objN = DBDAOImplNominee.getInstance();
+            objC = DBDAOImplCandidate.getInstance();
+            objV = DBDAOImplVoter.getInstance();
+            objP = DBDAOImplProbableNominee.getInstance();
+            objU = DBDAOImplUserInfo.getInstance();
+            objO = DBDAOImplOrganization.getInstance();
+
             List<FileItem> fileItemsList = uploader.parseRequest(request);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
             Date date;
@@ -101,6 +117,8 @@ public class UpdateCandidate extends HttpServlet {
                     gender = fileItem.getString();
                 } else if (fieldName.equals("mobile")) {
                     mobile = fileItem.getString();
+                } else if (fieldName.equals("organization_id")) {
+                    org_id = fileItem.getString();
                 } else if (fieldName.equals("organization_name")) {
                     organization_name = fileItem.getString();
                 } else if (fieldName.equals("organization_address")) {
@@ -144,36 +162,42 @@ public class UpdateCandidate extends HttpServlet {
                         System.out.println("Absolute Path at server=" + manifesto);
                         System.out.println("File " + fileItem.getName() + " uploaded successfully.");
                         if (objC.updateManifesto(election_id, email, manifesto)) {
-                            msg = "Profile updated successfully";
+                            msg = "Manifesto updated successfully";
                         } else {
-                            err = "Fail to update profile, please retry";
+                            err = "Fail to upload manifesto , please retry";
                         }
                     }
                 }
-                System.out.println("hello: " + fileItem.getString());
             }
 
-            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || organization_name == null || organization_name.equals("") || organization_address == null || organization_address.equals("") || about_organization == null || about_organization.equals("")) {
+            if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || org_id == null || org_id.equals("-1") || org_id.equals("")) {
                 err = "Please fill all required fields";
             } else {
-                System.out.println("hello");
-                Organization org = new Organization(organization_name, organization_address, about_organization);
-                long organization_id = objO.addNewOrganization(org);
-                int gen = Integer.parseInt(gender);
-                UserInfo ui = new UserInfo();
-                ui.setEmail(email);
-                ui.setFirstname(firstname);
-                ui.setGender(gen);
-                ui.setLastname(lastname);
-                ui.setMobile(mobile);
-                ui.setOrganization_id(organization_id);
-
-                if (objU.updateUserInfo(ui)) {
-                    msg = "Nominee updated successfully";
-                } else {
-                    err = "Fail to update profile, please retry";
+                long organization_id = Long.parseLong(org_id);
+                if (organization_id == 0) {
+                    if (organization_name == null || organization_address == null || about_organization == null || organization_name.equals("") || organization_address.equals("") || about_organization.equals("")) {
+                        err = "Please fill-up required fields";
+                    } else {
+                        Organization org = new Organization(organization_name, organization_address, about_organization);
+                        organization_id = objO.addNewOrganization(org);
+                    }
                 }
+                if (organization_id != 0) {
+                    int gen = Integer.parseInt(gender);
+                    UserInfo ui = new UserInfo();
+                    ui.setEmail(email);
+                    ui.setFirstname(firstname);
+                    ui.setGender(gen);
+                    ui.setLastname(lastname);
+                    ui.setMobile(mobile);
+                    ui.setOrganization_id(organization_id);
 
+                    if (objU.updateUserInfo(ui)) {
+                        msg = "Nominee updated successfully";
+                    } else {
+                        err = "Fail to update profile, please retry";
+                    }
+                }
             }
         } catch (FileUploadException e) {
             System.out.println("File Not Found Exception in uploading file.");
@@ -181,18 +205,31 @@ public class UpdateCandidate extends HttpServlet {
             err = e.getMessage();
             System.out.println("ERR UpdateCandidate: " + e.toString());
         }
-
+        try {
+            Election e = objE.getElection(election_id);
+            Nominee n = objN.getNominee(election_id, email);
+            Candidate c = objC.getCandidate(election_id, email);
+            Organization o = objO.getOrganization(n.getOrganization_id());
+            String reason = objN.getReason(election_id, email);
+            request.setAttribute("nominee", n);
+            request.setAttribute("candidate", c);
+            request.setAttribute("organization", o);
+            request.setAttribute("reason", reason);
+        } catch (Exception ex) {
+            err = ex.getMessage();
+            System.out.println("Setting Candidate Profile Err: " + ex.getMessage());
+        }
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);
         request.setAttribute("title", title);
         RequestDispatcher rd = request.getRequestDispatcher(view);
-    /*    try (PrintWriter out = response.getWriter()) {
-            out.println("UpdateCandidate Msg: " + request.getAttribute("msg"));
-            out.println("UpdateCandidate Err: " + request.getAttribute("err"));
-        } catch (Exception ex) {
-            System.out.println("ERR: " + ex.getMessage());
-        }
-      */  rd.forward(request, response);
+        /*    try (PrintWriter out = response.getWriter()) {
+         out.println("UpdateCandidate Msg: " + request.getAttribute("msg"));
+         out.println("UpdateCandidate Err: " + request.getAttribute("err"));
+         } catch (Exception ex) {
+         System.out.println("ERR: " + ex.getMessage());
+         }
+         */ rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
