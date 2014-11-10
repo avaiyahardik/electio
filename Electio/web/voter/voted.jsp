@@ -8,7 +8,7 @@
     window.location = "index.jsp";
 </script>
 <%}%>
-<div class="col-md-12">
+<div class="col-md-8 col-md-offset-2">
     <div class="page-header">
         <h1 class="page-title">Voted!</h1>
     </div>

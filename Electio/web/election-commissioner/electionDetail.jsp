@@ -34,14 +34,12 @@
                     <li class="active"><a href="#election_general" data-toggle="tab"><i class="fa fa-info-circle"></i> General Details</a></li>
                     <li><a href="#election_nominees" data-toggle="tab"><i class="fa fa-user"></i> Nominees</a></li>
                     <li><a href="#election_candidates" data-toggle="tab"><i class="fa fa-user"></i> Candidates</a></li>
-                    <li><a href="#election_voters" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Voters</a>
-                    <li><a href="#election_list" data-toggle="tab"><i class="fa fa-list"></i> Probable Nominee List</a>
-                    <li><a href="#election_result" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Results</a></li>
+                    <li><a href="#election_voters" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Voters</a></li>
+                    <li><a href="#election_list" data-toggle="tab"><i class="fa fa-list"></i> Probable Nominee List</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
 
                     <div class="tab-pane fade active in" id="election_general">
-
                         <form action="Controller" method="POST" class="form-horizontal">
                             <fieldset>
 
@@ -152,7 +150,7 @@
                         </form>
                     </div>
 
-                    <div class="tab-pane fade active in" id="election_nominees">
+                    <div class="tab-pane fade" id="election_nominees">
                         <h4>Nominees' list for the election</h4>
                         <table class="table table-hover table-dynamic table-tools">
                             <thead>
@@ -213,7 +211,7 @@
                         </table>
                     </div>
 
-                    <div class="tab-pane fade active in" id="election_candidates">
+                    <div class="tab-pane fade" id="election_candidates">
                         <h4>Candidates' List for the election</h4>
                         <table class="table table-hover table-dynamic table-tools">
                             <thead>
@@ -261,7 +259,7 @@
 
                     </div>
 
-                    <div class="tab-pane fade active in" id="election_voters">
+                    <div class="tab-pane fade" id="election_voters">
                         <h4>Voters' List for the election</h4>
                         <br>
 
@@ -368,7 +366,7 @@
                         </table>
                     </div>
 
-                    <div class="tab-pane fade active in" id="election_list">
+                    <div class="tab-pane fade" id="election_list">
                         <h4>Eligible Nominee List</h4>
                         <br>
 
@@ -458,23 +456,7 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="tab-pane fade active in" id="election_result">
-                        <div class="row">
-                            <div class="col-lg-8 col-lg-offset-2">
-                                <div id="result-chart-pie"></div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-8 col-lg-offset-2">
-                                <div id="result-chart-bar"></div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -489,8 +471,6 @@
 <script type="text/javascript" src="../assets/dtp/jquery.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
 <script type="text/javascript" src="../js/script.js"></script>
-<script type="text/javascript" src="../js/charts.js"></script>
-<script type="text/javascript" src="../js/jsapi"></script>
 <!-- END  PAGE LEVEL SCRIPTS -->
 
 
@@ -509,31 +489,6 @@
     $('#voting_end').datetimepicker()
             .datetimepicker({step: 30});
     tinymce.init({selector: '#requirements'});
-    google.load("visualization", "1", {packages: ["corechart"]});
-    google.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Candidate');
-        data.addColumn('number', 'Votes');
-    <%
-        int total_votes = 0;
-        for (Candidate c : candidates) {
-            total_votes += (int) c.getVotes();
-    %>
-        data.addRow(['<%=c.getFirstname()%> <%=c.getLastname()%>',<%=(int) c.getVotes()%>]);
-    <%}%>
-                var options = {
-                    title: 'Election Results ' + '\nTotal Votes : ' +<%=total_votes%>,
-                    is3D: true,
-                    width: 800,
-                    height: 600
-                };
-                var chart = new google.visualization.PieChart(document.getElementById('result-chart-pie'));
-                chart.draw(data, options);
-                var chart = new google.visualization.ColumnChart(document.getElementById('result-chart-bar'));
-                chart.draw(data, options);
-            }
-
 </script>
 
 

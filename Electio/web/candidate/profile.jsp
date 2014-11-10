@@ -31,14 +31,13 @@
                             <label class="control-label col-sm-4" for="status">Nomination Status</label>
                             <div class="col-sm-6">
                                 <%if (status == 0) {%>
-                                <label class="label label-info control-label" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+                                <label class="label label-info form-control" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
                                 <%} else if (status == 1) {%>
                                 <label class="label label-success control-label" style="font-size:13px"><i class="fa fa-check"></i> Approved</label>
                                 <%} else if (status == 2) {%>
-                                <label class="label label-danger control-label" style="font-size:13px"><i class="fa fa-times"></i> Rejected</label>
-                                Reason: <%= reason%>
+                                <label class="label label-danger form-control" style="font-size:13px"><i class="fa fa-times"></i> Rejected (<%= reason%>)</label>
                                 <%} else if (status == 3) {%>
-                                <label class="label label-warning control-label" style="font-size:13px"><i class="glyphicon glyphicon-thumbs-down"></i> Withdrawn</label>
+                                <label class="label label-warning form-control" style="font-size:13px"><i class="glyphicon glyphicon-thumbs-down"></i> Withdrawn</label>
                                 <%}%>
                             </div>
                         </div>

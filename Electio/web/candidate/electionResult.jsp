@@ -1,8 +1,6 @@
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
-<jsp:include page="headerSidebar.jsp"/>
-
-
+<jsp:include page="header.jsp"/>
 <%  ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
     int election_type = (Integer) request.getAttribute("election_type");%>
 
@@ -38,16 +36,10 @@
                             </div>
                         </div>
                         <%}
-                    } else {%>
+                        } else {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
-                                <h3 class="panel-title"><%=election_type%>Election Results</h3>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-8 col-lg-offset-2">
-                                <div id="result-chart-pie"></div>
+                                <h3 class="panel-title">Election Results</h3>
                             </div>
                         </div>
 
@@ -88,12 +80,8 @@
                     width: 800,
                     height: 600
                 };
-                var chart = new google.visualization.PieChart(document.getElementById('result-chart-pie'));
-                chart.draw(data, options);
                 var chart = new google.visualization.ColumnChart(document.getElementById('result-chart-bar'));
                 chart.draw(data, options);
             }
 </script>
-
-
 <jsp:include page="footer.jsp"/>

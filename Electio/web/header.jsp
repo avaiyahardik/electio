@@ -32,9 +32,9 @@
                 <div class="navbar-collapse collapse" id="navbar-main">
                     <ul class="nav navbar-nav">
                         <li><a href="about.jsp">About</a></li>
-                        <li><a href="disclaimer.jsp">Disclaimer</a></li>
                         <li><a href="privacy.jsp">Privacy</a></li>
                         <li><a href="contact.jsp">Contact</a></li>
+                        <li><a href="faqs.jsp">FAQs</a></li>
                     </ul>
 
                     <form class="navbar-form navbar-right"  action="election-commissioner/Controller" method="post">
