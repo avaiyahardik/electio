@@ -68,12 +68,13 @@ public class UpdateCandidate extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String view = "profile.jsp";
         String title = "Profile";
+        String email = (String) request.getSession().getAttribute("candidate_email");
+        String elec_id = (String) request.getSession().getAttribute("election_id");
         String msg = null;
         String err = null;
         long election_id = 0;
         String firstname = null;
         String lastname = null;
-        String email = null;
         String gender = null;
         String mobile = null;
         String org_id = null;
@@ -90,6 +91,7 @@ public class UpdateCandidate extends HttpServlet {
         DBDAOImplUserInfo objU = null;
         DBDAOImplOrganization objO = null;
         try {
+            election_id = Long.parseLong(elec_id);
             objE = DBDAOImplElection.getInstance();
             objN = DBDAOImplNominee.getInstance();
             objC = DBDAOImplCandidate.getInstance();
@@ -106,14 +108,10 @@ public class UpdateCandidate extends HttpServlet {
             while (fileItemsIterator.hasNext()) {
                 FileItem fileItem = fileItemsIterator.next();
                 String fieldName = fileItem.getFieldName();
-                if (fieldName.equals("election_id")) {
-                    election_id = Long.parseLong(fileItem.getString());
-                } else if (fieldName.equals("firstname")) {
+                if (fieldName.equals("firstname")) {
                     firstname = fileItem.getString();
                 } else if (fieldName.equals("lastname")) {
                     lastname = fileItem.getString();
-                } else if (fieldName.equals("email")) {
-                    email = fileItem.getString();
                 } else if (fieldName.equals("gender")) {
                     gender = fileItem.getString();
                 } else if (fieldName.equals("mobile")) {
@@ -206,11 +204,17 @@ public class UpdateCandidate extends HttpServlet {
             err = e.getMessage();
             System.out.println("ERR UpdateCandidate: " + e.toString());
         }
+        System.out.println("Yes1");
         try {
             Nominee n = objN.getNominee(election_id, email);
             Candidate c = objC.getCandidate(election_id, email);
+            System.out.println("ORG ID: " + n.getOrganization_id());
+            System.out.println("Yes1.5");
+
             Organization o = objO.getOrganization(n.getOrganization_id());
+            System.out.println("1.8");
             String reason = objN.getReason(election_id, email);
+            System.out.println("Yes2");
             request.setAttribute("nominee", n);
             request.setAttribute("candidate", c);
             request.setAttribute("organization", o);

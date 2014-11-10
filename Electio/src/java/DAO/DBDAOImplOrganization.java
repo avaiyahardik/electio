@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DAO;
 
 import Model.Organization;
@@ -18,7 +17,8 @@ import java.util.ArrayList;
  * @author darshit
  */
 public class DBDAOImplOrganization {
-            private Connection con;
+
+    private Connection con;
     private static DBDAOImplOrganization obj = null;
 
     private DBDAOImplOrganization() throws SQLException {
@@ -32,7 +32,8 @@ public class DBDAOImplOrganization {
         }
         return obj;
     }
-     public long addNewOrganization(Organization org) throws SQLException {
+
+    public long addNewOrganization(Organization org) throws SQLException {
         long id = -1;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_organization(name,address,about) VALUES(?,?,?)");
         ps.setString(1, org.getName());
@@ -75,11 +76,12 @@ public class DBDAOImplOrganization {
     }
 
     public Organization getOrganization(long id) throws SQLException {
-        Organization org = new Organization();
+        Organization org = null;
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_organization WHERE id=?");
         ps.setLong(1, id);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
+            org = new Organization();
             org.setName(rs.getString("name"));
             org.setAddress(rs.getString("address"));
             org.setAbout(rs.getString("about"));
