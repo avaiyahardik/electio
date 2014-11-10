@@ -24,6 +24,7 @@ import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -206,7 +207,6 @@ public class UpdateCandidate extends HttpServlet {
             System.out.println("ERR UpdateCandidate: " + e.toString());
         }
         try {
-            Election e = objE.getElection(election_id);
             Nominee n = objN.getNominee(election_id, email);
             Candidate c = objC.getCandidate(election_id, email);
             Organization o = objO.getOrganization(n.getOrganization_id());
@@ -215,9 +215,9 @@ public class UpdateCandidate extends HttpServlet {
             request.setAttribute("candidate", c);
             request.setAttribute("organization", o);
             request.setAttribute("reason", reason);
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             err = ex.getMessage();
-            System.out.println("Setting Candidate Profile Err: " + ex.getMessage());
+            System.out.println("Update Candidate Profile Err: " + ex.getMessage());
         }
         request.setAttribute("msg", msg);
         request.setAttribute("err", err);

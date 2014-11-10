@@ -5,9 +5,15 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
+import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplementation;
+import Model.Candidate;
+import Model.Election;
 import Model.ElectionCommissioner;
+import Model.Nominee;
 import Model.Organization;
 import Utilities.RandomString;
 import java.sql.SQLException;
@@ -35,8 +41,8 @@ public class NomineeChangePassword implements Controller.Action {
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
-            view = "Controller?action=candidate_profile";
-            title = "Nominee/Candidate Profile";
+            view = "profile.jsp";
+            title = "Profile";
 
             String old_password = req.getParameter("old_password");
             String new_password = req.getParameter("new_password");
@@ -47,6 +53,7 @@ public class NomineeChangePassword implements Controller.Action {
                 long election_id = Long.parseLong(elec_id);
                 try {
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    old_password = RandomString.encryptPassword(old_password);
                     if (objN.nomineeLogin(election_id, email, old_password)) {
                         if (new_password.equals(retype_password)) {
                             new_password = RandomString.encryptPassword(new_password);
@@ -65,8 +72,27 @@ public class NomineeChangePassword implements Controller.Action {
                     err = ex.getMessage();
                     System.out.println("NomineeChangePassword Err: " + ex.getMessage());
                 }
+                try {
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+
+                    Nominee n = objN.getNominee(election_id, email);
+                    Candidate c = objC.getCandidate(election_id, email);
+                    Organization o = objO.getOrganization(n.getOrganization_id());
+                    String reason = objN.getReason(election_id, email);
+                    req.setAttribute("nominee", n);
+                    req.setAttribute("candidate", c);
+                    req.setAttribute("organization", o);
+                    req.setAttribute("reason", reason);
+                } catch (SQLException ex) {
+                    err = ex.getMessage();
+                    System.out.println("Nominee/Candidate Profile Err: " + ex.getMessage());
+                }
             }
         }
+
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);
