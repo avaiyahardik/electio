@@ -34,6 +34,7 @@ public class SendMailToProbableNominee implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
+        String DOMAIN_BASE = req.getRequestURL().substring(0, req.getRequestURL().indexOf("Electio") + 8);
         String email = (String) req.getSession().getAttribute("email");
         String elec_id = req.getParameter("election_id");
 
@@ -63,7 +64,7 @@ public class SendMailToProbableNominee implements Controller.Action {
                     objP = DBDAOImplProbableNominee.getInstance();
 
                     ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(election_id);
-                    String link = "<a href='" + RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
+                    String link = "<a href='" + DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
                     for (ProbableNominee itm : pns) {
                         if (itm.getStatus() == 0) {
                             if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {

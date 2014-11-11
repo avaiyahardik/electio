@@ -34,7 +34,7 @@ public class SendMailToVoters implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        System.out.println("hi");
+        String DOMAIN_BASE = req.getRequestURL().substring(0, req.getRequestURL().indexOf("Electio") + 8);
         String email = (String) req.getSession().getAttribute("email");
         String elec_id = req.getParameter("election_id");
 
@@ -66,7 +66,7 @@ public class SendMailToVoters implements Controller.Action {
                     objP = DBDAOImplProbableNominee.getInstance();
 
                     ArrayList<Voter> voters = objV.getVotersEmail(election_id);
-                    String link = "<a href='" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
+                    String link = "<a href='" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
                     for (Voter v : voters) {
                         if (v.getLinkStatus() == false) {
                             if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Ballot Link", link, v.getEmail())) {
