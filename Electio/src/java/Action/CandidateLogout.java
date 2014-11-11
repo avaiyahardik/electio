@@ -18,13 +18,13 @@ public class CandidateLogout implements Controller.Action {
         String err = null;
         String title = "Login";
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("")) {
-            view = "../index.jsp";
+            view = "../index.jsp?electio=electio";
             err = "You are not logged in, or session already expired";
         } else {
             long election_id = Long.parseLong(elec_id);
             try {
                 req.getSession().invalidate();
-                view += "?election_id=" + election_id;
+                view += "&election_id=" + election_id;
                 msg = "You're logged out successfully";
             } catch (Exception ex) {
                 err = ex.getMessage();
