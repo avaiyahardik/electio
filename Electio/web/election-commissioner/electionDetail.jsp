@@ -17,7 +17,9 @@
 <link rel="stylesheet" href="../assets/plugins/datatables/dataTables.tableTools.css">
 <link rel="stylesheet" type="text/css" href="../assets/dtp/jquery.datetimepicker.css"/>
 <!-- END PAGE LEVEL STYLE -->
-<% Election el = (Election) request.getAttribute("election");
+<%
+    String DOMAIN_BASE = request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8);
+    Election el = (Election) request.getAttribute("election");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 %>
 <div id="main-content">
@@ -299,7 +301,7 @@
                                 </div>
 
                                 <div class="align-right col-lg-6">
-                                    <% String ballot_link = RandomString.DOMAIN_BASE + "voter/login.jsp?election_id=" + el.getId();%>
+                                    <% String ballot_link = DOMAIN_BASE + "voter/login.jsp?election_id=" + el.getId();%>
                                     <p> Ballot URL : <i><%=ballot_link%></i></p>
                                     <a href="Controller?action=send_ballot_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Ballot URL</a>
                                 </div>
@@ -403,7 +405,7 @@
                                 </div>
 
                                 <div class="col-lg-8 align-right">
-                                    <% String reg_link = RandomString.DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + el.getId();%>
+                                    <% String reg_link = DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + el.getId();%>
                                     <p> Nominee Registration URL : <i><%=reg_link%></i></p>
                                     <a href="Controller?action=send_registration_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Registration URL</a>
                                 </div>

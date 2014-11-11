@@ -32,6 +32,7 @@ public class NomineeAction implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
+        String DOMAIN_BASE = req.getRequestURL().substring(0, req.getRequestURL().indexOf("Electio") + 8);
 
         String email = (String) req.getSession().getAttribute("email");
         String title = "Login";
@@ -67,7 +68,7 @@ public class NomineeAction implements Controller.Action {
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");
                         if (objN.approveNominee(election_id, nominee_email, requirements_file)) {
-                            String ms = "Your Nomination is approved. To see your details goto Below link <a href='" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "'>" + RandomString.DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
+                            String ms = "Your Nomination is approved. To see your details goto Below link <a href='" + DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
                             EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Approval", ms, nominee_email);
                             msg = "Nominee approved successfully";
                         } else {

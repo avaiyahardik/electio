@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static String DB_URL = "jdbc:mysql://localhost:3306/db_electio?zeroDateTimeBehavior=convertToNull";
-    //  private static String DB_URL = "jdbc:mysql://localhost:3306/sdba_db_electio";
-    private static String DB_User = "root";
-    //  private static String DB_User = "sdba_electio";
-    private static String DB_Pwd = "";
-    // private static String DB_Pwd = "#password2014";
+    //private static String DB_URL = "jdbc:mysql://localhost:3306/db_electio?zeroDateTimeBehavior=convertToNull";
+    private static String DB_URL = "jdbc:mysql://db4free.net/electio";
+    //private static String DB_User = "root";
+    private static String DB_User = "electio";
+    //private static String DB_Pwd = "";
+    private static String DB_Pwd = "#password2014";
     private static String DB_Driver = "com.mysql.jdbc.Driver";
 
     public static Connection getConnection() {
