@@ -62,7 +62,7 @@ public class ViewElectionDetail implements Controller.Action {
                     req.setAttribute("elections", elections);
                     err = "Fail to locate election id, please retry";
                 } else {
-                    long id = Long.parseLong(req.getParameter("id"));
+                    long id = Long.parseLong(elec_id);
                     view = "electionDetail.jsp";
                     title = "Election Detail";
                     System.out.println("Election ID: " + id);

@@ -68,17 +68,11 @@ public class GenerateReport implements Controller.Action {
                 DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
                 view = "listElections.jsp";
                 title = "Elections";
+                ArrayList<Election> elections = null;
+                elections = objE.getElections(email);
+                req.setAttribute("elections", elections);
                 if (elec_id == null || !objE.isValidElectionId(Long.parseLong(req.getParameter("id")), email)) {
-
-                    ArrayList<Election> elections = null;
-                    try {
-                        elections = objE.getElections(email);
-                    } catch (SQLException ex) {
-                        err = ex.getMessage();
-                        System.out.println("ViewElections Err: " + ex.getMessage());
-                    }
-                    req.setAttribute("elections", elections);
-                    err = "Fail to locate election id, please retry";
+                    err = "Invalid election id, please retry";
                 } else {
                     long id = Long.parseLong(elec_id);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
