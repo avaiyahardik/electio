@@ -9,16 +9,11 @@ import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplOrganization;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
-import Model.ElectionCommissioner;
 import Model.Nominee;
 import Model.Organization;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,7 +32,6 @@ public class CandidateProfile implements Controller.Action {
         String msg = null;
         String err = null;
         String title = "Login";
-        System.out.println("candidate emaiL: " + email + ", elecID: " + elec_id);
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
@@ -61,7 +55,7 @@ public class CandidateProfile implements Controller.Action {
                 req.setAttribute("reason", reason);
             } catch (SQLException ex) {
                 err = ex.getMessage();
-                System.out.println("Nominee/Candidate Profile Err: " + ex.getMessage());
+                System.out.println("Candidate Profile Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);
