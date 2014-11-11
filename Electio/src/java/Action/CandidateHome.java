@@ -7,15 +7,8 @@ package Action;
 
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplementation;
-import Model.Candidate;
 import Model.Election;
-import Model.ElectionCommissioner;
-import Model.Organization;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,13 +28,12 @@ public class CandidateHome implements Controller.Action {
         String err = null;
         String title = "Login";
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
-            err = "Session expired please login again";
+            err = "Session expired or you are not logged in, please login";
         } else {
             view = "home.jsp";
-            title = "Nominee/Candidate Home Page";
+            title = "Home Page";
             long id = Long.parseLong(elec_id);
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 Election e = objE.getElection(id);
@@ -54,7 +46,7 @@ public class CandidateHome implements Controller.Action {
                 }
             } catch (SQLException ex) {
                 err = ex.getMessage();
-                System.out.println("Nominee/Candidate Err: " + ex.getMessage());
+                System.out.println("Candidate Home Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);
@@ -62,5 +54,4 @@ public class CandidateHome implements Controller.Action {
         req.setAttribute("title", title);
         return view;
     }
-
 }
