@@ -118,6 +118,32 @@ public class DBDAOImplElection {
         return el;
     }
 
+    public Election getElection(long id, String email) throws SQLException {
+        Election el = null;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE id=? AND election_commissioner_email=?");
+        ps.setLong(1, id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            el = new Election();
+            el.setId(id);
+            el.setElection_commissioner_email(rs.getString("election_commissioner_email"));
+            el.setName(rs.getString("name"));
+            el.setDescription(rs.getString("description"));
+            el.setRequirements(rs.getString("requirements"));
+            el.setType_id(rs.getLong("type_id"));
+            el.setCreated_at(rs.getTimestamp("created_at"));
+            el.setNomination_start(rs.getTimestamp("nomination_start"));
+            el.setNomination_end(rs.getTimestamp("nomination_end"));
+            el.setWithdrawal_start(rs.getTimestamp("withdrawal_start"));
+            el.setWithdrawal_end(rs.getTimestamp("withdrawal_end"));
+            el.setVoting_start(rs.getTimestamp("voting_start"));
+            el.setVoting_end(rs.getTimestamp("voting_end"));
+            el.setPetition_duration(rs.getInt("petition_duration"));
+        }
+        return el;
+    }
+
     public String getElectionName(long id) throws SQLException {
         String name = null;
         PreparedStatement ps = con.prepareStatement("SELECT name FROM tbl_election WHERE id=?");
@@ -242,6 +268,18 @@ public class DBDAOImplElection {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE id=?");
         ps.setLong(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean isValidElectionId(long id, String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE id=? AND election_commissioner_email=?");
+        ps.setLong(1, id);
+        ps.setString(2, email);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             result = true;

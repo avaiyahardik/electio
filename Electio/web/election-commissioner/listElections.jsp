@@ -8,20 +8,6 @@
 <%@page import="Model.Election"%>
 <jsp:include page="headerSidebar.jsp"/>
 <link href="../assets/plugins/modal/css/component.css" rel="stylesheet">
-<%
-
-    /*
-     if (new Timestamp(date.getTime()).compareTo(e.getNomination_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getNomination_start()) <= 0) {
-     status=1;
-     } else if (new Timestamp(date.getTime()).compareTo(e.getWithdrawal_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getWithdrawal_end()) <= 0) {
-     status=2;
-     } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_start()) >= 0 && new Timestamp(date.getTime()).compareTo(e.getVoting_end()) <= 0) {
-     status=3;
-     } else if (new Timestamp(date.getTime()).compareTo(e.getVoting_end()) >= 0) {
-     status=4;
-     }
-     }
-     */%>
 <div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-heading bg-blue">
@@ -54,8 +40,6 @@
                                 Date date = new Date();
                                 Timestamp temp = new Timestamp(date.getTime());
                                 for (Election el : elections) {
-//                                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
-
                                     if (temp.after(el.getNomination_start()) && temp.before(el.getNomination_end())) {
                                         election_status = 1;
                                     } else if (temp.after(el.getWithdrawal_start()) && temp.before(el.getWithdrawal_end())) {
@@ -77,8 +61,8 @@
                                 <td><%=sdf.format(new Date(el.getCreated_at().getTime()))%> </td>
                                 <td><%= et.getType()%></td>
 
-                                    <td><% switch (election_status) {
-                                        case 0: %> <label class="label label-primary">Due</label>
+                                <td><% switch (election_status) {
+                                            case 0: %> <label class="label label-primary">Due</label>
                                     <%break;
                                         case 1:%><label class="label label-warning">Nomination Period</label>
                                     <%break;
@@ -117,12 +101,12 @@
 <script src="../assets/plugins/modal/js/modalEffects.js"></script>
 
 <script type="text/javascript">
-function confirmDelete(){
-    if(confirm('Are you sure want to delete all the details of the election?')){
-        return true;
-    }else{
-        return false;
-    }
-}
+                                        function confirmDelete() {
+                                            if (confirm('Are you sure want to delete all the details of the election?')) {
+                                                return true;
+                                            } else {
+                                                return false;
+                                            }
+                                        }
 </script>
 <jsp:include page="footer.jsp"/>
