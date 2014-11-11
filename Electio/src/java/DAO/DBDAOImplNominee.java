@@ -175,7 +175,6 @@ public class DBDAOImplNominee {
         if (rs.next()) {
             result = true;
         }
-
         return result;
     }
 
