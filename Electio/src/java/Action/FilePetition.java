@@ -7,6 +7,9 @@
 package Action;
 
 import Utilities.EmailSender;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,16 +33,20 @@ public class FilePetition implements Controller.Action{
         }
         else{
             if(description==null){
-                view="petition.jsp";
-                title="File Petition";
+                try {
+                    res.sendRedirect("Controller?action=election_result&election_id=1&err=Please enter some description about your petition");
+                } catch (IOException ex) {
+                    Logger.getLogger(FilePetition.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            else if(description.equals("save")){
+            else{
                 String[] to={email};
                 if(EmailSender.sendMail("electio@jaintele.com", "electio_2014","File Petition", description, to)){
-                    msg="Approve File Petition";
-                }
-                else{
-                    err="Not Valid Reason";
+                    try {
+                        res.sendRedirect("Controller?action=election_result&election_id=1&msg=Petition Filed successfully!");
+                    } catch (IOException ex) {
+                        Logger.getLogger(FilePetition.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
