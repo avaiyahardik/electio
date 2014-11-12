@@ -8,7 +8,7 @@ package Controller;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
@@ -66,7 +66,7 @@ public class UploadProbableNomineeFile extends HttpServlet {
             DBDAOImplElection objE = DBDAOImplElection.getInstance();
             DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
             DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-            DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+            DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
             DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
             List<FileItem> fileItemsList = uploader.parseRequest(request);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();

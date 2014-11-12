@@ -8,7 +8,7 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
@@ -53,13 +53,13 @@ public class NomineeAction implements Controller.Action {
                 DBDAOImplNominee objN = null;
                 DBDAOImplCandidate objC = null;
                 DBDAOImplVoter objV = null;
-                DBDAOImplProbableNominee objP = null;
+                DBDAOImplEligibleNominee objP = null;
                 try {
                     objE = DBDAOImplElection.getInstance();
                     objN = DBDAOImplNominee.getInstance();
                     objC = DBDAOImplCandidate.getInstance();
                     objV = DBDAOImplVoter.getInstance();
-                    objP = DBDAOImplProbableNominee.getInstance();
+                    objP = DBDAOImplEligibleNominee.getInstance();
 
                     if (cmd.equals("approve")) {
                         String requirements_file = req.getParameter("requirements_file");

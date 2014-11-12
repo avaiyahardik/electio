@@ -5,7 +5,7 @@
  */
 package Action;
 
-import DAO.DBDAOImplUserInfo;
+import DAO.DBDAOImplUser;
 import Model.User;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public class NomineeExists implements Controller.Action {
                     jSONObject.put("name", null);
                 } else {
 
-                    DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
+                    DBDAOImplUser objU = DBDAOImplUser.getInstance();
                     User userInfo = objU.getUserInfo(email);
                     if (userInfo == null) {
                         jSONObject.put("status", false);

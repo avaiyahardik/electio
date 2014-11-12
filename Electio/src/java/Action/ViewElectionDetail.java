@@ -8,20 +8,15 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
-import Model.ElectionCommissioner;
 import Model.Nominee;
-import Model.Organization;
 import Model.EligibleNominee;
 import Model.Voter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,7 +43,7 @@ public class ViewElectionDetail implements Controller.Action {
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                 if (elec_id == null || !objE.isValidElectionId(Long.parseLong(req.getParameter("id")), email)) {
                     view = "listElections.jsp";
                     title = "Elections";

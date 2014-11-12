@@ -9,8 +9,8 @@ import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplOrganization;
-import DAO.DBDAOImplProbableNominee;
-import DAO.DBDAOImplUserInfo;
+import DAO.DBDAOImplEligibleNominee;
+import DAO.DBDAOImplUser;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Nominee;
@@ -81,8 +81,8 @@ public class UpdateCandidate extends HttpServlet {
         DBDAOImplNominee objN = null;
         DBDAOImplCandidate objC = null;
         DBDAOImplVoter objV = null;
-        DBDAOImplProbableNominee objP = null;
-        DBDAOImplUserInfo objU = null;
+        DBDAOImplEligibleNominee objP = null;
+        DBDAOImplUser objU = null;
         DBDAOImplOrganization objO = null;
         try {
             election_id = Long.parseLong(elec_id);
@@ -90,8 +90,8 @@ public class UpdateCandidate extends HttpServlet {
             objN = DBDAOImplNominee.getInstance();
             objC = DBDAOImplCandidate.getInstance();
             objV = DBDAOImplVoter.getInstance();
-            objP = DBDAOImplProbableNominee.getInstance();
-            objU = DBDAOImplUserInfo.getInstance();
+            objP = DBDAOImplEligibleNominee.getInstance();
+            objU = DBDAOImplUser.getInstance();
             objO = DBDAOImplOrganization.getInstance();
 
             List<FileItem> fileItemsList = uploader.parseRequest(request);

@@ -7,7 +7,7 @@ package Controller;
 
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplOrganization;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import Model.Nominee;
 import Model.Organization;
 import Model.EligibleNominee;
@@ -161,7 +161,7 @@ public class NomineeRegistration extends HttpServlet {
                     if (retype_password.equals(password)) {
                         password = RandomString.encryptPassword(password);
                         DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
-                        DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                        DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                         DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                         long organization_id = Long.parseLong(org_id);
                         if (organization_id == 0) {

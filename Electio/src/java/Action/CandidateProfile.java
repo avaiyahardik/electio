@@ -37,22 +37,25 @@ public class CandidateProfile implements Controller.Action {
         } else {
             view = "profile.jsp";
             title = "Profile";
-            long id = Long.parseLong(elec_id);
             try {
+                long id = Long.parseLong(elec_id);
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-
-                Election e = objE.getElection(id);
                 Nominee n = objN.getNominee(id, email);
-                Candidate c = objC.getCandidate(id, email);
                 Organization o = objO.getOrganization(n.getOrganization_id());
-                String reason = objN.getReason(id, email);
                 req.setAttribute("nominee", n);
-                req.setAttribute("candidate", c);
                 req.setAttribute("organization", o);
-                req.setAttribute("reason", reason);
+                if (n.getStatus() == 1) {
+                    Candidate c = objC.getCandidate(id, email);
+                    req.setAttribute("candidate", c);
+                } else if (n.getStatus() == 2) {
+                    String reason = objN.getReason(id, email);
+                    req.setAttribute("reason", reason);
+                }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election number";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("Candidate Profile Err: " + ex.getMessage());

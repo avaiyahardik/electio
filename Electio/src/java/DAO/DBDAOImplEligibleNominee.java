@@ -5,8 +5,6 @@
  */
 package DAO;
 
-import Model.Election;
-import Model.ElectionType;
 import Model.EligibleNominee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,19 +16,19 @@ import java.util.ArrayList;
  *
  * @author darshit
  */
-public class DBDAOImplProbableNominee {
+public class DBDAOImplEligibleNominee {
 
     private Connection con;
-    private static DBDAOImplProbableNominee obj = null;
+    private static DBDAOImplEligibleNominee obj = null;
 
-    private DBDAOImplProbableNominee() throws SQLException {
+    private DBDAOImplEligibleNominee() throws SQLException {
         con = DBConnection.getConnection();
     }
 
-    public static DBDAOImplProbableNominee getInstance() throws SQLException {
+    public static DBDAOImplEligibleNominee getInstance() throws SQLException {
         if (obj == null) {
             System.out.println("New DBDAOImpl created");
-            obj = new DBDAOImplProbableNominee();
+            obj = new DBDAOImplEligibleNominee();
         }
         return obj;
     }

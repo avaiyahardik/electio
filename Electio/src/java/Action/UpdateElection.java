@@ -8,7 +8,7 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
@@ -45,7 +45,7 @@ public class UpdateElection implements Controller.Action {
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                 if (elec_id == null) {
                     err = "Unable to locate election id";
                     view = "listElections.jsp";

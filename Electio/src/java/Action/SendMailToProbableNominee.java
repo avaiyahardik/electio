@@ -8,7 +8,7 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
@@ -50,13 +50,13 @@ public class SendMailToProbableNominee implements Controller.Action {
                 DBDAOImplNominee objN = null;
                 DBDAOImplCandidate objC = null;
                 DBDAOImplVoter objV = null;
-                DBDAOImplProbableNominee objP = null;
+                DBDAOImplEligibleNominee objP = null;
                 try {
                     objE = DBDAOImplElection.getInstance();
                     objN = DBDAOImplNominee.getInstance();
                     objC = DBDAOImplCandidate.getInstance();
                     objV = DBDAOImplVoter.getInstance();
-                    objP = DBDAOImplProbableNominee.getInstance();
+                    objP = DBDAOImplEligibleNominee.getInstance();
 
                     ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
                     String link = "<a href='" + DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";

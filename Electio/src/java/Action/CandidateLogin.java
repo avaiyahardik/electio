@@ -9,6 +9,7 @@ import Model.Election;
 import Model.Nominee;
 import Utilities.RandomString;
 import java.sql.SQLException;
+import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,12 +32,11 @@ public class CandidateLogin implements Controller.Action {
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("") || password == null || password.equals("")) {
             err = "Insufficiant parameters, email, password and retype password required";
         } else {
-            long election_id = Long.parseLong(elec_id);
-            password = RandomString.encryptPassword(password);
             try {
+                long election_id = Long.parseLong(elec_id);
+                password = RandomString.encryptPassword(password);
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 if (objN.nomineeLogin(election_id, email, password)) {
                     view = "home.jsp";
@@ -60,6 +60,9 @@ public class CandidateLogin implements Controller.Action {
                 } else {
                     err = "Invalid login cradentials, please retry";
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election number";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("CandidateLogin SQL Err: " + ex.getMessage());

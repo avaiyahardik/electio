@@ -18,11 +18,14 @@ public class CandidateLogout implements Controller.Action {
             view = "../index.jsp?electio=electio";
             err = "You are not logged in, or session already expired";
         } else {
-            long election_id = Long.parseLong(elec_id);
             try {
+                long election_id = Long.parseLong(elec_id);
                 req.getSession().invalidate();
                 view += "&election_id=" + election_id;
                 msg = "You're logged out successfully";
+            } catch (NumberFormatException ex) {
+                err = "Invalid election number";
+                System.out.println("NFE: " + ex);
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("Candidate Logout Error: " + ex.getMessage());

@@ -27,7 +27,7 @@ public class DBDAOImplVoter {
 
     public static DBDAOImplVoter getInstance() throws SQLException {
         if (obj == null) {
-            System.out.println("New DBDAOImpl created");
+            System.out.println("New DBDAOVoterImpl created");
             obj = new DBDAOImplVoter();
         }
         return obj;
@@ -49,7 +49,7 @@ public class DBDAOImplVoter {
 
     public boolean updateVoter(long election_id, String old_email, String new_email) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET email=? WHERE email=? AND election_id=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET email=?, link_status=0, status=0 WHERE email=? AND election_id=?");
         ps.setString(1, new_email);
         ps.setString(2, old_email);
         ps.setLong(3, election_id);
@@ -183,7 +183,6 @@ public class DBDAOImplVoter {
         } else {
             return false;
         }
-
     }
 
     public boolean updateVoterStatus(long election_id, String email) throws SQLException {

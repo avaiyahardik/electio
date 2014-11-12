@@ -7,9 +7,7 @@ package Action;
 
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplOrganization;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
-import Model.Nominee;
 import Model.Organization;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
