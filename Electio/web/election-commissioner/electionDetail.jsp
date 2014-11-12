@@ -223,7 +223,7 @@
                                     <th>Email ID</th>
                                     <th>Mobile No</th>
                                     <th>Photo</th>
-                                    <th>Action</th>
+                                   <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
 
@@ -243,11 +243,12 @@
                                         <a href="#" data-toggle="modal" data-target="#image-modal" class="img-link">
                                             <img src="..<%= File.separator%><%= c.getImage()%>" height="75" width="60" alt="Candidate Photo"/>
                                         </a>
-                                    </td>   
+                                    </td> 
+                                    <!--
                                     <td>
                                         <a href="Controller?action=delete_candidate&election_id=<%= c.getElection_id()%>&email=<%= c.getEmail()%>&reason=no reason" class="btn btn-effect btn-danger btn-sm"><i class="glyphicon glyphicon-remove"></i> Delete</a>
-                                    </td>
-
+                                    </td
+                                    -->
                                 </tr>
                                 <%}%>
                                 <%
@@ -542,7 +543,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Nominee Photo</h4>
+                <h4 class="modal-title">Photo</h4>
             </div>
             <div class="modal-body align-center">
 

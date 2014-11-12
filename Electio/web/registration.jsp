@@ -100,7 +100,7 @@
                                         <span class="arrow"></span>
                                         <i class="fa fa-mobile">+91</i> 
                                     </span>
-                                    <input type="text" class="form-control" name="mobile" required>
+                                    <input type="mobile" class="form-control" name="mobile" required>
                                 </div>
                             </div>
                         </div>

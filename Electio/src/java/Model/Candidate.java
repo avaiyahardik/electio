@@ -9,7 +9,7 @@ package Model;
  *
  * @author Hardik
  */
-public class Candidate extends UserInfo {
+public class Candidate extends User {
 
     private long election_id;
     private String requirements_file;

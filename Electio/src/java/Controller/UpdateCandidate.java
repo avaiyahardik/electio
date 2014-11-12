@@ -12,18 +12,13 @@ import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplUserInfo;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
-import Model.Election;
 import Model.Nominee;
 import Model.Organization;
-import Model.ProbableNominee;
-import Model.UserInfo;
-import Utilities.RandomString;
+import Model.User;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
@@ -36,7 +31,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.omg.CORBA.FieldNameHelper;
 
 /**
  *
@@ -183,7 +177,7 @@ public class UpdateCandidate extends HttpServlet {
                 }
                 if (organization_id != 0) {
                     int gen = Integer.parseInt(gender);
-                    UserInfo ui = new UserInfo();
+                    User ui = new User();
                     ui.setEmail(email);
                     ui.setFirstname(firstname);
                     ui.setGender(gen);

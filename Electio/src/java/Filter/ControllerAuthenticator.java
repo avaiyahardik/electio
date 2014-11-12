@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Properties;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -80,24 +78,8 @@ public class ControllerAuthenticator implements Filter {
                 rd.forward(request, response);
                 return;
             } else {
-
-                // here u'll have valid action, now check for required parameters
-          /*      map = new Properties();
-                 map.load(this.getClass().getClassLoader().getResourceAsStream(ACTION_PARAMETER_MAPPING));
-                 String str = map.getProperty(action);
-                 System.out.println("Total param: " + str);
-                 String params[] = str.split(",");
-                 for (String param : params) {
-                 System.out.println("Checking param: " + param);
-                 if (req.getParameter(param) == null) {
-                 view += "?err=Insufficient parameters";
-                 System.out.println("ControllerAuthenticator Insufficient parameters");
-                 RequestDispatcher rd = req.getRequestDispatcher(view);
-                 rd.forward(request, response);
-                 return;
-                 }
-                 }
-                 */            }
+                // valid action
+            }
         } else {
             view += "?err=No action found";
             System.out.println("ControllerAuthenticator No action found");

@@ -5,8 +5,6 @@
  */
 package Utilities;
 
-import Controller.*;
-
 /**
  *
  * @author Hardik
@@ -21,7 +19,6 @@ public class ObjectCreator {
         } catch (Exception e) {
             System.out.println("Object Creator Error: " + e);
         }
-
         return object;
     }
 

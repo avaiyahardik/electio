@@ -8,15 +8,12 @@ package Controller;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplProbableNominee;
-import DAO.DBDAOImplementation;
 import Model.Nominee;
 import Model.Organization;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Utilities.RandomString;
 import java.io.File;
-import javax.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +25,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.omg.CORBA.FieldNameHelper;
 
 /**
  *
@@ -181,7 +177,7 @@ public class NomineeRegistration extends HttpServlet {
                             Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
                             if (objN.registerNominee(nominee)) {
                                 if (objP.checkEmailExists(email)) {
-                                    ProbableNominee pn = new ProbableNominee(election_id, email, 2);
+                                    EligibleNominee pn = new EligibleNominee(election_id, email, 2);
                                     objP.changeProbableNomineeStatus(pn);
                                 }
                                 view = "index.jsp?election_id=" + election_id;

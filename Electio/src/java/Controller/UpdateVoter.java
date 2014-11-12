@@ -6,7 +6,6 @@
 package Controller;
 
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Voter;
 import Utilities.RandomString;
 import java.io.IOException;

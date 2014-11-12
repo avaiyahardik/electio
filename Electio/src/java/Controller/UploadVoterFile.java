@@ -10,12 +10,10 @@ import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
-import Model.Organization;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
 import Utilities.RandomString;
 import java.io.BufferedReader;
@@ -35,7 +33,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.omg.CORBA.FieldNameHelper;
 
 /**
  *
@@ -91,7 +88,7 @@ public class UploadVoterFile extends HttpServlet {
                     request.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = objV.getVoters(election_id);
                     request.setAttribute("voters", voters);
-                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(election_id);
+                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
                     request.setAttribute("probable_nominee", pns);
                 } else if (fileItem.getFieldName().equals("voter_file")) {
                     System.out.println("FileName=" + fileItem.getName());

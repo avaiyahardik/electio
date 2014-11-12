@@ -1,4 +1,4 @@
-s<jsp:include page="header.jsp"/>
+<jsp:include page="header.jsp"/>
 <title>Recover Password</title>
 
 <div class="row">

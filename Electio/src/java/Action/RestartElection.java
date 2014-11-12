@@ -26,34 +26,35 @@ public class RestartElection implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        String election_id = req.getParameter("election_id");
-        String petition_duration = req.getParameter("petition_duration");
+        String elec_id = req.getParameter("election_id");
+        String email = (String) req.getSession().getAttribute("email");
         String view = "Controller?action=dashboard";
         String title = "Dashboard";
-        String err=null;
-        String msg=null;
-        
-        try {
-            Timestamp voting_start = new Timestamp(dateFormat.parse(req.getParameter("voting_start")).getTime());
-            Timestamp voting_end = new Timestamp(dateFormat.parse(req.getParameter("voting_end")).getTime());
-            DBDAOImplElection objE=DBDAOImplElection.getInstance();
-            DBDAOImplCandidate objC=DBDAOImplCandidate.getInstance();
-            if(objE.updateElectionDates(Long.parseLong(election_id), voting_start, voting_end, Integer.parseInt(petition_duration)) && objC.setVoteZero(Long.parseLong(election_id))){
-                msg="Election Restarted";
+        String err = null;
+        String msg = null;
+        if (email == null || email.equals("")) {
+            err = "You are not logged in, or session already expired";
+        } else {
+            try {
+                long election_id = Long.parseLong(elec_id);
+                Timestamp voting_start = new Timestamp(dateFormat.parse(req.getParameter("voting_start")).getTime());
+                Timestamp voting_end = new Timestamp(dateFormat.parse(req.getParameter("voting_end")).getTime());
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                if (objE.updateElectionDates(election_id, voting_start, voting_end) && objC.setVoteZero(election_id)) {
+                    msg = "Election Restarted";
+                } else {
+                    err = "Fail to restart election";
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(RestartElection.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                System.out.println("Restart Election Err: " + ex.getMessage());
             }
-            else{
-                err="Fail to restart election";
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(RestartElection.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            System.out.println("Restart Election Err: "+ex.getMessage());
         }
-
         req.setAttribute("title", title);
         req.setAttribute("err", err);
         req.setAttribute("msg", msg);
         return view;
     }
-
 }

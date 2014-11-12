@@ -7,14 +7,10 @@ package Action;
 
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplElectionCommissioner;
-import DAO.DBDAOImplementation;
 import Model.Election;
-import Model.ElectionCommissioner;
 import Utilities.RandomString;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
