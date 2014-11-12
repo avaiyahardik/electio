@@ -43,32 +43,42 @@ public class SendMailToProbableNominee implements Controller.Action {
             if (elec_id == null || elec_id.equals("")) {
                 err = "invalid parameter";
             } else {
-                long election_id = Long.parseLong(elec_id);
-                view = "electionDetail.jsp";
-                title = "Election Detail";
                 DBDAOImplElection objE = null;
                 DBDAOImplNominee objN = null;
                 DBDAOImplCandidate objC = null;
                 DBDAOImplVoter objV = null;
                 DBDAOImplEligibleNominee objP = null;
+                long election_id = 0;
                 try {
+                    election_id = Long.parseLong(elec_id);
                     objE = DBDAOImplElection.getInstance();
                     objN = DBDAOImplNominee.getInstance();
                     objC = DBDAOImplCandidate.getInstance();
                     objV = DBDAOImplVoter.getInstance();
                     objP = DBDAOImplEligibleNominee.getInstance();
 
-                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
-                    String link = "<a href='" + DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
-                    for (EligibleNominee itm : pns) {
-                        if (itm.getStatus() == 0) {
-                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {
-                                itm.setStatus(1);
-                                objP.changeProbableNomineeStatus(itm);
+                    if (!objE.isValidElectionId(election_id, email)) {
+                        err = "Invalid election id";
+                    } else {
+                        view = "electionDetail.jsp";
+                        title = "Election Detail";
+
+                        ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
+                        String link = "<a href='" + DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "candidate/index.jsp?election_id=" + election_id + "</a>";
+                        for (EligibleNominee itm : pns) {
+                            if (itm.getStatus() == 0) {
+                                if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Nominee Registration Link", link, itm.getEmail())) {
+                                    itm.setStatus(1);
+                                    objP.changeProbableNomineeStatus(itm);
+                                }
                             }
                         }
                     }
+                } catch (NumberFormatException ex) {
+                    err = "Invalid election id";
+                    System.out.println("NFE: " + ex);
                 } catch (SQLException ex) {
+                    err = ex.getMessage();
                     System.out.println("Err SendMailToNominee: " + ex.getMessage());
                 }
                 try {
@@ -94,5 +104,4 @@ public class SendMailToProbableNominee implements Controller.Action {
         req.setAttribute("title", title);
         return view;
     }
-
 }
