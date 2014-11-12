@@ -1,7 +1,7 @@
 <%@page import="Utilities.RandomString"%>
-<%@page import="Model.UserInfo"%>
-<%@page import="DAO.DBDAOImplUserInfo"%>
-<%@page import="Model.ProbableNominee"%>
+<%@page import="Model.User"%>
+<%@page import="DAO.DBDAOImplUser"%>
+<%@page import="Model.EligibleNominee"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -426,8 +426,8 @@
                                 <tr id="blank_row_nominee"></tr>
                                 <!-- Display Voter Data by Loop -->
 
-                                <% ArrayList<ProbableNominee> pn = (ArrayList<ProbableNominee>) request.getAttribute("probable_nominee");
-                                    for (ProbableNominee p : pn) {
+                                <% ArrayList<EligibleNominee> pn = (ArrayList<EligibleNominee>) request.getAttribute("probable_nominee");
+                                    for (EligibleNominee p : pn) {
                                 %>
                                 <tr>
                                     <td><%= p.getEmail()%></td>
