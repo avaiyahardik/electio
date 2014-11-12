@@ -22,7 +22,7 @@ public class ElectionResult implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
-        String view = "electionResult.jsp";  // default view should be login page itself
+        String view = "electionResult.jsp";
         String title = "Election Result";
         String msg = null;
         String err = null;
@@ -32,10 +32,8 @@ public class ElectionResult implements Controller.Action {
             view = "index.jsp";
             title = "Login";
         } else {
-            long election_id = Long.parseLong(elec_id);
-
             try {
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                long election_id = Long.parseLong(elec_id);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 int election_type = (int) objE.getElectionType(election_id).getType_id();
@@ -47,13 +45,16 @@ public class ElectionResult implements Controller.Action {
                     candidates = objC.getCandidatesForWeightedVoting(election_id);
                 }
                 req.setAttribute("candidates", candidates);
+            } catch (NumberFormatException ex) {
+                err = "Invalid election id";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
-                err = ex.getMessage(); // error message should be displayed on the view page
+                err = ex.getMessage();
                 System.out.println("ElectionResult SQL Err: " + ex.getMessage());
             }
         }
-        req.setAttribute("msg", msg); // setting msg attribute
-        req.setAttribute("err", err); // setting err attribute
+        req.setAttribute("msg", msg);
+        req.setAttribute("err", err);
         req.setAttribute("title", title);
         return view;
     }

@@ -32,7 +32,7 @@ public class ElectionDetails implements Controller.Action {
                 Election el = objE.getElection(election_id);
                 req.setAttribute("election", el);
             } catch (NumberFormatException ex) {
-                err = "Invalid organization id";
+                err = "Invalid election id";
                 System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage();
