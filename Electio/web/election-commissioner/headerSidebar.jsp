@@ -108,7 +108,7 @@
                         </li>
 
                         <li>
-                            <a href="Controller?action=create_new_election"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New Election</span></a>
+                            <a href="Controller?action=create_new_election&mode=display"><span class="sidebar-text"><i class="fa fa-pencil"></i>Create New Election</span></a>
                         </li>
                     </ul>
                 </div>

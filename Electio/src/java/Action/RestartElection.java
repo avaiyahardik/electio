@@ -32,6 +32,7 @@ public class RestartElection implements Controller.Action {
         String title = "Dashboard";
         String err=null;
         String msg=null;
+        
         try {
             Timestamp voting_start = new Timestamp(dateFormat.parse(req.getParameter("voting_start")).getTime());
             Timestamp voting_end = new Timestamp(dateFormat.parse(req.getParameter("voting_end")).getTime());
