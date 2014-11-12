@@ -552,6 +552,51 @@ public class GenerateReport implements Controller.Action {
                     chapter = new Chapter(paragraph, 6);
                     document.add(chapter);
 
+                    ArrayList<Candidate> candidate = objC.getCandidates(id);
+//              table = new PdfPTable(4);
+                    table = new PdfPTable(3);
+                    table.setWidthPercentage(100);
+                    table.setSpacingBefore(20f);
+                    table.setSpacingAfter(10f);
+
+                    cell = new PdfPCell(new Paragraph("Name"));
+//                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                    cell = new PdfPCell(new Paragraph("No. of Votes"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+
+                    cell = new PdfPCell(new Paragraph("Votes in percentage"));
+//                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    cell.setBorder(PdfPCell.NO_BORDER);
+//                cell.setPadding(10f);
+                    table.addCell(cell);
+                    long total_votes=0;
+                    for (Candidate ca : candidate) {
+                        total_votes+=ca.getVotes();
+                    }
+                    for (Candidate c : candidate) {
+                        cell = new PdfPCell(new Paragraph(c.getFirstname() + " " + c.getLastname()));
+                        cell.setBorder(PdfPCell.NO_BORDER);
+                        table.addCell(cell);
+
+                        System.out.println("VVVVVVVvvotessssssssss: "+c.getVotes());
+                        cell = new PdfPCell(new Paragraph(Long.toString(c.getVotes())));
+                        cell.setBorder(PdfPCell.NO_BORDER);
+                        table.addCell(cell);
+
+                        cell = new PdfPCell(new Paragraph(Long.toString((c.getVotes()*100)/total_votes) + "%"));
+                        cell.setBorder(PdfPCell.NO_BORDER);
+                        table.addCell(cell);
+
+                    }
+                    document.add(table);
+
                     document.close();
                     req.setAttribute("file_path", filePath);
                     Desktop desktop = Desktop.getDesktop();
