@@ -7,9 +7,7 @@ package Action;
 
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
-import Utilities.RandomString;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;

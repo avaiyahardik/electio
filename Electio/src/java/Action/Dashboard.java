@@ -35,7 +35,7 @@ public class Dashboard implements Controller.Action {
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 elections = objE.getCompletedElections(email);
             } catch (SQLException ex) {
-                err = ex.getMessage();
+                err = "Could not complete action";
                 System.out.println("ViewElections Err: " + ex.getMessage());
             }
             req.setAttribute("elections", elections);
@@ -45,5 +45,4 @@ public class Dashboard implements Controller.Action {
         req.setAttribute("title", title);
         return view;
     }
-
 }

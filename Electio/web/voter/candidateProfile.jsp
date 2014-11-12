@@ -1,5 +1,4 @@
 <%@page import="DAO.DBDAOImplOrganization"%>
-<%@page import="DAO.DBDAOImplementation"%>
 <%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="Model.Organization"%>
 <%@page import="Model.Candidate"%>

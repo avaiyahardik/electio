@@ -9,7 +9,7 @@ package Model;
  *
  * @author Hardik
  */
-public class UserInfo {
+public class User {
 
     private String email;
     private String firstname;

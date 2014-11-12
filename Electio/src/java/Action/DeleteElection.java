@@ -8,7 +8,7 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Election;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class DeleteElection implements Controller.Action {
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                 ArrayList<Election> elections = null;
                 elections = objE.getElections(email);
                 req.setAttribute("elections", elections);

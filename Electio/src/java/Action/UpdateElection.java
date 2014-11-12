@@ -8,15 +8,13 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,7 +45,7 @@ public class UpdateElection implements Controller.Action {
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                 if (elec_id == null) {
                     err = "Unable to locate election id";
                     view = "listElections.jsp";
@@ -108,7 +106,7 @@ public class UpdateElection implements Controller.Action {
                     req.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = objV.getVoters(id);
                     req.setAttribute("voters", voters);
-                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(id);
+                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
                     req.setAttribute("probable_nominee", pns);
                 }
             } catch (Exception ex) {

@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Model.UserInfo;
+import Model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,30 +15,30 @@ import java.sql.SQLException;
  *
  * @author Hardik
  */
-public class DBDAOImplUserInfo {
+public class DBDAOImplUser {
 
     private Connection con;
-    private static DBDAOImplUserInfo obj = null;
+    private static DBDAOImplUser obj = null;
 
-    private DBDAOImplUserInfo() throws SQLException {
+    private DBDAOImplUser() throws SQLException {
         con = DBConnection.getConnection();
     }
 
-    public static DBDAOImplUserInfo getInstance() throws SQLException {
+    public static DBDAOImplUser getInstance() throws SQLException {
         if (obj == null) {
-            System.out.println("New DBDAOImpl created");
-            obj = new DBDAOImplUserInfo();
+            System.out.println("New DBDAOImplUser created");
+            obj = new DBDAOImplUser();
         }
         return obj;
     }
 
-    public UserInfo getUserInfo(String email) throws SQLException {
+    public User getUserInfo(String email) throws SQLException {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_user_info WHERE email=?");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
-        UserInfo ui = null;
+        User ui = null;
         if (rs.next()) {
-            ui = new UserInfo();
+            ui = new User();
             ui.setEmail(rs.getString("email"));
             ui.setFirstname(rs.getString("firstname"));
             ui.setGender(rs.getInt("gender"));
@@ -51,7 +51,7 @@ public class DBDAOImplUserInfo {
         return ui;
     }
 
-    public boolean updateUserInfo(UserInfo ui) throws SQLException {
+    public boolean updateUserInfo(User ui) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_user_info SET firstname=?,lastname=?,gender=?,mobile=?,organization_id=? WHERE email=?");
         ps.setString(1, ui.getFirstname());

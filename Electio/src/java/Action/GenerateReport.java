@@ -8,12 +8,12 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
 import com.lowagie.text.Chapter;
 import com.lowagie.text.Chunk;
@@ -65,7 +65,7 @@ public class GenerateReport implements Controller.Action {
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                 view = "listElections.jsp";
                 title = "Elections";
                 ArrayList<Election> elections = null;
@@ -269,7 +269,7 @@ public class GenerateReport implements Controller.Action {
                     chapter = new Chapter(paragraph, 2);
                     document.add(chapter);
 
-                    ArrayList<ProbableNominee> pNominees = objP.getAllProbableNominees(id);
+                    ArrayList<EligibleNominee> pNominees = objP.getAllProbableNominees(id);
                     table = new PdfPTable(2);
                     table.setWidthPercentage(100);
                     table.setSpacingBefore(20f);
@@ -287,7 +287,7 @@ public class GenerateReport implements Controller.Action {
                     cell.setPadding(10f);
                     table.addCell(cell);
                     String status = null;
-                    for (ProbableNominee pn : pNominees) {
+                    for (EligibleNominee pn : pNominees) {
                         cell = new PdfPCell(new Paragraph(pn.getEmail()));
                         cell.setBorder(PdfPCell.NO_BORDER);
                         cell.setPadding(10f);

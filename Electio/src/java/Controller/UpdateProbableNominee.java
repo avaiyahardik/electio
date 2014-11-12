@@ -5,11 +5,8 @@
  */
 package Controller;
 
-import DAO.DBDAOImplProbableNominee;
-import DAO.DBDAOImplementation;
-import Model.ProbableNominee;
-import Model.Voter;
-import Utilities.RandomString;
+import DAO.DBDAOImplEligibleNominee;
+import Model.EligibleNominee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -47,7 +44,7 @@ public class UpdateProbableNominee extends HttpServlet {
                         out.print("Command not found");
                     } else {
 //                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                        DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                        DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                         long election_id = Long.parseLong(request.getParameter("election_id"));
                         if (cmd.equals("delete")) {
                             String nominee_email = request.getParameter("probable_nominee_email");
@@ -66,7 +63,7 @@ public class UpdateProbableNominee extends HttpServlet {
                             }
                         } else if (cmd.equals("add")) {
                             String nominee_email = request.getParameter("email");
-                            ProbableNominee pn = new ProbableNominee(election_id, nominee_email, 0);
+                            EligibleNominee pn = new EligibleNominee(election_id, nominee_email, 0);
                             if (objP.addProbableNominee(pn)) {
                                 out.print("Added");
                             } else {

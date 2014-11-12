@@ -8,22 +8,18 @@ package Controller;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
-import Model.Organization;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
-import Utilities.RandomString;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -36,7 +32,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.omg.CORBA.FieldNameHelper;
 
 /**
  *
@@ -71,7 +66,7 @@ public class UploadProbableNomineeFile extends HttpServlet {
             DBDAOImplElection objE = DBDAOImplElection.getInstance();
             DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
             DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-            DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+            DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
             DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
             List<FileItem> fileItemsList = uploader.parseRequest(request);
             Iterator<FileItem> fileItemsIterator = fileItemsList.iterator();
@@ -92,7 +87,7 @@ public class UploadProbableNomineeFile extends HttpServlet {
                     request.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = objV.getVoters(election_id);
                     request.setAttribute("voters", voters);
-                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(election_id);
+                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
                     request.setAttribute("probable_nominee", pns);
                 } else if (fileItem.getFieldName().equals("nominee_file")) {
                     System.out.println("FileName=" + fileItem.getName());
@@ -109,7 +104,7 @@ public class UploadProbableNomineeFile extends HttpServlet {
                     nominee_file = request.getServletContext().getRealPath("/temp") + File.separator + date.getTime() + ext;
                     System.out.println("Absolute Path at server=" + nominee_file);
                     System.out.println("File " + fileItem.getName() + " uploaded successfully.");
-                    ProbableNominee pn;
+                    EligibleNominee pn;
                     File f = new File(nominee_file);
                     FileReader fr = new FileReader(f);
                     BufferedReader br = new BufferedReader(fr);
@@ -117,7 +112,7 @@ public class UploadProbableNomineeFile extends HttpServlet {
                     String reg = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     while (s != null) {
                         if (s.matches(reg)) {
-                            pn = new ProbableNominee(election_id, s, 0);
+                            pn = new EligibleNominee(election_id, s, 0);
                             objP.addProbableNominee(pn);
                         } else {
                             System.out.println("invalid email address " + s);

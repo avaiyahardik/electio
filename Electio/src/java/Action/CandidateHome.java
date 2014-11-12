@@ -45,7 +45,7 @@ public class CandidateHome implements Controller.Action {
                     req.setAttribute("reason", reason);
                 }
             } catch (SQLException ex) {
-                err = ex.getMessage();
+                err = "Could not complete action";
                 System.out.println("Candidate Home Err: " + ex.getMessage());
             }
         }

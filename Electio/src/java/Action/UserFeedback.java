@@ -1,10 +1,7 @@
 package Action;
 
-import DAO.DBDAOImplementation;
-import Model.Feedback_info;
 import Utilities.EmailSender;
 import Utilities.RandomString;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
