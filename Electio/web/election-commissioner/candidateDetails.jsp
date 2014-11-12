@@ -73,19 +73,20 @@
 
                                 <div class="form-group col-md-10">
                                     <a href="..<%= File.separator%><%= c.getRequirements_file()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Requirements file</a>
-                                    <a href="..<%= File.separator%><%= c.getManifesto() %>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto file</a>
+                                    <a href="..<%= File.separator%><%= c.getManifesto()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Manifesto file</a>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
 
-
-                    <div class="col-md-12">
-                        <div class="align-center">
-                            <a href="Controller?action=delete_candidate&election_id=<%=c.getElection_id()%>&email=<%=c.getEmail()%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete Candidate</a>
-                        </div>
-                    </div>
+                    <!--
+                                        <div class="col-md-12">
+                                            <div class="align-center">
+                                                <a href="Controller?action=delete_candidate&election_id=<%=c.getElection_id()%>&email=<%=c.getEmail()%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete Candidate</a>
+                                            </div>
+                                        </div>
+                    -->
                 </div>
             </div>
 
