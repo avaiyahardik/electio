@@ -10,12 +10,8 @@ import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Election;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
