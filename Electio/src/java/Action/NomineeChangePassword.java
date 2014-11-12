@@ -33,7 +33,7 @@ public class NomineeChangePassword implements Controller.Action {
         String title = "Login";
 //        System.out.println("Email: " + email + ", Elec Id: " + elec_id);
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
-            err = "Session expired please login again";
+            err = "Session expired or you are not logged in please login";
         } else {
             view = "profile.jsp";
             title = "Profile";
@@ -44,8 +44,8 @@ public class NomineeChangePassword implements Controller.Action {
             if (old_password == null || old_password.equals("") || new_password == null || new_password.equals("") || retype_password == null || retype_password.equals("")) {
                 err = "All fields are mendatory";
             } else {
-                long election_id = Long.parseLong(elec_id);
                 try {
+                    long election_id = Long.parseLong(elec_id);
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     old_password = RandomString.encryptPassword(old_password);
                     if (objN.nomineeLogin(election_id, email, old_password)) {
@@ -62,11 +62,15 @@ public class NomineeChangePassword implements Controller.Action {
                     } else {
                         err = "Old password doesn't match, please retry";
                     }
+                } catch (NumberFormatException ex) {
+                    err = "Invalid election id";
+                    System.out.println("NFE: " + ex);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("NomineeChangePassword Err: " + ex.getMessage());
                 }
                 try {
+                    long election_id = Long.parseLong(elec_id);
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
                     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
@@ -80,6 +84,9 @@ public class NomineeChangePassword implements Controller.Action {
                     req.setAttribute("candidate", c);
                     req.setAttribute("organization", o);
                     req.setAttribute("reason", reason);
+                } catch (NumberFormatException ex) {
+                    err = "Invalid election id";
+                    System.out.println("NFE: " + ex);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("Nominee/Candidate Profile Err: " + ex.getMessage());

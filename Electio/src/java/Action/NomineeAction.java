@@ -109,7 +109,7 @@ public class NomineeAction implements Controller.Action {
                     }
                 }
             } catch (NumberFormatException ex) {
-                err = "Invalid election number";
+                err = "Invalid election id";
                 System.out.println("NFE: " + ex);
             } catch (Exception ex) {
                 err = ex.getMessage();
