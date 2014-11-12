@@ -7,20 +7,13 @@ package Controller;
 
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplOrganization;
-import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplUserInfo;
-import DAO.DBDAOImplementation;
-import Model.Nominee;
-import Model.Organization;
-import Model.ProbableNominee;
-import Model.UserInfo;
+import Model.User;
 import Utilities.EmailSender;
 import Utilities.RandomString;
 import java.io.File;
 import javax.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -29,10 +22,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.omg.CORBA.FieldNameHelper;
 
 /**
  *
@@ -79,7 +70,7 @@ public class RegisterExistingNominee extends HttpServlet {
 
         try {
             DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
-            UserInfo user = null;
+            User user = null;
             try {
                 user = objU.getUserInfo(email);
                 firstname = user.getFirstname();

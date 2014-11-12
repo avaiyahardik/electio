@@ -10,19 +10,14 @@ import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplProbableNominee;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
 import Utilities.EmailSender;
-import Utilities.RandomString;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -95,7 +90,7 @@ public class SendMailToVoters implements Controller.Action {
                     req.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = objV.getVoters(election_id);
                     req.setAttribute("voters", voters);
-                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(election_id);
+                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
                     req.setAttribute("probable_nominee", pns);
 
                 } catch (Exception ex) {

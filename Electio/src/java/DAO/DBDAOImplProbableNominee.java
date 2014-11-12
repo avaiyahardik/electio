@@ -7,7 +7,7 @@ package DAO;
 
 import Model.Election;
 import Model.ElectionType;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +35,7 @@ public class DBDAOImplProbableNominee {
         return obj;
     }
 
-    public boolean addProbableNominee(ProbableNominee pn) throws SQLException {
+    public boolean addProbableNominee(EligibleNominee pn) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("INSERT INTO tbl_probable_nominee VALUES(?,?,?)");
         ps.setLong(1, pn.getElection_id());
@@ -49,7 +49,7 @@ public class DBDAOImplProbableNominee {
         return result;
     }
 
-    public boolean changeProbableNomineeStatus(ProbableNominee pn) throws SQLException {
+    public boolean changeProbableNomineeStatus(EligibleNominee pn) throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_probable_nominee SET status=? WHERE election_id=? AND email=?");
         ps.setInt(1, pn.getStatus());
@@ -63,14 +63,14 @@ public class DBDAOImplProbableNominee {
         return result;
     }
 
-    public ArrayList<ProbableNominee> getAllProbableNominees(long election_id) throws SQLException {
-        ArrayList<ProbableNominee> pns = new ArrayList<>();
-        ProbableNominee pn = null;
+    public ArrayList<EligibleNominee> getAllProbableNominees(long election_id) throws SQLException {
+        ArrayList<EligibleNominee> pns = new ArrayList<>();
+        EligibleNominee pn = null;
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_probable_nominee WHERE election_id=?");
         ps.setLong(1, election_id);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            pn = new ProbableNominee();
+            pn = new EligibleNominee();
             pn.setElection_id(election_id);;
             pn.setEmail(rs.getString("email"));
             pn.setStatus(rs.getInt("status"));

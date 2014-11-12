@@ -13,7 +13,7 @@ import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
 import com.lowagie.text.Chapter;
 import com.lowagie.text.Chunk;
@@ -269,7 +269,7 @@ public class GenerateReport implements Controller.Action {
                     chapter = new Chapter(paragraph, 2);
                     document.add(chapter);
 
-                    ArrayList<ProbableNominee> pNominees = objP.getAllProbableNominees(id);
+                    ArrayList<EligibleNominee> pNominees = objP.getAllProbableNominees(id);
                     table = new PdfPTable(2);
                     table.setWidthPercentage(100);
                     table.setSpacingBefore(20f);
@@ -287,7 +287,7 @@ public class GenerateReport implements Controller.Action {
                     cell.setPadding(10f);
                     table.addCell(cell);
                     String status = null;
-                    for (ProbableNominee pn : pNominees) {
+                    for (EligibleNominee pn : pNominees) {
                         cell = new PdfPCell(new Paragraph(pn.getEmail()));
                         cell.setBorder(PdfPCell.NO_BORDER);
                         cell.setPadding(10f);

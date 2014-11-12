@@ -6,10 +6,7 @@
 package Controller;
 
 import DAO.DBDAOImplProbableNominee;
-import DAO.DBDAOImplementation;
-import Model.ProbableNominee;
-import Model.Voter;
-import Utilities.RandomString;
+import Model.EligibleNominee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -66,7 +63,7 @@ public class UpdateProbableNominee extends HttpServlet {
                             }
                         } else if (cmd.equals("add")) {
                             String nominee_email = request.getParameter("email");
-                            ProbableNominee pn = new ProbableNominee(election_id, nominee_email, 0);
+                            EligibleNominee pn = new EligibleNominee(election_id, nominee_email, 0);
                             if (objP.addProbableNominee(pn)) {
                                 out.print("Added");
                             } else {

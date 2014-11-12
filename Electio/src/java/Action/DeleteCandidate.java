@@ -13,7 +13,7 @@ import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class DeleteCandidate implements Controller.Action {
                     req.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = objV.getVoters(election_id);
                     req.setAttribute("voters", voters);
-                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(election_id);
+                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
                     req.setAttribute("probable_nominee", pns);
 
                 } catch (Exception ex) {

@@ -9,16 +9,16 @@ package Model;
  *
  * @author Hardik
  */
-public class ProbableNominee {
+public class EligibleNominee {
 
     private long election_id;
     private String email;
     private int status;
 
-    public ProbableNominee() {
+    public EligibleNominee() {
     }
 
-    public ProbableNominee(long election_id, String email, int status) {
+    public EligibleNominee(long election_id, String email, int status) {
         this.election_id = election_id;
         this.email = email;
         this.status = status;

@@ -16,7 +16,7 @@ import Model.Election;
 import Model.ElectionCommissioner;
 import Model.Nominee;
 import Model.Organization;
-import Model.ProbableNominee;
+import Model.EligibleNominee;
 import Model.Voter;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class ViewElectionDetail implements Controller.Action {
                     req.setAttribute("candidates", candidates);
                     ArrayList<Voter> voters = objV.getVoters(id);
                     req.setAttribute("voters", voters);
-                    ArrayList<ProbableNominee> pns = objP.getAllProbableNominees(id);
+                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
                     req.setAttribute("probable_nominee", pns);
                 }
             } catch (SQLException ex) {
