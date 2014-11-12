@@ -64,7 +64,7 @@ public class CandidateLogin implements Controller.Action {
                 err = "Invalid election number";
                 System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
-                err = ex.getMessage();
+                err = "Could not complete action";
                 System.out.println("CandidateLogin SQL Err: " + ex.getMessage());
             }
         }

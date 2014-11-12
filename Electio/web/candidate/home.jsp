@@ -1,6 +1,5 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Election"%>
 <jsp:include page="header.jsp"/>
 <%

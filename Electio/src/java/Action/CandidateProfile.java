@@ -57,7 +57,7 @@ public class CandidateProfile implements Controller.Action {
                 err = "Invalid election number";
                 System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
-                err = ex.getMessage();
+                err = "Could not complete action";
                 System.out.println("Candidate Profile Err: " + ex.getMessage());
             }
         }

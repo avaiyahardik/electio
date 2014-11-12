@@ -1,7 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="Model.Candidate"%>
-<%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Organization"%>
 <%@page import="java.io.File"%>
 <%@page import="Model.Nominee"%>

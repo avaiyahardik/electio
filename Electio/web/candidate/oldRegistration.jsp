@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="DAO.DBDAOImplElection"%>
-<%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

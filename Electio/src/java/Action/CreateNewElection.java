@@ -82,7 +82,7 @@ public class CreateNewElection implements Controller.Action {
                         }
                     }
                 } catch (Exception ex) {
-                    err = ex.getMessage();
+                    err = "Could not complete action";
                     System.out.println("Create New Election Err: " + ex.getMessage());
                 }
             } catch (Exception ex) {
