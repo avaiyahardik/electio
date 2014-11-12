@@ -64,7 +64,7 @@ public class EmailSender {
             return true;
 
         } catch (MessagingException me) {
-            me.printStackTrace();
+            System.out.println("Multiple Rec. Email Sender Err: " + me.getMessage());
         }
         return false;
     }
@@ -100,7 +100,7 @@ public class EmailSender {
             return true;
 
         } catch (MessagingException me) {
-            me.printStackTrace();
+            System.out.println("Single Email Sender Err: " + me.getMessage());
         }
         return false;
     }

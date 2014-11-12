@@ -16,15 +16,15 @@ import java.util.Random;
  */
 public class RandomString {
 
-  //  public static final String DOMAIN_BASE = "http://localhost:8084/Electio/";
-    //String url=request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8);
+    //String DOMAIN=request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8);
     private static final String CHAR_LIST
             = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&-_=+?";
     private static Random random;
     public static final String ELECTIO_JAINTELE_EMAIL = "electio@jaintele.com";
     public static final String ELECTIO_JAINTELE_PASSWORD = "electio_2014";
-public static final String ELECTIO_GMAIL_EMAIL="sen.daiict@gmail.com";
-public static final String ELECTIO_GMAIL_PASSWORD="#password2014";
+    public static final String ELECTIO_GMAIL_EMAIL = "sen.daiict@gmail.com";
+    public static final String ELECTIO_GMAIL_PASSWORD = "#password2014";
+
     public static String generateRandomPassword() {
         random = new Random();
         StringBuffer randStr = new StringBuffer();
@@ -46,27 +46,6 @@ public static final String ELECTIO_GMAIL_PASSWORD="#password2014";
             return randomInt - 1;
         }
     }
-    /*
-     public static String encryptPassword(String password) {
-     MessageDigest msgDigest = null;
-     String encrptedPassword = null;
-
-     try {
-     msgDigest = MessageDigest.getInstance("SHA-1");
-     msgDigest.update(password.getBytes("UTF-8"));
-     } catch (NoSuchAlgorithmException ex) {
-     //         Logger.getLogger(RandomString.class.getName()).log(Level.SEVERE, null, ex);
-     System.out.println("EncryptPassword Error: " + ex.getMessage());
-     } catch (UnsupportedEncodingException ex) {
-     //  Logger.getLogger(RandomString.class.getName()).log(Level.SEVEREnull, ex);
-     System.out.println("EncryptPassword Error: " + ex.getMessage());
-     }
-     byte rawByte[] = msgDigest.digest();
-     encrptedPassword = (new BASE64Encoder()).encode(rawByte);
-
-     return encrptedPassword;
-     }
-     */
 
     public static String encryptPassword(String password) {
         String encrypted_password = password;
@@ -86,7 +65,7 @@ public static final String ELECTIO_GMAIL_PASSWORD="#password2014";
             //Get complete hashed password in hex format
             encrypted_password = sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("Err : " + e.getMessage());
+            System.out.println("encryptPassword Err : " + e.getMessage());
         }
         return encrypted_password;
     }
