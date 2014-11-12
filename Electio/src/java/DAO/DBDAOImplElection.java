@@ -250,13 +250,12 @@ public class DBDAOImplElection {
         return candidates;
     }
 
-    public boolean updateElectionDates(long election_id, Timestamp voting_start, Timestamp voting_end, int petition_duration) throws SQLException {
+    public boolean updateElectionDates(long election_id, Timestamp voting_start, Timestamp voting_end) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election SET voting_start=?,voting_end=?,petition_duration=? WHERE id=?");
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election SET voting_start=?,voting_end=? WHERE id=?");
         ps.setTimestamp(1, voting_start);
         ps.setTimestamp(2, voting_end);
-        ps.setInt(3, petition_duration);
-        ps.setLong(4, election_id);
+        ps.setLong(3, election_id);
         if (ps.executeUpdate() > 0) {
             result = true;
         }
