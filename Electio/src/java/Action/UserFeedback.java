@@ -19,8 +19,8 @@ public class UserFeedback implements Controller.Action {
         String mobile_no = req.getParameter("mobile_no");
         String message = req.getParameter("message");
 
-        String view = "registration.jsp";
-        String title = "Registration";
+        String view = "index.jsp";
+        String title = "Home";
         String msg = null;
         String err = null;
 
@@ -30,24 +30,8 @@ public class UserFeedback implements Controller.Action {
         } else {
             String mesg = "email_id : " + email_id + " Name: " + first_name + " Mobile No: " + mobile_no;
             if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, "Feedback", mesg, "sen.daiict@gmail.com")) {
-                msg = "feedback mail successfully";
+                msg = "feedback sent successfully";
             }
-            /*try {
-             DBDAOImplementation obj = DBDAOImplementation.getInstance();
-
-             Feedback_info fd = new Feedback_info(email_id, first_name, mobile_no, message);
-             if (obj.feedback(fd)) {
-             msg = "You're registered successfully";
-             view = "index.jsp";
-             title = "Login";
-             } else {
-             err = "Fail to send message, please try again later";
-             System.out.println("Fail to send message, please try again later");
-             }
-             } catch (SQLException ex) {
-             err = ex.getMessage();
-             System.out.println("Feedback send SQL Err: " + ex.getMessage());
-             }*/
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
