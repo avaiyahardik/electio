@@ -23,7 +23,8 @@ public class RandomString {
     private static Random random;
     public static final String ELECTIO_JAINTELE_EMAIL = "electio@jaintele.com";
     public static final String ELECTIO_JAINTELE_PASSWORD = "electio_2014";
-
+public static final String ELECTIO_GMAIL_EMAIL="sen.daiict@gmail.com";
+public static final String ELECTIO_GMAIL_PASSWORD="#password2014";
     public static String generateRandomPassword() {
         random = new Random();
         StringBuffer randStr = new StringBuffer();

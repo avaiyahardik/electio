@@ -3,6 +3,7 @@ package Action;
 import DAO.DBDAOImplementation;
 import Model.Feedback_info;
 import Utilities.EmailSender;
+import Utilities.RandomString;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +32,7 @@ public class UserFeedback implements Controller.Action {
             err = "Please fill-up required fields";
         } else {
             String mesg = "email_id : " + email_id + " Name: " + first_name + " Mobile No: " + mobile_no;
-            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Feedback", mesg, "sen.daiict@gmail.com")) {
+            if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, "Feedback", mesg, "sen.daiict@gmail.com")) {
                 msg = "feedback mail successfully";
             }
             /*try {

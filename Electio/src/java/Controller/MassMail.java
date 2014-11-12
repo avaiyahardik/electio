@@ -6,6 +6,7 @@
 package Controller;
 
 import DAOImpl.EmailSender;
+import Utilities.RandomString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -42,7 +43,7 @@ public class MassMail extends HttpServlet {
 
         String msg = request.getParameter("msg");
         PrintWriter out = response.getWriter();
-        if (EmailSender.sendMail("sen.daiict@gmail.com", "#password2014", subject, msg, toemail)) {
+        if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, subject, msg, toemail)) {
             out.println("Email Sent Successfully");
             response.sendRedirect("MassMail.jsp");
         } else {

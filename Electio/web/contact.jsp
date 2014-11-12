@@ -1,3 +1,4 @@
+<%@page import="Utilities.RandomString"%>
 <jsp:include page="header.jsp"/>
 <title>Contact Us</title>
 <div class="page-title">
@@ -23,7 +24,7 @@
         <p><i class="fa fa-phone"></i> 
             <abbr title="Phone">P</abbr>: (+91) 81282-44869</p>
         <p><i class="fa fa-envelope-o"></i> 
-            <abbr title="Email">E</abbr>: <a href="mailto:sen.daiict@gmail.com">sen.daiict@gmail.com</a>
+            <abbr title="Email">E</abbr>: <a href="mailto:<%=RandomString.ELECTIO_GMAIL_EMAIL%>"><%=RandomString.ELECTIO_GMAIL_EMAIL%></a>
         </p>
         <p><i class="fa fa-clock-o"></i> 
             <abbr title="Hours">H</abbr>: Monday - Friday: 9:00 AM to 5:00 PM</p>
