@@ -26,15 +26,15 @@ public class CreateNewElection implements Controller.Action {
 
         String email = (String) req.getSession().getAttribute("email");
         String mode = req.getParameter("mode");
-        String view = "index.jsp";
-        String title = "Login";
+        String view = "newElection.jsp";
+        String title = "New Election";
         String msg = null;
         String err = null;
         if (email == null || email.equals("")) {
+            view = "index.jsp";
+            title = "Login";
             err = "Session expired or you are not logged in, please login";
         } else if (mode == null) {
-            view = "newElection.jsp";
-            title = "New Election";
             try {
                 String name = req.getParameter("name");
                 String description = req.getParameter("description");
@@ -89,7 +89,6 @@ public class CreateNewElection implements Controller.Action {
                 err = "Invalid inputted data";
                 System.out.println("CreateNewElection Err Parse input: " + ex.getMessage());
             }
-
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
