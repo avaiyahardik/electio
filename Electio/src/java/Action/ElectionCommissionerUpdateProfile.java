@@ -31,7 +31,6 @@ public class ElectionCommissionerUpdateProfile implements Controller.Action {
         } else {
             view = "profile.jsp";
             title = "Profile";
-
             try {
                 String firstname = req.getParameter("firstname");
                 String lastname = req.getParameter("lastname");
@@ -64,6 +63,9 @@ public class ElectionCommissionerUpdateProfile implements Controller.Action {
                         }
                     }
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid organization id";
+                System.out.println("NFE: " + ex);
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("ECUpdateProfile ERR: " + ex.getMessage());
