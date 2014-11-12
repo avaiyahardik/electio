@@ -6,12 +6,9 @@
 package Action;
 
 import DAO.DBDAOImplElection;
-import DAO.DBDAOImplementation;
 import Model.Election;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,13 +26,12 @@ public class Dashboard implements Controller.Action {
         String err = null;
         String title = "Login";
         if (email == null || email.equals("")) {
-            err = "Session expired please login again";
+            err = "Session expired or you are not logged in, please login";
         } else {
             view = "dashboard.jsp";
             title = "Dashboard";
             ArrayList<Election> elections = null;
             try {
-                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 elections = objE.getCompletedElections(email);
             } catch (SQLException ex) {

@@ -34,7 +34,6 @@ public class CreateNewElection implements Controller.Action {
         } else {
             view = "newElection.jsp";
             title = "New Election";
-
             try {
                 String name = req.getParameter("name");
                 String description = req.getParameter("description");
