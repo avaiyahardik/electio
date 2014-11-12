@@ -250,4 +250,16 @@ public class DBDAOImplCandidate {
         }
         return result;
     }
+
+    public boolean isValidEmail(String email, long election_id) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election_candidate WHERE election_id=? and email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = true;
+        }
+        return result;
+    }
 }

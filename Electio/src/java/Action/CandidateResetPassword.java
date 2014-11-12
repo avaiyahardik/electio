@@ -11,24 +11,29 @@ public class CandidateResetPassword implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getParameter("email");
-        String election_id = req.getParameter("election_id");
-        String view = "index.jsp?election_id=" + election_id;
+        String elec_id = req.getParameter("election_id");
+        String view = "index.jsp?election_id=" + elec_id;
         String msg = null;
         String err = null;
         String title = "Forgot Password";
-        if (email == null || email.equals("")) {
+        if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Email Id required";
         } else {
             try {
+                long elecion_id = Long.parseLong(elec_id);
                 String newPassword = RandomString.generateRandomPassword();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                String s[] = {email};
-                if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, "New Password", newPassword, s)) {
-                    newPassword = RandomString.encryptPassword(newPassword);
-                    objC.changeCandidatePassword(email, newPassword);
-                    msg = "Password Sent To your email successfully";
+                if (objC.isValidEmail(email, elecion_id)) {
+                    String s[] = {email};
+                    if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, "New Password", newPassword, s)) {
+                        newPassword = RandomString.encryptPassword(newPassword);
+                        objC.changeCandidatePassword(email, newPassword);
+                        msg = "Password sent to your email successfully";
+                    } else {
+                        err = "Fail to send password, retry";
+                    }
                 } else {
-                    err = "Fail to send password, retry";
+                    err = "Invalid email id";
                 }
             } catch (Exception ex) {
                 err = ex.getMessage();
