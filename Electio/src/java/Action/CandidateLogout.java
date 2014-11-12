@@ -24,7 +24,7 @@ public class CandidateLogout implements Controller.Action {
                 view += "&election_id=" + election_id;
                 msg = "You're logged out successfully";
             } catch (NumberFormatException ex) {
-                err = "Invalid election number";
+                err = "Invalid election id";
                 System.out.println("NFE: " + ex);
             } catch (Exception ex) {
                 err = "Could not complete action";
