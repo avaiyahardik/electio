@@ -147,7 +147,7 @@ public class GenerateReport implements Controller.Action {
                     cell.setPadding(10f);
                     table.addCell(cell);
 
-                    cell = new PdfPCell(new Paragraph(election.getRequirements()));
+                    cell = new PdfPCell(new Paragraph(election.getRequirements().replaceAll("\\<.*?\\>","")));
                     cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                     cell.setBorder(PdfPCell.NO_BORDER);
                     cell.setPadding(10f);
