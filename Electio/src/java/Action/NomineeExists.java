@@ -27,7 +27,7 @@ public class NomineeExists implements Controller.Action {
         String view = "nomineeRegistration.jsp?elction_id=" + elec_id;
         try (PrintWriter out = res.getWriter()) {
             if (elec_id == null || email == null || elec_id.equals("") || email.equals("")) {
-                res.sendRedirect(view);
+                res.sendRedirect(view + "&err=Invalid parameters");
             } else {
                 jSONObject = new JSONObject();
 
@@ -45,10 +45,8 @@ public class NomineeExists implements Controller.Action {
                         jSONObject.put("status", true);
                         jSONObject.put("name", userInfo.getFirstname() + " " + userInfo.getLastname());
                     }
-
                 }
                 out.write(jSONObject.toJSONString());
-
             }
         } catch (Exception ex) {
             System.out.println("NomineeExists Error: " + ex.getMessage());

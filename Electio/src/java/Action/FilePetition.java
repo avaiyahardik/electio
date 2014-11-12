@@ -68,6 +68,7 @@ public class FilePetition implements Controller.Action {
                 System.out.println("ElectionResult SQL Err: " + ex.getMessage());
             }
         }
+        view += "&msg=" + msg + "&err=" + err + "&title=" + title;
         try {
             res.sendRedirect(view);
         } catch (Exception ex) {
