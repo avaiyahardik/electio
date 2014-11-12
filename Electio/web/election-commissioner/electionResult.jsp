@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <%}
-                    } else {%>
+                        } else {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
                                 <h3 class="panel-title"><%=election_type%>Election Results</h3>
