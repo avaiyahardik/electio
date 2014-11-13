@@ -36,7 +36,7 @@ public class FilePetition implements Controller.Action {
             err = "Session expired please login again";
         } else {
             try {
-                view = "electionResult.jsp?election_id=" + elec_id;
+                view = "Controller?action=election_result";
                 title = "Election Result";
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
@@ -68,13 +68,13 @@ public class FilePetition implements Controller.Action {
                 System.out.println("ElectionResult SQL Err: " + ex.getMessage());
             }
         }
-        view += "&msg=" + msg + "&err=" + err + "&title=" + title;
-        try {
-            res.sendRedirect(view);
-        } catch (Exception ex) {
-            err = ex.getMessage();
-            System.out.println("ERR File Petition Redirection: " + ex.getMessage());
-        }
+        /*view += "&msg=" + msg + "&err=" + err + "&title=" + title;
+         try {
+         res.sendRedirect(view);
+         } catch (Exception ex) {
+         err = ex.getMessage();
+         System.out.println("ERR File Petition Redirection: " + ex.getMessage());
+         }*/
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);
