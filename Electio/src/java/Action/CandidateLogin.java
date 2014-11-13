@@ -8,6 +8,7 @@ import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
 import Utilities.RandomString;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class CandidateLogin implements Controller.Action {
         String elec_id = req.getParameter("election_id");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String view = "index.jsp";
+        String view = "index.jsp?election_id=" + elec_id;
         String title = "Login";
         String msg = null;
         String err = null;
@@ -61,6 +62,12 @@ public class CandidateLogin implements Controller.Action {
                     }
                 } else {
                     err = "Invalid login cradentials, please retry";
+                    view += "&msg=" + msg + "&err=" + err + "&title=" + title;
+                    try {
+                        res.sendRedirect(view);
+                    } catch (IOException ex) {
+                        System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
+                    }
                 }
             } catch (NumberFormatException ex) {
                 err = "Invalid election number";
@@ -70,6 +77,7 @@ public class CandidateLogin implements Controller.Action {
                 System.out.println("CandidateLogin SQL Err: " + ex.getMessage());
             }
         }
+
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);
