@@ -285,4 +285,15 @@ public class DBDAOImplElection {
         }
         return result;
     }
+
+    public String getElectionCommissionerEmail(long id) throws SQLException {
+        String email = null;
+        PreparedStatement ps = con.prepareStatement("SELECT election_commissioner_email FROM tbl_election WHERE id=?");
+        ps.setLong(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            email = rs.getString("election_commissioner_email");
+        }
+        return email;
+    }
 }
