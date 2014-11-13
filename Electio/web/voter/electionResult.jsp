@@ -32,6 +32,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon bg-blue"><%=cnt%></span>
                                     <label class="form-control"><strong><%= c.getFirstname()%> <%= c.getLastname()%></strong></label>
+                                    <span class="input-group-addon bg-blue">Votes :<%=c.getVotes()%></span>
                                 </div>
                             </div>
                         </div>

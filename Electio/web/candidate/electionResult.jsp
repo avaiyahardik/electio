@@ -39,6 +39,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon bg-blue"><%=cnt%></span>
                                     <label class="form-control"><strong><%= c.getFirstname()%> <%= c.getLastname()%></strong></label>
+                                    <span class="input-group-addon bg-blue">Votes :<%=c.getVotes()%></span>
                                 </div>
                             </div>
                         </div>
@@ -104,8 +105,8 @@
 <script type="text/javascript" src="../js/charts.js"></script>
 <script type="text/javascript" src="../js/jsapi"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#link-toggle').click(function() {
+    $(document).ready(function () {
+        $('#link-toggle').click(function () {
             $('#petition-form').toggle(200);
         });
     });
