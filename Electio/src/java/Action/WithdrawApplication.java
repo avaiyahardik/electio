@@ -37,6 +37,8 @@ public class WithdrawApplication implements Controller.Action {
                     Election e = objE.getElection(election_id);
                     req.setAttribute("election", e);
                     req.setAttribute("nominee_status", 3 + "");
+                    String reason = objN.getReason(election_id, email);
+                    req.setAttribute("reason", reason);
                 }
             } catch (NumberFormatException ex) {
                 err = "Invalid election number";
