@@ -5,6 +5,7 @@
  */
 package Action;
 
+import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplOrganization;
@@ -39,23 +40,30 @@ public class ViewNomineeDetails implements Controller.Action {
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                ArrayList<Election> elections = null;
+                elections = objE.getElections(email);
+                req.setAttribute("elections", elections);
+                view = "listElections.jsp";
+                title = "Elections";
                 if (elec_id == null || elec_id.equals("") || nominee_email == null || nominee_email.equals("")) {
-                    view = "listElections.jsp";
-                    title = "Elections";
-                    ArrayList<Election> elections = null;
-                    elections = objE.getElections(email);
-                    req.setAttribute("elections", elections);
                     err = "Fail to locate election id or nominee email, please retry";
                 } else {
                     long id = Long.parseLong(elec_id);
-                    view = "nomineeDetails.jsp";
-                    title = "Nominee Details";
-                    Nominee n = objN.getNominee(id, nominee_email);
-                    Organization org = objO.getOrganization(n.getOrganization_id());
-                    req.setAttribute("nominee", n);
-                    req.setAttribute("organization", org);
-
+                    if (objN.isValidEmail(nominee_email, id)) {
+                        Nominee n = objN.getNominee(id, nominee_email);
+                        Organization org = objO.getOrganization(n.getOrganization_id());
+                        req.setAttribute("nominee", n);
+                        req.setAttribute("organization", org);
+                        view = "nomineeDetails.jsp";
+                        title = "Nominee Details";
+                    } else {
+                        err = "Invalid nominee email";
+                    }
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election id";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("View Nominee Detail Err: " + ex.getMessage());

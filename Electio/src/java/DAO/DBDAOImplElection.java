@@ -172,7 +172,7 @@ public class DBDAOImplElection {
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_election WHERE election_commissioner_email=?");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
-        Election el=null;
+        Election el = null;
         while (rs.next()) {
             el = new Election();
             el.setId(rs.getLong("id"));

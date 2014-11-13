@@ -44,22 +44,25 @@ public class SendMailToVoters implements Controller.Action {
             if (elec_id == null || elec_id.equals("")) {
                 err = "invalid parameter";
             } else {
-                long election_id = 0;
+
                 DBDAOImplElection objE = null;
                 DBDAOImplNominee objN = null;
                 DBDAOImplCandidate objC = null;
                 DBDAOImplVoter objV = null;
                 DBDAOImplEligibleNominee objP = null;
-
+                long election_id = 0;
                 try {
-                    election_id = Long.parseLong(elec_id);
-                    view = "electionDetail.jsp";
-                    title = "Election Detail";
                     objE = DBDAOImplElection.getInstance();
                     objN = DBDAOImplNominee.getInstance();
                     objC = DBDAOImplCandidate.getInstance();
                     objV = DBDAOImplVoter.getInstance();
                     objP = DBDAOImplEligibleNominee.getInstance();
+                    ArrayList<Election> elections = null;
+                    elections = objE.getElections(email);
+                    req.setAttribute("elections", elections);
+                    view = "listElections.jsp";
+                    title = "Elections";
+                    election_id = Long.parseLong(elec_id);
                     if (!objE.isValidElectionId(election_id, email)) {
                         err = "Invalid election id";
                     } else {
@@ -68,7 +71,6 @@ public class SendMailToVoters implements Controller.Action {
                         for (Voter v : voters) {
                             if (v.getLinkStatus() == false) {
                                 if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Ballot Link", link, v.getEmail())) {
-                                    System.out.println("mail send to all voters ");
                                     msg = "mail send to all voters";
                                     v.setLinkStatus(true);
                                     System.out.println("Mail sent to: " + v.getEmail());
@@ -79,27 +81,17 @@ public class SendMailToVoters implements Controller.Action {
                                 }
                             }
                         }
+                        Election el = objE.getElection(election_id);
+                        req.setAttribute("election", el);
+                        view = "electionDetail.jsp";
+                        title = "Election Detail";
                     }
+                } catch (NumberFormatException ex) {
+                    err = "Invalid election id";
+                    System.out.println("NFE: " + ex);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("SendMailToVoter Err: " + ex.getMessage());
-                }
-
-                try {
-                    Election el = objE.getElection(election_id);
-                    req.setAttribute("election", el);
-                    ArrayList<Nominee> nominees = objN.getNominees(election_id);
-                    req.setAttribute("nominees", nominees);
-                    ArrayList<Candidate> candidates = objC.getCandidates(election_id);
-                    req.setAttribute("candidates", candidates);
-                    ArrayList<Voter> voters = objV.getVoters(election_id);
-                    req.setAttribute("voters", voters);
-                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(election_id);
-                    req.setAttribute("probable_nominee", pns);
-
-                } catch (Exception ex) {
-                    err = ex.getMessage();
-                    System.out.println("SendMailToVoter setting election data: " + ex.getMessage());
                 }
             }
         }
