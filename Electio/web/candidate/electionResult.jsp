@@ -42,13 +42,6 @@
                             </div>
                         </div>
                         <%}
-                            if (cnt == 0) { %>
-                        <div class="form-group">
-                            <div class="col-lg-8 col-lg-offset-2">
-                                <label class="form-control"><strong>No Candidates for this election available</strong></label>
-                            </div>
-                        </div>
-                        <%}
                         } else {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
@@ -122,9 +115,6 @@
         data.addColumn('number', 'Votes');
     <%
         int total_votes = 0;
-        candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
-        out.print("candidates: " + candidates);
-        System.out.print("Candidates: " + candidates);
         for (Candidate c : candidates) {
             total_votes += (int) c.getVotes();
     %>
