@@ -6,10 +6,13 @@
 package Action;
 
 import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplOrganization;
 import Model.Candidate;
+import Model.Election;
 import Model.Organization;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,29 +33,53 @@ public class ViewCandidateDetails implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
-            System.out.println("2");
-            if (req.getParameter("election_id") == null || req.getParameter("email") == null) {
-                view = "Controller?action=view_elections";
-                title = "Elections";
-                err = "Fail to locate election id or nominee email, please retry";
-            } else {
-                System.out.println("3");
-                long id = Long.parseLong(req.getParameter("election_id"));
-                String candidate_email = req.getParameter("email");
-                view = "candidateDetails.jsp";
-                title = "Candidate Details";
-                try {
-//                    DBDAOImplementation obj = DBDAOImplementation.getInstance();
+            String elec_id = req.getParameter("election_id");
+            String candidate_email = req.getParameter("email");
+            try {
+                long id = 0;
+                if (elec_id == null || candidate_email == null) {
+                    view = "listElections.jsp";
+                    title = "Elections";
+                    ArrayList<Election> elections = null;
+                    try {
+                        DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                        elections = objE.getElections(email);
+                    } catch (SQLException ex) {
+                        err = ex.getMessage();
+                        System.out.println("ViewCandidate-ViewElections Err: " + ex.getMessage());
+                    }
+                    req.setAttribute("elections", elections);
+                    err = "Fail to locate election id or nominee email, please retry";
+                } else {
+                    id = Long.parseLong(elec_id);
+                    view = "candidateDetails.jsp";
+                    title = "Candidate Details";
+
                     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                     DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                     Candidate c = objC.getCandidate(id, candidate_email);
                     Organization org = objO.getOrganization(c.getOrganization_id());
                     req.setAttribute("candidate", c);
                     req.setAttribute("organization", org);
-                } catch (SQLException ex) {
-                    err = ex.getMessage();
-                    System.out.println("View Nominee Detail Err: " + ex.getMessage());
                 }
+
+            } catch (NumberFormatException ex) {
+                view = "listElections.jsp";
+                title = "Elections";
+                ArrayList<Election> elections = null;
+                try {
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    elections = objE.getElections(email);
+                } catch (SQLException ex2) {
+                    err = ex.getMessage();
+                    System.out.println("ViewCandidate-nfe-ViewElections Err: " + ex2.getMessage());
+                }
+                req.setAttribute("elections", elections);
+                err = "Fail to locate election id or nominee email, please retry";
+                System.out.println("NFE: " + ex);
+            } catch (SQLException ex) {
+                err = ex.getMessage();
+                System.out.println("View Nominee Detail Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);

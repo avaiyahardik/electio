@@ -35,33 +35,36 @@ public class ElectionCommissionerChangePassword implements Controller.Action {
             String old_password = req.getParameter("old_password");
             String new_password = req.getParameter("new_password");
             String retype_password = req.getParameter("retype_password");
-            try {
-                DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
-                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
-                ElectionCommissioner ec = objEC.getElectionCommissioner(email);
-                Organization org = objO.getOrganization(ec.getOrganization_id());
-                req.setAttribute("election_commissioner", ec);
-                req.setAttribute("organization", org);
-                old_password = RandomString.encryptPassword(old_password);
-                if (objEC.loginElectionCommissioner(email, old_password)) {
-                    if (new_password.equals(retype_password)) {
-                        new_password = RandomString.encryptPassword(new_password);
-                        if (objEC.changeElectionCommissionerPassword(email, new_password)) {
-                            msg = "Your password changed successfully";
+            if (old_password == null || old_password.equals("") || new_password == null || new_password.equals("") || retype_password == null || retype_password.equals("")) {
+                err = "old password, new password, retype password required";
+            } else {
+                try {
+                    DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
+                    DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
+                    ElectionCommissioner ec = objEC.getElectionCommissioner(email);
+                    Organization org = objO.getOrganization(ec.getOrganization_id());
+                    req.setAttribute("election_commissioner", ec);
+                    req.setAttribute("organization", org);
+                    old_password = RandomString.encryptPassword(old_password);
+                    if (objEC.loginElectionCommissioner(email, old_password)) {
+                        if (new_password.equals(retype_password)) {
+                            new_password = RandomString.encryptPassword(new_password);
+                            if (objEC.changeElectionCommissionerPassword(email, new_password)) {
+                                msg = "Your password changed successfully";
+                            } else {
+                                err = "Error occured while changing your password, please retry";
+                            }
                         } else {
-                            err = "Error occured while changing your password, please retry";
+                            err = "Confirm password does not match, please retry";
                         }
                     } else {
-                        err = "Confirm password does not match, please retry";
+                        err = "Old password doesn't match, please retry";
                     }
-                } else {
-                    err = "Old password doesn't match, please retry";
+                } catch (SQLException ex) {
+                    err = ex.getMessage();
+                    System.out.println("ChangePassword Err: " + ex.getMessage());
                 }
-            } catch (SQLException ex) {
-                err = ex.getMessage();
-                System.out.println("ChangePassword Err: " + ex.getMessage());
             }
-
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);

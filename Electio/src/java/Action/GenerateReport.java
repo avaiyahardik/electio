@@ -20,21 +20,14 @@ import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
-import com.lowagie.text.Header;
-import com.lowagie.text.Image;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -147,7 +140,7 @@ public class GenerateReport implements Controller.Action {
                     cell.setPadding(10f);
                     table.addCell(cell);
 
-                    cell = new PdfPCell(new Paragraph(election.getRequirements().replaceAll("\\<.*?\\>","")));
+                    cell = new PdfPCell(new Paragraph(election.getRequirements().replaceAll("\\<.*?\\>", "")));
                     cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                     cell.setBorder(PdfPCell.NO_BORDER);
                     cell.setPadding(10f);
@@ -576,21 +569,21 @@ public class GenerateReport implements Controller.Action {
                     cell.setBorder(PdfPCell.NO_BORDER);
 //                cell.setPadding(10f);
                     table.addCell(cell);
-                    long total_votes=0;
+                    long total_votes = 0;
                     for (Candidate ca : candidate) {
-                        total_votes+=ca.getVotes();
+                        total_votes += ca.getVotes();
                     }
                     for (Candidate c : candidate) {
                         cell = new PdfPCell(new Paragraph(c.getFirstname() + " " + c.getLastname()));
                         cell.setBorder(PdfPCell.NO_BORDER);
                         table.addCell(cell);
 
-                        System.out.println("VVVVVVVvvotessssssssss: "+c.getVotes());
+                        System.out.println("VVVVVVVvvotessssssssss: " + c.getVotes());
                         cell = new PdfPCell(new Paragraph(Long.toString(c.getVotes())));
                         cell.setBorder(PdfPCell.NO_BORDER);
                         table.addCell(cell);
 
-                        cell = new PdfPCell(new Paragraph(Long.toString((c.getVotes()*100)/total_votes) + "%"));
+                        cell = new PdfPCell(new Paragraph(Long.toString((c.getVotes() * 100) / total_votes) + "%"));
                         cell.setBorder(PdfPCell.NO_BORDER);
                         table.addCell(cell);
 
@@ -607,6 +600,9 @@ public class GenerateReport implements Controller.Action {
                         err = "Open is not supported";
                     }
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election id";
+                System.out.println("NFE: " + ex);
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("View Election Detail Err: " + ex.getMessage());

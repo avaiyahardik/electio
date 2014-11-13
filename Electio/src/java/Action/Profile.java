@@ -28,13 +28,11 @@ public class Profile implements Controller.Action {
         String err = null;
         String title = "Login";
         if (email == null || email.equals("")) {
-            err = "Session expired please login again";
+            err = "Session expired or you are not logged in, please login";
         } else {
             view = "profile.jsp";
             title = "Profile";
-
             try {
-                //DBDAOImplementation obj = DBDAOImplementation.getInstance();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 ElectionCommissioner ec = objEC.getElectionCommissioner(email);
@@ -51,7 +49,5 @@ public class Profile implements Controller.Action {
         req.setAttribute("err", err);
         req.setAttribute("title", title);
         return view;
-
     }
-
 }

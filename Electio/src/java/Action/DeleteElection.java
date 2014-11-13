@@ -32,32 +32,38 @@ public class DeleteElection implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "Session expired, please login again";
         } else {
-            try {
-                view = "listElections.jsp";
-                title = "Elections";
-                DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
-                ArrayList<Election> elections = null;
-                elections = objE.getElections(email);
-                req.setAttribute("elections", elections);
-
-                if (elec_id == null || !objE.isValidElectionId(Long.parseLong(elec_id), email)) {
-                    err = "Invalid election id, please retry";
-                } else {
+            if (elec_id == null || elec_id.equals("")) {
+                err = "Election id missing";
+            } else {
+                try {
+                    view = "listElections.jsp";
+                    title = "Elections";
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                    DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                    DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                    DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
+                    ArrayList<Election> elections = null;
+                    elections = objE.getElections(email);
+                    req.setAttribute("elections", elections);
                     long id = Long.parseLong(elec_id);
-                    if (objE.deleteElection(email, id) && objV.deleteVoterForElection(id) && objN.deleteNominee(email, id) && objC.deleteCandidateForElection(id) && objP.deleteProbableNomineeForElection(id) && objN.deleteRejectedNomineeForElection(id)) {
-                        msg = "Election deleted successfully";
+                    if (elec_id == null || !objE.isValidElectionId(id, email)) {
+                        err = "Invalid election id, please retry";
                     } else {
-                        err = "Fail to delete election, please retry";
+                        if (objV.deleteVoterForElection(id) && objN.deleteNomineeForElection(id) && objC.deleteCandidateForElection(id) && objP.deleteProbableNomineeForElection(id) && objN.deleteRejectedNomineeForElection(id) && objE.deleteElection(email, id)) {
+                            msg = "Election deleted successfully";
+                        } else {
+                            err = "Fail to delete election, please retry";
+                        }
                     }
-                }
 
-            } catch (Exception ex) {
-                err = ex.getMessage();
-                System.out.println("DeleteElection Error: " + ex.getMessage());
+                } catch (NumberFormatException ex) {
+                    err = "Invalid election id";
+                    System.out.println("NFE: " + ex);
+                } catch (Exception ex) {
+                    err = ex.getMessage();
+                    System.out.println("DeleteElection Error: " + ex.getMessage());
+                }
             }
         }
         req.setAttribute("msg", msg);

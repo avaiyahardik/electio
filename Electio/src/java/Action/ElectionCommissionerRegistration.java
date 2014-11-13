@@ -72,6 +72,9 @@ public class ElectionCommissionerRegistration implements Controller.Action {
                             }
                         }
                     }
+                } catch (NumberFormatException ex) {
+                    err = "Invalid organization number";
+                    System.out.println("NFE: " + ex);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("Election Commissioner Register SQL Err: " + ex.getMessage());
