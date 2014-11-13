@@ -24,7 +24,6 @@ public class Unlock implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
         String email = (String) req.getSession().getAttribute("email");
-        String old_action = req.getParameter("old_action");
         String title = "Screen Locked";
         String msg = null;
         String err = null;
@@ -52,7 +51,6 @@ public class Unlock implements Controller.Action {
                 System.out.println("LockScreen Err: " + ex.getMessage());
             }
         }
-        req.setAttribute("old_action", old_action);
         req.setAttribute("name", name);
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);

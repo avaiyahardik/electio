@@ -1,7 +1,6 @@
 <%@page import="DAO.DBDAOImplElection"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.ElectionType"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Election"%>

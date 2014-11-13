@@ -28,9 +28,8 @@ public class ListCandidates implements Controller.Action {
         String title = "Login";
 
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
-            err = "Session expired please login again";
+            err = "Session expired or you are not logged in, please login";
         } else {
-
             view = "candidates.jsp";
             title = "Candidates List";
             ArrayList<Candidate> candidates = null;
@@ -38,6 +37,9 @@ public class ListCandidates implements Controller.Action {
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 long election_id = Long.parseLong(elec_id);
                 candidates = objC.getCandidates(election_id);
+            } catch (NumberFormatException ex) {
+                err = "Invalid election id";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("List Candidates Err: " + ex.getMessage());
@@ -49,5 +51,4 @@ public class ListCandidates implements Controller.Action {
         req.setAttribute("title", title);
         return view;
     }
-
 }

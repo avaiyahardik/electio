@@ -1,8 +1,13 @@
+<%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
 <jsp:include page="header.jsp"/>
-<%  ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
-    int election_type = (Integer) request.getAttribute("election_type");%>
+<%  ArrayList<Candidate> candidates = null;
+    long type = 0;
+    candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
+    String elec_type = (String) request.getAttribute("election_type");
+    type = Integer.parseInt(elec_type);
+%>
 
 <div id="main-content">
     <div class="page-title">
@@ -16,7 +21,7 @@
                 </div>            
                 <div class="panel body">
                     <div class="form-horizontal">
-                        <%if (election_type == 1) {%>
+                        <%if (type == 1) {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
                                 <h3 class="panel-title">Final Preferences of the Candidates</h3>
@@ -32,6 +37,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon bg-blue"><%=cnt%></span>
                                     <label class="form-control"><strong><%= c.getFirstname()%> <%= c.getLastname()%></strong></label>
+                                    <span class="input-group-addon bg-blue">Votes :<%=c.getVotes()%></span>
                                 </div>
                             </div>
                         </div>
@@ -55,14 +61,20 @@
 
         </div>
     </div>
+    <%
+        DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+        long election_id = Long.parseLong((String) request.getSession().getAttribute("election_id"));
+        String email = (String) request.getSession().getAttribute("candidate_email");
+        boolean petition_filed = objC.isPetitionFiled(election_id, email);
 
+        if (!petition_filed) { %>
     <div class="row">
         <div class="col-lg-12">
-            <a href="#"  id="link-toggle">File a Petition</a>
+            <a href="#" id="link-toggle">File a Petition</a>
         </div>
     </div>
 
-    <div class="row" id="petition-form" style="display:none">
+    <div class="row" id="petition-form" style="display:block">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">File a Petition</div>
@@ -88,14 +100,17 @@
             </div>
         </div>
         <br>
-
     </div>
+    <%} else {%>
+    You already filed petition
+    <%}%>
 </div>
 <script type="text/javascript" src="../js/charts.js"></script>
 <script type="text/javascript" src="../js/jsapi"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#link-toggle').click(function() {
+
             $('#petition-form').toggle(200);
         });
     });

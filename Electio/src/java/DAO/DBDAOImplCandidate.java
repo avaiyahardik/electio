@@ -262,4 +262,28 @@ public class DBDAOImplCandidate {
         }
         return result;
     }
+
+    public boolean updatePetitionFiled(long election_id, String email, boolean status) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_candidate SET petition_filed=? WHERE email=? AND election_id=?");
+        ps.setBoolean(1, status);
+        ps.setString(2, email);
+        ps.setLong(3, election_id);
+        if (ps.executeUpdate() > 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean isPetitionFiled(long election_id, String email) throws SQLException {
+        boolean result = false;
+        PreparedStatement ps = con.prepareStatement("SELECT petition_filed FROM tbl_election_candidate WHERE election_id=? and email=?");
+        ps.setLong(1, election_id);
+        ps.setString(2, email);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            result = rs.getBoolean("petition_filed");
+        }
+        return result;
+    }
 }

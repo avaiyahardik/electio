@@ -8,7 +8,10 @@ import Model.Candidate;
 import Model.Election;
 import Model.Nominee;
 import Utilities.RandomString;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,19 +27,18 @@ public class CandidateLogin implements Controller.Action {
         String elec_id = req.getParameter("election_id");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String view = "index.jsp";
+        String view = "index.jsp?election_id=" + elec_id;
         String title = "Login";
         String msg = null;
         String err = null;
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("") || password == null || password.equals("")) {
             err = "Insufficiant parameters, email, password and retype password required";
         } else {
-            long election_id = Long.parseLong(elec_id);
-            password = RandomString.encryptPassword(password);
             try {
+                long election_id = Long.parseLong(elec_id);
+                password = RandomString.encryptPassword(password);
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 if (objN.nomineeLogin(election_id, email, password)) {
                     view = "home.jsp";
@@ -44,27 +46,45 @@ public class CandidateLogin implements Controller.Action {
                     req.getSession().setAttribute("election_id", elec_id);
                     req.getSession().setAttribute("candidate_email", email);
                     Nominee n = objN.getNominee(election_id, email);
-                    req.getSession().setAttribute("candidate_name", n.getFirstname());
                     Election e = objE.getElection(election_id);
+                    req.getSession().setAttribute("candidate_name", n.getFirstname());
+                    req.getSession().setAttribute("election_type", e.getType_id() + "");
                     req.setAttribute("election", e);
+                    boolean show_result_menu = false;
+                    if (e.getVoting_end().before(new Date())) {
+                        show_result_menu = true;
+                    }
+                    req.getSession().setAttribute("show_result_menu", show_result_menu);
                     int nominee_status = objN.getNomineeStatus(election_id, email);
-                    req.setAttribute("nominee_status", nominee_status);
+                    req.setAttribute("nominee_status", nominee_status + "");
+                    req.getSession().setAttribute("nominee_status", nominee_status);
                     System.out.println("Name: " + n.getFirstname());
                     if (nominee_status == 1) {
                         Candidate c = objC.getCandidate(election_id, email);
                         req.setAttribute("candidate", c);
+
                     } else if (nominee_status == 2) {
                         String reason = objN.getReason(election_id, email);
                         req.setAttribute("reason", reason);
                     }
                 } else {
                     err = "Invalid login cradentials, please retry";
+                    view += "&msg=" + msg + "&err=" + err + "&title=" + title;
+                    try {
+                        res.sendRedirect(view);
+                    } catch (IOException ex) {
+                        System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
+                    }
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election number";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
-                err = ex.getMessage();
+                err = "Could not complete action";
                 System.out.println("CandidateLogin SQL Err: " + ex.getMessage());
             }
         }
+
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
         req.setAttribute("title", title);

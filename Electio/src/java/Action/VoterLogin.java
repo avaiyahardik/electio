@@ -3,19 +3,14 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
-import Model.ElectionType;
 import Model.Voter;
 import Utilities.EmailSender;
 import Utilities.RandomString;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,18 +27,17 @@ public class VoterLogin implements Controller.Action {
         String email = req.getParameter("email");
         String step = req.getParameter("step");
         String password = "";
-        String view = "index.jsp";  // default view should be login page itself        
-        String title = "";
+        String view = "login.jsp?election_id=" + elec_id;
+        String title = "Login";
         String msg = null;
         String err = null;
         System.out.println(elec_id + ", " + email);
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("") || step == null || step.equals("")) {
-            err = "Insufficiant input"; // error message should be displayed on view page
+            err = "Insufficiant input";
         } else {
-            long election_id = Long.parseLong(elec_id);
             password = RandomString.encryptPassword(password);
-
             try {
+                long election_id = Long.parseLong(elec_id);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
@@ -63,7 +57,13 @@ public class VoterLogin implements Controller.Action {
                                 msg = "Your password has been sent to your email id";
                             } else {
                                 msg = "Fail to send mail, try again after sometime";
-                                view = "login.jsp?election_id=" + election_id;
+                                err = "Invalid login cradentials, please retry";
+                                view += "&msg=" + msg + "&err=" + err + "&title=" + title;
+                                try {
+                                    res.sendRedirect(view);
+                                } catch (IOException ex) {
+                                    System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
+                                }
                             }
                         }
                     } else if (step.equals("2")) {
@@ -72,7 +72,7 @@ public class VoterLogin implements Controller.Action {
                         if (objV.loginVoter2(election_id, email, password)) {
                             Voter v = objV.loginVoter1(election_id, email);
 
-                            view = "electionDetails.jsp"; // view changed if login successfull
+                            view = "electionDetails.jsp"; // view changed if login successful
                             title = "Election Details";
                             Election el = objE.getElection(election_id);
                             ArrayList<Candidate> candidates = objC.getCandidates(election_id);
@@ -83,15 +83,22 @@ public class VoterLogin implements Controller.Action {
                             req.setAttribute("election", el);
                             req.getSession().setAttribute("election_id", elec_id);
                             req.getSession().setAttribute("voter_email", email);
-
                         }
                     } else {
-
                         err = "Fail to login, please retry"; // error message should be displayed on view page
+                        view += "&msg=" + msg + "&err=" + err + "&title=" + title;
+                        try {
+                            res.sendRedirect(view);
+                        } catch (IOException ex) {
+                            System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
+                        }
                     }
                 } else {
                     err = "Invalid election link";
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election id";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage(); // error message should be displayed on the view page
                 System.out.println("VoterLogin SQL Err: " + ex.getMessage());

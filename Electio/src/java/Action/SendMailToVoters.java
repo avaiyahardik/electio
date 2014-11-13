@@ -8,7 +8,7 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
@@ -44,35 +44,39 @@ public class SendMailToVoters implements Controller.Action {
             if (elec_id == null || elec_id.equals("")) {
                 err = "invalid parameter";
             } else {
-                System.out.println("hi");
-                long election_id = Long.parseLong(elec_id);
-                view = "electionDetail.jsp";
-                title = "Election Detail";
+                long election_id = 0;
                 DBDAOImplElection objE = null;
                 DBDAOImplNominee objN = null;
                 DBDAOImplCandidate objC = null;
                 DBDAOImplVoter objV = null;
-                DBDAOImplProbableNominee objP = null;
+                DBDAOImplEligibleNominee objP = null;
+
                 try {
+                    election_id = Long.parseLong(elec_id);
+                    view = "electionDetail.jsp";
+                    title = "Election Detail";
                     objE = DBDAOImplElection.getInstance();
                     objN = DBDAOImplNominee.getInstance();
                     objC = DBDAOImplCandidate.getInstance();
                     objV = DBDAOImplVoter.getInstance();
-                    objP = DBDAOImplProbableNominee.getInstance();
-
-                    ArrayList<Voter> voters = objV.getVotersEmail(election_id);
-                    String link = "<a href='" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
-                    for (Voter v : voters) {
-                        if (v.getLinkStatus() == false) {
-                            if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Ballot Link", link, v.getEmail())) {
-                                System.out.println("mail send to all voters ");
-                                msg = "mail send to all voters";
-                                v.setLinkStatus(true);
-                                System.out.println("Mail sent to: " + v.getEmail());
-                                objV.changeVoterLinkStatus(v);
-                            } else {
-                                err = "Fail to send mail to voters";
-                                System.out.println("Fail to send mail to voters: " + v.getEmail());
+                    objP = DBDAOImplEligibleNominee.getInstance();
+                    if (!objE.isValidElectionId(election_id, email)) {
+                        err = "Invalid election id";
+                    } else {
+                        ArrayList<Voter> voters = objV.getVotersEmail(election_id);
+                        String link = "<a href='" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
+                        for (Voter v : voters) {
+                            if (v.getLinkStatus() == false) {
+                                if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Ballot Link", link, v.getEmail())) {
+                                    System.out.println("mail send to all voters ");
+                                    msg = "mail send to all voters";
+                                    v.setLinkStatus(true);
+                                    System.out.println("Mail sent to: " + v.getEmail());
+                                    objV.changeVoterLinkStatus(v);
+                                } else {
+                                    err = "Fail to send mail to voters";
+                                    System.out.println("Fail to send mail to voters: " + v.getEmail());
+                                }
                             }
                         }
                     }

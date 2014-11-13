@@ -1,7 +1,7 @@
 <%@page import="Utilities.RandomString"%>
-<%@page import="Model.UserInfo"%>
-<%@page import="DAO.DBDAOImplUserInfo"%>
-<%@page import="Model.ProbableNominee"%>
+<%@page import="Model.User"%>
+<%@page import="DAO.DBDAOImplUser"%>
+<%@page import="Model.EligibleNominee"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -188,14 +188,17 @@
                                         <% int status = n.getStatus();
                                             if (status == 0) {
                                         %>
-                                        <label class="label label-warning" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+                                        <label class="label label-info" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
                                         <%
                                         } else if (status == 1) {
                                         %>
                                         <label class="label label-success" style="font-size:13px"><i class="glyphicon glyphicon-check"></i> Approved</label>
-                                        <%} else {
+                                        <%} else if (status == 2) {
                                         %>
                                         <label class="label label-danger" style="font-size:13px"><i class="glyphicon glyphicon-remove"></i> Rejected</label>
+                                        <%} else {
+                                        %>
+                                        <label class="label label-warning" style="font-size:13px"><i class="fa fa-thumbs-down"></i> Withdrawn</label>
                                         <%
                                             }
                                         %>
@@ -223,7 +226,7 @@
                                     <th>Email ID</th>
                                     <th>Mobile No</th>
                                     <th>Photo</th>
-                                   <!-- <th>Action</th> -->
+                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
 
@@ -427,8 +430,8 @@
                                 <tr id="blank_row_nominee"></tr>
                                 <!-- Display Voter Data by Loop -->
 
-                                <% ArrayList<ProbableNominee> pn = (ArrayList<ProbableNominee>) request.getAttribute("probable_nominee");
-                                    for (ProbableNominee p : pn) {
+                                <% ArrayList<EligibleNominee> pn = (ArrayList<EligibleNominee>) request.getAttribute("probable_nominee");
+                                    for (EligibleNominee p : pn) {
                                 %>
                                 <tr>
                                     <td><%= p.getEmail()%></td>

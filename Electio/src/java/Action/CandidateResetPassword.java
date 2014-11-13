@@ -24,8 +24,7 @@ public class CandidateResetPassword implements Controller.Action {
                 String newPassword = RandomString.generateRandomPassword();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 if (objC.isValidEmail(email, elecion_id)) {
-                    String s[] = {email};
-                    if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, "New Password", newPassword, s)) {
+                    if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, "New Password", newPassword, email)) {
                         newPassword = RandomString.encryptPassword(newPassword);
                         objC.changeCandidatePassword(email, newPassword);
                         msg = "Password sent to your email successfully";
@@ -35,8 +34,12 @@ public class CandidateResetPassword implements Controller.Action {
                 } else {
                     err = "Invalid email id";
                 }
+
+            } catch (NumberFormatException ex) {
+                err = "Invalid election number";
+                System.out.println("NFE: " + ex);
             } catch (Exception ex) {
-                err = ex.getMessage();
+                err = "Could not complete action";
                 System.out.println("Candidate Forgot Password Error: " + ex.getMessage());
             }
         }

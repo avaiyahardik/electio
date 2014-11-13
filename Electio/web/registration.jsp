@@ -2,7 +2,6 @@
 <%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="Model.Organization"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="DAO.DBDAOImplementation"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="header.jsp"/>
@@ -100,7 +99,7 @@
                                         <span class="arrow"></span>
                                         <i class="fa fa-mobile">+91</i> 
                                     </span>
-                                    <input type="mobile" class="form-control" name="mobile" required>
+                                    <input type="text" class="form-control" name="mobile" required pattern="[7-9]{1}[0-9]{9}" title="10 Digit mobile number">
                                 </div>
                             </div>
                         </div>
@@ -162,14 +161,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
+                            <label for="password" class="control-label col-lg-4" ><strong>Password</strong></label>
                             <div class="col-lg-7">
                                 <div class="input-group">
                                     <span class="input-group-addon bg-blue">
                                         <span class="arrow"></span>
                                         <i class="fa fa-key"></i> 
                                     </span>
-                                    <input type="password" class="form-control" name="password" required>
+                                    <input type="password" class="form-control" id="pass1" name="password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters">
                                 </div>
                             </div>
                         </div>
@@ -182,8 +181,9 @@
                                         <span class="arrow"></span>
                                         <i class="fa fa-key"></i> 
                                     </span>
-                                    <input type="password" class="form-control" name="retype_password" required>
+                                    <input type="password" class="form-control" id="pass2" name="retype_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters" onkeyup="checkPass(); return false;">
                                 </div>
+                                <span id="msg" class="label label-danger"></span>
                             </div>
                         </div>
 
@@ -203,16 +203,33 @@
 
 <script src="assets/readable/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
-                                    function checkOrg(val) {
-                                        if (val == 0) {
-                                            document.getElementById('org-name').style.display = "block";
-                                            document.getElementById('org-address').style.display = "block";
-                                            document.getElementById('org-about').style.display = "block";
-                                        } else {
-                                            document.getElementById('org-name').style.display = "none";
-                                            document.getElementById('org-address').style.display = "none";
-                                            document.getElementById('org-about').style.display = "none";
+                                        function checkOrg(val) {
+                                            if (val == 0) {
+                                                document.getElementById('org-name').style.display = "block";
+                                                document.getElementById('org-address').style.display = "block";
+                                                document.getElementById('org-about').style.display = "block";
+                                            } else {
+                                                document.getElementById('org-name').style.display = "none";
+                                                document.getElementById('org-address').style.display = "none";
+                                                document.getElementById('org-about').style.display = "none";
+                                            }
                                         }
-                                    }
+                                        function checkPass()
+                                        {
+                                            var pass1 = document.getElementById('pass1');
+                                            var pass2 = document.getElementById('pass2');
+                                            //Store the Confimation Message Object ...
+                                            var message = document.getElementById('msg');
+
+                                            if (pass1.value == pass2.value) {
+                                                message.innerHTML = "Passwords Match!"
+                                                message.classList.remove('label-danger');
+                                                message.classList.add('label-success');
+                                            } else {
+                                                message.innerHTML = "Passwords Do Not Match!"
+                                                message.classList.remove('label-success');
+                                                message.classList.add('label-danger');
+                                            }
+                                        }
 </script>
 <jsp:include page="footer.jsp"/>

@@ -4,7 +4,10 @@
 
 
 <%  ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
-    int election_type = (Integer) request.getAttribute("election_type");%>
+    String elec_type = (String) request.getAttribute("election_type");
+    long type = Long.parseLong(elec_type);
+%>
+
 
 <div id="main-content">
     <div class="page-title">
@@ -18,7 +21,7 @@
                 </div>            
                 <div class="panel body">
                     <div class="form-horizontal">
-                        <%if (election_type == 1) {%>
+                        <%if (type == 1) {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
                                 <h3 class="panel-title">Final Preferences of the Candidates</h3>
@@ -41,7 +44,7 @@
                         } else {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
-                                <h3 class="panel-title"><%=election_type%>Election Results</h3>
+                                <h3 class="panel-title">Election Results</h3>
                             </div>
                         </div>
 

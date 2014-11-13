@@ -1,6 +1,5 @@
 <%@page import="DAO.DBDAOImplOrganization"%>
 <%@page import="DAO.DBDAOImplCandidate"%>
-<%@page import="DAO.DBDAOImplementation"%>
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
 <jsp:include page="header.jsp"/>

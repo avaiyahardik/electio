@@ -29,7 +29,7 @@ public class ElectionCommissionerLogin implements Controller.Action {
         String title = "Login";
         String msg = null;
         String err = null;
-        System.out.println(email + ", " + password);
+        //System.out.println(email + ", " + password);
         if (email == null || email.equals("") || password == null || password.equals("")) {
             err = "Please fill-up required fields";
         } else {

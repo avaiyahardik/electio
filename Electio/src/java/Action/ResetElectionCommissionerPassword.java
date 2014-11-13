@@ -14,18 +14,16 @@ public class ResetElectionCommissionerPassword implements Controller.Action {
         String view = "forgotPassword.jsp";
         String msg = null;
         String err = null;
-        System.out.println("EMAIL: " + email);
         String title = "Forgot Password";
         if (email == null || email.equals("")) {
             err = "Email Id required";
         } else {
             try {
-                String newPassword = RandomString.generateRandomPassword(); // it'll generate new password
-//                DBDAOImplementation obj = DBDAOImplementation.getInstance();
+                String newPassword = RandomString.generateRandomPassword();
                 DBDAOImplElectionCommissioner objEC = DBDAOImplElectionCommissioner.getInstance();
                 if (EmailSender.sendMail(RandomString.ELECTIO_JAINTELE_EMAIL, RandomString.ELECTIO_JAINTELE_PASSWORD, "New Password", newPassword, email)) {
                     newPassword = RandomString.encryptPassword(newPassword);
-                    objEC.changeElectionCommissionerPassword(email, newPassword); // it'll update password
+                    objEC.changeElectionCommissionerPassword(email, newPassword);
                     msg = "Password sent to your email successfully, login now";
                 } else {
                     err = "Fail to send password, please retry";

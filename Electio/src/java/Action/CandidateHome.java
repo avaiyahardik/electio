@@ -32,20 +32,20 @@ public class CandidateHome implements Controller.Action {
         } else {
             view = "home.jsp";
             title = "Home Page";
-            long id = Long.parseLong(elec_id);
             try {
+                long id = Long.parseLong(elec_id);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 Election e = objE.getElection(id);
                 int status = objN.getNomineeStatus(id, email);
                 req.setAttribute("election", e);
-                req.setAttribute("nominee_status", status);
+                req.setAttribute("nominee_status", status + "");
                 if (status == 2) {
                     String reason = objN.getReason(id, email);
                     req.setAttribute("reason", reason);
                 }
             } catch (SQLException ex) {
-                err = ex.getMessage();
+                err = "Could not complete action";
                 System.out.println("Candidate Home Err: " + ex.getMessage());
             }
         }

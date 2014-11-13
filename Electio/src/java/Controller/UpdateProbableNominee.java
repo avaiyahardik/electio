@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import Model.EligibleNominee;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,7 +44,7 @@ public class UpdateProbableNominee extends HttpServlet {
                         out.print("Command not found");
                     } else {
 //                        DBDAOImplementation obj = DBDAOImplementation.getInstance();
-                        DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
+                        DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                         long election_id = Long.parseLong(request.getParameter("election_id"));
                         if (cmd.equals("delete")) {
                             String nominee_email = request.getParameter("probable_nominee_email");

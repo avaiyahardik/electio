@@ -8,18 +8,11 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplVoter;
-import DAO.DBDAOImplementation;
 import Model.Candidate;
 import Model.Election;
-import Model.ElectionCommissioner;
-import Model.Nominee;
-import Model.Organization;
-import Model.Voter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,25 +26,24 @@ public class VoteNow implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
 
         String email = (String) req.getSession().getAttribute("voter_email");
-
         long election_type = (Long) req.getSession().getAttribute("election_type");
+        String elec_id = (String) req.getSession().getAttribute("election_id");
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
-        if (email == null || email.equals("")) {
+        if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
-            if (req.getSession().getAttribute("election_id") == null) {
+            if (elec_id == null) {
                 err = "Fail to locate election id, please retry";
             } else {
                 try {
+                    long id = Long.parseLong(elec_id);
                     DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                    long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
                     Election election = objE.getElection(id);
-
                     boolean status = objV.getVoterStatus(id, email);
                     Date date = new Date();
                     view = "voted.jsp";
@@ -76,6 +68,9 @@ public class VoteNow implements Controller.Action {
                             msg = "You have already voted for this election, thank you!!"; // message should be displayed on view page
                         }
                     }
+                } catch (NumberFormatException ex) {
+                    err = "Invalid election number";
+                    System.out.println("NFE: " + ex);
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("View Candidate Detail Err: " + ex.getMessage());

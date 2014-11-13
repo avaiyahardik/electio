@@ -16,7 +16,16 @@
         <script src="../assets/readable/jquery-1.10.2.min.js"></script>
         <script src="../assets/readable/bootstrap.min.js"></script>
         <title><% String title = (String) request.getAttribute("title");
-            int election_id = Integer.parseInt((String) request.getSession().getAttribute("election_id"));
+            long election_id = Long.parseLong((String) request.getSession().getAttribute("election_id"));
+            String nom_status = (String) request.getAttribute("nominee_status");
+            int status = 0;
+            if (request.getSession().getAttribute("nominee_status") != null) {
+                status = (Integer) request.getSession().getAttribute("nominee_status");
+            }
+            boolean show_result_menu = false;
+            if (request.getSession().getAttribute("show_result_menu") != null) {
+                show_result_menu = (Boolean) request.getSession().getAttribute("show_result_menu");
+            }
             %>
             <%=title%></title>
     </head>
@@ -45,7 +54,11 @@
                     <ul class="nav navbar-nav">
                         <li><a href="Controller?action=candidate_home">Home</a></li>
                         <li><a href="Controller?action=candidate_profile">Profile</a></li>
-                        <li><a href="Controller?action=election_result&election_id=<%=election_id%>">View Results</a></li>
+                            <% if (status == 1 && show_result_menu) {%>
+                        <li><a href="Controller?action=election_result">View Results</a></li>
+                            <%} else if (status == 1) {%>
+                        <li><a href="#">Result awaiting</a></li>
+                            <%}%>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

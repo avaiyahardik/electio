@@ -19,32 +19,33 @@ public class WithdrawApplication implements Controller.Action {
         String elec_id = (String) req.getSession().getAttribute("election_id");
         String email = (String) req.getSession().getAttribute("candidate_email");
 
-        String view = "index.jsp";  // default view should be login page itself
+        String view = "index.jsp";
         String title = "Login";
         String msg = null;
         String err = null;
-        System.out.println(elec_id + ", " + email);
-        if (email.equals("") || email == null) {
-            err = "session expired"; // error message should be displayed on view page
+//        System.out.println(elec_id + ", " + email);
+        if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
+            err = "Session expired or you are not logged in, please login";
         } else {
-            if (elec_id.equals("") || elec_id == null) {
-                err = "invalid parameter";
-            } else {
+            try {
                 long election_id = Long.parseLong(elec_id);
-                try {
-                    DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                    if (objN.withdrawMyApplication(election_id, email)) {
-                        view = "home.jsp";
-                        title = "Nominee/Candidate Home Page";
-                        Election e = objE.getElection(election_id);
-                        req.setAttribute("election", e);
-                        req.setAttribute("nominee_status", 3 + "");
-                    }
-                } catch (SQLException ex) {
-                    err = ex.getMessage();
-                    System.out.println("withdraw application Err: " + ex.getMessage());
+                DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                if (objN.withdrawMyApplication(election_id, email)) {
+                    view = "home.jsp";
+                    title = "Home Page";
+                    Election e = objE.getElection(election_id);
+                    req.setAttribute("election", e);
+                    req.setAttribute("nominee_status", 3 + "");
+                    String reason = objN.getReason(election_id, email);
+                    req.setAttribute("reason", reason);
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election number";
+                System.out.println("NFE: " + ex);
+            } catch (SQLException ex) {
+                err = ex.getMessage();
+                System.out.println("withdraw application Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);

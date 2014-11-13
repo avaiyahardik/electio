@@ -8,7 +8,7 @@ package Action;
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplProbableNominee;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import Model.Election;
@@ -40,13 +40,19 @@ public class UpdateElection implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "Session expired, please login again";
         } else {
+            DBDAOImplElection objE = null;
+            DBDAOImplNominee objN = null;
+            DBDAOImplCandidate objC = null;
+            DBDAOImplVoter objV = null;
+            DBDAOImplEligibleNominee objP = null;
+
             try {
-                DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplProbableNominee objP = DBDAOImplProbableNominee.getInstance();
-                if (elec_id == null) {
+                objE = DBDAOImplElection.getInstance();
+                objN = DBDAOImplNominee.getInstance();
+                objC = DBDAOImplCandidate.getInstance();
+                objV = DBDAOImplVoter.getInstance();
+                objP = DBDAOImplEligibleNominee.getInstance();
+                if (elec_id == null || elec_id.equals("")) {
                     err = "Unable to locate election id";
                     view = "listElections.jsp";
                     title = "Elections";
@@ -57,6 +63,16 @@ public class UpdateElection implements Controller.Action {
                     long id = Long.parseLong(elec_id);
                     view = "electionDetail.jsp";
                     title = "Election Detail";
+                    Election el = objE.getElection(id, email);
+                    req.setAttribute("election", el);
+                    ArrayList<Nominee> nominees = objN.getNominees(id);
+                    req.setAttribute("nominees", nominees);
+                    ArrayList<Candidate> candidates = objC.getCandidates(id);
+                    req.setAttribute("candidates", candidates);
+                    ArrayList<Voter> voters = objV.getVoters(id);
+                    req.setAttribute("voters", voters);
+                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
+                    req.setAttribute("probable_nominee", pns);
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                     Timestamp nomination_start = new Timestamp(dateFormat.parse(req.getParameter("nomination_start")).getTime());
                     Timestamp nomination_end = new Timestamp(dateFormat.parse(req.getParameter("nomination_end")).getTime());
@@ -65,9 +81,7 @@ public class UpdateElection implements Controller.Action {
                     Timestamp voting_start = new Timestamp(dateFormat.parse(req.getParameter("voting_start")).getTime());
                     Timestamp voting_end = new Timestamp(dateFormat.parse(req.getParameter("voting_end")).getTime());
                     Date date = new Date();
-                    if (nomination_start.before(date)) {
-                        err = "Nomination start time should be after today";
-                    } else if (nomination_end.before(nomination_start)) {
+                    if (nomination_end.before(nomination_start)) {
                         err = "Nomination end time should be after nomination start time";
                     } else if (withdrawal_start.before(nomination_end)) {
                         err = "Withdrawal start time should be after nomination end time";
@@ -79,7 +93,7 @@ public class UpdateElection implements Controller.Action {
                         err = "Voting end time should be after voting start time";
                     } else {
                         System.out.println("Election_type:" + req.getParameter("type"));
-                        Election el = new Election();
+                        el = new Election();
                         el.setId(id);
                         el.setName(req.getParameter("name"));
                         el.setDescription(req.getParameter("description"));
@@ -98,17 +112,19 @@ public class UpdateElection implements Controller.Action {
                             err = "Fail to update election, please retry";
                         }
                     }
-                    Election el = objE.getElection(id, email);
-                    req.setAttribute("election", el);
-                    ArrayList<Nominee> nominees = objN.getNominees(id);
-                    req.setAttribute("nominees", nominees);
-                    ArrayList<Candidate> candidates = objC.getCandidates(id);
-                    req.setAttribute("candidates", candidates);
-                    ArrayList<Voter> voters = objV.getVoters(id);
-                    req.setAttribute("voters", voters);
-                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
-                    req.setAttribute("probable_nominee", pns);
                 }
+            } catch (NumberFormatException ex) {
+                try {
+                    err = "Unable to locate election id";
+                    view = "listElections.jsp";
+                    title = "Elections";
+                    ArrayList<Election> elections = null;
+                    elections = objE.getElections(email);
+                    req.setAttribute("elections", elections);
+                } catch (Exception e) {
+                    System.out.println("UpdateElection:NumFormEx: Exrr: " + e.getMessage());
+                }
+                System.out.println("NFE: " + ex);
             } catch (Exception ex) {
                 err = ex.getMessage();
                 System.out.println("Update Election Error: " + ex.getMessage());

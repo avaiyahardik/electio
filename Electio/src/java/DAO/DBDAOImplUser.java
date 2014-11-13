@@ -15,19 +15,19 @@ import java.sql.SQLException;
  *
  * @author Hardik
  */
-public class DBDAOImplUserInfo {
+public class DBDAOImplUser {
 
     private Connection con;
-    private static DBDAOImplUserInfo obj = null;
+    private static DBDAOImplUser obj = null;
 
-    private DBDAOImplUserInfo() throws SQLException {
+    private DBDAOImplUser() throws SQLException {
         con = DBConnection.getConnection();
     }
 
-    public static DBDAOImplUserInfo getInstance() throws SQLException {
+    public static DBDAOImplUser getInstance() throws SQLException {
         if (obj == null) {
-            System.out.println("New DBDAOImpl created");
-            obj = new DBDAOImplUserInfo();
+            System.out.println("New DBDAOImplUser created");
+            obj = new DBDAOImplUser();
         }
         return obj;
     }

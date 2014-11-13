@@ -7,7 +7,7 @@ package Controller;
 
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplNominee;
-import DAO.DBDAOImplUserInfo;
+import DAO.DBDAOImplUser;
 import Model.User;
 import Utilities.EmailSender;
 import Utilities.RandomString;
@@ -69,7 +69,7 @@ public class RegisterExistingNominee extends HttpServlet {
         String requirements_file = "requirements_files" + File.separator + "electio.pdf";
 
         try {
-            DBDAOImplUserInfo objU = DBDAOImplUserInfo.getInstance();
+            DBDAOImplUser objU = DBDAOImplUser.getInstance();
             User user = null;
             try {
                 user = objU.getUserInfo(email);
@@ -128,7 +128,7 @@ public class RegisterExistingNominee extends HttpServlet {
                 }
                 System.out.println("Msg1");
                 if (cmd.equals("save")) {
-                    objU = DBDAOImplUserInfo.getInstance();
+                    objU = DBDAOImplUser.getInstance();
                     user = objU.getUserInfo(email);
                     firstname = user.getFirstname();
                     lastname = user.getLastname();
