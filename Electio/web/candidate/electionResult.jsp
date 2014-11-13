@@ -2,7 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <jsp:include page="header.jsp"/>
 <%  ArrayList<Candidate> candidates = null;
-    int type = 0;
+    long type = 0;
     try {
         candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
         String elec_type = (String) request.getAttribute("election_type");
