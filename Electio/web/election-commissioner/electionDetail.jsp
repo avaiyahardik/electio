@@ -187,17 +187,17 @@
                                         <% int status = n.getStatus();
                                             if (status == 0) {
                                         %>
-                                        <label class="label label-warning" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
+                                        <label class="label label-info" style="font-size:13px"><i class="fa fa-clock-o"></i> Waiting</label>
                                         <%
                                         } else if (status == 1) {
                                         %>
                                         <label class="label label-success" style="font-size:13px"><i class="glyphicon glyphicon-check"></i> Approved</label>
                                         <%} else if (status == 2) {
                                         %>
-                                        <label class="label label-success" style="font-size:13px"><i class="glyphicon glyphicon-check"></i> Rejected</label>
+                                        <label class="label label-danger" style="font-size:13px"><i class="glyphicon glyphicon-remove"></i> Rejected</label>
                                         <%} else {
                                         %>
-                                        <label class="label label-danger" style="font-size:13px"><i class="glyphicon glyphicon-remove"></i> Withdrawn</label>
+                                        <label class="label label-warning" style="font-size:13px"><i class="fa fa-thumbs-down"></i> Withdrawn</label>
                                         <%
                                             }
                                         %>
