@@ -10,14 +10,14 @@ public class CandidateResetPassword implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String email = (String) req.getParameter("email");
+        String email = req.getParameter("email");
         String elec_id = req.getParameter("election_id");
         String view = "index.jsp?election_id=" + elec_id;
         String msg = null;
         String err = null;
         String title = "Forgot Password";
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
-            err = "Email Id required";
+            err = "Email Id & elecion id required";
         } else {
             try {
                 long elecion_id = Long.parseLong(elec_id);

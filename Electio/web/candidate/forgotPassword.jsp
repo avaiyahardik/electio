@@ -73,6 +73,7 @@
 
 
                             <form action="Controller" method="POST">
+                                <input type="hidden"name="election_id" value="<%= request.getParameter("election_id")%>">
                                 <input type="email" name="email" placeholder="Email" class="input-field form-control user" required title="Enter a valid email address"/>                        
                                 <button type="submit"  name="action" value="candidate_reset_password" class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">Reset</span></button>
                             </form>
