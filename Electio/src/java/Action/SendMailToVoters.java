@@ -64,7 +64,7 @@ public class SendMailToVoters implements Controller.Action {
                         err = "Invalid election id";
                     } else {
                         ArrayList<Voter> voters = objV.getVotersEmail(election_id);
-                        String link = "<a href='" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "voter/login.jsp?election_id=" + election_id + "</a>";
+                        String link = "<a href='" + DOMAIN_BASE + "voter/index.jsp?election_id=" + election_id + "'>" + DOMAIN_BASE + "voter/index.jsp?election_id=" + election_id + "</a>";
                         for (Voter v : voters) {
                             if (v.getLinkStatus() == false) {
                                 if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "Ballot Link", link, v.getEmail())) {

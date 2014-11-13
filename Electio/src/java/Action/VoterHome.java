@@ -45,5 +45,4 @@ public class VoterHome implements Controller.Action {
         req.setAttribute("title", title);
         return view;
     }
-
 }

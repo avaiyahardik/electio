@@ -22,17 +22,18 @@ public class SaveVote implements Controller.Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String email = (String) req.getSession().getAttribute("voter_email");
-        long election_type = (Long) req.getSession().getAttribute("election_type");
+        String elec_type = (String) req.getSession().getAttribute("election_type");
         String candidate_email = req.getParameter("candidate_email");
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
-        if (email == null || email.equals("")) {
+        if (email == null || email.equals("") || elec_type == null || elec_type.equals("") || candidate_email == null || candidate_email.equals("")) {
             err = "Session expired please login again";
         } else {
 
             try {
+                long election_type = Long.parseLong(elec_type);
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                 System.out.println("email : " + email + " election_type : " + election_type + " election_id : " + req.getSession().getAttribute("election_id"));
