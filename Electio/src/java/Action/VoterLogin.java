@@ -26,18 +26,17 @@ public class VoterLogin implements Controller.Action {
         String email = req.getParameter("email");
         String step = req.getParameter("step");
         String password = "";
-        String view = "index.jsp";  // default view should be login page itself        
+        String view = "index.jsp";
         String title = "";
         String msg = null;
         String err = null;
         System.out.println(elec_id + ", " + email);
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("") || step == null || step.equals("")) {
-            err = "Insufficiant input"; // error message should be displayed on view page
+            err = "Insufficiant input";
         } else {
-            long election_id = Long.parseLong(elec_id);
             password = RandomString.encryptPassword(password);
-
             try {
+                long election_id = Long.parseLong(elec_id);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
@@ -77,7 +76,6 @@ public class VoterLogin implements Controller.Action {
                             req.setAttribute("election", el);
                             req.getSession().setAttribute("election_id", elec_id);
                             req.getSession().setAttribute("voter_email", email);
-
                         }
                     } else {
 
@@ -86,6 +84,9 @@ public class VoterLogin implements Controller.Action {
                 } else {
                     err = "Invalid election link";
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election id";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage(); // error message should be displayed on the view page
                 System.out.println("VoterLogin SQL Err: " + ex.getMessage());

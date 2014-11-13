@@ -33,11 +33,11 @@ public class ViewCandidateProfileToVoter implements Controller.Action {
         } else {
             view = "candidateProfile.jsp";
             title = "Candidate Profile";
-            long id = Long.parseLong(elec_id);
-            String candidate_email = req.getParameter("candidate_email");
             Candidate c = null;
             Organization o = null;
             try {
+                long id = Long.parseLong(elec_id);
+                String candidate_email = req.getParameter("candidate_email");
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplOrganization objO = DBDAOImplOrganization.getInstance();
                 c = objC.getCandidate(id, candidate_email);
@@ -48,6 +48,9 @@ public class ViewCandidateProfileToVoter implements Controller.Action {
                     title = "Voter";
                     err = "Candidate does not exists for this election";
                 }
+            } catch (NumberFormatException ex) {
+                err = "Invalid election number";
+                System.out.println("NFE: " + ex);
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("View Candidate Profile to Voter Err: " + ex.getMessage());
