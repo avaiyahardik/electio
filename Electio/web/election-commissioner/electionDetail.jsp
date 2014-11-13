@@ -38,6 +38,7 @@
                     <li><a href="#election_candidates" data-toggle="tab"><i class="fa fa-user"></i> Candidates</a></li>
                     <li><a href="#election_voters" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Voters</a></li>
                     <li><a href="#election_list" data-toggle="tab"><i class="fa fa-list"></i> Probable Nominee List</a></li>
+                    <li><a href="#election_result" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Election Statistics</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
 
@@ -462,6 +463,20 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="tab-pane fade" id="election_result">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <div id="result-chart-pie"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <div id="result-chart-bar"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -477,6 +492,9 @@
 <script type="text/javascript" src="../assets/dtp/jquery.js"></script>
 <script type="text/javascript" src="../assets/dtp/jquery.datetimepicker.js"></script>
 <script type="text/javascript" src="../js/script.js"></script>
+
+<script type="text/javascript" src="../js/charts.js"></script>
+<script type="text/javascript" src="../js/jsapi"></script>
 <!-- END  PAGE LEVEL SCRIPTS -->
 
 
@@ -495,6 +513,31 @@
     $('#voting_end').datetimepicker()
             .datetimepicker({step: 30});
     tinymce.init({selector: '#requirements'});
+
+    google.load("visualization", "1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Candidate');
+        data.addColumn('number', 'Votes');
+    <%
+        int total_votes = 0;
+        for (Candidate c : candidates) {
+            total_votes += (int) c.getVotes();
+    %>
+        data.addRow(['<%=c.getFirstname()%> <%=c.getLastname()%>',<%=(int) c.getVotes()%>]);
+    <%}%>
+                var options = {
+                    title: 'Election Statistics ' + '\nTotal Votes : ' +<%=total_votes%>,
+                    is3D: true,
+                    width: 800,
+                    height: 600
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('result-chart-pie'));
+                chart.draw(data, options);
+                var chart = new google.visualization.ColumnChart(document.getElementById('result-chart-bar'));
+                chart.draw(data, options);
+            }
 </script>
 
 

@@ -1,5 +1,6 @@
 package Action;
 
+import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import Model.Election;
@@ -31,6 +32,8 @@ public class WithdrawApplication implements Controller.Action {
                 long election_id = Long.parseLong(elec_id);
                 DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+
                 if (objN.withdrawMyApplication(election_id, email)) {
                     view = "home.jsp";
                     title = "Home Page";
@@ -39,6 +42,7 @@ public class WithdrawApplication implements Controller.Action {
                     req.setAttribute("nominee_status", 3 + "");
                     String reason = objN.getReason(election_id, email);
                     req.setAttribute("reason", reason);
+                    objC.deleteCandidate(election_id, email);
                 }
             } catch (NumberFormatException ex) {
                 err = "Invalid election number";

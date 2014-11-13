@@ -85,7 +85,7 @@
                                         <span class="arrow"></span>
                                         <i>@</i> 
                                     </span>
-                                    <input type="email" name="email" class="form-control" required>
+                                    <input type="email" name="email" class="form-control" required pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" title="Enter a valid email address">
                                 </div>
                             </div>
                         </div>

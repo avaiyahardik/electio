@@ -258,7 +258,7 @@ public class DBDAOImplNominee {
             ps.setLong(2, election_id);
             ps.setString(3, email);
             ps.execute();
-            
+
             ps = con.prepareStatement("DELETE FROM INTO tbl_rejected_nominee WHERE election_id=? AND email=?");
             ps.setLong(1, election_id);
             ps.setString(2, email);
