@@ -57,7 +57,6 @@ public class VoterLogin implements Controller.Action {
                                 msg = "Your password has been sent to your email id";
                             } else {
                                 msg = "Fail to send mail, try again after sometime";
-                                err = "Invalid login cradentials, please retry";
                                 view += "&msg=" + msg + "&err=" + err + "&title=" + title + "&email=" + email;
                                 try {
                                     res.sendRedirect(view);
@@ -97,12 +96,11 @@ public class VoterLogin implements Controller.Action {
                             req.setAttribute("election_id", elec_id);
                             req.setAttribute("email", email);
                             err = "Incorrect password, retry";
-                            view += "&msg=" + msg + "&err=" + err + "&title=" + title + "&email=" + email;
-                            try {
-                                res.sendRedirect(view);
-                            } catch (IOException ex) {
-                                System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
-                            }
+                            req.setAttribute("msg", msg);
+                            req.setAttribute("err", err);
+                            req.setAttribute("view", view);
+                            req.setAttribute("title", title);
+                            return view;
                         }
                     } else {
                         err = "Fail to login, please retry"; // error message should be displayed on view page

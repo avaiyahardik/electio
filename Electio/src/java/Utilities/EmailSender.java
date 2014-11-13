@@ -28,18 +28,19 @@ public class EmailSender {
      * @param body
      */
     public static boolean sendMail(String from, String password, String subject, String message, String to[]) {
-        String host = "smtp.gmail.com";
-        Properties props = System.getProperties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", password);
-        props.put("mail.smtp.auth", "true");
-
-        Session session = Session.getDefaultInstance(props, null);
-
-        MimeMessage mimeMessage = new MimeMessage(session);
         try {
+            String host = "smtp.gmail.com";
+            Properties props = System.getProperties();
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.user", from);
+            props.put("mail.smtp.password", password);
+            props.put("mail.smtp.auth", "true");
+
+            Session session = Session.getDefaultInstance(props, null);
+
+            MimeMessage mimeMessage = new MimeMessage(session);
+
             mimeMessage.setFrom(new InternetAddress(from));
 
             mimeMessage.setHeader("Content-Type", "text/html; charset=UTF-8");
@@ -70,18 +71,19 @@ public class EmailSender {
     }
 
     public static boolean sendMail(String from, String password, String subject, String message, String to) {
-        String host = "mail.jaintele.com";
-        Properties props = System.getProperties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", password);
-        props.put("mail.smtp.auth", "true");
-
-        Session session = Session.getDefaultInstance(props, null);
-
-        MimeMessage mimeMessage = new MimeMessage(session);
         try {
+
+            String host = "mail.jaintele.com";
+            Properties props = System.getProperties();
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.user", from);
+            props.put("mail.smtp.password", password);
+            props.put("mail.smtp.auth", "true");
+
+            Session session = Session.getDefaultInstance(props, null);
+
+            MimeMessage mimeMessage = new MimeMessage(session);
             mimeMessage.setFrom(new InternetAddress(from));
             mimeMessage.setHeader("Content-Type", "text/html; charset=UTF-8");
 
