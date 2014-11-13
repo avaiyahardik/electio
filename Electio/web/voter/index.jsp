@@ -28,23 +28,21 @@
 
         <% String name = "";
             DBDAOImplElection objE = DBDAOImplElection.getInstance();
-            Election election = null;
             String elec_id = request.getParameter("election_id");
             long election_id = 0;
             if (elec_id != null) {
                 election_id = Long.parseLong(elec_id);
                 name = objE.getElectionName(election_id);
-                election = objE.getElection(election_id);
             } else {%>
         <script>
-            window.location = "../index.jsp?err=<%= (String) request.getAttribute("err")%>";
+            window.location = "../index.jsp?err=session expired or election id missing";
         </script>
         <%
             }
         %>
         <%if (name == null) {%>
         <script>
-            window.location = "../index.jsp?err=Invalid election login link";
+            window.location = "../index.jsp?err=Invalid election link";
         </script>
         <%
             }
