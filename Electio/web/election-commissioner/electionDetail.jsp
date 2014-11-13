@@ -528,7 +528,7 @@
         data.addRow(['<%=c.getFirstname()%> <%=c.getLastname()%>',<%=(int) c.getVotes()%>]);
     <%}%>
                 var options = {
-                    title: 'Election Results ' + '\nTotal Votes : ' +<%=total_votes%>,
+                    title: 'Election Statistics ' + '\nTotal Votes : ' +<%=total_votes%>,
                     is3D: true,
                     width: 800,
                     height: 600

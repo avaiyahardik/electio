@@ -42,7 +42,7 @@
                 <div class="panel-body">
                     <form action="Controller" method="post">
                         <div class="form-group">
-                            <input type="text" name="email" placeholder="Email" class="form-control user" required/>                        
+                            <input type="email" name="email" placeholder="Email" class="form-control user" required pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" title="Enter a valid email address"/>
                         </div>
                         <div class="form-group">
                             <button type="submit"  name="action" value="reset_election_commissioner_password" class="btn btn-primary">Reset</button>

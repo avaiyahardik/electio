@@ -73,7 +73,7 @@
 
 
                             <form action="Controller" method="POST">
-                                <input type="email" name="email" placeholder="Email" class="input-field form-control user" required title="Enter a valid email address"/>                        
+                                <input type="email" name="email" placeholder="Email" class="input-field form-control user" required title="Enter a valid email address" pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"/>                        
                                 <button type="submit"  name="action" value="candidate_reset_password" class="btn btn-login ladda-button" data-style="expand-left"><span class="ladda-label">Reset</span></button>
                             </form>
                             <hr>
