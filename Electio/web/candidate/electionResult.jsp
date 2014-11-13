@@ -43,6 +43,9 @@
                             </div>
                         </div>
                         <%}
+                            if (cnt == 0) { %>
+                        <label class="form-control"><strong>No Candidates for this election available</strong></label>
+                        <%}
                         } else {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
