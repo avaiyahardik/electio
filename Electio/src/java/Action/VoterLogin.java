@@ -27,7 +27,7 @@ public class VoterLogin implements Controller.Action {
         String email = req.getParameter("email");
         String step = req.getParameter("step");
         String password = "";
-        String view = "login.jsp?election_id=" + elec_id;
+        String view = "index.jsp?election_id=" + elec_id;
         String title = "Login";
         String msg = null;
         String err = null;

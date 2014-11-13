@@ -306,7 +306,7 @@
                                 </div>
 
                                 <div class="align-right col-lg-6">
-                                    <% String ballot_link = DOMAIN_BASE + "voter/login.jsp?election_id=" + el.getId();%>
+                                    <% String ballot_link = DOMAIN_BASE + "voter/index.jsp?election_id=" + el.getId();%>
                                     <p> Ballot URL : <i><%=ballot_link%></i></p>
                                     <a href="Controller?action=send_ballot_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Ballot URL</a>
                                 </div>

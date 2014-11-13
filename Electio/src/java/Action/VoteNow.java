@@ -24,14 +24,15 @@ public class VoteNow implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-
         String email = (String) req.getSession().getAttribute("voter_email");
-        long election_type = (Long) req.getSession().getAttribute("election_type");
+        String elec_type = (String) req.getSession().getAttribute("election_type");
         String elec_id = (String) req.getSession().getAttribute("election_id");
+
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
+//        System.out.println("email: " + email + ", elecType: " + elec_type + ", elec Id: " + elec_id);
         if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
@@ -40,6 +41,7 @@ public class VoteNow implements Controller.Action {
             } else {
                 try {
                     long id = Long.parseLong(elec_id);
+                    long election_type = Long.parseLong(elec_type);
                     DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                     DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
@@ -50,7 +52,12 @@ public class VoteNow implements Controller.Action {
                     if (date.before(election.getVoting_start())) {
                         msg = "Voting period has not been started";
                     } else if (date.after(election.getVoting_end())) {
-                        msg = "Voting period gets over";
+                        msg = "Voting period got over";
+                        if (status) {
+                            msg += ", you voted";
+                        } else {
+                            msg += ", you didn't voted";
+                        }
                     } else {
                         if (status == false) {
                             ArrayList<Candidate> candidates = objC.getCandidates(id);

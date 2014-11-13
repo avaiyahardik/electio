@@ -21,7 +21,7 @@ public class ViewCandidateProfileToVoter implements Controller.Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) {
-        String view = "login.jsp";
+        String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
