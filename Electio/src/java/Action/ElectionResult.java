@@ -7,6 +7,7 @@ package Action;
 
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
+import DAO.DBDAOImplVoter;
 import Model.Candidate;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,23 +27,46 @@ public class ElectionResult implements Controller.Action {
         String title = "Election Result";
         String msg = null;
         String err = null;
-        String elec_id = req.getParameter("election_id");
-        if (elec_id == null || elec_id.equals("")) {
-            err = "Election Id is missing";
-            view = "index.jsp";
-            title = "Login";
+        String elec_id;
+        String candidate_email = (String) req.getSession().getAttribute("candidate_email");
+        String voter_email = (String) req.getSession().getAttribute("voter_email");
+        String ec_email = (String) req.getAttribute("email");
+        //System.out.println("ec_email: " + ec_email + "candidate emails " + candidate_email + ", voter email: " + voter_email);
+        if (candidate_email == null && voter_email == null && candidate_email.equals("") && voter_email.equals("")) {
+            elec_id = req.getParameter("election_id");
         } else {
-            ArrayList<Candidate> candidates = null;
+            elec_id = (String) req.getSession().getAttribute("election_id");
+        }
+//        System.out.println("ELECID: " + elec_id);
+        if (candidate_email == null && voter_email == null && ec_email == null) {
+            err = "Session expired or you are  not logged in";
+        } else {
             try {
                 long election_id = Long.parseLong(elec_id);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                long election_type = (int) objE.getElectionType(election_id).getType_id();
-                req.setAttribute("election_type", election_type + "");
-                if (election_type == 1) {
-                    candidates = objC.getCandidatesForPreferentialVoting(election_id);
-                } else if (election_type == 2) {
-                    candidates = objC.getCandidatesForWeightedVoting(election_id);
+                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
+                if (elec_id == null || elec_id.equals("")) {
+                    err = "Election Id is missing";
+                    view = "index.jsp";
+                    title = "Login";
+                } /* else if (ec_email == null && voter_email == null && objC.isValidEmail(candidate_email, election_id)) {
+                 err = "Invalid election id";
+                 } else if (ec_email == null && candidate_email == null && objV.isValidEmail(candidate_email, election_id)) {
+                 err = "Invalid election id";
+                 } else if (voter_email == null && candidate_email == null && objE.isValidElectionId(election_id, ec_email)) {
+                 err = "Invalid election id";
+                 } */ else {
+                    ArrayList<Candidate> candidates = null;
+                    long election_type = (int) objE.getElectionType(election_id).getType_id();
+                    req.setAttribute("election_type", election_type + "");
+                    if (election_type == 1) {
+                        candidates = objC.getCandidatesForPreferentialVoting(election_id);
+                    } else if (election_type == 2) {
+                        candidates = objC.getCandidatesForWeightedVoting(election_id);
+                    }
+
+                    req.setAttribute("candidates", candidates);
                 }
             } catch (NumberFormatException ex) {
                 err = "Invalid election id";
@@ -51,7 +75,6 @@ public class ElectionResult implements Controller.Action {
                 err = ex.getMessage();
                 System.out.println("ElectionResult SQL Err: " + ex.getMessage());
             }
-            req.setAttribute("candidates", candidates);
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);

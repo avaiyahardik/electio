@@ -16,7 +16,7 @@
         <script src="../assets/readable/jquery-1.10.2.min.js"></script>
         <script src="../assets/readable/bootstrap.min.js"></script>
         <title><% String title = (String) request.getAttribute("title");
-            int election_id = Integer.parseInt((String) request.getSession().getAttribute("election_id"));
+            long election_id = Long.parseLong((String) request.getSession().getAttribute("election_id"));
             %>
             <%=title%></title>
     </head>
@@ -45,7 +45,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="Controller?action=candidate_home">Home</a></li>
                         <li><a href="Controller?action=candidate_profile">Profile</a></li>
-                        <li><a href="Controller?action=election_result&election_id=<%=election_id%>">View Results</a></li>
+                        <li><a href="Controller?action=election_result">View Results</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
