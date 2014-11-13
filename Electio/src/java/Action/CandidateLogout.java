@@ -10,12 +10,12 @@ public class CandidateLogout implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String elec_id = (String) req.getSession().getAttribute("election_id");
         String email = (String) req.getSession().getAttribute("candidate_email");
-        String view = "index.jsp";
+        String view = "../index.jsp?electio=electio";
         String msg = null;
         String err = null;
         String title = "Login";
         if (elec_id == null || elec_id.equals("") || email == null || email.equals("")) {
-            view = "../index.jsp?electio=electio";
+            
             err = "You are not logged in, or session already expired";
         } else {
             try {
