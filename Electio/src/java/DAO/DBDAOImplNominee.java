@@ -126,7 +126,7 @@ public class DBDAOImplNominee {
 
     public boolean registerNominee(Nominee nominee) throws SQLException {
         boolean result = false;
-        con.setAutoCommit(false);
+        int flag = 0;
         PreparedStatement ps1 = con.prepareStatement("INSERT INTO tbl_user_info(email, firstname,lastname,gender,mobile,organization_id, image, password) VALUES(?,?,?,?,?,?,?,?)");
         ps1.setString(1, nominee.getEmail());
         ps1.setString(2, nominee.getFirstname());
@@ -137,17 +137,25 @@ public class DBDAOImplNominee {
         ps1.setString(7, nominee.getImage());
         ps1.setString(8, nominee.getPassword());
 
+        if (ps1.executeUpdate() > 0) {
+            flag++;
+        }
         PreparedStatement ps2 = con.prepareStatement("INSERT INTO tbl_election_nominee(email, election_id,requirements_file, status) VALUES(?,?,?,?)");
         ps2.setString(1, nominee.getEmail());
         ps2.setLong(2, nominee.getElection_id());
         ps2.setString(3, nominee.getRequirements_file());
         ps2.setInt(4, nominee.getStatus());
 
-        if (ps1.executeUpdate() > 0 && ps2.executeUpdate() > 0) {
+        if (ps2.executeUpdate() > 0) {
+            flag++;
+        }
+        if (flag == 2) {
             result = true;
-            con.commit();
         } else {
-            con.rollback();
+            ps2 = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE electio_id=? and email=?");
+            ps2.setLong(1, nominee.getElection_id());
+            ps2.setString(2, nominee.getEmail());
+            ps2.execute();
         }
         return result;
     }

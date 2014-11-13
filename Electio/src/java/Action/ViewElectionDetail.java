@@ -106,7 +106,7 @@ public class ViewElectionDetail implements Controller.Action {
                                 break;
                             case "probable_nominees":
                                 view = "electionProbableNominees.jsp";
-                                title = "Probable Nominees";
+                                title = "Eligible Nominees";
                                 ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
                                 req.setAttribute("probable_nominee", pns);
                                 break;

@@ -35,7 +35,7 @@
                         <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=nominees" class="btn btn-info"><i class="fa fa-user"></i> Nominees</a>
                         <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=candidates" class="btn btn-info"><i class="fa fa-user"></i> Candidates</a>
                         <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=voters" class="btn btn-info"><i class="fa fa-group"></i> Voters</a>
-                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=probable_nominees" class="btn btn-info"><i class="fa fa-list"></i> Probable Nominees</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=probable_nominees" class="btn btn-info"><i class="fa fa-list"></i> Eligible Nominees</a>
                         <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=statistics" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> Election Statistics</a>               
                     </div>
                 </div>

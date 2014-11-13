@@ -257,7 +257,7 @@ public class GenerateReport implements Controller.Action {
                     document.add(table);
 
                     paragraph = new Paragraph();
-                    phrase = new Phrase("Probable Nominee Detail", fontChapterName);
+                    phrase = new Phrase("Eligible Nominee Detail", fontChapterName);
                     paragraph.add(phrase);
                     chapter = new Chapter(paragraph, 2);
                     document.add(chapter);
