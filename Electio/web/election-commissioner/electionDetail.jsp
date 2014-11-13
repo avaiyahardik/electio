@@ -192,9 +192,12 @@
                                         } else if (status == 1) {
                                         %>
                                         <label class="label label-success" style="font-size:13px"><i class="glyphicon glyphicon-check"></i> Approved</label>
+                                        <%} else if (status == 2) {
+                                        %>
+                                        <label class="label label-success" style="font-size:13px"><i class="glyphicon glyphicon-check"></i> Rejected</label>
                                         <%} else {
                                         %>
-                                        <label class="label label-danger" style="font-size:13px"><i class="glyphicon glyphicon-remove"></i> Rejected</label>
+                                        <label class="label label-danger" style="font-size:13px"><i class="glyphicon glyphicon-remove"></i> Withdrawn</label>
                                         <%
                                             }
                                         %>
@@ -222,7 +225,7 @@
                                     <th>Email ID</th>
                                     <th>Mobile No</th>
                                     <th>Photo</th>
-                                   <!-- <th>Action</th> -->
+                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
 
