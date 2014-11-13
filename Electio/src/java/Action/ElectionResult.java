@@ -31,11 +31,13 @@ public class ElectionResult implements Controller.Action {
         String candidate_email = (String) req.getSession().getAttribute("candidate_email");
         String voter_email = (String) req.getSession().getAttribute("voter_email");
         String ec_email = (String) req.getAttribute("email");
-        if (candidate_email == null || voter_email == null || candidate_email.equals("") || voter_email.equals("")) {
+        //System.out.println("ec_email: " + ec_email + "candidate emails " + candidate_email + ", voter email: " + voter_email);
+        if (candidate_email == null && voter_email == null && candidate_email.equals("") && voter_email.equals("")) {
             elec_id = req.getParameter("election_id");
         } else {
             elec_id = (String) req.getSession().getAttribute("election_id");
         }
+//        System.out.println("ELECID: " + elec_id);
         if (candidate_email == null && voter_email == null && ec_email == null) {
             err = "Session expired or you are  not logged in";
         } else {
@@ -48,13 +50,13 @@ public class ElectionResult implements Controller.Action {
                     err = "Election Id is missing";
                     view = "index.jsp";
                     title = "Login";
-                } else if (ec_email == null && voter_email == null && objC.isValidEmail(candidate_email, election_id)) {
-                    err = "Invalid election id";
-                } else if (ec_email == null && candidate_email == null && objV.isValidEmail(candidate_email, election_id)) {
-                    err = "Invalid election id";
-                } else if (voter_email == null && candidate_email == null && objE.isValidElectionId(election_id, ec_email)) {
-                    err = "Invalid election id";
-                } else {
+                } /* else if (ec_email == null && voter_email == null && objC.isValidEmail(candidate_email, election_id)) {
+                 err = "Invalid election id";
+                 } else if (ec_email == null && candidate_email == null && objV.isValidEmail(candidate_email, election_id)) {
+                 err = "Invalid election id";
+                 } else if (voter_email == null && candidate_email == null && objE.isValidElectionId(election_id, ec_email)) {
+                 err = "Invalid election id";
+                 } */ else {
                     ArrayList<Candidate> candidates = null;
                     long election_type = (int) objE.getElectionType(election_id).getType_id();
                     req.setAttribute("election_type", election_type + "");
