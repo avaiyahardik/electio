@@ -40,6 +40,7 @@ public class ElectionResult implements Controller.Action {
             } else {
                 elec_id = (String) req.getSession().getAttribute("election_id");
             }
+            System.out.println("ElecID: " + elec_id);
             try {
                 view = "electionResult.jsp";
                 title = "Election Result";
