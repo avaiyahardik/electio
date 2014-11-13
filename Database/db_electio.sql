@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2014 at 09:56 AM
+-- Generation Time: Nov 13, 2014 at 10:05 AM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -100,10 +100,10 @@ CREATE TABLE IF NOT EXISTS `tbl_election_commissioner` (
 --
 
 INSERT INTO `tbl_election_commissioner` (`email`, `firstname`, `lastname`, `mobile`, `organization_id`, `password`) VALUES
-('201312038@daiict.ac.in', 'Darshit', 'Mashar', '4567895488', 24, '074cbe716357fb735ec7c6d20acd0405'),
+('201312038@daiict.ac.in', 'Darshit', 'Mashar', '4567895488', 24, 'c355ed137a60060d89c63e67c4e4acc4'),
 ('201312067@daiict.ac.in', 'Nirma', 'nirma', '5555555555', 24, 'c355ed137a60060d89c63e67c4e4acc4'),
-('avaiyahardik@gmail.com', 'Avaiya', 'Maheshbhai', 'sad', 25, '0cc175b9c0f1b6a831c399e269772661'),
-('avaiyahm@yahoo.com', 'Hardik', 'Avaiya', '9737809095', 24, '8e55ecef6a2e2b363e7f56fe00d6cd64');
+('avaiyahardik@gmail.com', 'Avaiya', 'Maheshbhai', 'sad', 25, 'c355ed137a60060d89c63e67c4e4acc4'),
+('avaiyahm@yahoo.com', 'Hardik', 'Avaiya', '9737809095', 24, 'c355ed137a60060d89c63e67c4e4acc4');
 
 -- --------------------------------------------------------
 
@@ -251,10 +251,10 @@ CREATE TABLE IF NOT EXISTS `tbl_user_info` (
 --
 
 INSERT INTO `tbl_user_info` (`email`, `firstname`, `lastname`, `gender`, `mobile`, `organization_id`, `image`, `password`) VALUES
-('201312011@daiict.ac.in', 'Pooja', 'Singn', 1, '7894562135', 26, 'user_images\\1415791930816.jpg', 'b00a50c448238a71ed479f81fa4d9066'),
-('201312031@daiict.ac.in', 'Vishal', 'Jain', 1, '5236541252', 26, 'user_images\\1415607386258.jpg', '8b64d2451b7a8f3fd17390f88ea35917'),
-('201312067@daiict.ac.in', 'Hardik', 'Avaiya', 0, '9737808097', 24, 'user_images\\1415732145925.jpg', '8e55ecef6a2e2b363e7f56fe00d6cd64'),
-('avaiyahardik@gmail.com', 'Avaiya', 'Lalaeet', 0, '9737808095', 24, 'user_images\\1415537193956.jpg', '8e55ecef6a2e2b363e7f56fe00d6cd64');
+('201312011@daiict.ac.in', 'Pooja', 'Singn', 1, '7894562135', 26, 'user_images\\1415791930816.jpg', 'c355ed137a60060d89c63e67c4e4acc4'),
+('201312031@daiict.ac.in', 'Vishal', 'Jain', 1, '5236541252', 26, 'user_images\\1415607386258.jpg', 'c355ed137a60060d89c63e67c4e4acc4'),
+('201312067@daiict.ac.in', 'Hardik', 'Avaiya', 0, '9737808097', 24, 'user_images\\1415732145925.jpg', 'c355ed137a60060d89c63e67c4e4acc4'),
+('avaiyahardik@gmail.com', 'Avaiya', 'Lalaeet', 0, '9737808095', 24, 'user_images\\1415537193956.jpg', 'c355ed137a60060d89c63e67c4e4acc4');
 
 -- --------------------------------------------------------
 
