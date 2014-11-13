@@ -46,7 +46,7 @@
                         <li><a href="Controller?action=voter_home">Home</a></li>
                         <li><a href="Controller?action=list_candidates">Candidates</a></li>
                         <li><a href="Controller?action=vote_now">Vote Now!</a></li>
-                        <li><a href="#"></a></li>
+                        <li><a href="Controller?action=election_result">View Results</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
