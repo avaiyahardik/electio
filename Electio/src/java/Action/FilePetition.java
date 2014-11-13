@@ -35,22 +35,22 @@ public class FilePetition implements Controller.Action {
         if (email.equals("") || email == null || elec_id.equals("") || elec_id == null) {
             err = "Session expired please login again";
         } else {
-            view = "electionResult.jsp?election_id=" + elec_id;
-            title = "Election Result";
-            if (description == null || description.equals("")) {
-                err = "Please enter some description about your petition";
-            } else {
-                if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "File Petition", description, email)) {
-                    msg = "Petition Filed successfully!";
-                    // change filed_petition value here
-                } else {
-                    err = "Fail to send mail";
-                }
-            }
             try {
-                long election_id = Long.parseLong(elec_id);
+                view = "electionResult.jsp?election_id=" + elec_id;
+                title = "Election Result";
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+                long election_id = Long.parseLong(elec_id);
+                if (description == null || description.equals("")) {
+                    err = "Please enter some description about your petition";
+                } else {
+                    if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "File Petition", description, objE.getElectionCommissionerEmail(election_id))) {
+                        msg = "Petition Filed successfully!";
+                        objC.updatePetitionFiled(election_id, email, true);
+                    } else {
+                        err = "Fail to send mail";
+                    }
+                }
                 int election_type = (int) objE.getElectionType(election_id).getType_id();
                 req.setAttribute("election_type", election_type);
                 ArrayList<Candidate> candidates = null;

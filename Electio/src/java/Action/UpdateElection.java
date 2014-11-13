@@ -81,9 +81,7 @@ public class UpdateElection implements Controller.Action {
                     Timestamp voting_start = new Timestamp(dateFormat.parse(req.getParameter("voting_start")).getTime());
                     Timestamp voting_end = new Timestamp(dateFormat.parse(req.getParameter("voting_end")).getTime());
                     Date date = new Date();
-                    if (nomination_start.before(date)) {
-                        err = "Nomination start time should be after today";
-                    } else if (nomination_end.before(nomination_start)) {
+                    if (nomination_end.before(nomination_start)) {
                         err = "Nomination end time should be after nomination start time";
                     } else if (withdrawal_start.before(nomination_end)) {
                         err = "Withdrawal start time should be after nomination end time";

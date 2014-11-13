@@ -11,6 +11,7 @@ import Utilities.RandomString;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,14 +49,20 @@ public class CandidateLogin implements Controller.Action {
                     Election e = objE.getElection(election_id);
                     req.getSession().setAttribute("candidate_name", n.getFirstname());
                     req.getSession().setAttribute("election_type", e.getType_id() + "");
-
                     req.setAttribute("election", e);
+                    boolean show_result_menu = false;
+                    if (e.getVoting_end().before(new Date())) {
+                        show_result_menu = true;
+                    }
+                    req.getSession().setAttribute("show_result_menu", show_result_menu);
                     int nominee_status = objN.getNomineeStatus(election_id, email);
                     req.setAttribute("nominee_status", nominee_status + "");
+                    req.getSession().setAttribute("nominee_status", nominee_status);
                     System.out.println("Name: " + n.getFirstname());
                     if (nominee_status == 1) {
                         Candidate c = objC.getCandidate(election_id, email);
                         req.setAttribute("candidate", c);
+
                     } else if (nominee_status == 2) {
                         String reason = objN.getReason(election_id, email);
                         req.setAttribute("reason", reason);
