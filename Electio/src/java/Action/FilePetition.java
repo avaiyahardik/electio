@@ -52,7 +52,7 @@ public class FilePetition implements Controller.Action {
                     }
                 }
                 int election_type = (int) objE.getElectionType(election_id).getType_id();
-                req.setAttribute("election_type", election_type);
+                req.setAttribute("election_type", election_type+"");
                 ArrayList<Candidate> candidates = null;
                 if (election_type == 1) {
                     candidates = objC.getCandidatesForPreferentialVoting(election_id);

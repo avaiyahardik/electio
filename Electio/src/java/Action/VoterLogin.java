@@ -86,7 +86,7 @@ public class VoterLogin implements Controller.Action {
                             Election election = objE.getElection(election_id);
                             req.setAttribute("candidates", candidates);
                             System.out.println("ttppyyee" + election.getType_id());
-                            req.getSession().setAttribute("election_type", election.getType_id());
+                            req.getSession().setAttribute("election_type", election.getType_id()+"");
                             req.setAttribute("election", el);
                             req.getSession().setAttribute("election_id", elec_id);
                             req.getSession().setAttribute("voter_email", email);
