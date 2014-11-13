@@ -33,9 +33,12 @@
                                         } else if (status == 1) {
                                         %>
                                         <label class="label label-success" style="font-size:13px"><i class="glyphicon glyphicon-check"></i> Approved</label>
-                                        <%} else {
+                                        <%} else if (status == 2) {
                                         %>
                                         <label class="label label-danger" style="font-size:13px"><i class="glyphicon glyphicon-remove"></i> Rejected</label>
+                                        <%} else {
+                                        %>
+                                        <label class="label label-warning" style="font-size:13px"><i class="fa fa-thumbs-down"></i> Withdrawn</label>
                                         <%
                                             }
                                         %>
@@ -98,7 +101,6 @@
                         <div class="col-md-12">
                             <div class="align-center">
                                 <a href="Controller?action=nominee_action&cmd=approve&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>&requirements_file=<%= n.getRequirements_file()%>" class="btn btn-success"><i class="fa fa-check"></i> Approve</a>
-
                                 <a href="#" class="btn btn-effect btn-danger" data-toggle="modal" data-target="#reject-modal"><i class="glyphicon glyphicon-remove"></i> Reject</a>
                             </div>
                         </div>

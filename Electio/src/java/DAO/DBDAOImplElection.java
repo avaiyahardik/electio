@@ -115,6 +115,7 @@ public class DBDAOImplElection {
             el.setVoting_end(rs.getTimestamp("voting_end"));
             el.setPetition_duration(rs.getInt("petition_duration"));
         }
+
         return el;
     }
 

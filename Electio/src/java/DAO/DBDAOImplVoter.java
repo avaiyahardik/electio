@@ -159,20 +159,20 @@ public class DBDAOImplVoter {
         ps.setString(1, email);
         ps.setLong(2, election_id);
 
-        Voter v = new Voter();
+        Voter v = null;
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
+            v = new Voter();
             v.setPassword(rs.getString("password"));
             v.setStatus(rs.getBoolean("status"));
             v.setLinkStatus(rs.getBoolean("link_status"));
-            return v;
-        } else {
-            return null;
-        }
 
+        }
+        return v;
     }
 
     public boolean loginVoter2(long election_id, String email, String password) throws SQLException {
+        boolean result = false;
         PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_voter WHERE email=? and election_id=? and password=?");
         ps.setString(1, email);
         ps.setLong(2, election_id);
@@ -180,9 +180,8 @@ public class DBDAOImplVoter {
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             return true;
-        } else {
-            return false;
         }
+        return result;
     }
 
     public boolean updateVoterStatus(long election_id, String email) throws SQLException {

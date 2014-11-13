@@ -194,9 +194,8 @@ public class DBDAOImplNominee {
     public boolean approveNominee(long election_id, String email, String requirements_file) throws SQLException {
         boolean result = false;
         int flag = 0;
-        // status = 1 means approved
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
-        ps.setInt(1, 1);
+        ps.setInt(1, 1);        // status = 1 means approved
         ps.setLong(2, election_id);
         ps.setString(3, email);
 
@@ -218,7 +217,7 @@ public class DBDAOImplNominee {
             result = true;
         } else {
             ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? and email=?");
-            ps.setInt(1, 0);
+            ps.setInt(1, 0); // 0 means waiting
             ps.setLong(2, election_id);
             ps.setString(3, email);
             ps.execute();
@@ -253,7 +252,7 @@ public class DBDAOImplNominee {
         if (flag == 2) {
             result = true;
         } else {
-            ps = con.prepareStatement("UPDATE tbl_election_nominee SET status =? WHERE election_id=? AND email=?");
+            ps = con.prepareStatement("UPDATE tbl_election_nominee SET status=? WHERE election_id=? AND email=?");
             ps.setInt(1, 0);
             ps.setLong(2, election_id);
             ps.setString(3, email);
