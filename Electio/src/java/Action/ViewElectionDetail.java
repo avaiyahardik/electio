@@ -44,26 +44,24 @@ public class ViewElectionDetail implements Controller.Action {
             DBDAOImplVoter objV = null;
             DBDAOImplEligibleNominee objP = null;
             String tab = (String) req.getParameter("tab");
-            if (elec_id == null || elec_id.equals("") || tab == null || tab.equals("")) {
-                err = "Election id or tab name missing";
-            } else {
-                try {
-                    objE = DBDAOImplElection.getInstance();
-                    objN = DBDAOImplNominee.getInstance();
-                    objC = DBDAOImplCandidate.getInstance();
-                    objV = DBDAOImplVoter.getInstance();
-                    objP = DBDAOImplEligibleNominee.getInstance();
-                    ArrayList<Election> elections = null;
-                    System.out.println("test0");
-                    elections = objE.getElections(email);
-                    System.out.println("test");
-                    req.setAttribute("elections", elections);
+            view = "listElections.jsp";
+            title = "Elections";
+            try {
+                objE = DBDAOImplElection.getInstance();
+                objN = DBDAOImplNominee.getInstance();
+                objC = DBDAOImplCandidate.getInstance();
+                objV = DBDAOImplVoter.getInstance();
+                objP = DBDAOImplEligibleNominee.getInstance();
+                ArrayList<Election> elections = null;
+                System.out.println("test0");
+                elections = objE.getElections(email);
+                System.out.println("test");
+                req.setAttribute("elections", elections);
+                if (elec_id == null || elec_id.equals("") || tab == null || tab.equals("")) {
+                    err = "Election id or tab name missing";
+                } else {
                     long id = Long.parseLong(elec_id);
-                    view = "electionDetail.jsp";
-                    title = "Election Details";
                     if (elec_id == null || !objE.isValidElectionId(id, email) || tab == null || tab.equals("")) {
-                        view = "listElections.jsp";
-                        title = "Elections";
                         err = "Fail to locate election id or invalid election id, please retry";
                     } else {
                         System.out.println("Election ID: " + id);
@@ -77,7 +75,6 @@ public class ViewElectionDetail implements Controller.Action {
                         } else {
                             result_candidates = objC.getCandidatesForPreferentialVoting(id);
                         }
-
                         ArrayList<Candidate> candidates = objC.getCandidates(id);
                         switch (tab) {
                             case "general":
@@ -113,21 +110,17 @@ public class ViewElectionDetail implements Controller.Action {
                                 req.setAttribute("probable_nominee", pns);
                                 break;
                             default:
-                                view = "listElections.jsp";
-                                title = "Elections";
                                 err = "Requesting invalid tab";
                         }
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("e:" + e);
-                    view = "listElections.jsp";
-                    title = "Elections";
-                    err = "Invalid election id, please retry";
-                    System.out.println("num form ex");
-                } catch (SQLException ex) {
-                    err = ex.getMessage();
-                    System.out.println("View Election Detail Err: " + ex.getMessage());
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("e:" + e);
+                err = "Invalid election id, please retry";
+                System.out.println("num form ex");
+            } catch (SQLException ex) {
+                err = ex.getMessage();
+                System.out.println("View Election Detail Err: " + ex.getMessage());
             }
         }
         req.setAttribute("msg", msg);
