@@ -46,14 +46,15 @@ public class ViewElectionDetail implements Controller.Action {
 
             try {
                 long id = Long.parseLong(req.getParameter("id"));
+                String tab = (String) req.getParameter("tab");
                 view = "electionDetail.jsp";
-                title = "Election Detail";
+                title = "Election Details";
                 objE = DBDAOImplElection.getInstance();
                 objN = DBDAOImplNominee.getInstance();
                 objC = DBDAOImplCandidate.getInstance();
                 objV = DBDAOImplVoter.getInstance();
                 objP = DBDAOImplEligibleNominee.getInstance();
-                if (elec_id == null || !objE.isValidElectionId(id, email)) {
+                if (elec_id == null || !objE.isValidElectionId(id, email) || tab == null || tab.equals("")) {
                     view = "listElections.jsp";
                     title = "Elections";
                     ArrayList<Election> elections = null;
@@ -66,19 +67,47 @@ public class ViewElectionDetail implements Controller.Action {
                     req.setAttribute("elections", elections);
                     err = "Fail to locate election id, please retry";
                 } else {
-                    view = "electionDetail.jsp";
-                    title = "Election Detail";
                     System.out.println("Election ID: " + id);
+                    System.out.println("tab : " + tab);
+
                     Election el = objE.getElection(id, email);
                     req.setAttribute("election", el);
-                    ArrayList<Nominee> nominees = objN.getNominees(id);
-                    req.setAttribute("nominees", nominees);
+
                     ArrayList<Candidate> candidates = objC.getCandidates(id);
-                    req.setAttribute("candidates", candidates);
-                    ArrayList<Voter> voters = objV.getVoters(id);
-                    req.setAttribute("voters", voters);
-                    ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
-                    req.setAttribute("probable_nominee", pns);
+                    switch (tab) {
+                        case "general":
+                            view = "electionDetail.jsp";
+                            title = "General Election Details";
+                            break;
+                        case "statistics":
+                            view = "electionStatistics.jsp";
+                            title = "Election Statistics";
+                            req.setAttribute("candidates", candidates);
+                            break;
+                        case "nominees":
+                            view = "electionNominees.jsp";
+                            title = "Nominees";
+                            ArrayList<Nominee> nominees = objN.getNominees(id);
+                            req.setAttribute("nominees", nominees);
+                            break;
+                        case "candidates":
+                            view = "electionCandidates.jsp";
+                            title = "Candidates";
+                            req.setAttribute("candidates", candidates);
+                            break;
+                        case "voters":
+                            view = "electionVoters.jsp";
+                            title = "Voters";
+                            ArrayList<Voter> voters = objV.getVoters(id);
+                            req.setAttribute("voters", voters);
+                            break;
+                        case "probable_nominees":
+                            view = "electionProbableNominees.jsp";
+                            title = "Probable Nominees";
+                            ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
+                            req.setAttribute("probable_nominee", pns);
+                            break;
+                    }
                 }
             } catch (NumberFormatException e) {
                 view = "listElections.jsp";
@@ -101,7 +130,5 @@ public class ViewElectionDetail implements Controller.Action {
         req.setAttribute("err", err);
         req.setAttribute("title", title);
         return view;
-
     }
-
 }

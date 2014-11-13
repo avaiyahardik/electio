@@ -1,9 +1,3 @@
-<%-- 
-    Document   : headerSidebar
-    Created on : Oct 19, 2014, 1:59:15 PM
-    Author     : Vishal Jain
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -11,7 +5,6 @@
 <!--[if IE 7]>         <html class="no-js sidebar-large lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js sidebar-large lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js sidebar-large"> <!--<![endif]-->
-
     <head>
         <!-- BEGIN META SECTION -->
         <meta charset="utf-8">

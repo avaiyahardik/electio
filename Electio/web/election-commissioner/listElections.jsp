@@ -56,7 +56,7 @@
                             %>
 
                             <tr>
-                                <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>"><%= el.getName()%></a></strong></td>
+                                <td><strong><a href="Controller?action=view_election_detail&id=<%= el.getId()%>&tab=general"><%= el.getName()%></a></strong></td>
                                 <td><%=sdf.format(new Date(el.getCreated_at().getTime()))%> </td>
                                 <td><%= et.getType()%></td>
 
