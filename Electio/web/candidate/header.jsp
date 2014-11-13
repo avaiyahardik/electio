@@ -45,7 +45,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="Controller?action=candidate_home">Home</a></li>
                         <li><a href="Controller?action=candidate_profile">Profile</a></li>
-                        <li><a href="Controller?action=election_result&election_id=<%=election_id%>">View Results</a></li>
+                        <li><a href="Controller?action=election_result">View Results</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
