@@ -3,13 +3,11 @@
 <jsp:include page="header.jsp"/>
 <%  ArrayList<Candidate> candidates = null;
     long type = 0;
-    try {
-        candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
-        String elec_type = (String) request.getAttribute("election_type");
-        type = Integer.parseInt(elec_type);
-    } catch (Exception ex) {
-        out.print("No candidates for this election");
-    } %>
+
+    candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
+    String elec_type = (String) request.getAttribute("election_type");
+    type = Integer.parseInt(elec_type);
+%>
 
 <div id="main-content">
     <div class="page-title">
@@ -45,7 +43,11 @@
                         </div>
                         <%}
                             if (cnt == 0) { %>
-                        <label class="form-control"><strong>No Candidates for this election available</strong></label>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <label class="form-control"><strong>No Candidates for this election available</strong></label>
+                            </div>
+                        </div>
                         <%}
                         } else {%>
                         <div class="form-group">
@@ -69,11 +71,11 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <a href="#"  id="link-toggle">File a Petition</a>
+            <a href="#" id="link-toggle">File a Petition</a>
         </div>
     </div>
 
-    <div class="row" id="petition-form" style="display:none">
+    <div class="row" id="petition-form" style="display:block">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">File a Petition</div>
@@ -107,6 +109,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#link-toggle').click(function () {
+
             $('#petition-form').toggle(200);
         });
     });
