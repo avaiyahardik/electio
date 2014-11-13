@@ -25,7 +25,7 @@ public class CandidateLogin implements Controller.Action {
         String elec_id = req.getParameter("election_id");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String view = "index.jsp";
+        String view = "index.jsp?election_id=" + elec_id;
         String title = "Login";
         String msg = null;
         String err = null;
