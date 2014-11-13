@@ -124,7 +124,7 @@
                                     <div class="form-group">
                                         <label for="email" class="control-label col-lg-4"><strong>Email ID</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" name="email" class="form-control" required id="email">
+                                            <input type="email" name="email" class="form-control" required id="email">
                                         </div>
                                     </div>
 
@@ -156,7 +156,7 @@
                                     <div class="form-group">
                                         <label for="mobile" class="col-lg-4 control-label"><strong>Mobile No</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="text" class="form-control" name="mobile" required>
+                                            <input type="text" class="form-control" name="mobile" required pattern="[7-9]{1}[0-9]{9}" title="10 Digit mobile number">
                                         </div>
                                     </div>
 
@@ -219,14 +219,15 @@
                                     <div class="form-group">
                                         <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="password" class="form-control" name="password" required>
+                                            <input type="password" id="pass1" class="form-control" name="password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="password" class="form-control" name="retype_password" required>
+                                            <input type="password" id="pass2" class="form-control" name="retype_password" required onkeyup="checkPass(); return false;">
+                                            <span id="msg" class="label label-danger"></span>
                                         </div>
                                     </div>
 
@@ -312,6 +313,24 @@
                                                         document.getElementById('org-about').style.display = "none";
                                                     }
                                                 }
+                                                
+                                                function checkPass()
+                                        {
+                                            var pass1 = document.getElementById('pass1');
+                                            var pass2 = document.getElementById('pass2');
+                                            //Store the Confimation Message Object ...
+                                            var message = document.getElementById('msg');
+
+                                            if (pass1.value == pass2.value) {
+                                                message.innerHTML = "Passwords Match!"
+                                                message.classList.remove('label-danger');
+                                                message.classList.add('label-success');
+                                            } else {
+                                                message.innerHTML = "Passwords Do Not Match!"
+                                                message.classList.remove('label-success');
+                                                message.classList.add('label-danger');
+                                            }
+                                        }
         </script>
     </body>
 </html>

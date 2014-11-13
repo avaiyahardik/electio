@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <label for="email" class="control-label col-lg-4">Email ID</label>
                             <div class="col-lg-6">
-                                <input type="text" name="email" class="form-control" required disabled="" value="<%=n.getEmail()%>">
+                                <input type="email" name="email" class="form-control" required disabled="" value="<%=n.getEmail()%>">
                             </div>
                         </div>
 
@@ -86,7 +86,7 @@
                         <div class="form-group">
                             <label for="mobile" class="col-lg-4 control-label">Mobile No</label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="mobile" required value="<%=n.getMobile()%>">
+                                <input type="text" class="form-control" name="mobile" required value="<%=n.getMobile()%>"  pattern="[7-9]{1}[0-9]{9}" title="10 Digit mobile number">
                             </div>
                         </div>
 
@@ -183,11 +183,11 @@
                 <form action="Controller" method="POST" class="form-inline">
 
                     <div class="form-group">
-                        <label for="old_password" class="control-label col-lg-12">Old Password</label>
+                        <label for="old_password" class="control-label col-lg-12" >Old Password</label>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-12">
-                            <input type="password" class="form-control" name="old_password" required>
+                            <input type="password" class="form-control" name="old_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters">
                         </div>
                     </div>
 
@@ -196,15 +196,17 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-12">
-                            <input type="password" class="form-control" name="new_password" required>
+                            <input type="password" id="pass1" class="form-control" name="new_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="retype_new_password" class="control-label col-lg-12">Retype New Password</label>
                         <div class="col-lg-12">
-                            <input type="password" class="form-control" name="retype_new_password" required>
+                            <input type="password" id="pass2" class="form-control" name="retype_new_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters" onkeyup="checkPass(); return false;">
+                             <span id="msg" class="label label-danger"></span>
                         </div>
+                       
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-12"></label>
@@ -229,6 +231,24 @@
             document.getElementById('org-name').style.display = "none";
             document.getElementById('org-address').style.display = "none";
             document.getElementById('org-about').style.display = "none";
+        }
+    }
+
+    function checkPass()
+    {
+        var pass1 = document.getElementById('pass1');
+        var pass2 = document.getElementById('pass2');
+        //Store the Confimation Message Object ...
+        var message = document.getElementById('msg');
+
+        if (pass1.value == pass2.value) {
+            message.innerHTML = "Passwords Match!"
+            message.classList.remove('label-danger');
+            message.classList.add('label-success');
+        } else {
+            message.innerHTML = "Passwords Do Not Match!"
+            message.classList.remove('label-success');
+            message.classList.add('label-danger');
         }
     }
 </script>

@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         <label for="password" class="control-label col-lg-4"><strong>Password</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="password" class="form-control" name="password" required>
+                                            <input type="password" class="form-control" name="password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters">
                                         </div>
                                     </div>
 
