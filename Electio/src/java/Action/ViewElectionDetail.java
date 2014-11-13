@@ -48,21 +48,23 @@ public class ViewElectionDetail implements Controller.Action {
                 err = "Election id or tab name missing";
             } else {
                 try {
-                    long id = Long.parseLong(elec_id);
-                    view = "electionDetail.jsp";
-                    title = "Election Details";
                     objE = DBDAOImplElection.getInstance();
                     objN = DBDAOImplNominee.getInstance();
                     objC = DBDAOImplCandidate.getInstance();
                     objV = DBDAOImplVoter.getInstance();
                     objP = DBDAOImplEligibleNominee.getInstance();
+                    ArrayList<Election> elections = null;
+                    System.out.println("test0");
+                    elections = objE.getElections(email);
+                    System.out.println("test");
+                    req.setAttribute("elections", elections);
+                    long id = Long.parseLong(elec_id);
+                    view = "electionDetail.jsp";
+                    title = "Election Details";
                     if (elec_id == null || !objE.isValidElectionId(id, email) || tab == null || tab.equals("")) {
                         view = "listElections.jsp";
                         title = "Elections";
-                        ArrayList<Election> elections = null;
-                        elections = objE.getElections(email);
-                        req.setAttribute("elections", elections);
-                        err = "Fail to locate election id, please retry";
+                        err = "Fail to locate election id or invalid election id, please retry";
                     } else {
                         System.out.println("Election ID: " + id);
                         System.out.println("tab : " + tab);
@@ -113,24 +115,15 @@ public class ViewElectionDetail implements Controller.Action {
                             default:
                                 view = "listElections.jsp";
                                 title = "Elections";
-                                ArrayList<Election> elections = null;
-                                elections = objE.getElections(email);
-                                req.setAttribute("elections", elections);
                                 err = "Requesting invalid tab";
                         }
                     }
                 } catch (NumberFormatException e) {
+                    System.out.println("e:" + e);
                     view = "listElections.jsp";
                     title = "Elections";
-                    ArrayList<Election> elections = null;
-                    try {
-                        elections = objE.getElections(email);
-                    } catch (SQLException ex) {
-                        err = ex.getMessage();
-                        System.out.println("ViewElections Err: " + ex.getMessage());
-                    }
-                    req.setAttribute("elections", elections);
-                    err = "Fail to locate election id, please retry";
+                    err = "Invalid election id, please retry";
+                    System.out.println("num form ex");
                 } catch (SQLException ex) {
                     err = ex.getMessage();
                     System.out.println("View Election Detail Err: " + ex.getMessage());
