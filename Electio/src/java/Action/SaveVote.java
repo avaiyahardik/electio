@@ -24,30 +24,28 @@ public class SaveVote implements Controller.Action {
         String email = (String) req.getSession().getAttribute("voter_email");
         String elec_type = (String) req.getSession().getAttribute("election_type");
         String candidate_email = req.getParameter("candidate_email");
+        String elec_id = (String) req.getSession().getAttribute("election_id");
         String view = "index.jsp";
         String msg = null;
         String err = null;
         String title = "Login";
-        if (email == null || email.equals("") || elec_type == null || elec_type.equals("") || candidate_email == null || candidate_email.equals("")) {
+        if (email == null || email.equals("") || elec_type == null || elec_type.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
-
             try {
                 long election_type = Long.parseLong(elec_type);
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                System.out.println("email : " + email + " election_type : " + election_type + " election_id : " + req.getSession().getAttribute("election_id"));
-                if (req.getSession().getAttribute("election_id") == null) {
-                    err = "Fail to locate election id, please retry";
+                view = "voted.jsp";
+                title = "Voted";
+                long id = Long.parseLong(elec_id);
+                if (objV.getVoterStatus(id, email)) {
+                    msg = "You already voted";
                 } else {
-                    view = "voted.jsp";
-                    title = "Voted";
-                    long id = Long.parseLong(req.getSession().getAttribute("election_id").toString());
-                    if (objV.getVoterStatus(id, email)) {
-                        msg = "You already voted";
-                    } else {
-                        if (election_type == 2) {
-                            System.out.println("Election ID: " + id);
+                    if (election_type == 2) {
+                        if (candidate_email == null || candidate_email.equals("")) {
+                            err = "Candidate email id missing";
+                        } else {
                             try {
                                 if (objC.saveVote(id, candidate_email) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
                                     msg = "Your Vote has been casted, thank you!!";
@@ -56,20 +54,21 @@ public class SaveVote implements Controller.Action {
                                 err = ex.getMessage();
                                 System.out.println("Save vote Err: " + ex.getMessage());
                             }
-                        } else if (election_type == 1) {
-                            try {
-                                ArrayList<Candidate> candidates = objC.getCandidates(id);
-                                int tot = candidates.size();
-                                for (Candidate c : candidates) {
-                                    System.out.println("email:" + c.getEmail() + "votes: " + (tot - Long.parseLong(req.getParameter(c.getEmail())) + 1));
-                                    c.setVotes(tot - Long.parseLong(req.getParameter(c.getEmail())) + 1);
-                                }
-                                if (objC.updateCandidateVotes(candidates, id) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
-                                    msg = "Your Vote has been casted, thank you!!";
-                                }
-                            } catch (SQLException ex) {
-                                System.out.println("Err: " + ex.getMessage());
+                        }
+                    } else if (election_type == 1) {
+                        try {
+                            ArrayList<Candidate> candidates = objC.getCandidates(id);
+                            int tot = candidates.size();
+                            for (Candidate c : candidates) {
+                                System.out.println("email:" + c.getEmail() + "votes: " + (tot - Long.parseLong(req.getParameter(c.getEmail())) + 1));
+                                c.setVotes(tot - Long.parseLong(req.getParameter(c.getEmail())) + 1);
                             }
+                            if (objC.updateCandidateVotes(candidates, id) && objV.updateVoterStatus(id, email)) {//update votes in candidate and update voter status as voted
+                                msg = "Your Vote has been casted, thank you!!";
+                            }
+                        } catch (SQLException ex) {
+                            err = ex.getMessage();
+                            System.out.println("Err: " + ex.getMessage());
                         }
                     }
                 }
