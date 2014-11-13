@@ -85,7 +85,6 @@ public class ViewElectionDetail implements Controller.Action {
                 title = "Elections";
                 ArrayList<Election> elections = null;
                 try {
-
                     elections = objE.getElections(email);
                 } catch (SQLException ex) {
                     err = ex.getMessage();

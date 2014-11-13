@@ -51,16 +51,15 @@ public class Controller extends HttpServlet {
             System.out.println("Action Object Created");
             view = action.execute(request, response);
             System.out.println("View: " + view);
-//            out.print("<script>alert('yes');</script>");
-        /*    out.println("Controller Msg: " + request.getAttribute("msg"));
-            out.println("Controller Err: " + request.getAttribute("err"));
-          */  if (!response.isCommitted()) {
+            if (!response.isCommitted()) {
                 RequestDispatcher rd = request.getRequestDispatcher(view);
                 rd.forward(request, response);
             }
 
         } catch (Exception ex) {
             System.out.println("Controller Error: " + ex.getMessage());
+            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            rd.forward(request, response);
         }
     }
 
