@@ -6,7 +6,6 @@
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     Election el = (Election) request.getAttribute("election");
     String nom_status = (String) request.getAttribute("nominee_status");
-    out.print("STATUS: "+nom_status);
     String reason = (String) request.getAttribute("reason");
     int status = Integer.parseInt(nom_status);
 %>

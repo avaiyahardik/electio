@@ -10,7 +10,7 @@ public class CandidateLogout implements Controller.Action {
     public String execute(HttpServletRequest req, HttpServletResponse res) {
         String elec_id = (String) req.getSession().getAttribute("election_id");
         String email = (String) req.getSession().getAttribute("candidate_email");
-        String view = "../index.jsp?electio=electio";
+        String view = "index.jsp?electio=electio";
         String msg = null;
         String err = null;
         String title = "Login";
