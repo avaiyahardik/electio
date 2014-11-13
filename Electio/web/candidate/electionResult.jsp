@@ -118,6 +118,7 @@
         data.addColumn('number', 'Votes');
     <%
         int total_votes = 0;
+        out.print("candidates: "candidates);
         for (Candidate c : candidates) {
             total_votes += (int) c.getVotes();
     %>
