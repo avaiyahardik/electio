@@ -1,8 +1,13 @@
+<%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
 <jsp:include page="header.jsp"/>
-<%  ArrayList<Candidate> candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
-    int election_type = (Integer) request.getAttribute("election_type");%>
+<%  ArrayList<Candidate> candidates = null;
+    long type = 0;
+    candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
+    String elec_type = (String) request.getAttribute("election_type");
+    type = Integer.parseInt(elec_type);
+%>
 
 <div id="main-content">
     <div class="page-title">
@@ -16,7 +21,7 @@
                 </div>            
                 <div class="panel body">
                     <div class="form-horizontal">
-                        <%if (election_type == 1) {%>
+                        <%if (type == 1) {%>
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
                                 <h3 class="panel-title">Final Preferences of the Candidates</h3>
@@ -56,12 +61,11 @@
 
         </div>
     </div>
+    
 </div>
-
 <script type="text/javascript" src="../js/charts.js"></script>
 <script type="text/javascript" src="../js/jsapi"></script>
 <script type="text/javascript">
-
     google.load("visualization", "1", {packages: ["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -84,5 +88,7 @@
                 var chart = new google.visualization.ColumnChart(document.getElementById('result-chart-bar'));
                 chart.draw(data, options);
             }
+
+
 </script>
 <jsp:include page="footer.jsp"/>
