@@ -39,7 +39,7 @@
 
                     <form class="navbar-form navbar-right"  action="election-commissioner/Controller" method="post">
                         <div class="form-group">
-                            <input type="text" name="email" class="form-control" required="required" placeholder="Email ID"/><br/>
+                            <input type="email" name="email" class="form-control" required="required" placeholder="Email ID" pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" title="Enter a valid email address"/><br/>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" required="required" class="form-control" placeholder="Password"/><br/>

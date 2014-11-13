@@ -124,7 +124,7 @@
                                     <div class="form-group">
                                         <label for="email" class="control-label col-lg-4"><strong>Email ID</strong></label>
                                         <div class="col-lg-7">
-                                            <input type="email" name="email" class="form-control" required id="email">
+                                            <input type="email" name="email" class="form-control" required id="email" pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" title="Enter a valid email address">
                                         </div>
                                     </div>
 
