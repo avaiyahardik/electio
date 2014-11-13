@@ -47,14 +47,13 @@ public class ElectionResult implements Controller.Action {
                 long election_id = Long.parseLong(elec_id);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
                 if (elec_id == null || elec_id.equals("")) {
                     err = "Election Id is missing";
                     view = "index.jsp";
                     title = "Login";
                 } else {
                     ArrayList<Candidate> candidates = null;
-                    long election_type = (long) objE.getElectionType(election_id).getType_id();
+                    long election_type = objE.getElectionType(election_id).getType_id();
                     req.setAttribute("election_type", election_type + "");
                     if (election_type == 1) {
                         candidates = objC.getCandidatesForPreferentialVoting(election_id);

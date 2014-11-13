@@ -30,12 +30,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading align-center">
                     <div class="btn-group">
-                        <a href="Controller?action=view_election_detail&id=1&tab=general" class="btn btn-info"><i class="fa fa-info-circle"></i> General</a>
-                        <a href="Controller?action=view_election_detail&id=1&tab=nominees" class="btn btn-info"><i class="fa fa-user"></i> Nominees</a>
-                        <a href="Controller?action=view_election_detail&id=1&tab=candidates" class="btn btn-info"><i class="fa fa-user"></i> Candidates</a>
-                        <a href="Controller?action=view_election_detail&id=1&tab=voters" class="btn btn-info"><i class="fa fa-group"></i> Voters</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=general" class="btn btn-info"><i class="fa fa-info-circle"></i> General</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=nominees" class="btn btn-info"><i class="fa fa-user"></i> Nominees</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=candidates" class="btn btn-info"><i class="fa fa-user"></i> Candidates</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=voters" class="btn btn-info"><i class="fa fa-group"></i> Voters</a>
                         <a href="#" class="btn btn-primary"><i class="fa fa-list"></i> Probable Nominees</a>
-                        <a href="Controller?action=view_election_detail&id=1&tab=statistics" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> Election Statistics</a>               
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=statistics" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> Election Statistics</a>               
                     </div>
                 </div>
 
