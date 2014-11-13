@@ -25,7 +25,7 @@ public class VoterHome implements Controller.Action {
         String msg = null;
         String err = null;
         String title = "Login";
-        if (email == null || email.equals("") || elec_id == null) {
+        if (email == null || email.equals("") || elec_id == null || elec_id.equals("")) {
             err = "Session expired please login again";
         } else {
             view = "electionDetails.jsp";

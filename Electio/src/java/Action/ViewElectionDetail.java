@@ -38,13 +38,22 @@ public class ViewElectionDetail implements Controller.Action {
         if (email == null || email.equals("")) {
             err = "Session expired please login again";
         } else {
+            DBDAOImplElection objE = null;
+            DBDAOImplNominee objN = null;
+            DBDAOImplCandidate objC = null;
+            DBDAOImplVoter objV = null;
+            DBDAOImplEligibleNominee objP = null;
+
             try {
-                DBDAOImplElection objE = DBDAOImplElection.getInstance();
-                DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
-                DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
-                DBDAOImplVoter objV = DBDAOImplVoter.getInstance();
-                DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
-                if (elec_id == null || !objE.isValidElectionId(Long.parseLong(req.getParameter("id")), email)) {
+                long id = Long.parseLong(req.getParameter("id"));
+                view = "electionDetail.jsp";
+                title = "Election Detail";
+                objE = DBDAOImplElection.getInstance();
+                objN = DBDAOImplNominee.getInstance();
+                objC = DBDAOImplCandidate.getInstance();
+                objV = DBDAOImplVoter.getInstance();
+                objP = DBDAOImplEligibleNominee.getInstance();
+                if (elec_id == null || !objE.isValidElectionId(id, email)) {
                     view = "listElections.jsp";
                     title = "Elections";
                     ArrayList<Election> elections = null;
@@ -57,11 +66,9 @@ public class ViewElectionDetail implements Controller.Action {
                     req.setAttribute("elections", elections);
                     err = "Fail to locate election id, please retry";
                 } else {
-                    long id = Long.parseLong(elec_id);
                     view = "electionDetail.jsp";
                     title = "Election Detail";
                     System.out.println("Election ID: " + id);
-
                     Election el = objE.getElection(id, email);
                     req.setAttribute("election", el);
                     ArrayList<Nominee> nominees = objN.getNominees(id);
@@ -73,6 +80,19 @@ public class ViewElectionDetail implements Controller.Action {
                     ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
                     req.setAttribute("probable_nominee", pns);
                 }
+            } catch (NumberFormatException e) {
+                view = "listElections.jsp";
+                title = "Elections";
+                ArrayList<Election> elections = null;
+                try {
+
+                    elections = objE.getElections(email);
+                } catch (SQLException ex) {
+                    err = ex.getMessage();
+                    System.out.println("ViewElections Err: " + ex.getMessage());
+                }
+                req.setAttribute("elections", elections);
+                err = "Fail to locate election id, please retry";
             } catch (SQLException ex) {
                 err = ex.getMessage();
                 System.out.println("View Election Detail Err: " + ex.getMessage());

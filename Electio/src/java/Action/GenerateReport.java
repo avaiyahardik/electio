@@ -582,8 +582,12 @@ public class GenerateReport implements Controller.Action {
                         cell = new PdfPCell(new Paragraph(Long.toString(c.getVotes())));
                         cell.setBorder(PdfPCell.NO_BORDER);
                         table.addCell(cell);
+                        if (total_votes != 0) {
+                            cell = new PdfPCell(new Paragraph(Long.toString((c.getVotes() * 100) / total_votes) + "%"));
+                        } else {
+                            cell = new PdfPCell(new Paragraph(Long.toString(c.getVotes()) + "%"));
+                        }
 
-                        cell = new PdfPCell(new Paragraph(Long.toString((c.getVotes() * 100) / total_votes) + "%"));
                         cell.setBorder(PdfPCell.NO_BORDER);
                         table.addCell(cell);
 
