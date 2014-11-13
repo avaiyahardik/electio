@@ -118,7 +118,9 @@
         data.addColumn('number', 'Votes');
     <%
         int total_votes = 0;
-        out.print("candidates: "+candidates);
+        candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
+        out.print("candidates: " + candidates);
+        System.out.print("Candidates: " + candidates);
         for (Candidate c : candidates) {
             total_votes += (int) c.getVotes();
     %>
