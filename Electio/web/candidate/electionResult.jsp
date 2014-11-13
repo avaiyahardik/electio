@@ -1,9 +1,9 @@
+<%@page import="DAO.DBDAOImplCandidate"%>
 <%@page import="Model.Candidate"%>
 <%@page import="java.util.ArrayList"%>
 <jsp:include page="header.jsp"/>
 <%  ArrayList<Candidate> candidates = null;
     long type = 0;
-
     candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
     String elec_type = (String) request.getAttribute("election_type");
     type = Integer.parseInt(elec_type);
@@ -61,7 +61,13 @@
 
         </div>
     </div>
+    <%
+        DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
+        long election_id = Long.parseLong((String) request.getSession().getAttribute("election_id"));
+        String email = (String) request.getSession().getAttribute("candidate_email");
+        boolean petition_filed = objC.isPetitionFiled(election_id, email);
 
+        if (!petition_filed) { %>
     <div class="row">
         <div class="col-lg-12">
             <a href="#" id="link-toggle">File a Petition</a>
@@ -94,14 +100,16 @@
             </div>
         </div>
         <br>
-
     </div>
+    <%} else {%>
+    You already filed petition
+    <%}%>
 </div>
 <script type="text/javascript" src="../js/charts.js"></script>
 <script type="text/javascript" src="../js/jsapi"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#link-toggle').click(function () {
+    $(document).ready(function() {
+        $('#link-toggle').click(function() {
 
             $('#petition-form').toggle(200);
         });

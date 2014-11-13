@@ -49,7 +49,7 @@ public class Candidate extends User {
         this.manifesto = manifesto;
     }
 
-    public boolean isPetition_filed() {
+    public boolean getPetition_filed() {
         return petition_filed;
     }
 

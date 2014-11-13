@@ -96,13 +96,10 @@ public class EmailSender {
             transport.connect(host, from, password);
             transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
             transport.close();
-
             return true;
-
         } catch (MessagingException me) {
             System.out.println("Single Email Sender Err: " + me.getMessage());
         }
         return false;
     }
-
 }
