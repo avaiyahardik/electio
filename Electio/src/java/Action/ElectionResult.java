@@ -32,19 +32,18 @@ public class ElectionResult implements Controller.Action {
             view = "index.jsp";
             title = "Login";
         } else {
+            ArrayList<Candidate> candidates = null;
             try {
                 long election_id = Long.parseLong(elec_id);
                 DBDAOImplElection objE = DBDAOImplElection.getInstance();
                 DBDAOImplCandidate objC = DBDAOImplCandidate.getInstance();
                 int election_type = (int) objE.getElectionType(election_id).getType_id();
-                req.setAttribute("election_type", election_type);
-                ArrayList<Candidate> candidates = null;
+                req.setAttribute("election_type", election_type + "");
                 if (election_type == 1) {
                     candidates = objC.getCandidatesForPreferentialVoting(election_id);
                 } else if (election_type == 2) {
                     candidates = objC.getCandidatesForWeightedVoting(election_id);
                 }
-                req.setAttribute("candidates", candidates);
             } catch (NumberFormatException ex) {
                 err = "Invalid election id";
                 System.out.println("NFE: " + ex);
@@ -52,6 +51,7 @@ public class ElectionResult implements Controller.Action {
                 err = ex.getMessage();
                 System.out.println("ElectionResult SQL Err: " + ex.getMessage());
             }
+            req.setAttribute("candidates", candidates);
         }
         req.setAttribute("msg", msg);
         req.setAttribute("err", err);
