@@ -58,12 +58,20 @@ public class VoterLogin implements Controller.Action {
                             } else {
                                 msg = "Fail to send mail, try again after sometime";
                                 err = "Invalid login cradentials, please retry";
-                                view += "&msg=" + msg + "&err=" + err + "&title=" + title;
+                                view += "&msg=" + msg + "&err=" + err + "&title=" + title + "&email=" + email;
                                 try {
                                     res.sendRedirect(view);
                                 } catch (IOException ex) {
                                     System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
                                 }
+                            }
+                        } else {
+                            err = "Invalid email or election id";
+                            view += "&msg=" + msg + "&err=" + err + "&title=" + title + "&email=" + email;
+                            try {
+                                res.sendRedirect(view);
+                            } catch (IOException ex) {
+                                System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
                             }
                         }
                     } else if (step.equals("2")) {
@@ -83,6 +91,18 @@ public class VoterLogin implements Controller.Action {
                             req.setAttribute("election", el);
                             req.getSession().setAttribute("election_id", elec_id);
                             req.getSession().setAttribute("voter_email", email);
+                        } else {
+                            view = "login2.jsp"; // view changed if email exists and status is not voted successfull
+                            title = "Voter Login";
+                            req.setAttribute("election_id", elec_id);
+                            req.setAttribute("email", email);
+                            err = "Incorrect password, retry";
+                            view += "&msg=" + msg + "&err=" + err + "&title=" + title + "&email=" + email;
+                            try {
+                                res.sendRedirect(view);
+                            } catch (IOException ex) {
+                                System.out.println("Voter Logout Fail to redirect" + ex.getMessage());
+                            }
                         }
                     } else {
                         err = "Fail to login, please retry"; // error message should be displayed on view page

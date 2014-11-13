@@ -81,7 +81,13 @@
                                     <div class="form-group">
                                         <label for="email" class="control-label col-sm-4">Email ID</label>
                                         <div class="col-sm-7">
+                                            <% if (request.getParameter("email") != null && !request.getParameter("email").equals("")) {%>
+                                            <input type="email" value="<%= request.getParameter("email")%>" name="email" class="form-control" required pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" title="Enter a valid email address">
+                                            <%
+                                            } else {%>
                                             <input type="email" name="email" class="form-control" required pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" title="Enter a valid email address">
+                                            <%}%>
+
                                         </div>
                                     </div>
 
