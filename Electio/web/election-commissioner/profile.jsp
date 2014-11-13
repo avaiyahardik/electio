@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label for="email" class="control-label col-lg-5"><strong>Email ID</strong></label>
                             <div class="col-lg-7">
-                                <input type="text" name="email" disabled="disabled" class="form-control" required value="<%=ec.getEmail()%>">
+                                <input type="email" name="email" disabled="disabled" class="form-control" required value="<%=ec.getEmail()%>">
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@
                                         <span class="arrow"></span>
                                         <i>+91</i> 
                                     </span>
-                                    <input type="text" class="form-control" required="required" name="mobile"  value="<%=ec.getMobile()%>">
+                                    <input type="text" class="form-control" required="required" name="mobile"  value="<%=ec.getMobile()%>" pattern="[7-9]{1}[0-9]{9}" title="10 Digit mobile number">
                                 </div>
                             </div>
                         </div>
@@ -113,21 +113,22 @@
                         <div class="form-group">
                             <label for="old_password" class="control-label col-lg-4"><strong>Old Password</strong></label>
                             <div class="col-lg-7">
-                                <input type="password" class="form-control" name="old_password" required>
+                                <input type="password" class="form-control" name="old_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="new_password" class="control-label col-lg-4"><strong>Password</strong></label>
                             <div class="col-lg-7">
-                                <input type="password" class="form-control" name="new_password" required>
+                                <input type="password" id="pass1" class="form-control" name="new_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="retype_password" class="control-label col-lg-4"><strong>Retype Password</strong></label>
                             <div class="col-lg-7">
-                                <input type="password" class="form-control" name="retype_password" required>
+                                <input type="password" id="pass2" class="form-control" name="retype_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters"  onkeyup="checkPass(); return false;">
+                                <span id="msg" class="label label-danger"></span>
                             </div>
                         </div>
 
@@ -186,6 +187,24 @@
             document.getElementById('org-name').style.display = "none";
             document.getElementById('org-address').style.display = "none";
             document.getElementById('org-about').style.display = "none";
+        }
+    }
+
+    function checkPass()
+    {
+        var pass1 = document.getElementById('pass1');
+        var pass2 = document.getElementById('pass2');
+        //Store the Confimation Message Object ...
+        var message = document.getElementById('msg');
+
+        if (pass1.value == pass2.value) {
+            message.innerHTML = "Passwords Match!"
+            message.classList.remove('label-danger');
+            message.classList.add('label-success');
+        } else {
+            message.innerHTML = "Passwords Do Not Match!"
+            message.classList.remove('label-success');
+            message.classList.add('label-danger');
         }
     }
 </script>
