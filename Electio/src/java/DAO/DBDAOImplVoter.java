@@ -86,9 +86,9 @@ public class DBDAOImplVoter {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_voter WHERE election_id=?");
         ps.setLong(1, election_id);
-        if (ps.execute()) {
-            result = true;
-        }
+        ps.executeUpdate();
+        result = true;
+        System.out.println("voter: " + result);
         return result;
     }
 
