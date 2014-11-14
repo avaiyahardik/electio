@@ -249,6 +249,7 @@ public class DBDAOImplCandidate {
         if (ps.executeUpdate() > 0) {
             result = true;
         }
+        System.out.println("setvotesZero: "+result);
         return result;
     }
 

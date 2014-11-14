@@ -213,9 +213,12 @@ public class DBDAOImplVoter {
     public boolean resetAllVoterStatus() throws SQLException {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("UPDATE tbl_voter SET link_status=? ,status=?");
-        if (ps.execute()) {
-            result = true;
-        }
+        ps.setBoolean(1, false);
+        ps.setBoolean(2, false);
+        ps.execute();
+        result = true;
+
+        System.out.println("resetallvoterstatus: " + result);
         return result;
     }
 

@@ -261,6 +261,7 @@ public class DBDAOImplElection {
         if (ps.executeUpdate() > 0) {
             result = true;
         }
+        System.out.println("updateElectionDates: "+result);
 
         return result;
     }
