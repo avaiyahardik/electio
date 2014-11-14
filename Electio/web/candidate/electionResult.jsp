@@ -5,7 +5,7 @@
 <%  ArrayList<Candidate> candidates = null;
     long type = 0;
     candidates = (ArrayList<Candidate>) request.getAttribute("candidates");
-    String elec_type = (String) request.getAttribute("election_type");
+    String elec_type = (String) request.getSession().getAttribute("election_type");
     type = Integer.parseInt(elec_type);
 %>
 
@@ -29,8 +29,13 @@
                         </div>
                         <%
                             int cnt = 0;
+                            long lastVote = -1;
                             for (Candidate c : candidates) {
-                                cnt++;%>
+                                if (lastVote == -1 || lastVote != c.getVotes()) {
+                                    cnt++;
+                                }
+                                lastVote = c.getVotes();
+                        %>
 
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
@@ -48,8 +53,13 @@
                                 <h3 class="panel-title">Election Results</h3>
                             </div>
                         </div>
-
                         <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <div id="result-chart-pie"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+
                             <div class="col-lg-8 col-lg-offset-2">
                                 <div id="result-chart-bar"></div>
                             </div>
@@ -136,6 +146,8 @@
                     width: 800,
                     height: 600
                 };
+                var chart = new google.visualization.PieChart(document.getElementById('result-chart-pie'));
+                chart.draw(data, options);
                 var chart = new google.visualization.ColumnChart(document.getElementById('result-chart-bar'));
                 chart.draw(data, options);
             }
