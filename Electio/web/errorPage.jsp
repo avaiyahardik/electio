@@ -13,11 +13,11 @@
         <title>Electi - Error</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="assets/img/favicon.png">
-        
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="assets/css/style.min.css" rel="stylesheet">
+
+        <link href="<%=request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8)%>assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<%=request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8)%>assets/css/style.min.css" rel="stylesheet">
         <!-- END  MANDATORY STYLE -->
-  
+
     </head>
 
     <body class="error-page">

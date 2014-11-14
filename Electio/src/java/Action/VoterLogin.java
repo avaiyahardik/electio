@@ -11,6 +11,7 @@ import Utilities.RandomString;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -86,10 +87,15 @@ public class VoterLogin implements Controller.Action {
                             Election election = objE.getElection(election_id);
                             req.setAttribute("candidates", candidates);
                             System.out.println("ttppyyee" + election.getType_id());
-                            req.getSession().setAttribute("election_type", election.getType_id()+"");
+                            req.getSession().setAttribute("election_type", election.getType_id() + "");
                             req.setAttribute("election", el);
                             req.getSession().setAttribute("election_id", elec_id);
                             req.getSession().setAttribute("voter_email", email);
+                            boolean show_result_menu = false;
+                            if (el.getVoting_end().before(new Date())) {
+                                show_result_menu = true;
+                            }
+                            req.getSession().setAttribute("show_result_menu", show_result_menu);
                         } else {
                             view = "login2.jsp"; // view changed if email exists and status is not voted successfull
                             title = "Voter Login";

@@ -16,7 +16,12 @@
         <script src="../assets/readable/jquery-1.10.2.min.js"></script>
         <script src="../assets/readable/bootstrap.min.js"></script>
         <title>
-            <% String title = (String) request.getAttribute("title");%>
+            <% String title = (String) request.getAttribute("title");
+                boolean show_result_menu = false;
+                if (request.getSession().getAttribute("show_result_menu") != null) {
+                    show_result_menu = (Boolean) request.getSession().getAttribute("show_result_menu");
+                }
+            %>
             <%=title%>
         </title>
     </head>
@@ -46,7 +51,11 @@
                         <li><a href="Controller?action=voter_home">Home</a></li>
                         <li><a href="Controller?action=list_candidates">Candidates</a></li>
                         <li><a href="Controller?action=vote_now">Vote Now!</a></li>
+                            <% if (show_result_menu) {%>
                         <li><a href="Controller?action=election_result">View Results</a></li>
+                            <%} else {%>
+                        <li><a href="#">Result awaiting</a></li>
+                            <%}%>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
