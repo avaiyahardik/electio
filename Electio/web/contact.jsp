@@ -100,7 +100,7 @@
                                 <span class="arrow"></span>
                                 <i class="fa fa-mobile">+91</i> 
                             </span>
-                            <input type="text" class="form-control" name="mobile_no" required>
+                            <input type="text" class="form-control" name="mobile_no" required pattern="[7-9]{1}[0-9]{9}" title="10 Digit mobile number">
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                 <div class="control-group form-group">
                     <div class="controls">
                         <label>Message:</label>
-                        <textarea rows="8" cols="100" name="message"class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+                        <textarea rows="8" cols="100" name="message"class="form-control" id="message" required title="Please enter your message" maxlength="999" style="resize:none"></textarea>
                     </div>
                 </div>
                 <div id="success"></div>
