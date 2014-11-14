@@ -48,9 +48,10 @@ public class DBDAOImplNominee {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_nominee WHERE election_id=?");
         ps.setLong(1, id);
-        if (ps.execute()) {
-            result = true;
-        }
+        ps.execute();
+        result = true;
+
+        System.out.println("Nominee: " + result);
         return result;
     }
 
@@ -58,9 +59,9 @@ public class DBDAOImplNominee {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_rejected_nominee WHERE election_id=?");
         ps.setLong(1, id);
-        if (ps.execute()) {
-            result = true;
-        }
+        ps.execute();
+        result = true;
+        System.out.println("rejected nominee: " + result);
         return result;
     }
 

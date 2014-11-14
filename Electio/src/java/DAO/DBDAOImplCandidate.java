@@ -48,9 +48,10 @@ public class DBDAOImplCandidate {
         boolean result = false;
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election_candidate WHERE election_id=?");
         ps.setLong(1, election_id);
-        if (ps.execute()) {
-            result = true;
-        }
+        ps.execute();
+        result = true;
+
+        System.out.println("Candidate: " + result);
         return result;
     }
 
@@ -248,6 +249,7 @@ public class DBDAOImplCandidate {
         if (ps.executeUpdate() > 0) {
             result = true;
         }
+        System.out.println("setvotesZero: "+result);
         return result;
     }
 

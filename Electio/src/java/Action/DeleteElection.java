@@ -56,7 +56,9 @@ public class DeleteElection implements Controller.Action {
                             err = "Fail to delete election, please retry";
                         }
                     }
-
+                   
+                    elections = objE.getElections(email);
+                    req.setAttribute("elections", elections);
                 } catch (NumberFormatException ex) {
                     err = "Invalid election id";
                     System.out.println("NFE: " + ex);

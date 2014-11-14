@@ -87,9 +87,10 @@ public class DBDAOImplElection {
         PreparedStatement ps = con.prepareStatement("DELETE FROM tbl_election WHERE election_commissioner_email=? and id=?");
         ps.setString(1, email);
         ps.setLong(2, id);
-        if (ps.executeUpdate() > 0) {
-            result = true;
-        }
+        ps.executeUpdate();
+        result = true;
+
+        System.out.println("election: " + result);
         return result;
     }
 
@@ -260,6 +261,7 @@ public class DBDAOImplElection {
         if (ps.executeUpdate() > 0) {
             result = true;
         }
+        System.out.println("updateElectionDates: "+result);
 
         return result;
     }
