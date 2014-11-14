@@ -122,10 +122,11 @@ public class DBDAOImplEligibleNominee {
         return result;
     }
 
-    public boolean checkEmailExists(String email) throws SQLException {
+    public boolean checkEmailExists(String email, long election_id) throws SQLException {
         boolean result = false;
-        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_probable_nominee WHERE email=?");
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM tbl_probable_nominee WHERE email=? AND election_id=?");
         ps.setString(1, email);
+        ps.setLong(2, election_id);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             result = true;

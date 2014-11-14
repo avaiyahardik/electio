@@ -44,7 +44,7 @@ public class FilePetition implements Controller.Action {
                 if (description == null || description.equals("")) {
                     err = "Please enter some description about your petition";
                 } else {
-                    if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "File Petition", description, objE.getElectionCommissionerEmail(election_id))) {
+                    if (EmailSender.sendMail("electio@jaintele.com", "electio_2014", "File Petition from: " + email, description, objE.getElectionCommissionerEmail(election_id))) {
                         msg = "Petition Filed successfully!";
                         objC.updatePetitionFiled(election_id, email, true);
                     } else {
@@ -52,7 +52,7 @@ public class FilePetition implements Controller.Action {
                     }
                 }
                 int election_type = (int) objE.getElectionType(election_id).getType_id();
-                req.setAttribute("election_type", election_type+"");
+                req.setAttribute("election_type", election_type + "");
                 ArrayList<Candidate> candidates = null;
                 if (election_type == 1) {
                     candidates = objC.getCandidatesForPreferentialVoting(election_id);

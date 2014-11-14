@@ -54,7 +54,6 @@ public class NomineeRegistration extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("1");
         String view = "nomineeRegistration.jsp";
         String title = "Nominee Registration";
         String msg = null;
@@ -176,7 +175,7 @@ public class NomineeRegistration extends HttpServlet {
                             int gen = Integer.parseInt(gender);
                             Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
                             if (objN.registerNominee(nominee)) {
-                                if (objP.checkEmailExists(email)) {
+                                if (objP.checkEmailExists(email,election_id)) {
                                     EligibleNominee pn = new EligibleNominee(election_id, email, 2);
                                     objP.changeProbableNomineeStatus(pn);
                                 }
