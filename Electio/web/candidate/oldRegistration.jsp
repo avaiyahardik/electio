@@ -159,5 +159,24 @@
             </div>
         </div>
 
+        <script type="text/javascript">
+            document.getElementById('requirements_file').addEventListener('change', checkFile, false);
+            function checkFile(e) {
+                var file_list = e.target.files;
+                for (var i = 0, file; file = file_list[i]; i++) {
+                    var sFileName = file.name;
+                    var sFileExtension = sFileName.split('.')[sFileName.split('.').length - 1].toLowerCase();
+                    var iFileSize = file.size;
+                    var iConvert = (file.size / 1024000).toFixed(2);
+
+                    if (!(sFileExtension === "pdf") || iFileSize > 102400) {
+                        // txt = "File type : " + sFileExtension + "\n\n";
+                        //txt += "Size: " + iConvert + " MB \n\n";
+                        txt = "Please make sure your file is in pdf or doc format and less than or equal 100 KB.\n\n";
+                        alert(txt);
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

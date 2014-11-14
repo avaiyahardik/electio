@@ -94,7 +94,7 @@
                         <div class="form-group">
                             <label for="photo" class="control-label col-lg-4">Photo</label>
                             <div class="col-lg-6">
-                                <input type="file" class="form-control" name="photo" accept="image/gif, image/jpeg, image/png"/>
+                                <input type="file" class="form-control" name="photo" accept="image/*"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -108,7 +108,7 @@
                         <div class="form-group">
                             <label for="manifesto" class="control-label col-lg-4">Manifesto(PDF only)</label>
                             <div class="col-lg-6">
-                                <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf" />
+                                <input type="file" class="form-control" name="manifesto_file"  accept="application/pdf" id="manifesto_file"/>
                                 <a href="..<%= File.separator%><%= c.getManifesto()%>" class="btn btn-dark"><i class="fa fa-paperclip"></i> Current Manifesto file</a>
                             </div>
                         </div>
@@ -203,10 +203,11 @@
                     <div class="form-group">
                         <label for="retype_new_password" class="control-label col-lg-12">Retype New Password</label>
                         <div class="col-lg-12">
-                            <input type="password" id="pass2" class="form-control" name="retype_new_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters" onkeyup="checkPass(); return false;">
-                             <span id="msg" class="label label-danger"></span>
+                            <input type="password" id="pass2" class="form-control" name="retype_new_password" required pattern=".{8,14}" title="Min 8 & Max 14 Characters" onkeyup="checkPass();
+                                    return false;">
+                            <span id="msg" class="label label-danger"></span>
                         </div>
-                       
+
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-12"></label>
@@ -249,6 +250,26 @@
             message.innerHTML = "Passwords Do Not Match!"
             message.classList.remove('label-success');
             message.classList.add('label-danger');
+        }
+    }
+
+    document.getElementById('requirements_file').addEventListener('change', checkFile, false);
+    document.getElementById('manifesto_file').addEventListener('change', checkFile, false);
+    
+    function checkFile(e) {
+        var file_list = e.target.files;
+        for (var i = 0, file; file = file_list[i]; i++) {
+            var sFileName = file.name;
+            var sFileExtension = sFileName.split('.')[sFileName.split('.').length - 1].toLowerCase();
+            var iFileSize = file.size;
+            var iConvert = (file.size / 1024000).toFixed(2);
+
+            if (!(sFileExtension === "pdf") || iFileSize > 102400) {
+                // txt = "File type : " + sFileExtension + "\n\n";
+                //txt += "Size: " + iConvert + " MB \n\n";
+                txt = "Please make sure your file is in pdf or doc format and less than or equal 100 KB.\n\n";
+                alert(txt);
+            }
         }
     }
 </script>
