@@ -7,9 +7,11 @@ package Controller;
 
 import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
+import DAO.DBDAOImplEligibleNominee;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplUser;
 import Model.Election;
+import Model.EligibleNominee;
 import Model.User;
 import Utilities.EmailSender;
 import Utilities.RandomString;
@@ -143,6 +145,7 @@ public class RegisterExistingNominee extends HttpServlet {
                     System.out.println("Going to checkNominee Login");
                     password = RandomString.encryptPassword(password);  // encrypt password for security reason
                     DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    DBDAOImplEligibleNominee objP = DBDAOImplEligibleNominee.getInstance();
                     Election el = objE.getElection(election_id);
                     if (email.equals(objE.getElectionCommissionerEmail(election_id))) {
                         err = "Election Commissioner can not be nominee";
@@ -150,7 +153,11 @@ public class RegisterExistingNominee extends HttpServlet {
                         if (objN.checkNomineeLogin(email, password)) {
                             if (objN.registerNominee(election_id, email, requirements_file, 0)) {
                                 System.out.println("Existing Nominee in diff election registered");
-                                msg = "Registered Successfully";
+                                if (objP.checkEmailExists(email, election_id)) {
+                                    EligibleNominee pn = new EligibleNominee(election_id, email, 2);
+                                    objP.changeProbableNomineeStatus(pn);
+                                }
+                                msg = "Nominee registered successfully";
                             } else {
                                 err = "Error occurs while registering";
                                 System.out.println("Error while registering existing nominee");

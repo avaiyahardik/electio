@@ -28,8 +28,8 @@ public class UserFeedback implements Controller.Action {
         if (email_id == null || email_id.equals("") || first_name == null || first_name.equals("") || mobile_no == null || mobile_no.equals("") || message == null || message.equals("")) {
             err = "Please fill-up required fields";
         } else {
-            String mesg = "email_id : " + email_id + " Name: " + first_name + " Mobile No: " + mobile_no;
-            if (EmailSender.sendMail(RandomString.ELECTIO_GMAIL_EMAIL, RandomString.ELECTIO_GMAIL_PASSWORD, "Feedback", mesg, "sen.daiict@gmail.com")) {
+            String mesg = "<br>Email : " + email_id + " <br>Name: " + first_name + "<br>Mobile No: " + mobile_no + "<br><p>"+message+"<p>";
+            if (EmailSender.sendMail(RandomString.ELECTIO_JAINTELE_EMAIL, RandomString.ELECTIO_JAINTELE_PASSWORD, "Feedback", mesg, "sen.daiict@gmail.com")) {
                 msg = "feedback sent successfully";
             }
         }
