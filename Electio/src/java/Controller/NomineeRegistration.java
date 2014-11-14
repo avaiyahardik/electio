@@ -5,9 +5,11 @@
  */
 package Controller;
 
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplOrganization;
 import DAO.DBDAOImplEligibleNominee;
+import Model.Election;
 import Model.Nominee;
 import Model.Organization;
 import Model.EligibleNominee;
@@ -152,10 +154,14 @@ public class NomineeRegistration extends HttpServlet {
             if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("") || email == null || email.equals("") || gender == null || gender.equals("") || mobile == null || mobile.equals("") || org_id == null || org_id.equals("") || org_id.equals("-1") || password == null || password.equals("") || retype_password == null || retype_password.equals("")) {
                 err = "Please fill all required fields";
             } else {
+                DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                Election el = objE.getElection(election_id);
                 if (image_size > (50 * 1000)) {
                     err = "Image size should be less than 50kb";
                 } else if (requirements_file_size > (100 * 1000)) {
                     err = "PDF file size should be less than 100kb";
+                } else if (el.getElection_commissioner_email().equals(email)) {
+                    err = "Election Commissioner can not be nominee";
                 } else {
                     if (retype_password.equals(password)) {
                         password = RandomString.encryptPassword(password);
@@ -175,7 +181,7 @@ public class NomineeRegistration extends HttpServlet {
                             int gen = Integer.parseInt(gender);
                             Nominee nominee = new Nominee(firstname, lastname, email, gen, mobile, organization_id, image, password, election_id, requirements_file, status);
                             if (objN.registerNominee(nominee)) {
-                                if (objP.checkEmailExists(email,election_id)) {
+                                if (objP.checkEmailExists(email, election_id)) {
                                     EligibleNominee pn = new EligibleNominee(election_id, email, 2);
                                     objP.changeProbableNomineeStatus(pn);
                                 }
@@ -190,7 +196,6 @@ public class NomineeRegistration extends HttpServlet {
                     }
                 }
             }
-
         } catch (FileUploadException e) {
             System.out.println("File Not Found Exception in uploading file.");
         } catch (Exception e) {

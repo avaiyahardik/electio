@@ -6,8 +6,10 @@
 package Controller;
 
 import DAO.DBDAOImplCandidate;
+import DAO.DBDAOImplElection;
 import DAO.DBDAOImplNominee;
 import DAO.DBDAOImplUser;
+import Model.Election;
 import Model.User;
 import Utilities.EmailSender;
 import Utilities.RandomString;
@@ -140,21 +142,26 @@ public class RegisterExistingNominee extends HttpServlet {
                     DBDAOImplNominee objN = DBDAOImplNominee.getInstance();
                     System.out.println("Going to checkNominee Login");
                     password = RandomString.encryptPassword(password);  // encrypt password for security reason
-
-                    if (objN.checkNomineeLogin(email, password)) {
-                        if (objN.registerNominee(election_id, email, requirements_file, 0)) {
-                            System.out.println("Existing Nominee in diff election registered");
-                            msg = "Registered Successfully";
-                        } else {
-                            err = "Error occurs while registering";
-                            System.out.println("Error while registering existing nominee");
-                        }
+                    DBDAOImplElection objE = DBDAOImplElection.getInstance();
+                    Election el = objE.getElection(election_id);
+                    if (email.equals(objE.getElectionCommissionerEmail(election_id))) {
+                        err = "Election Commissioner can not be nominee";
                     } else {
-                        System.out.println("Invalid pwd");
-                        err = "Invalid password";
+                        if (objN.checkNomineeLogin(email, password)) {
+                            if (objN.registerNominee(election_id, email, requirements_file, 0)) {
+                                System.out.println("Existing Nominee in diff election registered");
+                                msg = "Registered Successfully";
+                            } else {
+                                err = "Error occurs while registering";
+                                System.out.println("Error while registering existing nominee");
+                            }
+                        } else {
+                            System.out.println("Invalid pwd");
+                            err = "Invalid password";
+                        }
+                        view = "index.jsp?election_id=" + election_id;
+                        title = "Login";
                     }
-                    view = "index.jsp?election_id=" + election_id;
-                    title = "Login";
                 } else {
                     view = "index.jsp?election_id=" + election_id;
                     title = "Login";
