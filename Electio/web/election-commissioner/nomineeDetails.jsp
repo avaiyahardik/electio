@@ -15,6 +15,7 @@
                         <%
                             Nominee n = (Nominee) request.getAttribute("nominee");
                             Organization organization = (Organization) request.getAttribute("organization");
+                            boolean show_actions = (Boolean) request.getAttribute("show_actions");
                         %>
                         <div class="col-md-5">
                             <img src="../<%= n.getImage()%>" alt="Nominee Image" width="200" height="300"/>
@@ -98,12 +99,20 @@
                             </div>
                         </div>
                         <% if (status == 0) {%>
+                        <% if (show_actions) {%>
                         <div class="col-md-12">
                             <div class="align-center">
                                 <a href="Controller?action=nominee_action&cmd=approve&election_id=<%= n.getElection_id()%>&email=<%= n.getEmail()%>&requirements_file=<%= n.getRequirements_file()%>" class="btn btn-success"><i class="fa fa-check"></i> Approve</a>
                                 <a href="#" class="btn btn-effect btn-danger" data-toggle="modal" data-target="#reject-modal"><i class="glyphicon glyphicon-remove"></i> Reject</a>
                             </div>
                         </div>
+                        <%} else {%>
+                        <div class="col-md-12">
+                            <div class="align-center">
+                                Voting has been started, no action allowed
+                            </div>
+                        </div>           
+                        <%}%>
                         <%}%>
 
                     </form>

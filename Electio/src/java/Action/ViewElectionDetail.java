@@ -17,6 +17,7 @@ import Model.EligibleNominee;
 import Model.Voter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,7 +67,7 @@ public class ViewElectionDetail implements Controller.Action {
                     } else {
                         System.out.println("Election ID: " + id);
                         System.out.println("tab : " + tab);
-
+                        Date date = new Date();
                         Election el = objE.getElection(id, email);
                         req.setAttribute("election", el);
                         ArrayList<Candidate> result_candidates = null;
@@ -102,12 +103,23 @@ public class ViewElectionDetail implements Controller.Action {
                                 title = "Voters";
                                 ArrayList<Voter> voters = objV.getVoters(id);
                                 req.setAttribute("voters", voters);
+                                boolean show_add_voter = true;
+
+                                if (date.after(el.getVoting_start()) && date.before(el.getVoting_end())) {
+                                    show_add_voter = false;
+                                }
+                                req.setAttribute("show_add_voter", show_add_voter);
                                 break;
                             case "probable_nominees":
                                 view = "electionProbableNominees.jsp";
                                 title = "Eligible Nominees";
                                 ArrayList<EligibleNominee> pns = objP.getAllProbableNominees(id);
                                 req.setAttribute("probable_nominee", pns);
+                                boolean show_add_eligible_nominee = true;
+                                if (el.getNomination_end().before(date)) {
+                                    show_add_eligible_nominee = false;
+                                }
+                                req.setAttribute("show_add_eligible_nominee", show_add_eligible_nominee);
                                 break;
                             default:
                                 err = "Requesting invalid tab";

@@ -14,6 +14,7 @@ import Model.Nominee;
 import Model.Organization;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,6 +54,12 @@ public class ViewNomineeDetails implements Controller.Action {
                     if (objN.isValidEmail(nominee_email, id)) {
                         Nominee n = objN.getNominee(id, nominee_email);
                         Organization org = objO.getOrganization(n.getOrganization_id());
+                        Election e = objE.getElection(id);
+                        if (e.getVoting_start().before(new Date())) {
+                            req.setAttribute("show_actions", false);
+                        } else {
+                            req.setAttribute("show_actions", true);
+                        }
                         req.setAttribute("nominee", n);
                         req.setAttribute("organization", org);
                         view = "nomineeDetails.jsp";

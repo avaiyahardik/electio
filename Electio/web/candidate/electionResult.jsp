@@ -66,8 +66,8 @@
         long election_id = Long.parseLong((String) request.getSession().getAttribute("election_id"));
         String email = (String) request.getSession().getAttribute("candidate_email");
         boolean petition_filed = objC.isPetitionFiled(election_id, email);
-
-        if (!petition_filed) { %>
+        boolean show_petition = (Boolean) request.getAttribute("show_petition");
+        if (!petition_filed && show_petition) { %>
     <div class="row">
         <div class="col-lg-12">
             <a href="#" id="link-toggle">File a Petition</a>
@@ -101,9 +101,11 @@
         </div>
         <br>
     </div>
-    <%} else {%>
+    <%} else if (petition_filed) {%>
     You already filed petition
-    <%}%>
+    <%} else {%>
+    Petition duration got over
+    <% }%>
 </div>
 <script type="text/javascript" src="../js/charts.js"></script>
 <script type="text/javascript" src="../js/jsapi"></script>

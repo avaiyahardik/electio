@@ -47,6 +47,10 @@
             <td><%=sdf.format(new Date(el.getVoting_start().getTime()))%></td>
             <td><%=sdf.format(new Date(el.getVoting_end().getTime()))%></td>
         </tr>
+        <tr>
+            <td>Petition Duration</td>
+            <td><%= el.getPetition_duration()%> Day(s)</td>
+        </tr>
     </table>
     <label style="font-size: 17px;">You nomination status</label>
     <%if (status == 0) {%>

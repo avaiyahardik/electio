@@ -18,6 +18,7 @@
     String DOMAIN_BASE = request.getRequestURL().substring(0, request.getRequestURL().indexOf("Electio") + 8);
     Election el = (Election) request.getAttribute("election");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    boolean show_add_eligible_nominee = (Boolean) request.getAttribute("show_add_eligible_nominee");
 %>
 <div id="main-content">
     <div class="page-title">
@@ -30,16 +31,17 @@
             <div class="panel panel-default">
                 <div class="panel-heading align-center">
                     <div class="btn-group">
-                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=general" class="btn btn-info"><i class="fa fa-info-circle"></i> General</a>
-                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=nominees" class="btn btn-info"><i class="fa fa-user"></i> Nominees</a>
-                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=candidates" class="btn btn-info"><i class="fa fa-user"></i> Candidates</a>
-                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=voters" class="btn btn-info"><i class="fa fa-group"></i> Voters</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId()%>&tab=general" class="btn btn-info"><i class="fa fa-info-circle"></i> General</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId()%>&tab=nominees" class="btn btn-info"><i class="fa fa-user"></i> Nominees</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId()%>&tab=candidates" class="btn btn-info"><i class="fa fa-user"></i> Candidates</a>
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId()%>&tab=voters" class="btn btn-info"><i class="fa fa-group"></i> Voters</a>
                         <a href="#" class="btn btn-primary"><i class="fa fa-list"></i> Eligible Nominees</a>
-                        <a href="Controller?action=view_election_detail&id=<%= el.getId() %>&tab=statistics" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> Election Statistics</a>               
+                        <a href="Controller?action=view_election_detail&id=<%= el.getId()%>&tab=statistics" class="btn btn-info"><i class="fa fa-bar-chart-o"></i> Election Statistics</a>               
                     </div>
                 </div>
 
                 <div class="panel-body">
+                    <% if (show_add_eligible_nominee) {%>
                     <div class="row">
                         <div class="col-md-4">
                             <button class="btn btn-primary btn-sm btn-add" value="<%=el.getId()%>*addNominee"><i class="fa fa-plus"></i> Add New </button>
@@ -60,75 +62,80 @@
 
                         </div>
                     </div>
-
-
-                    <br><br>
-                    <div class="well">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <strong>Status</strong><br>
-                                <i class="fa fa-circle" style="color:red"></i> Link Not Sent<br>
-                                <i class="fa fa-circle" style="color:orange"></i> Link Sent<br>
-                                <i class="fa fa-check-circle" style="color:green"></i> Registered
-                            </div>
-
-                            <div class="col-lg-8 align-right">
-                                <% String reg_link = DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + el.getId();%>
-                                <p> Nominee Registration URL : <i><%=reg_link%></i></p>
-                                <a href="Controller?action=send_registration_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Registration URL</a>
-                            </div>
+                </div>
+                <%} else {%>
+                <strong> Add eligible nominee disabled after nomination end</strong>
+                <%}%><br><br>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <strong>Status</strong><br>
+                            <i class="fa fa-circle" style="color:red"></i> Link Not Sent<br>
+                            <i class="fa fa-circle" style="color:orange"></i> Link Sent<br>
+                            <i class="fa fa-check-circle" style="color:green"></i> Registered
                         </div>
 
+                        <div class="col-lg-8 align-right">
+                            <% String reg_link = DOMAIN_BASE + "candidate/nomineeRegistration.jsp?election_id=" + el.getId();%>
+                            <p> Nominee Registration URL : <i><%=reg_link%></i></p>
+                            <% if (show_add_eligible_nominee) {%><a href="Controller?action=send_registration_link&election_id=<%= el.getId()%>" class="btn btn-primary align-right btn-sm"><i class="fa fa-envelope"></i> Send Registration URL</a><% }%>
+                        </div>
                     </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nominee Email</th>
-                                <th class="align-center">Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                            <tr id="blank_row_nominee"></tr>
-                            <!-- Display Voter Data by Loop -->
-
-                            <% ArrayList<EligibleNominee> pn = (ArrayList<EligibleNominee>) request.getAttribute("probable_nominee");
-                                for (EligibleNominee p : pn) {
-                            %>
-                            <tr>
-                                <td><%= p.getEmail()%></td>
-                                <td class="align-center"><%
-                                    int p_status = p.getStatus();
-                                    if (p_status == 0) {
-                                    %>
-                                    <i class="fa fa-circle" style="color:red"></i>
-                                    <%} else if (p_status == 1) {%>
-                                    <i class="fa fa-circle" style="color:orange"></i>
-                                    <%
-                                    } else {
-                                    %>
-                                    <i class="fa fa-check-circle" style="color:green"></i>
-                                    <%
-                                        }
-                                    %></td>
-                                <td>
-                                    <button value="<%= p.getElection_id()%>*<%= p.getEmail()%>*editNominee" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
-                                    <button value="<%= p.getElection_id()%>*<%= p.getEmail()%>*deleteNominee" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
-                                </td>
-                            </tr>
-                            <%}%>
-                            <%if (pn.size() == 0) {%>
-                            <tr id="no-nominee-row">
-                                <td colspan="3"><br><strong>Your eligible nominees will be displayed here...</strong></td>
-                            </tr>
-                            <%}%>
-                        </tbody>
-                    </table>
                 </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nominee Email</th>
+                            <th class="align-center">Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr id="blank_row_nominee"></tr>
+                        <!-- Display Voter Data by Loop -->
+
+                        <% ArrayList<EligibleNominee> pn = (ArrayList<EligibleNominee>) request.getAttribute("probable_nominee");
+                            for (EligibleNominee p : pn) {
+                        %>
+                        <tr>
+                            <td><%= p.getEmail()%></td>
+                            <td class="align-center"><%
+                                int p_status = p.getStatus();
+                                if (p_status == 0) {
+                                %>
+                                <i class="fa fa-circle" style="color:red"></i>
+                                <%} else if (p_status == 1) {%>
+                                <i class="fa fa-circle" style="color:orange"></i>
+                                <%
+                                } else {
+                                %>
+                                <i class="fa fa-check-circle" style="color:green"></i>
+                                <%
+                                    }
+                                %></td>
+                            <td>
+                                <% if (show_add_eligible_nominee) {%>
+                                <button value="<%= p.getElection_id()%>*<%= p.getEmail()%>*editNominee" class="btn-edit btn-default btn-sm"><i class="fa fa-edit"></i> Edit</button>
+                                <button value="<%= p.getElection_id()%>*<%= p.getEmail()%>*deleteNominee" class="btn-del btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</button>
+                                <%} else {%>
+                                Not allowed after nomination end
+                                <%}%>
+                            </td>
+                        </tr>
+                        <%}%>
+                        <%if (pn.size() == 0) {%>
+                        <tr id="no-nominee-row">
+                            <td colspan="3"><br><strong>Your eligible nominees will be displayed here...</strong></td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->

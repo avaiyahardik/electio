@@ -9,8 +9,12 @@ import DAO.DBDAOImplCandidate;
 import DAO.DBDAOImplElection;
 import DAO.DBDAOImplVoter;
 import Model.Candidate;
+import Model.Election;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -61,6 +65,15 @@ public class ElectionResult implements Controller.Action {
                         candidates = objC.getCandidatesForWeightedVoting(election_id);
                     }
                     req.setAttribute("candidates", candidates);
+                    Election el = objE.getElection(election_id);
+                    boolean show_petition = true;
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(el.getVoting_end());
+                    c.add(Calendar.DATE, el.getPetition_duration());
+                    if (c.getTime().before(new Date())) {
+                        show_petition = false;
+                    }
+                    req.setAttribute("show_petition", show_petition);
                 }
             } catch (NumberFormatException ex) {
                 err = "Invalid election id";
