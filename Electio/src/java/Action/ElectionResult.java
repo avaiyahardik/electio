@@ -34,12 +34,12 @@ public class ElectionResult implements Controller.Action {
         String elec_id;
         String candidate_email = (String) req.getSession().getAttribute("candidate_email");
         String voter_email = (String) req.getSession().getAttribute("voter_email");
-        String ec_email = (String) req.getAttribute("email");
+        String ec_email = (String) req.getSession().getAttribute("email");
         System.out.println("ec_email: " + ec_email + "candidate emails " + candidate_email + ", voter email: " + voter_email);
         if (candidate_email == null && voter_email == null && ec_email == null) {
             err = "Session expired or you are  not logged in";
         } else {
-            if (candidate_email == null && voter_email == null && candidate_email.equals("") && voter_email.equals("")) {
+            if ((candidate_email == null && voter_email == null) || (candidate_email.equals("") && voter_email.equals(""))) {
                 elec_id = req.getParameter("election_id");
             } else {
                 elec_id = (String) req.getSession().getAttribute("election_id");

@@ -29,8 +29,13 @@
                         </div>
                         <%
                             int cnt = 0;
+                            long lastVote = -1;
                             for (Candidate c : candidates) {
-                                cnt++;%>
+                                if (lastVote == -1 || lastVote != c.getVotes()) {
+                                    cnt++;
+                                }
+                                lastVote = c.getVotes();
+                        %>
 
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-2">
